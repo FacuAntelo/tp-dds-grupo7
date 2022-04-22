@@ -9,18 +9,18 @@ public class TestValidacionPorLongitud {
     CriterioValidador validacionPorLongitud = new Validador.ValidacionPorLongitud();
 
     @Before
-    public void initilization(){
+    public void inicializacion(){
         validacionPorLongitud = new Validador.ValidacionPorLongitud();
     }
     @Test
     public void longitudCorrecta(){
-        initilization();
+        inicializacion();
         assertTrue(validacionPorLongitud.esValida("jose12345"));
     }
 
     @Test
     public void longitudInvalida(){
-        initilization();
+        inicializacion();
         assertTrue(!validacionPorLongitud.esValida("utn"));
     }
 }

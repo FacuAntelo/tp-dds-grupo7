@@ -10,13 +10,13 @@ public class TestValidadorDePassword {
     ValidadorDePassword validadorDePassword;
     ValidacionPorLongitud validacionPorLongitud;
     @Before
-    public void initialization(){
+    public void inicializar(){
         validadorDePassword = new Validador.ValidadorDePassword();
         validacionPorLongitud = new ValidacionPorLongitud();
     }
     @Test
     public void validacionBajoUnCriterio(){
-        initialization();
+        inicializar();
         validadorDePassword.agregarCriterio(validacionPorLongitud);
         assertTrue(!validadorDePassword.esValida("utn"));
     }
