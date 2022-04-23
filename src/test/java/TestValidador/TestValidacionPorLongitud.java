@@ -3,6 +3,9 @@ import Validador.CriterioValidador;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.FileNotFoundException;
+
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class TestValidacionPorLongitud {
@@ -13,14 +16,14 @@ public class TestValidacionPorLongitud {
         validacionPorLongitud = new Validador.ValidacionPorLongitud();
     }
     @Test
-    public void longitudCorrecta(){
+    public void longitudCorrecta() throws FileNotFoundException {
         inicializacion();
         assertTrue(validacionPorLongitud.esValida("jose12345"));
     }
 
     @Test
-    public void longitudInvalida(){
+    public void longitudInvalida() throws FileNotFoundException {
         inicializacion();
-        assertTrue(!validacionPorLongitud.esValida("utn"));
+        assertFalse(validacionPorLongitud.esValida("utn"));
     }
 }
