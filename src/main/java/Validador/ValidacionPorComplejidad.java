@@ -14,7 +14,8 @@ public class ValidacionPorComplejidad extends CriterioValidador{
 
         try {
             estadoDeValidacion = clave.chars().anyMatch(Character::isLowerCase) &&
-                                 clave.chars().anyMatch(Character::isDigit);
+                                 clave.chars().anyMatch(Character::isDigit) &&
+                                 clave.chars().anyMatch(Character::isUpperCase);
         }catch (Exception exception){
             System.out.println("No se pudo validar por complejidad");
         }

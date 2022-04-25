@@ -39,5 +39,16 @@ public class TestValidacionPorComplejidad {
             inicializacion();
             assertFalse(validacionPorLongitud.esValida("CAMAasdasd$"));
         }
+        @Test
+        public void contieneMayuscula() throws FileNotFoundException {
+            inicializacion();
+            assertTrue(validacionPorLongitud.esValida("CAMAq12123123"));
+        }
+
+        @Test
+        public void noContieneMayuscula() throws FileNotFoundException {
+            inicializacion();
+            assertFalse(validacionPorLongitud.esValida("123asdasd$"));
+        }
     }
 
