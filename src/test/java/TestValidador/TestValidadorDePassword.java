@@ -20,10 +20,9 @@ public class TestValidadorDePassword {
         validacionCompararContraPeores = new ValidacionCompararContraPeores();
     }
     @Test
-    public void validacionBajoUnCriterio(){
+    public void validacionBajoUnCriterios(){
         inicializar();
         validadorDePassword.agregarCriterio(validacionPorLongitud);
-        validadorDePassword.agregarCriterio(validacionPorComplejidad);
         validadorDePassword.agregarCriterio(validacionPorComplejidad);
         validadorDePassword.agregarCriterio(validacionCompararContraPeores);
         assertTrue(validadorDePassword.esValida("utnGrupo7"));
