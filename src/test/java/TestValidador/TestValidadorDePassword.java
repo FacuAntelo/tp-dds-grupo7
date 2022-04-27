@@ -20,7 +20,7 @@ public class TestValidadorDePassword {
         validacionCompararContraPeores = new ValidacionCompararContraPeores();
     }
     @Test
-    public void validacionBajoUnCriterios(){
+    public void validacionBajoCriterios(){
         inicializar();
         validadorDePassword.agregarCriterio(validacionPorLongitud);
         validadorDePassword.agregarCriterio(validacionPorComplejidad);
