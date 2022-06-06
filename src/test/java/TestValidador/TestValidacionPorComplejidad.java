@@ -11,7 +11,7 @@ import static org.junit.Assert.assertTrue;
 
 public class TestValidacionPorComplejidad {
 
-        CriterioValidador validacionPorComplejidad = new Validador.ValidacionPorComplejidad();
+        CriterioValidador validacionPorComplejidad;
 
         @Before
         public void inicializacion(){

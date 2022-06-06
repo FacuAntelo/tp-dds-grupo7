@@ -28,6 +28,6 @@ public abstract class Usuario {
     }
 
     public boolean validarClave(Validable validable){
-        return true;
+        return validable.esValida(this.getContrasenia());
     }
 }

@@ -1,5 +1,6 @@
 package Validador;
 
 public interface Validable {
-    public abstract boolean esValida(String clave);
+
+    public boolean esValida(String clave);
 }

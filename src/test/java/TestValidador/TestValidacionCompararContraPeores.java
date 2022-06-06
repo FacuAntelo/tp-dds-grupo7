@@ -25,6 +25,6 @@ public class TestValidacionCompararContraPeores {
     @Test
     public void contraseniaInvalida() throws FileNotFoundException {
         inicializacion();
-        assertFalse(validacionCompararContraPeores.esValida("brady"));
+        assertTrue(validacionCompararContraPeores.esValida("hola"));
     }
 }
