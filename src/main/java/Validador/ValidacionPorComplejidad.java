@@ -10,15 +10,18 @@ public class ValidacionPorComplejidad extends CriterioValidador{
     @Override
     public boolean esValida(String clave) {
 
-        boolean estadoDeValidacion = false;
+        return clave.chars().anyMatch(Character::isLowerCase) &&
+                clave.chars().anyMatch(Character::isDigit) &&
+                clave.chars().anyMatch(Character::isUpperCase);
+        //boolean estadoDeValidacion = false;
 
-        try {
+       /* try {
             estadoDeValidacion = clave.chars().anyMatch(Character::isLowerCase) &&
                                  clave.chars().anyMatch(Character::isDigit) &&
                                  clave.chars().anyMatch(Character::isUpperCase);
         }catch (Exception exception){
             System.out.println("No se pudo validar por complejidad");
         }
-        return estadoDeValidacion;
+        return estadoDeValidacion;*/
     }
 }

@@ -35,6 +35,7 @@ public class Main {
 
         System.out.print(per.tipoPerfil.queSoy());
         System.out.print(sec.getMiembros());
+        //sadsadasdas
 
     }
 

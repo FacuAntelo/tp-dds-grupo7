@@ -8,12 +8,12 @@ public class ValidacionPorLongitud extends CriterioValidador{
 
     @Override
     public boolean esValida(String clave) {
-        boolean estadoDeValidacion = false;
-        try{
+        return clave.length() > 8;
+        /*try{
             estadoDeValidacion = clave.length() > 8;
         }catch(Exception exception){
             System.out.println("No se pudo validar por longitud");
         }
-        return estadoDeValidacion;
+        return estadoDeValidacion;*/
     }
 }
