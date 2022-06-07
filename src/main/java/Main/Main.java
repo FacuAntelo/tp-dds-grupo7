@@ -25,15 +25,17 @@ public class Main {
         /*Prueba de miembro*/
 
         Organizacion org = new Organizacion();
-        Sector sec = new Sector("Mark", org);
+        Sector sec = new Sector("market", org);
         org.agregarSector(sec);
         Persona per = new Persona();
-        per.setNombre("Jose");
+        per.setNombre("Nacho");
+
         APIInterna api = new APIInterna();
-        System.out.print(per.tipoPerfil.queSoy());
+
+        //System.out.print(per);
         org.darDeAltaMiembro(per, api);
 
-        System.out.print(per.tipoPerfil.queSoy());
+        //System.out.print(per);
         System.out.print(sec.getMiembros());
         //sadsadasdas
 

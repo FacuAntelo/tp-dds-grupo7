@@ -11,7 +11,7 @@ public class APIInterna implements ValidadorExterno{
 
     public APIInterna(){
         this.base = new ArrayList<>();
-        this.base.add("Jose");
+        this.base.add("Nacho");
     }
 
     @Override

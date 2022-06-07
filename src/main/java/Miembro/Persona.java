@@ -3,14 +3,19 @@ package Miembro;
 import Organizacion.Organizacion;
 
 public class Persona {
-    protected String nombre;
-    protected String apellido;
-    protected Integer numeroDoc;
-    public TipoDePerfil tipoPerfil;
+    private String nombre;
+    private String apellido;
+    private TipoDocumento tipoDocumento;
+    private String numDoc;
 
-    public Persona(){
-        this.tipoPerfil = new Fake();
-    }
+    /*
+    public Persona()
+
+        /*this.nombre = nombre;
+        this.apellido = apellido;
+        this.numeroDoc = numeroDoc;
+
+    */
 
     public void solicitarMembresia(Organizacion organizacion) {
         organizacion.agregarMiembroPendiente(this);

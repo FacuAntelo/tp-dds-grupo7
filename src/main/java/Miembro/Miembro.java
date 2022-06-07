@@ -6,11 +6,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class Miembro extends TipoDePerfil{
+public class Miembro{
     //private List<Trayecto> trayectos;
+    private Persona persona;
     private List<Organizacion> organizaciones;
 
-    public Miembro(){
+    public Miembro(Persona persona){
+        this.persona = persona;
         this.organizaciones = new ArrayList<>();
     }
 
@@ -26,9 +28,5 @@ public class Miembro extends TipoDePerfil{
         organizaciones.add(organizacion);
     }
 
-    @Override
-    public String queSoy(){
-        return "Soy Miembro";
-    }
 
 }

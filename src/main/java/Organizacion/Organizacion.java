@@ -21,11 +21,10 @@ public class Organizacion {
 
     public void darDeAltaMiembro(Persona persona, ValidadorExterno validadorPertenencia){
         if(validarPertenenciaDeMiembro(persona, validadorPertenencia)){
-            persona.tipoPerfil = new Miembro();
-            validadorPertenencia.sectorAlQuePertenece(persona).agregarMiembro(persona);
+            validadorPertenencia.sectorAlQuePertenece(persona).agregarMiembro(new Miembro(persona));
             //No deberia pasar el sector, sino la entidad externa tiene esa info.
         }else{
-            persona.tipoPerfil = new Fake();
+            validadorPertenencia.sectorAlQuePertenece(persona).agregarMiembro(new Miembro(persona));
         }
     }
 
