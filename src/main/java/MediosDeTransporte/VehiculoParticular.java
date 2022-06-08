@@ -1,6 +1,10 @@
 package MediosDeTransporte;
 
-public class VehiculoParticular implements MedioDeTransporte{
+import domain.services.entities.DistanciaAPI;
+import domain.services.entities.DistanciaAPI;
+import trayecto.Direccion;
+
+public class VehiculoParticular extends MediosDeTransporte {
     private TipoVehiculo tipo;
     private Combustible combustible;
 
@@ -17,4 +21,7 @@ public class VehiculoParticular implements MedioDeTransporte{
 
     public void setCombustible(Combustible combustible) {this.combustible = combustible;}
 
+    public DistanciaAPI distancia(Direccion direccionInicial, Direccion direccionFinal) {
+        return null;
+    }
 }

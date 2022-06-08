@@ -3,6 +3,7 @@ package domain;
 import domain.services.ServicioGeoDDS;
 import domain.services.adapters.ServicioGeoDDSRetrofitAdapter;
 import domain.services.entities.DistanciaAPI;
+import domain.ubicacion.Ubicacion;
 
 import java.io.IOException;
 

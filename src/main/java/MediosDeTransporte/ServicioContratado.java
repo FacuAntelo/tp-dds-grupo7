@@ -1,6 +1,9 @@
 package MediosDeTransporte;
 
-public class ServicioContratado implements MedioDeTransporte{
+import domain.services.entities.DistanciaAPI;
+import trayecto.Direccion;
+
+public class ServicioContratado extends MediosDeTransporte{
     private Servicio servicio;
 
     public ServicioContratado(Servicio servicio) {
@@ -10,4 +13,9 @@ public class ServicioContratado implements MedioDeTransporte{
     public Servicio getServicio() {return servicio;}
 
     public void setServicio(Servicio servicio) {this.servicio = servicio;}
+
+    /*public DistanciaAPI distancia(Direccion direccionInicial, Direccion direccionFinal) {
+        return new DistanciaAPI();
+        //Cambiar esto
+    }*/
 }
