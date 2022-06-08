@@ -11,6 +11,10 @@ public class Miembro{
     private Persona persona;
     private List<Organizacion> organizaciones;
 
+    public Persona getPersona() {
+        return persona;
+    }
+
     public Miembro(Persona persona){
         this.persona = persona;
         this.organizaciones = new ArrayList<>();

@@ -5,6 +5,6 @@ import Sector.Sector;
 
 public interface ValidadorExterno {
     public abstract boolean perteneceMiembro(Persona persona);
-    public abstract Sector sectorAlQuePertenece(Persona persona);
+    public abstract Sector sectorAlQuePertenece(Persona persona, Sector sector);
 
 }

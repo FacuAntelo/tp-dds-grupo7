@@ -23,4 +23,8 @@ public class Sector {
     public List<Miembro> getMiembros() {
         return miembros;
     }
+
+    public String getNombre() {
+        return nombre;
+    }
 }

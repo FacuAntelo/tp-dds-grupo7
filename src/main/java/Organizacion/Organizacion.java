@@ -1,6 +1,7 @@
 package Organizacion;
 import Sector.Sector;
 import Miembro.*;
+import ValidacionExterna.APIInterna;
 import ValidacionExterna.ValidadorExterno;
 
 import java.util.ArrayList;
@@ -19,20 +20,31 @@ public class Organizacion {
         this.sectores = new ArrayList<>();
     }
 
-    public void darDeAltaMiembro(Persona persona, ValidadorExterno validadorPertenencia){
+    public void darDeAltaMiembro(Persona persona, APIInterna validadorPertenencia, Sector sector){
         if(validarPertenenciaDeMiembro(persona, validadorPertenencia)){
-            validadorPertenencia.sectorAlQuePertenece(persona).agregarMiembro(new Miembro(persona));
-            //No deberia pasar el sector, sino la entidad externa tiene esa info.
+            validadorPertenencia.sectorAlQuePertenece(persona, sector).agregarMiembro(new Miembro(persona));
+
         }else{
-            validadorPertenencia.sectorAlQuePertenece(persona).agregarMiembro(new Miembro(persona));
+            System.out.print("No se puede dar de alta a la parsona");
+
         }
     }
 
-    public void confirmarRelacionesPendientes( ValidadorExterno validadorPertenencia){
+    public void darDeAltaMiembro2(Persona persona, APIInterna validadorExterno, Sector sector){
+        if(validadorExterno.puedePernecerALaOrganizacion(persona, true)){
+            sector.agregarMiembro(new Miembro(persona));
+
+        }else{
+            System.out.print("No se puede dar de alta a la parsona");
+
+        }
+    }
+/*
+    public void confirmarRelacionesPendientes( APIInterna validadorPertenencia){
         this.relacionesPendientesAConfirmar.forEach(solicitud->{
             this.darDeAltaMiembro(solicitud, validadorPertenencia);
         });
-    }
+    }*/
 
     public void agregarSector(Sector sector){
         this.sectores.add(sector);
@@ -42,7 +54,7 @@ public class Organizacion {
         return this.sectores.indexOf(sector);
     }
 
-    public boolean validarPertenenciaDeMiembro(Persona persona, ValidadorExterno validadorPertenencia){
+    public boolean validarPertenenciaDeMiembro(Persona persona, APIInterna validadorPertenencia){
         return validadorPertenencia.perteneceMiembro(persona);
     }
 
