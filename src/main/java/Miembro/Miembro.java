@@ -11,14 +11,16 @@ public class Miembro{
     private Persona persona;
     private List<Organizacion> organizaciones;
 
-    public Persona getPersona() {
-        return persona;
-    }
+
 
     public Miembro(Persona persona){
         this.persona = persona;
         this.organizaciones = new ArrayList<>();
         this.trayectos = new ArrayList<>();
+    }
+
+    public Persona getPersona() {
+        return persona;
     }
 
     public List<Organizacion> getOrganizaciones() {
@@ -35,6 +37,10 @@ public class Miembro{
 
     public List<Trayecto> getTrayectos(){
         return trayectos;
+    }
+
+    public Double calcularHC(){
+        return 0.0;
     }
 
 }

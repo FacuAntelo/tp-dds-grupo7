@@ -98,8 +98,7 @@ public class Main {
 
         miembro.agregarTrayecto(trayecto);
 
-        miembro.getTrayectos().forEach(trayect -> trayect.calcularDistanciaTrayecto()
-        );
+        miembro.getTrayectos().forEach(trayect -> trayect.calcularDistanciaTrayecto());
 
         System.out.print(trayecto.getDistanciaTotal());
     }

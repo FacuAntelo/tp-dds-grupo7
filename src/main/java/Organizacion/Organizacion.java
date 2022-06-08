@@ -61,4 +61,8 @@ public class Organizacion {
     public void agregarMiembroPendiente(Persona persona){
         this.relacionesPendientesAConfirmar.add(persona);
     }
+
+    public Double calcularHCdeLaOrg(){
+        return 0.0;
+    }
 }

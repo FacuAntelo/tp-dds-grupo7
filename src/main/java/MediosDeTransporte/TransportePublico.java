@@ -25,25 +25,8 @@ public class TransportePublico extends MediosDeTransporte{
 
     public void setLinea(Linea linea) {this.linea = linea;}
 
-    public double calcularDistanciaEntreParadas(Parada paradaInicio, Parada paradaFin){
 
-        double acumDistancia = 0;
-        int i = 0;
-        boolean pasoPorInicio = false;
-
-        while(this.linea.getParadas().get(i) != paradaFin){
-            if(this.linea.getParadas().get(i) == paradaInicio){
-                pasoPorInicio = true;
-            }
-            if(pasoPorInicio){
-                acumDistancia += this.linea.getParadas().get(i).getDistanciaProximaParada() - this.linea.getParadas().get(i).getDistanciaParadaAnterior();
-            }
-            i++;
-        }
-        return acumDistancia;
-    }
-
-    public double calcularDistanciaEntreParadas2(Parada unaParada, Parada otraParada){
+    public double calcularDistanciaEntreParadas(Parada unaParada, Parada otraParada){
         Parada paradaInicio;
         Parada paradaFin;
         double acumDistancia = 0;
@@ -53,16 +36,23 @@ public class TransportePublico extends MediosDeTransporte{
         paradaInicio=paradas.stream().findFirst().get();
         paradaFin=paradas.get(1);
 
-        for(int i =0; i < linea.getParadas().size();i++){
-            if ((linea.getParadas().get(i)==paradaInicio || acumDistancia>0) && linea.getParadas().get(i)!=paradaFin){
+        //Recorro lista de las paradas y voy sumando las distancias
+        for(int i =0; i < linea.getParadas().size() && linea.getParadas().get(i)!=paradaFin;i++){
+            if (linea.getParadas().get(i)==paradaInicio || acumDistancia>0 ){
                 acumDistancia+= linea.getParadas().get(i).getDistanciaProximaParada();
             }
         }
         return acumDistancia;
     }
 
-    public DistanciaAPI distancia(Direccion direccionInicial, Direccion direccionFinal) {
-        return null;
+    @Override
+    public DistanciaAPI distancia(Direccion direccionInicial, Direccion direccionFinal){
+        DistanciaAPI distanciaApi = new DistanciaAPI();
+        Parada parada1 = linea.obtenerParadaDeLaDireccion(direccionInicial);
+        Parada parada2 = linea.obtenerParadaDeLaDireccion(direccionFinal);
+
+        distanciaApi.setValor(this.calcularDistanciaEntreParadas(parada1,parada2));
+        return distanciaApi;
     }
 
 }

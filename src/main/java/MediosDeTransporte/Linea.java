@@ -1,7 +1,10 @@
 package MediosDeTransporte;
 
+import trayecto.Direccion;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Linea {
     private String nombre;
@@ -17,9 +20,13 @@ public class Linea {
 
     public List<Parada> getParadas() {return paradas;}
 
-    public Linea agregarParada(Parada parada) {
+    public void setParada(Parada parada) {
         this.paradas.add(parada);
-        return this;
+    }
+
+    public Parada obtenerParadaDeLaDireccion(Direccion unaDireccion){
+        return paradas.stream().filter(parada->parada.getDireccion() == unaDireccion).collect(Collectors.toList()).get(0);
+
     }
 
 
