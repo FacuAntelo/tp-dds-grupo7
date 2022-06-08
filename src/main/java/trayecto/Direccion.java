@@ -6,6 +6,13 @@ public class Direccion {
     private Localidad localidad;
     private Provincia provincia;
 
+    public Direccion(Calle calle, int altura, Localidad localidad, Provincia provincia) {
+        this.calle = calle;
+        this.altura = altura;
+        this.localidad = localidad;
+        this.provincia = provincia;
+    }
+
     public Calle getCalle() {
         return calle;
     }

@@ -1,14 +1,15 @@
 package MediosDeTransporte;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Linea {
     private String nombre;
     private List<Parada> paradas;
 
-    public Linea(String nombre, List<Parada> paradas) {
+    public Linea(String nombre) {
         this.nombre = nombre;
-        this.paradas = paradas;
+        this.paradas = new ArrayList<Parada>();
     }
     public String getNombre() {return nombre;}
 
@@ -16,5 +17,10 @@ public class Linea {
 
     public List<Parada> getParadas() {return paradas;}
 
-    public void setParadas(List<Parada> paradas) {this.paradas = paradas;}
+    public Linea agregarParada(Parada parada) {
+        this.paradas.add(parada);
+        return this;
+    }
+
+
 }
