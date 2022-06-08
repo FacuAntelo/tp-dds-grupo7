@@ -2,6 +2,7 @@ package Usuarios;
 
 import CargaExcel.ExcelUtils;
 
+import java.io.IOException;
 import java.nio.file.Path;
 import java.time.LocalDate;
 
@@ -13,7 +14,7 @@ public class Organizacion {
     public String periodicidad;
     public LocalDate localDate;
 
-    public void cargarExcel(String path) {
+    public void cargarExcel(String path) throws IOException {
         ExcelUtils.leerExcel(path);
     }
 }
