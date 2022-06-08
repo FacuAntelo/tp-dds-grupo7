@@ -20,8 +20,15 @@ public class APIInterna implements ValidadorExterno{
     }
 
     @Override
-    public Sector sectorAlQuePertenece(Persona persona){
-        return new Sector("market", new Organizacion());
+    public Sector sectorAlQuePertenece(Persona persona, Sector sector){
+        return sector;
+        //return new Sector("market", new Organizacion());
+    }
+
+    public boolean puedePernecerALaOrganizacion(Persona persona, boolean valorDeRetorno){
+        //TODO
+        // hace alguna validacion
+        return valorDeRetorno;
     }
 
 }
