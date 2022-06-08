@@ -13,7 +13,8 @@ public class Organizacion {
     public String periodicidad;
     public LocalDate localDate;
 
-    public void cargarExcel(Path path) {
+    public void cargarExcel(String path) {
         ExcelUtils.leerExcel(path);
     }
+}
 

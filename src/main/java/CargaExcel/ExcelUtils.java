@@ -2,15 +2,20 @@ package CargaExcel;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.nio.file.Path;
 import java.util.Iterator;
 //falta importar mas, agregar dependencias??
+
+
+
 public class ExcelUtils {
 
-        public static void leerExcel(Path path)
+        public static void leerExcel(String path)
         {
             try
             {
@@ -36,11 +41,11 @@ public class ExcelUtils {
                         //Chequea la celda y el formato
                         switch (cell.getCellType())
                         {
-                            case Cell.CELL_TYPE_NUMERIC:
-                                System.out.print(cell.getNumericCellValue() + "t");
+                            case NUMERIC:
+                                System.out.print(cell.getNumericCellValue() + "\t");
                                 break;
-                            case Cell.CELL_TYPE_STRING:
-                                System.out.print(cell.getStringCellValue() + "t");
+                            case STRING:
+                                System.out.print(cell.getStringCellValue() + "\t");
                                 break;
                         }
                     }
