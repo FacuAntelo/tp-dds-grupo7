@@ -21,7 +21,4 @@ public class VehiculoParticular extends MediosDeTransporte {
 
     public void setCombustible(Combustible combustible) {this.combustible = combustible;}
 
-    public DistanciaAPI distancia(Direccion direccionInicial, Direccion direccionFinal) {
-        return null;
     }
-}

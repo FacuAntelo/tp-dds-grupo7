@@ -39,12 +39,12 @@ public class Organizacion {
 
         }
     }
-/*
-    public void confirmarRelacionesPendientes( APIInterna validadorPertenencia){
+
+    public void confirmarRelacionesPendientes(APIInterna validadorPertenencia, Sector sector){
         this.relacionesPendientesAConfirmar.forEach(solicitud->{
-            this.darDeAltaMiembro(solicitud, validadorPertenencia);
+            this.darDeAltaMiembro(solicitud, validadorPertenencia, sector);
         });
-    }*/
+    }
 
     public void agregarSector(Sector sector){
         this.sectores.add(sector);

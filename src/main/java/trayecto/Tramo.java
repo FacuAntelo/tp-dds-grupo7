@@ -16,6 +16,18 @@ public class Tramo {
         }
 
         public void calcularDistanciaTramo() throws IOException {
-                this.distancia = medioDeTransporte.distancia(ubicacionInicio, ubicacionFinal);
+                distancia = medioDeTransporte.distancia(ubicacionInicio, ubicacionFinal);
+        }
+
+        public void setMedioDeTransporte(MediosDeTransporte medioDeTransporte) {
+                this.medioDeTransporte = medioDeTransporte;
+        }
+
+        public void setUbicacionInicio(Direccion ubicacionInicio) {
+                this.ubicacionInicio = ubicacionInicio;
+        }
+
+        public void setUbicacionFinal(Direccion ubicacionFinal) {
+                this.ubicacionFinal = ubicacionFinal;
         }
 }
