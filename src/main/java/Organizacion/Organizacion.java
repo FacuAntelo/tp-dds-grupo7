@@ -3,6 +3,10 @@ import Sector.Sector;
 import Miembro.*;
 import ValidacionExterna.APIInterna;
 import ValidacionExterna.ValidadorExterno;
+import CargaExcel.ExcelUtils;
+
+import java.nio.file.Path;
+import java.time.LocalDate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +34,7 @@ public class Organizacion {
         }
     }
 
-    public void darDeAltaMiembro2(Persona persona, APIInterna validadorExterno, Sector sector){
+    /*public void darDeAltaMiembro2(Persona persona, APIInterna validadorExterno, Sector sector){
         if(validadorExterno.puedePernecerALaOrganizacion(persona, true)){
             sector.agregarMiembro(new Miembro(persona));
 
@@ -38,7 +42,7 @@ public class Organizacion {
             System.out.print("No se puede dar de alta a la parsona");
 
         }
-    }
+    }*/
 
     public void confirmarRelacionesPendientes(APIInterna validadorPertenencia, Sector sector){
         this.relacionesPendientesAConfirmar.forEach(solicitud->{
@@ -65,4 +69,9 @@ public class Organizacion {
     public Double calcularHCdeLaOrg(){
         return 0.0;
     }
+
+
+
+
+
 }

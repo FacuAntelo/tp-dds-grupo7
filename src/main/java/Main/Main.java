@@ -1,5 +1,6 @@
 package Main;
 
+import CargaExcel.ExcelUtils;
 import MediosDeTransporte.*;
 import Miembro.Persona;
 import Organizacion.Organizacion;
@@ -11,12 +12,14 @@ import Validador.CriterioValidador;
 import Validador.Validable;
 import Validador.ValidadorDePassword;
 import Miembro.*;
+import org.apache.logging.log4j.LogManager;
 import trayecto.*;
 
 import java.awt.*;
 import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 import static MediosDeTransporte.Combustible.ELECTRICO;
 import static MediosDeTransporte.TipoVehiculo.AUTO;
@@ -41,7 +44,7 @@ public class Main {
         Sector sec = new Sector("market", org);
         org.agregarSector(sec);
         Persona per = new Persona();
-        per.setNombre("Nacho\n");
+        per.setNombre("Nacho");
 
         //System.out.print(per.getNombre());
 
@@ -49,7 +52,7 @@ public class Main {
         APIInterna api = new APIInterna();
 
 
-        org.darDeAltaMiembro2(per, api, sec);
+        org.darDeAltaMiembro(per, api, sec);
 
        /* sec.getMiembros().forEach(un_miembro -> {System.out.print(un_miembro.getPersona().getNombre());} );*/
 
@@ -101,6 +104,10 @@ public class Main {
         miembro.getTrayectos().forEach(trayect -> trayect.calcularDistanciaTrayecto());
 
         System.out.print(trayecto.getDistanciaTotal());
+
+        /*Prueba excel*/
+        String path = new String("C:\\Users\\NACHO\\Desktop\\TP DDS\\2022-mi-no-mino-grupo-07\\src\\main\\java\\Main\\Libro1.xlsx");
+        ExcelUtils.leerExcel(path);
     }
 
 }
