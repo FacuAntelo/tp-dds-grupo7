@@ -3,12 +3,16 @@ import MediosDeTransporte.*;
 import domain.services.entities.DistanciaAPI;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 public class Tramo {
         private MediosDeTransporte medioDeTransporte;
         private Direccion ubicacionInicio;
         private Direccion ubicacionFinal;
         private DistanciaAPI distancia;
+        private LocalDateTime fechaHoraInicio;
+        private LocalDateTime fechaHoraFin;
+
 
         public DistanciaAPI getDistancia() throws IOException {
                 calcularDistanciaTramo();

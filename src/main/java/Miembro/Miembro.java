@@ -41,7 +41,9 @@ public class Miembro{
     public void setTipoDocumento(TipoDocumento tipoDocumento) {this.tipoDocumento = tipoDocumento;}
     public void setNumDoc(String numDoc) {this.numDoc = numDoc;}
     public void setContacto(Contacto contacto) {this.contacto = contacto;}
-    public void agregarTrayecto(Trayecto trayecto){trayectos.add(trayecto);}
+    public void agregarTrayecto(Trayecto trayecto){
+        trayectos.add(trayecto);
+    }
 
 
 

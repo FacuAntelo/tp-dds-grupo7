@@ -12,47 +12,29 @@ public class Organizacion {
     private Ubicacion ubicacion;
     private List<Sector> sectores;
     private String clasificacion;
-    private List<Persona> relacionesPendientesAConfirmar; //SE NECESITA UNA LISTA DE RELACIONES PENDIENTES A CONFIRMAR???
 
     public Organizacion(){
-        this.relacionesPendientesAConfirmar = new ArrayList<>();
         this.sectores = new ArrayList<>();
     }
 
-    public void recibePeticion(String nombre, String apellido, TipoDocumento tipoDocumento, String nroDocumento, ValidadorExterno validadorPertenencia, Sector sector){
+    public void recibePeticion(String nombre, String apellido, TipoDocumento tipoDocumento, String nroDocumento, ValidadorExterno validadorPertenencia){
         if(puedeSerMiembro(nombre, apellido, tipoDocumento, nroDocumento, validadorPertenencia)){
-            darDeAltaMiembro(nombre, apellido,tipoDocumento, nroDocumento,validadorPertenencia, sector);
+            darDeAltaMiembro(nombre, apellido,tipoDocumento, nroDocumento,validadorPertenencia);
         }else{
             System.out.print("No se puede dar de alta a la parsona");
 
         }
     }
-    //COMO SE ASIGNA EL SECTOR?? VIENE EN LA PETICION O DEVUELVE EL VALIDADOR EXTERNO??
-    public void darDeAltaMiembro(String nombre, String apellido, TipoDocumento tipoDocumento, String nroDocumento, ValidadorExterno validadorExterno, Sector sector){
-        sector.agregarMiembro(new Miembro(nombre, apellido, tipoDocumento, nroDocumento));
+
+    public void darDeAltaMiembro(String nombre, String apellido, TipoDocumento tipoDocumento, String nroDocumento, ValidadorExterno validadorExterno){
+        validadorExterno.sectorAlQuePertenece(nroDocumento).agregarMiembro(new Miembro(nombre, apellido, tipoDocumento, nroDocumento));
     }
 
     public boolean puedeSerMiembro(String nombre, String apellido, TipoDocumento tipoDocumento, String nroDocumento, ValidadorExterno validadorPertenencia){
         return validadorPertenencia.perteneceMiembro(nombre, apellido, tipoDocumento, nroDocumento);
     }
-//    public void darDeAltaMiembro(Persona persona, ValidadorExterno validadorPertenencia, Sector sector){
-//        if(validarPertenenciaDeMiembro(persona, validadorPertenencia)){
-//            validadorPertenencia.sectorAlQuePertenece(persona, sector).agregarMiembro(new Miembro(persona));
-//
-//        }else{
-//            System.out.print("No se puede dar de alta a la parsona");
-//
-//        }
-//    }
 
 
-//SE NECESITA UNA LISTA DE RELACIONES PENDIENTES A CONFIRMAR???
-//    public void confirmarRelacionesPendientes(APIInterna validadorPertenencia, Sector sector){
-//        this.relacionesPendientesAConfirmar.forEach(solicitud->{
-//            this.darDeAltaMiembro(solicitud, validadorPertenencia, sector);
-//        });
-//    }
-    public void agregarMiembroPendiente(Persona persona){this.relacionesPendientesAConfirmar.add(persona);}
 
     public void agregarSector(Sector sector){
         this.sectores.add(sector);
@@ -61,8 +43,6 @@ public class Organizacion {
     public Integer getPosSectorActual(Sector sector){
         return this.sectores.indexOf(sector);
     }
-
-
 
     public Double calcularHCdeLaOrg(){
         return 0.0;

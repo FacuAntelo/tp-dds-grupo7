@@ -5,9 +5,5 @@ import Sector.Sector;
 
 public interface ValidadorExterno {
     public abstract boolean perteneceMiembro(String nombre, String apellido, TipoDocumento tipoDocumento, String nroDocumento);
-    public abstract Sector sectorAlQuePertenece(Persona persona, Sector sector);
-
-
-
-
+    public abstract Sector sectorAlQuePertenece(String identificador);
 }

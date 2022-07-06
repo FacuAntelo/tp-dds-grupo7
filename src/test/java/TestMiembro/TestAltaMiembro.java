@@ -26,8 +26,8 @@ public class TestAltaMiembro {
     @Test
     public void altaMiembro(){
         inicializacion();
-        organizacion.recibePeticion ("Nacho", "n", TipoDocumento.DNI, "05072022", validadorExterno, sector);
-        assertTrue(sector.getMiembros().stream().anyMatch(unmiembro -> unmiembro.getNombre() == "Nacho"));
+        organizacion.recibePeticion ("Nacho", "n", TipoDocumento.DNI, "05072022", validadorExterno);
+        assertTrue(validadorExterno.getSectores().get(0).getMiembros().stream().anyMatch(unmiembro -> unmiembro.getNombre() == "Nacho"));
 
     }
 }

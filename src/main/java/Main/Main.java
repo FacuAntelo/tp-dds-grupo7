@@ -2,24 +2,16 @@ package Main;
 
 import CargaExcel.ExcelUtils;
 import MediosDeTransporte.*;
-import Miembro.Persona;
 import Organizacion.Organizacion;
 import Sector.Sector;
 import Usuarios.Administrador;
-import Usuarios.Usuario;
 import ValidacionExterna.APIInterna;
 import Validador.CriterioValidador;
-import Validador.Validable;
 import Validador.ValidadorDePassword;
 import Miembro.*;
-import org.apache.logging.log4j.LogManager;
 import trayecto.*;
 
-import java.awt.*;
 import java.io.IOException;
-import java.util.List;
-import java.util.Scanner;
-import java.util.logging.Logger;
 
 import static MediosDeTransporte.Combustible.ELECTRICO;
 import static MediosDeTransporte.TipoVehiculo.AUTO;
@@ -43,8 +35,6 @@ public class Main {
         Organizacion org = new Organizacion();
         Sector sec = new Sector("market", org);
         org.agregarSector(sec);
-        Persona per = new Persona();
-        per.setNombre("Nacho");
 
         //System.out.print(per.getNombre());
 
