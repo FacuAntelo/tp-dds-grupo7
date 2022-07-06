@@ -2,24 +2,16 @@ package Main;
 
 import CargaExcel.ExcelUtils;
 import MediosDeTransporte.*;
-import Miembro.Persona;
 import Organizacion.Organizacion;
 import Sector.Sector;
 import Usuarios.Administrador;
-import Usuarios.Usuario;
 import ValidacionExterna.APIInterna;
 import Validador.CriterioValidador;
-import Validador.Validable;
 import Validador.ValidadorDePassword;
 import Miembro.*;
-import org.apache.logging.log4j.LogManager;
 import trayecto.*;
 
-import java.awt.*;
 import java.io.IOException;
-import java.util.List;
-import java.util.Scanner;
-import java.util.logging.Logger;
 
 import static MediosDeTransporte.Combustible.ELECTRICO;
 import static MediosDeTransporte.TipoVehiculo.AUTO;
@@ -43,8 +35,6 @@ public class Main {
         Organizacion org = new Organizacion();
         Sector sec = new Sector("market", org);
         org.agregarSector(sec);
-        Persona per = new Persona();
-        per.setNombre("Nacho");
 
         //System.out.print(per.getNombre());
 
@@ -52,7 +42,7 @@ public class Main {
         APIInterna api = new APIInterna();
 
 
-        org.darDeAltaMiembro(per, api, sec);
+//        org.darDeAltaMiembro(per, api, sec);
 
        /* sec.getMiembros().forEach(un_miembro -> {System.out.print(un_miembro.getPersona().getNombre());} );*/
 
@@ -97,7 +87,7 @@ public class Main {
         trayecto.agregarTramo(tramo1);
         trayecto.agregarTramo(tramo2);
 
-        Miembro miembro = new Miembro(per);
+        Miembro miembro = new Miembro("emily", "higa", TipoDocumento.DNI, "05072022" );
 
         miembro.agregarTrayecto(trayecto);
 
