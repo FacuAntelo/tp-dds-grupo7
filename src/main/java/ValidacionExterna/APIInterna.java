@@ -15,8 +15,8 @@ public class APIInterna implements ValidadorExterno{
     }
 
     @Override
-    public boolean perteneceMiembro(Persona persona){
-        return base.contains(persona.getNombre());
+    public  boolean perteneceMiembro(String nombre, String apellido, TipoDocumento tipoDocumento, String nroDocumento){
+        return base.contains(nombre);
     }
 
     @Override
@@ -30,5 +30,7 @@ public class APIInterna implements ValidadorExterno{
         // hace alguna validacion
         return valorDeRetorno;
     }
+
+
 
 }

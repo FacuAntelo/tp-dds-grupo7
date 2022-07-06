@@ -52,7 +52,7 @@ public class Main {
         APIInterna api = new APIInterna();
 
 
-        org.darDeAltaMiembro(per, api, sec);
+//        org.darDeAltaMiembro(per, api, sec);
 
        /* sec.getMiembros().forEach(un_miembro -> {System.out.print(un_miembro.getPersona().getNombre());} );*/
 
@@ -97,7 +97,7 @@ public class Main {
         trayecto.agregarTramo(tramo1);
         trayecto.agregarTramo(tramo2);
 
-        Miembro miembro = new Miembro(per);
+        Miembro miembro = new Miembro("emily", "higa", TipoDocumento.DNI, "05072022" );
 
         miembro.agregarTrayecto(trayecto);
 
