@@ -68,6 +68,9 @@ public class Organizacion {
         return 0.0;
     }
 
+    public void agregarContactoEmail(Miembro miembro, String email){miembro.getContacto().setEmail(email);}
+    public void agregarContactoNroCelular(Miembro miembro, String email){miembro.getContacto().setNroCelular(email);}
+
 
 
 
