@@ -48,7 +48,10 @@ public class Miembro{
 
 
     public Double calcularHC(){
-        return 0.0;
+        return this.trayectos.stream().mapToDouble(trayecto -> trayecto.getHCTotalTramos()).sum();
+        //Traer datos de da del exel + lista de fe del usuario administrador(Falta crear) que incorpora los datos de un txt
+        //Tener en cuenta que el calculo HC Por miembro es de la suma de sus trayectos. A eso debemos sumar las actividades del exel
+        //La huella de carbono de cada tramo hay que agregarsela al miembro propietario del tramo
     }
 
 }

@@ -1,7 +1,7 @@
 package Organizacion;
-import Sector.Sector;
+import Sector.*;
 import Miembro.*;
-import ValidacionExterna.ValidadorExterno;
+import ValidacionExterna.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +45,7 @@ public class Organizacion {
     }
 
     public Double calcularHCdeLaOrg(){
-        return 0.0;
+        return this.sectores.stream().mapToDouble(sector->sector.getTotalEmisionMiembros()).sum();
     }
 
     public void agregarContactoEmail(Miembro miembro, String email){miembro.getContacto().setEmail(email);}

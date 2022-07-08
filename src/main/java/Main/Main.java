@@ -96,8 +96,8 @@ public class Main {
         System.out.print(trayecto.getDistanciaTotal());
 
         /*Prueba excel*/
-        String path = new String("C:\\Users\\NACHO\\Desktop\\TP DDS\\2022-mi-no-mino-grupo-07\\src\\main\\java\\Main\\Libro1.xlsx");
-        ExcelUtils.leerExcel(path);
+        /*String path = new String("C:\\Users\\NACHO\\Desktop\\TP DDS\\2022-mi-no-mino-grupo-07\\src\\main\\java\\Main\\Libro1.xlsx");
+        ExcelUtils.leerExcel(path);*/
     }
 
 }

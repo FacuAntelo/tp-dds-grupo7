@@ -20,6 +20,7 @@ public class ExcelUtils {
         public static boolean esEncabezadoValido(String titulo, HashMap<String, Integer> indicesDeColumas){
             return indicesDeColumas.containsKey(titulo);
         }
+
         public static void leerExcel(String path) throws IOException {
 
             FileInputStream file = new FileInputStream(path);

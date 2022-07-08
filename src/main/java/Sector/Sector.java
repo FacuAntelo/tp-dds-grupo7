@@ -27,4 +27,8 @@ public class Sector {
     public String getNombre() {
         return nombre;
     }
+
+    public double getTotalEmisionMiembros(){
+        return this.miembros.stream().mapToDouble(miembro->miembro.calcularHC()).sum();
+    }
 }

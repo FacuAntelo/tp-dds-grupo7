@@ -40,6 +40,10 @@ public class Trayecto {
     public double getDistanciaTotal(){
         return distanciaTotal;
     }
+
+    public double getHCTotalTramos(){
+        return this.tramos.stream().mapToDouble(tramo->tramo.getCalculoHC()).sum();
+    }
 }
 
 

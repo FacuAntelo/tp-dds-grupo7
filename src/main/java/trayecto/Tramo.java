@@ -23,6 +23,10 @@ public class Tramo {
                 distancia = medioDeTransporte.distancia(ubicacionInicio, ubicacionFinal);
         }
 
+        public double getCalculoHC(){
+                return this.medioDeTransporte.getHC(this.distancia);
+        }
+
         public void setMedioDeTransporte(MediosDeTransporte medioDeTransporte) {
                 this.medioDeTransporte = medioDeTransporte;
         }

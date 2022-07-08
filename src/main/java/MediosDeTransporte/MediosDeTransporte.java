@@ -17,4 +17,6 @@ public abstract class MediosDeTransporte {
         return servicio.distanciaAPI(direccionInicial.getLocalidad().getLocalidad(), direccionInicial.getCalle().getCalle(),direccionInicial.getAltura(),
                 direccionFinal.getLocalidad().getLocalidad(),direccionFinal.getCalle().getCalle(),direccionFinal.getAltura());
     }
+
+    public abstract double getHC(DistanciaAPI distancia);
 }
