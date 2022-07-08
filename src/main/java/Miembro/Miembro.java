@@ -52,6 +52,8 @@ public class Miembro{
         //Traer datos de da del exel + lista de fe del usuario administrador(Falta crear) que incorpora los datos de un txt
         //Tener en cuenta que el calculo HC Por miembro es de la suma de sus trayectos. A eso debemos sumar las actividades del exel
         //La huella de carbono de cada tramo hay que agregarsela al miembro propietario del tramo
+        //Tener en cuenta cuando un miembro pertence a varias organizaciones, el calculo de hc por organizacion puede fallar
+        //Como saber si pertenece el tramo a la organizacion? Facil direccionFinalTramo == direccionOrganizacionCalle
     }
 
 }
