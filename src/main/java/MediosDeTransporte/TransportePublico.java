@@ -55,4 +55,8 @@ public class TransportePublico extends MediosDeTransporte{
         return distanciaApi;
     }
 
+    public double getHC(DistanciaAPI distancia){
+        return 0.0;
+    }
+
 }

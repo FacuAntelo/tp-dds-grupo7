@@ -14,4 +14,8 @@ public class ServicioContratado extends MediosDeTransporte{
 
     public void setServicio(Servicio servicio) {this.servicio = servicio;}
 
+    public double getHC(DistanciaAPI distancia){
+        return 0.0;
+    }
+
 }

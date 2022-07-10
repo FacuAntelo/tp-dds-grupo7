@@ -21,4 +21,8 @@ public class VehiculoParticular extends MediosDeTransporte {
 
     public void setCombustible(Combustible combustible) {this.combustible = combustible;}
 
+    public double getHC(DistanciaAPI distancia){
+        //admi.getfac['NAFTA'] * DISTANCIA
+        return 0.0;
+    }
     }

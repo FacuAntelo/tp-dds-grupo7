@@ -98,6 +98,10 @@ public class Main {
         /*Prueba excel*/
         /*String path = new String("C:\\Users\\NACHO\\Desktop\\TP DDS\\2022-mi-no-mino-grupo-07\\src\\main\\java\\Main\\Libro1.xlsx");
         ExcelUtils.leerExcel(path);*/
+
+        Administrador admi = new Administrador("Jose", "sadasda");
+        admi.FactorDeEmision();
+        System.out.println(admi.getFactorDeEmisiones());
     }
 
 }

@@ -25,6 +25,7 @@ public class Tramo {
 
         public double getCalculoHC(){
                 return this.medioDeTransporte.getHC(this.distancia);
+
         }
 
         public void setMedioDeTransporte(MediosDeTransporte medioDeTransporte) {
