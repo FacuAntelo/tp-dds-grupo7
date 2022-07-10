@@ -11,7 +11,6 @@ public class Miembro{
     private String apellido;
     private TipoDocumento tipoDocumento;
     private String numDoc;
-    private Contacto contacto;
     private List<Trayecto> trayectos;
 
 
@@ -21,7 +20,6 @@ public class Miembro{
         this.apellido = apellido;
         this.tipoDocumento = tipoDocumento;
         this.numDoc = numDoc;
-        this.contacto= new Contacto();
         this.trayectos = new ArrayList<>();
     }
 
@@ -29,7 +27,6 @@ public class Miembro{
     public String getApellido() {return apellido;}
     public TipoDocumento getTipoDocumento() {return tipoDocumento;}
     public String getNumDoc() {return numDoc;}
-    public Contacto getContacto() {return contacto;}
     public List<Trayecto> getTrayectos(){
         return trayectos;
     }
@@ -40,7 +37,6 @@ public class Miembro{
     public void setApellido(String apellido) {this.apellido = apellido;}
     public void setTipoDocumento(TipoDocumento tipoDocumento) {this.tipoDocumento = tipoDocumento;}
     public void setNumDoc(String numDoc) {this.numDoc = numDoc;}
-    public void setContacto(Contacto contacto) {this.contacto = contacto;}
     public void agregarTrayecto(Trayecto trayecto){
         trayectos.add(trayecto);
     }

@@ -2,23 +2,24 @@ package Main;
 
 import CargaExcel.ExcelUtils;
 import MediosDeTransporte.*;
-import Organizacion.Organizacion;
+import Notificacion.*;
+import Organizacion.*;
 import Sector.Sector;
 import Usuarios.Administrador;
 import ValidacionExterna.APIInterna;
-import Validador.CriterioValidador;
-import Validador.ValidadorDePassword;
+import Validador.*;
 import Miembro.*;
 import trayecto.*;
 
 import java.io.IOException;
+import java.text.ParseException;
 
 import static MediosDeTransporte.Combustible.ELECTRICO;
 import static MediosDeTransporte.TipoVehiculo.AUTO;
 
 
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, ParseException {
 
         /*Prueba del validador*/
         ValidadorDePassword vali = new ValidadorDePassword();
@@ -102,6 +103,19 @@ public class Main {
         Administrador admi = new Administrador("Jose", "sadasda");
         admi.FactorDeEmision();
         System.out.println(admi.getFactorDeEmisiones());
+
+        //PRUEBA ENVIO DE NOTIFICACIONES A ORGANIZACIONES
+        Organizacion organizacionNotif = new Organizacion();
+        Email email = new Email("email@gmail");
+        WhatsApp celu = new WhatsApp("1109072022");
+        organizacionNotif.setRazonSocial("Unilever");
+        organizacionNotif.agregarContacto(email);
+        organizacionNotif.agregarContacto(celu);
+        organizacionNotif.getContactos().forEach(contacto -> System.out.println(contacto.obtenerContacto()));
+
+        Notificacion notificacionLink = new Notificacion();
+        notificacionLink.setearEnvioDeNotificaciones("09-07-2022 23:49", "Link notificacioooonnn"); //FECHA -> "dd-mm-aaaa hh:mm"
+
     }
 
 }

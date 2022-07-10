@@ -1,9 +1,11 @@
 package Organizacion;
+import Notificacion.Notificacion;
 import Sector.*;
 import Miembro.*;
 import ValidacionExterna.*;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Organizacion {
@@ -12,9 +14,11 @@ public class Organizacion {
     private Ubicacion ubicacion;
     private List<Sector> sectores;
     private String clasificacion;
+    private List<Contacto> contactos;
 
     public Organizacion(){
         this.sectores = new ArrayList<>();
+        this.contactos= new ArrayList<>();
     }
 
     public void recibePeticion(String nombre, String apellido, TipoDocumento tipoDocumento, String nroDocumento, ValidadorExterno validadorPertenencia){
@@ -48,9 +52,32 @@ public class Organizacion {
         return this.sectores.stream().mapToDouble(sector->sector.getTotalEmisionMiembros()).sum();
     }
 
-    public void agregarContactoEmail(Miembro miembro, String email){miembro.getContacto().setEmail(email);}
-    public void agregarContactoNroCelular(Miembro miembro, String email){miembro.getContacto().setNroCelular(email);}
+    //ENTREGA 3 --> PUNTO 4: CONTACTOS
+    public void agregarContacto(Contacto uncontacto){contactos.add(uncontacto);};
 
+    //ENTREGA 3 --> PUNTO 5: NOTIFICACIONES
+    public void activarNotificaciones(Notificacion notificacion){
+        if (tieneContactos()){
+            notificacion.agregarOrganizacionANotificar(this);
+        }
+        else System.out.println("No tiene contactos para ser notificado");
+    }
+
+    public boolean tieneContactos(){return !contactos.isEmpty();}
+
+
+    public void serNotificado(String linkGuiaDeRecomendaciones, Date fecha) {
+        if (tieneContactos()){
+            contactos.forEach(contacto -> contacto.serNotificado(linkGuiaDeRecomendaciones, fecha));
+        }
+        else System.out.println("No tiene contactos para ser notificado");
+    }
+
+    //GETTERS Y SETTERS
+    public void setRazonSocial(String razonSocial) {this.razonSocial = razonSocial;}
+
+    public String getRazonSocial() {return razonSocial;}
+    public List<Contacto> getContactos() {return contactos;}
 
 
 
