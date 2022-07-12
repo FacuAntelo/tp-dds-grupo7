@@ -68,7 +68,7 @@ public class Organizacion {
 
     public void serNotificado(String linkGuiaDeRecomendaciones, Date fecha) {
         if (tieneContactos()){
-            contactos.forEach(contacto -> contacto.serNotificado(linkGuiaDeRecomendaciones, fecha));
+            contactos.forEach(contacto -> contacto.serNotificado(linkGuiaDeRecomendaciones,fecha));
         }
         else System.out.println("No tiene contactos para ser notificado");
     }

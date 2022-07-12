@@ -26,7 +26,7 @@ public class Notificacion {
         TimerTask tareaCalendarizada = new TimerTask() {
             @Override
             public void run() {
-                enviarNotificacionAOrganizaciones(fecha, notificacion);
+                enviarNotificacionAOrganizaciones(notificacion, fecha);
                 System.out.println("Se han enviado las notificaciones a las " + new Date());
             }
         };
@@ -34,7 +34,7 @@ public class Notificacion {
 
     }
 
-    public void enviarNotificacionAOrganizaciones(Date fecha, String notificacion){
+    public void enviarNotificacionAOrganizaciones(String notificacion, Date fecha){
         organizacionesANotificar.forEach(organizacion -> organizacion.serNotificado(notificacion, fecha));
     }
     private Date convertirFechaStringADate(String fecha) throws ParseException {
