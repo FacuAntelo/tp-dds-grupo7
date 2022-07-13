@@ -1,9 +1,11 @@
 package Organizacion;
+import CargaExcel.ExcelUtils;
 import Notificacion.Notificacion;
 import Sector.*;
 import Miembro.*;
 import ValidacionExterna.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -15,8 +17,12 @@ public class Organizacion {
     private List<Sector> sectores;
     private String clasificacion;
     private List<Contacto> contactos;
+    private List<DatosDeActividad> datosDeActividad;
+    private ExcelUtils lectorExcel;
 
     public Organizacion(){
+        this.lectorExcel = new ExcelUtils();
+        this.datosDeActividad = new ArrayList<>();
         this.sectores = new ArrayList<>();
         this.contactos= new ArrayList<>();
     }
@@ -49,7 +55,22 @@ public class Organizacion {
     }
 
     public Double calcularHCdeLaOrg(){
-        return this.sectores.stream().mapToDouble(sector->sector.getTotalEmisionMiembros()).sum();
+        return this.sectores.stream().mapToDouble(sector->sector.getTotalEmisionMiembros()).sum() + this.calcularHCDA();
+    }
+
+    public void cargarDA(String path) throws IOException {
+        this.datosDeActividad = lectorExcel.leerExcel(path);
+    }
+
+    public double calcularHCDA() {
+        return datosDeActividad.stream().mapToDouble(dato-> {
+            try {
+                return dato.getValor()*dato.getFactorDeEmision().getValorFactorEmision();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return 0;
+        }).sum();
     }
 
     //ENTREGA 3 --> PUNTO 4: CONTACTOS

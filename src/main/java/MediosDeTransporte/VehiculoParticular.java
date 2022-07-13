@@ -1,8 +1,7 @@
 package MediosDeTransporte;
 
+import Combustible.Combustible;
 import domain.services.entities.DistanciaAPI;
-import domain.services.entities.DistanciaAPI;
-import trayecto.Direccion;
 
 public class VehiculoParticular extends MediosDeTransporte {
     private TipoVehiculo tipo;
@@ -21,8 +20,4 @@ public class VehiculoParticular extends MediosDeTransporte {
 
     public void setCombustible(Combustible combustible) {this.combustible = combustible;}
 
-    public double getHC(DistanciaAPI distancia){
-        //admi.getfac['NAFTA'] * DISTANCIA
-        return 0.0;
-    }
-    }
+}

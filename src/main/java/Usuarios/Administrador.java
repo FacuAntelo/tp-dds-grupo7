@@ -16,7 +16,7 @@ public class Administrador extends Usuario{
         facEmisiones = new ArrayList<>();
     }
 
-    public void FactorDeEmision() throws FileNotFoundException {
+/*    public void FactorDeEmision() throws FileNotFoundException {
         File doc = new File("C:\\Users\\jose_\\OneDrive\\Escritorio\\2022-mi-no-mino-grupo-07\\src\\main\\java\\Usuarios\\factoresDeEmision.config");
         Scanner obj = new Scanner(doc);
         while (obj.hasNextLine()) {
@@ -27,7 +27,7 @@ public class Administrador extends Usuario{
             System.out.println("nombre factor"+fac.getNombreFactor()+"valor del factor"+fac.getFactorEmision()+"unidad del factor:"+fac.getUnidad());
         }
 
-    }
+    }*/
 
     public List<FactorDeEmision> getFactorDeEmisiones(){
         return this.facEmisiones;

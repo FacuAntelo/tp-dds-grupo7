@@ -1,26 +1,25 @@
 package Usuarios;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
+import Configuracion.Configuracion;
+
+import java.io.IOException;
 
 public class FactorDeEmision {
-    double factorEmision;
+    double valorFactorEmision;
     String nombreFactor;
     String unidad;
 
-    public FactorDeEmision(String nombreFactor,double factorEmision, String unidad) {
-        this.factorEmision = factorEmision;
-        this.nombreFactor = nombreFactor;
-        this.unidad = unidad;
+    public FactorDeEmision FactorDeEmision(String nombreFactor) throws IOException {
+        Configuracion config = new Configuracion();
+        return config.getConfiguracion(nombreFactor);
     }
 
-    public double getFactorEmision() {
-        return factorEmision;
+    public double getValorFactorEmision() {
+        return valorFactorEmision;
     }
 
     public void setFactorEmision(double factorEmision) {
-        this.factorEmision = factorEmision;
+        this.valorFactorEmision = factorEmision;
     }
 
     public String getNombreFactor() {

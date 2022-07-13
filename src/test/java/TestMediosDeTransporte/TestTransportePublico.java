@@ -10,6 +10,8 @@ import trayecto.Direccion;
 import trayecto.Localidad;
 import trayecto.Provincia;
 
+import java.io.IOException;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -23,7 +25,7 @@ public class TestTransportePublico {
     Parada otraParada= new MediosDeTransporte.Parada("4",direccion1, 6.0,0.0);
 
     @Before
-    public void inicializacion(){
+    public void inicializacion() throws IOException {
         TipoTransportePublico tipoTp= TipoTransportePublico.COLECTIVO;
 
         Linea linea = new Linea("1");
@@ -35,7 +37,7 @@ public class TestTransportePublico {
         unTransportePublico = new TransportePublico(tipoTp,linea);
     }
     @Test
-    public void calculoDeDistanciaEntreDosParadas(){
+    public void calculoDeDistanciaEntreDosParadas() throws IOException {
         inicializacion();
         System.out.print(unTransportePublico.calcularDistanciaEntreParadas(unaParada,otraParada));
         System.out.print(unTransportePublico.calcularDistanciaEntreParadas(otraParada,unaParada));
@@ -44,7 +46,7 @@ public class TestTransportePublico {
 
     }
     @Test
-    public void calcularDistanciaEntreDosParadasDesdeDistanciaAPPI(){
+    public void calcularDistanciaEntreDosParadasDesdeDistanciaAPPI() throws IOException {
         inicializacion();
         assertEquals(10,unTransportePublico.distancia(direccion2, direccion4).getValor(),0);
 

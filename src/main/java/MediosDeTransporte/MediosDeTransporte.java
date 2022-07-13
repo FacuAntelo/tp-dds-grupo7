@@ -1,5 +1,6 @@
 package MediosDeTransporte;
 
+import Combustible.Combustible;
 import domain.services.ServicioGeoDDS;
 import domain.services.adapters.ServicioGeoDDSRetrofitAdapter;
 import domain.services.entities.DistanciaAPI;
@@ -10,6 +11,7 @@ import java.io.IOException;
 
 public abstract class MediosDeTransporte {
     ServicioGeoDDS servicio;
+    Combustible combustible;
 
     public DistanciaAPI distancia(Direccion direccionInicial, Direccion direccionFinal) throws IOException {
         servicio = ServicioGeoDDS.getInstance();
@@ -18,5 +20,7 @@ public abstract class MediosDeTransporte {
                 direccionFinal.getLocalidad().getLocalidad(),direccionFinal.getCalle().getCalle(),direccionFinal.getAltura());
     }
 
-    public abstract double getHC(DistanciaAPI distancia);
+    public double getHC(DistanciaAPI distancia){
+        return this.combustible.getFactorEmision().getValorFactorEmision()*distancia.getValor();
+    }
 }

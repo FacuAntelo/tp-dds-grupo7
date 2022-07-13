@@ -1,9 +1,12 @@
 package MediosDeTransporte;
 
+import Configuracion.Configuracion;
+import Usuarios.FactorDeEmision;
 import domain.services.entities.DistanciaAPI;
 import domain.services.entities.DistanciaAPI;
 import trayecto.Direccion;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -12,7 +15,7 @@ public class TransportePublico extends MediosDeTransporte{
     private TipoTransportePublico tipo;
     private Linea linea;
 
-    public TransportePublico(TipoTransportePublico tipo, Linea linea) {
+    public TransportePublico(TipoTransportePublico tipo, Linea linea){
         this.tipo = tipo;
         this.linea = linea;
     }

@@ -14,8 +14,7 @@ import trayecto.*;
 import java.io.IOException;
 import java.text.ParseException;
 
-import static MediosDeTransporte.Combustible.ELECTRICO;
-import static MediosDeTransporte.TipoVehiculo.AUTO;
+
 
 
 public class Main {
