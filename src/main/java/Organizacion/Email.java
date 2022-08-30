@@ -36,7 +36,7 @@ public class Email implements Contacto {
 
             propiedades.setProperty("mail.smtp.ssl.protocols", "TLSv1.2");
             Session sesion = Session.getDefaultInstance(propiedades);
-            String correo_emisor = "tp.dds.grupo7.2022@outlook.com";
+            String correo_emisor = "tp.dds.7.2022@outlook.com.ar";
             String contraseña_emisor = "tpdds72022";
 
             String correo_receptor = email;

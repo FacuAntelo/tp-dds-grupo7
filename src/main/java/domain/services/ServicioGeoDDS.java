@@ -1,6 +1,7 @@
 package domain.services;
 
 import domain.services.adapters.GeoDDSAdapter;
+import domain.services.adapters.ServicioGeoDDSRetrofitAdapter;
 import domain.services.entities.DistanciaAPI;
 import retrofit2.Call;
 import retrofit2.Response;

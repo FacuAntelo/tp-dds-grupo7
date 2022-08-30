@@ -5,7 +5,6 @@ import MediosDeTransporte.TipoTransportePublico;
 import MediosDeTransporte.TransportePublico;
 import org.junit.Before;
 import org.junit.Test;
-import trayecto.Calle;
 import trayecto.Direccion;
 import trayecto.Localidad;
 import trayecto.Provincia;
@@ -16,10 +15,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class TestTransportePublico {
-    Direccion direccion1 = new Direccion(new Calle("mitre"), 10, new Localidad(100), new Provincia("BsAs"));
-    Direccion direccion2 = new Direccion(new Calle("belgrano"), 350, new Localidad(10), new Provincia("BsAs"));
-    Direccion direccion3 = new Direccion(new Calle("guemes"), 350, new Localidad(10), new Provincia("BsAs"));
-    Direccion direccion4 = new Direccion(new Calle("nacho"), 350, new Localidad(10), new Provincia("BsAs"));
+    Direccion direccion1 = new Direccion("mitre", 10, new Localidad(100), new Provincia("BsAs"));
+    Direccion direccion2 = new Direccion("belgrano", 350, new Localidad(10), new Provincia("BsAs"));
+    Direccion direccion3 = new Direccion("guemes", 350, new Localidad(10), new Provincia("BsAs"));
+    Direccion direccion4 = new Direccion("nacho", 350, new Localidad(10), new Provincia("BsAs"));
     TransportePublico unTransportePublico;
     Parada unaParada= new MediosDeTransporte.Parada("2",direccion1, 2.0,0.0);
     Parada otraParada= new MediosDeTransporte.Parada("4",direccion1, 6.0,0.0);

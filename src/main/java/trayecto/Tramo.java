@@ -1,5 +1,7 @@
 package trayecto;
 import MediosDeTransporte.*;
+import domain.services.ServicioGeoDDS;
+import domain.services.adapters.ServicioGeoDDSRetrofitAdapter;
 import domain.services.entities.DistanciaAPI;
 
 import java.io.IOException;
@@ -11,21 +13,27 @@ public class Tramo {
         private Direccion ubicacionFinal;
         private DistanciaAPI distancia;
         private LocalDateTime fechaHoraInicio;
-        private LocalDateTime fechaHoraFin;
+        private Boolean fueCalculado = false;
 
-
-        public DistanciaAPI getDistancia() throws IOException {
-                calcularDistanciaTramo();
-                return distancia;
+        public Tramo(Direccion ubicacionInicio, Direccion ubicacionFinal) throws IOException {
+                this.ubicacionFinal=ubicacionFinal;
+                this.ubicacionInicio=ubicacionInicio;
+                this.calcularDistanciaTramo();
         }
 
         public void calcularDistanciaTramo() throws IOException {
-                distancia = medioDeTransporte.distancia(ubicacionInicio, ubicacionFinal);
+                ServicioGeoDDS servicioGeoDDS = ServicioGeoDDS.getInstance();
+                this.distancia = servicioGeoDDS.distanciaAPI(ubicacionInicio.getLocalidad().getNumeroLocalidad(), ubicacionInicio.getCalle(), ubicacionInicio.getAltura(),
+                        ubicacionFinal.getLocalidad().getNumeroLocalidad(), ubicacionFinal.getCalle(), ubicacionFinal.getAltura());
         }
 
-        public double getCalculoHC(){
+        public double getCalculoHC() throws IOException {
                 return this.medioDeTransporte.getHC(this.distancia);
 
+        }
+
+        public void seCalculo(){
+                this.fueCalculado= true;
         }
 
         public void setMedioDeTransporte(MediosDeTransporte medioDeTransporte) {

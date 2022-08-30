@@ -19,7 +19,7 @@ public class ExcelUtils {
     public static boolean esEncabezadoValido(String titulo, HashMap<String, Integer> indicesDeColumas){
         return indicesDeColumas.containsKey(titulo);
     }
-
+    //Devuelve una lista de DatosDeActividad
     public static  List<DatosDeActividad> leerExcel(String path) throws IOException {
 
         FileInputStream file = new FileInputStream(path);

@@ -4,12 +4,14 @@ import Usuarios.FactorDeEmision;
 
 import java.io.IOException;
 
-public abstract class Combustible {
+public class Combustible {
+    public String nombre;
     public FactorDeEmision factorEmision;
 
-    public abstract void cargarFactorEmision() throws IOException;
-
-    public FactorDeEmision getFactorEmision() {
+    public Combustible(String nombre){
+        this.nombre = nombre;
+    }
+    public FactorDeEmision getFactorEmision() throws IOException {
         return this.factorEmision;
     }
 }

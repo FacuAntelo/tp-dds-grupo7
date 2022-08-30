@@ -7,7 +7,7 @@ public class Localidad {
 
     public void setLocalidad(int localidad) {this.localidad = localidad;}
 
-    public int getLocalidad() {
+    public int getNumeroLocalidad() {
         return localidad;
     }
 }

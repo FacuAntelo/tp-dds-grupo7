@@ -9,8 +9,14 @@ import java.util.List;
 public class Trayecto {
     private List<Tramo> tramos;
     private Direccion puntoInicio;
-    private Direccion puntoIpuntoFin;
+    private Direccion puntoFin;
     private double distanciaTotal;
+
+    public Trayecto(Direccion inicial, Direccion ffinal){
+        this.puntoInicio= inicial;
+        this.puntoFin = ffinal;
+        this.tramos = new ArrayList<>();
+    }
 
     public void setPuntoInicio(Direccion puntoInicio) {
         this.puntoInicio = puntoInicio;
@@ -18,7 +24,7 @@ public class Trayecto {
     }
 
     public void setPuntoIpuntoFin(Direccion puntoIpuntoFin) {
-        this.puntoIpuntoFin = puntoIpuntoFin;
+        this.puntoFin = puntoIpuntoFin;
     }
 
     public void calcularDistanciaTrayecto (){
@@ -42,7 +48,14 @@ public class Trayecto {
     }
 
     public double getHCTotalTramos(){
-        return this.tramos.stream().mapToDouble(tramo->tramo.getCalculoHC()).sum();
+        return this.tramos.stream().mapToDouble(tramo-> {
+            try {
+                return tramo.getCalculoHC();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return 0;
+            }
+        }).sum();
     }
 }
 

@@ -1,5 +1,6 @@
 package Organizacion;
 import CargaExcel.ExcelUtils;
+import HuellaDeCarbono.RegistroHC;
 import Notificacion.Notificacion;
 import Sector.*;
 import Miembro.*;
@@ -15,12 +16,17 @@ public class Organizacion {
     private TipoOrganizacion tipoOrganizacion;
     private Ubicacion ubicacion;
     private List<Sector> sectores;
-    private String clasificacion;
+    private Clasificacion clasificacion;
+    private RegistroHC registrosHC;
     private List<Contacto> contactos;
     private List<DatosDeActividad> datosDeActividad;
-    private ExcelUtils lectorExcel;
+    private ExcelUtils lectorExcel; // TODO NO DEBERIA SER PARTE DE LA ENTIDAD UN LECTOR DE EXCEL, QUE TIENE QUE VER EL EXCEL CON LA ORGANIZACION
 
-    public Organizacion(){
+    public Organizacion(String razonSocial,TipoOrganizacion tipoOrganizacion, Clasificacion clasificacion, Ubicacion ubicacion){
+        this.razonSocial = razonSocial;
+        this.tipoOrganizacion = tipoOrganizacion;
+        this.clasificacion=clasificacion;
+        this.ubicacion=ubicacion;
         this.lectorExcel = new ExcelUtils();
         this.datosDeActividad = new ArrayList<>();
         this.sectores = new ArrayList<>();
@@ -32,8 +38,11 @@ public class Organizacion {
             darDeAltaMiembro(nombre, apellido,tipoDocumento, nroDocumento,validadorPertenencia);
         }else{
             System.out.print("No se puede dar de alta a la parsona");
-
         }
+    }
+
+    public Ubicacion getUbicacion() {
+        return ubicacion;
     }
 
     public void darDeAltaMiembro(String nombre, String apellido, TipoDocumento tipoDocumento, String nroDocumento, ValidadorExterno validadorExterno){

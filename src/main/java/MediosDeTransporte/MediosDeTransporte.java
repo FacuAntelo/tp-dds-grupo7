@@ -1,6 +1,7 @@
 package MediosDeTransporte;
 
 import Combustible.Combustible;
+import com.twilio.rest.supersim.v1.sim.BillingPeriod;
 import domain.services.ServicioGeoDDS;
 import domain.services.adapters.ServicioGeoDDSRetrofitAdapter;
 import domain.services.entities.DistanciaAPI;
@@ -10,17 +11,10 @@ import java.io.IOException;
 
 
 public abstract class MediosDeTransporte {
-    ServicioGeoDDS servicio;
-    Combustible combustible;
+    public Combustible combustible;
+    public Boolean esCompartido;
 
-    public DistanciaAPI distancia(Direccion direccionInicial, Direccion direccionFinal) throws IOException {
-        servicio = ServicioGeoDDS.getInstance();
-        servicio.setAdapter(new ServicioGeoDDSRetrofitAdapter());
-        return servicio.distanciaAPI(direccionInicial.getLocalidad().getLocalidad(), direccionInicial.getCalle().getCalle(),direccionInicial.getAltura(),
-                direccionFinal.getLocalidad().getLocalidad(),direccionFinal.getCalle().getCalle(),direccionFinal.getAltura());
-    }
-
-    public double getHC(DistanciaAPI distancia){
+    public double getHC(DistanciaAPI distancia) throws IOException {
         return this.combustible.getFactorEmision().getValorFactorEmision()*distancia.getValor();
     }
 }
