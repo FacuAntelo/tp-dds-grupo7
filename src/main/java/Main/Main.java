@@ -15,9 +15,11 @@ import domain.services.ServicioGeoDDS;
 import domain.services.adapters.ServicioGeoDDSRetrofitAdapter;
 import trayecto.*;
 
+import javax.xml.stream.FactoryConfigurationError;
 import java.io.IOException;
 import java.text.ParseException;
 
+import static MediosDeTransporte.TipoVehiculo.AUTO;
 import static MediosDeTransporte.TipoVehiculo.MOTO;
 import static Miembro.TipoDocumento.DNI;
 import static Organizacion.TipoOrganizacion.EMPRESA;
@@ -172,8 +174,8 @@ public class Main {
         // FIN MIEMBROS //
 
         // DIRECCIONES Y TRAYECTOS DE LOS MIEMBROS //
-        Direccion direccioCasanOscar = new Direccion("COD Warzone", 2, ezeiza,buenosAires);
-        Trayecto trayectoOscar = new Trayecto(direccioCasanOscar,direccionCocaCola);
+        Direccion direccionCasaOscar = new Direccion("COD Warzone", 2, ezeiza,buenosAires);
+        Trayecto trayectoOscar = new Trayecto(direccionCasaOscar,direccionCocaCola);
 
         Direccion direccionCasaVanesa = new Direccion("LOL",20020,ezeiza,buenosAires);
         Trayecto trayectoVanesa = new Trayecto(direccionCasaVanesa,direccionCocaCola);
@@ -185,22 +187,61 @@ public class Main {
         Trayecto trayectoTeresa = new Trayecto(direccionCasaTeresa,direccionCocaCola);
         // FIN DIRECCIONES Y TRAYECTOS DE LOS MIEMBROS
         // TRAMOS Y MEDIOS DE TRANSPORTE
-
-        //EL TRAYECTO DE VANESA
         Pie pie = new Pie();
+        //COMBUSTIBLE Y FACTOR DE EMISIONES
+
         FactorDeEmision naftaFactorDeEmision = new FactorDeEmision();
         Combustible nafta = new Combustible("nafta");
+        nafta.setFactorEmision(naftaFactorDeEmision);
+
+        FactorDeEmision gasFactorDeEmision = new FactorDeEmision();
+        Combustible gas = new Combustible("gas");
+        gas.setFactorEmision(gasFactorDeEmision);
+
+        FactorDeEmision electricidadFactorDeEmision = new FactorDeEmision();
+        Combustible electricidad = new Combustible("electricidad");
+        electricidad.setFactorEmision(electricidadFactorDeEmision);
+
+        FactorDeEmision dieselFactorDeEmision = new FactorDeEmision();
+        Combustible diesel = new Combustible("diesel");
+        diesel.setFactorEmision(dieselFactorDeEmision);
+
+        // SERVICIOS
+        Servicio servicioUber = new Servicio("Uber");
+        MediosDeTransporte uber = new ServicioContratado(servicioUber);
+
+        //EL TRAYECTO DE VANESA
             //DE SU CASA AL GARAJE
         Direccion direccionGarageVanesa = new Direccion("SUPER GARAJE",8550,ezeiza,buenosAires);
         Tramo tramoVanesaAlGarage = new Tramo(direccionCasaTeresa,direccionGarageVanesa);
         tramoVanesaAlGarage.setMedioDeTransporte(pie);
         trayectoTeresa.agregarTramo(tramoVanesaAlGarage);
             // DEL GARAJE A LA COCA COLA
-        // COMBUSTIBLE //
-
         Tramo tramoVanesaACocaCola = new Tramo(direccionGarageVanesa,direccionCocaCola);
         VehiculoParticular bmwVanesa = new VehiculoParticular(MOTO,nafta,true);
+        tramoVanesaACocaCola.setMedioDeTransporte(bmwVanesa);
+        trayectoTeresa.agregarTramo(tramoVanesaACocaCola);
+        //EL TRAYECTO DE EDGARDO
+            // DE SU CASA AL GARAJE
+        Direccion direccionGarageEdgardo = new Direccion("SUPER GARAJE",8550,ezeiza,buenosAires);
+        Tramo tramoEdgardoAlGaraje = new Tramo(direccionCasaEdgardo,direccionGarageEdgardo);
+        tramoEdgardoAlGaraje.setMedioDeTransporte(pie);
+        trayectoEdgardo.agregarTramo(tramoEdgardoAlGaraje);
+            // DEL GARAJE A COCA COLA
+        Tramo tramoEdgardoACocaCola = new Tramo(direccionGarageEdgardo,direccionCocaCola);
+        VehiculoParticular bmwEdgardo = new VehiculoParticular(MOTO,nafta,true);
+        tramoEdgardoACocaCola.setMedioDeTransporte(bmwEdgardo);
+        trayectoEdgardo.agregarTramo(tramoEdgardoAlGaraje);
+        // EL TRAYECTO DE TERESA
+        Tramo tramoTeresaACocaCola = new Tramo(direccionCasaTeresa,direccionCocaCola);
+        tramoTeresaACocaCola.setMedioDeTransporte(uber);
+            // EL TRAYECTO DE OSCAR
+        Tramo tramoOscarACocaCola = new Tramo(direccionCasaOscar,direccionCocaCola);
+        MediosDeTransporte porscheOscar = new VehiculoParticular(AUTO,gas,false);
+        tramoOscarACocaCola.setMedioDeTransporte(porscheOscar);
 
+
+        // TODO SETEAR LAS HORAS INICIO
 
 
     }

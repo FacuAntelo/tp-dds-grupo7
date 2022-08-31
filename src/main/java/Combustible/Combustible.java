@@ -14,4 +14,8 @@ public class Combustible {
     public FactorDeEmision getFactorEmision() throws IOException {
         return this.factorEmision;
     }
+
+    public void setFactorEmision(FactorDeEmision factorEmision) {
+        this.factorEmision = factorEmision;
+    }
 }

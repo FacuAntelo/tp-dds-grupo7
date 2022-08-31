@@ -37,8 +37,9 @@ public class Miembro{
     public void setApellido(String apellido) {this.apellido = apellido;}
     public void setTipoDocumento(TipoDocumento tipoDocumento) {this.tipoDocumento = tipoDocumento;}
     public void setNumDoc(String numDoc) {this.numDoc = numDoc;}
-    public void agregarTrayecto(Trayecto trayecto){
+    public void agregarTrayecto(Trayecto trayecto,Organizacion organizacion){
         trayectos.add(trayecto);
+        organizacion.agregarTrayecto(trayecto);
     }
 
 

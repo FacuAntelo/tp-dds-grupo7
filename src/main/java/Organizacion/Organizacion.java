@@ -5,11 +5,15 @@ import Notificacion.Notificacion;
 import Sector.*;
 import Miembro.*;
 import ValidacionExterna.*;
+import trayecto.Tramo;
+import trayecto.Trayecto;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Organizacion {
     private String razonSocial;
@@ -19,6 +23,7 @@ public class Organizacion {
     private Clasificacion clasificacion;
     private RegistroHC registrosHC;
     private List<Contacto> contactos;
+    private List<Trayecto> trayectosDeLosMiembros;
     private List<DatosDeActividad> datosDeActividad;
     private ExcelUtils lectorExcel; // TODO NO DEBERIA SER PARTE DE LA ENTIDAD UN LECTOR DE EXCEL, QUE TIENE QUE VER EL EXCEL CON LA ORGANIZACION
 
@@ -31,6 +36,7 @@ public class Organizacion {
         this.datosDeActividad = new ArrayList<>();
         this.sectores = new ArrayList<>();
         this.contactos= new ArrayList<>();
+        this.trayectosDeLosMiembros = new ArrayList<>();
     }
 
     public void recibePeticion(String nombre, String apellido, TipoDocumento tipoDocumento, String nroDocumento, ValidadorExterno validadorPertenencia){
@@ -63,8 +69,14 @@ public class Organizacion {
         return this.sectores.indexOf(sector);
     }
 
-    public Double calcularHCdeLaOrg(){
-        return this.sectores.stream().mapToDouble(sector->sector.getTotalEmisionMiembros()).sum() + this.calcularHCDA();
+
+    public List<Tramo> obtenerTramosDeLosMiembros(){
+        List<Tramo> tramos = trayectosDeLosMiembros.stream().flatMap(t -> t.getTramos().stream()).collect(Collectors.toList());
+        return tramos;
+    }
+    public void calcularHCdeLosMiembros(){
+        // CHEQUEAR LOS TRAYECTOS CUYO PUNTO FIN ES LA DIRECCION DE LA ORGANIZACION
+       List <Tramo> tramosDeLosMiembros = obtenerTramosDeLosMiembros();
     }
 
     public void cargarDA(String path) throws IOException {
@@ -101,6 +113,10 @@ public class Organizacion {
             contactos.forEach(contacto -> contacto.serNotificado(linkGuiaDeRecomendaciones,fecha));
         }
         else System.out.println("No tiene contactos para ser notificado");
+    }
+
+    public void agregarTrayecto(Trayecto trayecto){
+        this.trayectosDeLosMiembros.add(trayecto);
     }
 
     //GETTERS Y SETTERS

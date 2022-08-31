@@ -18,6 +18,7 @@ public class TransportePublico extends MediosDeTransporte{
     public TransportePublico(TipoTransportePublico tipo, Linea linea){
         this.tipo = tipo;
         this.linea = linea;
+        this.setTipoTransporte(TipoTransporte.TRANSPORTE_PUBLICO);
     }
 
     public TipoTransportePublico getTipo() {return tipo;}
@@ -48,7 +49,6 @@ public class TransportePublico extends MediosDeTransporte{
         return acumDistancia;
     }
 
-    @Override
     public DistanciaAPI distancia(Direccion direccionInicial, Direccion direccionFinal){
         DistanciaAPI distanciaApi = new DistanciaAPI();
         Parada parada1 = linea.obtenerParadaDeLaDireccion(direccionInicial);

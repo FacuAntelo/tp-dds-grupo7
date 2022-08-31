@@ -8,6 +8,7 @@ public class ServicioContratado extends MediosDeTransporte{
 
     public ServicioContratado(Servicio servicio) {
         this.servicio = servicio;
+        this.setTipoTransporte(TipoTransporte.SERVICIO_CONTRATADO);
     }
 
     public Servicio getServicio() {return servicio;}
@@ -17,5 +18,6 @@ public class ServicioContratado extends MediosDeTransporte{
     public double getHC(DistanciaAPI distancia){
         return 0.0;
     }
+
 
 }

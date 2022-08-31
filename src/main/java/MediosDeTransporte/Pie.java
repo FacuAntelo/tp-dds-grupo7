@@ -7,7 +7,8 @@ public class Pie extends MediosDeTransporte{
 
 
     public Pie(){
-        super.esCompartido = false;
+        this.setEsCompartido(false);
+        this.setTipoTransporte(TipoTransporte.MEDIOS_SIN_CONTAMINAR);
     }
 
     public double getHC(DistanciaAPI distancia){

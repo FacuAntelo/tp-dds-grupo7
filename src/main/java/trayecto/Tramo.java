@@ -1,7 +1,6 @@
 package trayecto;
 import MediosDeTransporte.*;
 import domain.services.ServicioGeoDDS;
-import domain.services.adapters.ServicioGeoDDSRetrofitAdapter;
 import domain.services.entities.DistanciaAPI;
 
 import java.io.IOException;
@@ -12,8 +11,28 @@ public class Tramo {
         private Direccion ubicacionInicio;
         private Direccion ubicacionFinal;
         private DistanciaAPI distancia;
-        private LocalDateTime fechaHoraInicio;
+        private Horario horaInicio;
         private Boolean fueCalculado = false;
+
+        public Horario getHoraInicio() {
+                return horaInicio;
+        }
+
+        public void setHoraInicio(Horario horaInicio) {
+                this.horaInicio = horaInicio;
+        }
+
+        public MediosDeTransporte getMedioDeTransporte() {
+                return medioDeTransporte;
+        }
+
+        public Direccion getUbicacionInicio() {
+                return ubicacionInicio;
+        }
+
+        public Direccion getUbicacionFinal() {
+                return ubicacionFinal;
+        }
 
         public Tramo(Direccion ubicacionInicio, Direccion ubicacionFinal) throws IOException {
                 this.ubicacionFinal=ubicacionFinal;

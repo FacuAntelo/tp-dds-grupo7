@@ -10,7 +10,8 @@ public class VehiculoParticular extends MediosDeTransporte {
     public VehiculoParticular(TipoVehiculo tipo, Combustible combustible,Boolean compartido) {
         this.tipo = tipo;
         this.combustible = combustible;
-        this.esCompartido = compartido;
+        this.setEsCompartido(compartido);
+        this.setTipoTransporte(TipoTransporte.VEHICULO_PARTICULAR);
     }
 
     public TipoVehiculo getTipo() {return tipo;}

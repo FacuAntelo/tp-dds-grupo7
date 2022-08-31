@@ -1,5 +1,6 @@
 package trayecto;
 
+import Organizacion.Organizacion;
 import domain.services.entities.DistanciaAPI;
 
 import java.io.IOException;
@@ -11,6 +12,10 @@ public class Trayecto {
     private Direccion puntoInicio;
     private Direccion puntoFin;
     private double distanciaTotal;
+
+    public List<Tramo> getTramos() {
+        return tramos;
+    }
 
     public Trayecto(Direccion inicial, Direccion ffinal){
         this.puntoInicio= inicial;
@@ -27,17 +32,17 @@ public class Trayecto {
         this.puntoFin = puntoIpuntoFin;
     }
 
-    public void calcularDistanciaTrayecto (){
-        distanciaTotal=0;
-        tramos.forEach(unTramo -> {
-            try {
-                distanciaTotal += unTramo.getDistancia().getValor();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
-
-    }
+//    public void calcularDistanciaTrayecto (){
+//        distanciaTotal=0;
+//        tramos.forEach(unTramo -> {
+//            try {
+//                distanciaTotal += unTramo.getDistancia().getValor();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        });
+//
+//    }
 
     public void agregarTramo(Tramo tramo){
         tramos.add(tramo);
