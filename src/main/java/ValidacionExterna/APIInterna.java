@@ -14,7 +14,7 @@ public class APIInterna implements ValidadorExterno{
         this.base = new ArrayList<>();
         this.base.add("Nacho");
         this.sectores = new ArrayList<Sector>();
-        sectores.add(new Sector("market", new Organizacion()));
+//        sectores.add(new Sector("market", new Organizacion()));
     }
 
     public List<Sector> getSectores() {return sectores;}

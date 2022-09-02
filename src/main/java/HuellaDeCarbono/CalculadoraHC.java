@@ -2,8 +2,10 @@ package HuellaDeCarbono;
 
 import MediosDeTransporte.MediosDeTransporte;
 import domain.ubicacion.Ubicacion;
+import trayecto.Direccion;
 import trayecto.Tramo;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -13,6 +15,7 @@ public class CalculadoraHC {
 
     public List<Tramo> filtrarTramos(List<Tramo> tramos){
         List<Tramo> tramosFiltrados = new ArrayList<>();
+        tramos = filtrarTramosCalculados(tramos);
         int aux = tramos.size();
         for(int i =0; i< aux; i++){
             Tramo tramo = tramos.remove(0);
@@ -24,20 +27,32 @@ public class CalculadoraHC {
         }
         return tramosFiltrados;
     }
-    public Boolean dosTramosSonIguales(Tramo unTramo, Tramo otroTramo) {
-        // TODO
-        return true;
+
+    public List<Tramo> filtrarTramosCalculados(List<Tramo> tramos) {
+        return tramos.stream().filter(t -> !t.getFueCalculado()).collect(Collectors.toList());
     }
-    public Boolean dosUbicacionesSonIguales(Ubicacion unaUbicacion, Ubicacion otraUbicacion){
+
+    public Boolean dosTramosSonIguales(Tramo unTramo, Tramo otroTramo) {
+        return
+          dosLocalTimeSonIguales(unTramo.getHoraInicio(),otroTramo.getHoraInicio()) && dosDireccionesSonIguales(unTramo.getUbicacionInicio(),otroTramo.getUbicacionInicio()) &&
+            dosDireccionesSonIguales(unTramo.getUbicacionFinal(),otroTramo.getUbicacionFinal()) &&
+              dosMediosDeTransporteSonIguales(unTramo.getMedioDeTransporte(), otroTramo.getMedioDeTransporte());
+    }
+
+    public Boolean dosLocalTimeSonIguales (LocalTime unaHora, LocalTime otraHora){
+        return unaHora.equals(otraHora);
+    }
+
+    public Boolean dosDireccionesSonIguales(Direccion unaDireccion, Direccion otraDireccion){
         // NO COMPARE POR CALLE PORQUE NO SE SI SON KEY SENSISITIVE
-        return unaUbicacion.getLocalidad() == otraUbicacion.getLocalidad() && unaUbicacion.getAltura() == otraUbicacion.getAltura();
+        return unaDireccion.getLocalidad() == otraDireccion.getLocalidad() && unaDireccion.getAltura() == otraDireccion.getAltura();
     }
 
     public Boolean dosMediosDeTransporteSonIguales(MediosDeTransporte unMedioDeTranporte,MediosDeTransporte otroMedioDeTransporte){
         return unMedioDeTranporte.getTipoTransporte() == otroMedioDeTransporte.getTipoTransporte();
     }
 
-    public HuellaDeCarbono calcularHCTramos(){
+    public HuellaDeCarbono calcularHCTramos(List <Tramo> tramos){
 
         return null;
     }

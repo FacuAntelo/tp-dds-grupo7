@@ -1,5 +1,11 @@
 package trayecto;
 
+
+import lombok.Getter;
+import lombok.Setter;
+
+@Setter
+@Getter
 public class Direccion {
     private String calle;
     private int altura;
@@ -13,19 +19,4 @@ public class Direccion {
         this.provincia = provincia;
     }
 
-    public String getCalle() {
-        return calle;
-    }
-
-    public Integer getAltura() {
-        return altura;
-    }
-
-    public Localidad getLocalidad() {
-        return localidad;
-    }
-
-    public Provincia getProvincia() {
-        return provincia;
-    }
 }

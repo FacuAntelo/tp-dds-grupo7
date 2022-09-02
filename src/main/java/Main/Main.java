@@ -2,6 +2,7 @@ package Main;
 
 import CargaExcel.ExcelUtils;
 import Combustible.Combustible;
+import HuellaDeCarbono.CalculadoraHC;
 import MediosDeTransporte.*;
 import Notificacion.*;
 import Organizacion.*;
@@ -11,6 +12,7 @@ import Usuarios.FactorDeEmision;
 import ValidacionExterna.APIInterna;
 import Validador.*;
 import Miembro.*;
+import com.twilio.rest.api.v2010.account.incomingphonenumber.Local;
 import domain.services.ServicioGeoDDS;
 import domain.services.adapters.ServicioGeoDDSRetrofitAdapter;
 import trayecto.*;
@@ -18,6 +20,8 @@ import trayecto.*;
 import javax.xml.stream.FactoryConfigurationError;
 import java.io.IOException;
 import java.text.ParseException;
+import java.time.LocalTime;
+import java.util.List;
 
 import static MediosDeTransporte.TipoVehiculo.AUTO;
 import static MediosDeTransporte.TipoVehiculo.MOTO;
@@ -126,6 +130,7 @@ public class Main {
 
         ServicioGeoDDS servicioGeoDDS = ServicioGeoDDS.getInstance();
         servicioGeoDDS.setAdapter(new ServicioGeoDDSRetrofitAdapter());
+        CalculadoraHC calculadoraHC = new CalculadoraHC();
 
         // ORGANIZACION //
         // UBICACION //
@@ -176,15 +181,19 @@ public class Main {
         // DIRECCIONES Y TRAYECTOS DE LOS MIEMBROS //
         Direccion direccionCasaOscar = new Direccion("COD Warzone", 2, ezeiza,buenosAires);
         Trayecto trayectoOscar = new Trayecto(direccionCasaOscar,direccionCocaCola);
+        oscarAdministracion.agregarTrayecto(trayectoOscar,cocaCola);
 
         Direccion direccionCasaVanesa = new Direccion("LOL",20020,ezeiza,buenosAires);
         Trayecto trayectoVanesa = new Trayecto(direccionCasaVanesa,direccionCocaCola);
+        vanesaMarketing.agregarTrayecto(trayectoVanesa,cocaCola);
 
         Direccion direccionCasaEdgardo = new Direccion("CS:GO", 205,ezeiza,buenosAires);
         Trayecto trayectoEdgardo = new Trayecto(direccionCasaEdgardo,direccionCocaCola);
+        edgardoVentas.agregarTrayecto(trayectoEdgardo,cocaCola);
 
         Direccion direccionCasaTeresa = new Direccion("outlast",101,ezeiza,buenosAires);
         Trayecto trayectoTeresa = new Trayecto(direccionCasaTeresa,direccionCocaCola);
+        teresaMarketing.agregarTrayecto(trayectoTeresa,cocaCola);
         // FIN DIRECCIONES Y TRAYECTOS DE LOS MIEMBROS
         // TRAMOS Y MEDIOS DE TRANSPORTE
         Pie pie = new Pie();
@@ -213,36 +222,45 @@ public class Main {
         //EL TRAYECTO DE VANESA
             //DE SU CASA AL GARAJE
         Direccion direccionGarageVanesa = new Direccion("SUPER GARAJE",8550,ezeiza,buenosAires);
-        Tramo tramoVanesaAlGarage = new Tramo(direccionCasaTeresa,direccionGarageVanesa);
+        LocalTime horaVanesaAlGarage = LocalTime.of(8,30);
+        Tramo tramoVanesaAlGarage = new Tramo(direccionCasaTeresa,direccionGarageVanesa,horaVanesaAlGarage);
         tramoVanesaAlGarage.setMedioDeTransporte(pie);
         trayectoTeresa.agregarTramo(tramoVanesaAlGarage);
             // DEL GARAJE A LA COCA COLA
-        Tramo tramoVanesaACocaCola = new Tramo(direccionGarageVanesa,direccionCocaCola);
+        LocalTime horaVanesaACocaCola = LocalTime.of(9,0);
+        Tramo tramoVanesaACocaCola = new Tramo(direccionGarageVanesa,direccionCocaCola,horaVanesaACocaCola);
         VehiculoParticular bmwVanesa = new VehiculoParticular(MOTO,nafta,true);
         tramoVanesaACocaCola.setMedioDeTransporte(bmwVanesa);
         trayectoTeresa.agregarTramo(tramoVanesaACocaCola);
         //EL TRAYECTO DE EDGARDO
             // DE SU CASA AL GARAJE
+        LocalTime horaGarageEdgardo = LocalTime.of(8,45);
         Direccion direccionGarageEdgardo = new Direccion("SUPER GARAJE",8550,ezeiza,buenosAires);
-        Tramo tramoEdgardoAlGaraje = new Tramo(direccionCasaEdgardo,direccionGarageEdgardo);
+        Tramo tramoEdgardoAlGaraje = new Tramo(direccionCasaEdgardo,direccionGarageEdgardo,horaGarageEdgardo);
         tramoEdgardoAlGaraje.setMedioDeTransporte(pie);
         trayectoEdgardo.agregarTramo(tramoEdgardoAlGaraje);
             // DEL GARAJE A COCA COLA
-        Tramo tramoEdgardoACocaCola = new Tramo(direccionGarageEdgardo,direccionCocaCola);
+        LocalTime horaEdgardoACocaCola = LocalTime.of(9,0);
+        Tramo tramoEdgardoACocaCola = new Tramo(direccionGarageEdgardo,direccionCocaCola,horaEdgardoACocaCola);
         VehiculoParticular bmwEdgardo = new VehiculoParticular(MOTO,nafta,true);
         tramoEdgardoACocaCola.setMedioDeTransporte(bmwEdgardo);
         trayectoEdgardo.agregarTramo(tramoEdgardoAlGaraje);
         // EL TRAYECTO DE TERESA
-        Tramo tramoTeresaACocaCola = new Tramo(direccionCasaTeresa,direccionCocaCola);
+        LocalTime horaTeresaACocaCola = LocalTime.of(9,15);
+        Tramo tramoTeresaACocaCola = new Tramo(direccionCasaTeresa,direccionCocaCola,horaTeresaACocaCola);
         tramoTeresaACocaCola.setMedioDeTransporte(uber);
             // EL TRAYECTO DE OSCAR
-        Tramo tramoOscarACocaCola = new Tramo(direccionCasaOscar,direccionCocaCola);
+        LocalTime horaOscarACocaCola = LocalTime.of(15,50);
+        Tramo tramoOscarACocaCola = new Tramo(direccionCasaOscar,direccionCocaCola,horaOscarACocaCola);
         MediosDeTransporte porscheOscar = new VehiculoParticular(AUTO,gas,false);
         tramoOscarACocaCola.setMedioDeTransporte(porscheOscar);
 
+        List<Tramo> tramosMiembros = cocaCola.obtenerTramosDeLosMiembros();
 
-        // TODO SETEAR LAS HORAS INICIO
+        System.out.println(tramosMiembros.size());
 
+
+        tramosMiembros = calculadoraHC.filtrarTramos(tramosMiembros);
 
     }
 
