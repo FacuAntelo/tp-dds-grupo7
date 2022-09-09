@@ -1,5 +1,8 @@
 package trayecto;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
 public class Localidad {
     private int localidad;
 

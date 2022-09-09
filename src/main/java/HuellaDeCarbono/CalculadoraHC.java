@@ -16,14 +16,12 @@ public class CalculadoraHC {
     public List<Tramo> filtrarTramos(List<Tramo> tramos){
         List<Tramo> tramosFiltrados = new ArrayList<>();
         tramos = filtrarTramosCalculados(tramos);
-        int aux = tramos.size();
-        for(int i =0; i< aux; i++){
+       while(!tramos.isEmpty()){
             Tramo tramo = tramos.remove(0);
             if(tramo.getMedioDeTransporte().getEsCompartido()){
-                tramos = tramos.stream().filter(t -> !dosTramosSonIguales(tramo,t)).collect(Collectors.toList());
+                tramos = tramos.stream().filter(t -> !this.dosTramosSonIguales(tramo,t)).collect(Collectors.toList());
             }
-            tramosFiltrados.add(tramo);
-            aux = tramos.size();
+           tramosFiltrados.add(tramo);
         }
         return tramosFiltrados;
     }
@@ -45,7 +43,7 @@ public class CalculadoraHC {
 
     public Boolean dosDireccionesSonIguales(Direccion unaDireccion, Direccion otraDireccion){
         // NO COMPARE POR CALLE PORQUE NO SE SI SON KEY SENSISITIVE
-        return unaDireccion.getLocalidad() == otraDireccion.getLocalidad() && unaDireccion.getAltura() == otraDireccion.getAltura();
+        return unaDireccion.getLocalidad().getLocalidad() == otraDireccion.getLocalidad().getLocalidad() && unaDireccion.getAltura() == otraDireccion.getAltura();
     }
 
     public Boolean dosMediosDeTransporteSonIguales(MediosDeTransporte unMedioDeTranporte,MediosDeTransporte otroMedioDeTransporte){

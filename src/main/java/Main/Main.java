@@ -7,6 +7,10 @@ import MediosDeTransporte.*;
 import Notificacion.*;
 import Organizacion.*;
 import Sector.Sector;
+import Unidad.GR;
+import Unidad.KG;
+import Unidad.TN;
+import Unidad.TipoDeUnidad;
 import Usuarios.Administrador;
 import Usuarios.FactorDeEmision;
 import ValidacionExterna.APIInterna;
@@ -131,6 +135,9 @@ public class Main {
         ServicioGeoDDS servicioGeoDDS = ServicioGeoDDS.getInstance();
         servicioGeoDDS.setAdapter(new ServicioGeoDDSRetrofitAdapter());
         CalculadoraHC calculadoraHC = new CalculadoraHC();
+        KG kg = KG.getKG();
+        TN tn = TN.getTN();
+        GR gr = GR.getGR();
 
         // ORGANIZACION //
         // UBICACION //
@@ -199,25 +206,25 @@ public class Main {
         Pie pie = new Pie();
         //COMBUSTIBLE Y FACTOR DE EMISIONES
 
-        FactorDeEmision naftaFactorDeEmision = new FactorDeEmision();
+        FactorDeEmision naftaFactorDeEmision = new FactorDeEmision(100,"lts",gr);
         Combustible nafta = new Combustible("nafta");
         nafta.setFactorEmision(naftaFactorDeEmision);
 
-        FactorDeEmision gasFactorDeEmision = new FactorDeEmision();
+        FactorDeEmision gasFactorDeEmision = new FactorDeEmision(100,"m3",gr);
         Combustible gas = new Combustible("gas");
         gas.setFactorEmision(gasFactorDeEmision);
 
-        FactorDeEmision electricidadFactorDeEmision = new FactorDeEmision();
+        FactorDeEmision electricidadFactorDeEmision = new FactorDeEmision(200,"kWh",gr);
         Combustible electricidad = new Combustible("electricidad");
         electricidad.setFactorEmision(electricidadFactorDeEmision);
 
-        FactorDeEmision dieselFactorDeEmision = new FactorDeEmision();
+        FactorDeEmision dieselFactorDeEmision = new FactorDeEmision(200,"lts",gr);
         Combustible diesel = new Combustible("diesel");
         diesel.setFactorEmision(dieselFactorDeEmision);
 
         // SERVICIOS
         Servicio servicioUber = new Servicio("Uber");
-        MediosDeTransporte uber = new ServicioContratado(servicioUber);
+        MediosDeTransporte uber = new ServicioContratado(servicioUber,false);
 
         //EL TRAYECTO DE VANESA
             //DE SU CASA AL GARAJE
@@ -244,16 +251,18 @@ public class Main {
         Tramo tramoEdgardoACocaCola = new Tramo(direccionGarageEdgardo,direccionCocaCola,horaEdgardoACocaCola);
         VehiculoParticular bmwEdgardo = new VehiculoParticular(MOTO,nafta,true);
         tramoEdgardoACocaCola.setMedioDeTransporte(bmwEdgardo);
-        trayectoEdgardo.agregarTramo(tramoEdgardoAlGaraje);
+        trayectoEdgardo.agregarTramo(tramoEdgardoACocaCola);
         // EL TRAYECTO DE TERESA
         LocalTime horaTeresaACocaCola = LocalTime.of(9,15);
         Tramo tramoTeresaACocaCola = new Tramo(direccionCasaTeresa,direccionCocaCola,horaTeresaACocaCola);
         tramoTeresaACocaCola.setMedioDeTransporte(uber);
+        trayectoTeresa.agregarTramo(tramoTeresaACocaCola);
             // EL TRAYECTO DE OSCAR
         LocalTime horaOscarACocaCola = LocalTime.of(15,50);
         Tramo tramoOscarACocaCola = new Tramo(direccionCasaOscar,direccionCocaCola,horaOscarACocaCola);
         MediosDeTransporte porscheOscar = new VehiculoParticular(AUTO,gas,false);
         tramoOscarACocaCola.setMedioDeTransporte(porscheOscar);
+        trayectoOscar.agregarTramo(tramoOscarACocaCola);
 
         List<Tramo> tramosMiembros = cocaCola.obtenerTramosDeLosMiembros();
 
@@ -262,6 +271,11 @@ public class Main {
 
         tramosMiembros = calculadoraHC.filtrarTramos(tramosMiembros);
 
+        System.out.println(tramosMiembros.size());
+
+        System.out.println(gasFactorDeEmision.getUnidad());
+        gasFactorDeEmision.pasarAKg();
+        System.out.println(gasFactorDeEmision.getUnidad());
     }
 
 }

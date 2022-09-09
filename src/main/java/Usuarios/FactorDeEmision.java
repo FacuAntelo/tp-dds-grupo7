@@ -1,41 +1,37 @@
 package Usuarios;
 
 import Configuracion.Configuracion;
+import Unidad.Unidad;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.IOException;
 
+ @Setter
+ @Getter
 public class FactorDeEmision {
-    double valorFactorEmision;
-    String nombreFactor;
-    String unidad;
+    private double valorFactorEmision;
+    private String unidad = "CO2eq/";
+    private String medidoEn;
+    private String masaUnidad;
+    private Unidad tipoUnidad;
 
-    public FactorDeEmision FactorDeEmision(String nombreFactor) throws IOException {
-        Configuracion config = new Configuracion();
-        return config.getConfiguracion(nombreFactor);
+     public FactorDeEmision(double valorFactorEmision,String medidoEn,Unidad tipoUnidad){
+        this.valorFactorEmision = valorFactorEmision;
+        this.medidoEn =  medidoEn;
+        this.tipoUnidad = tipoUnidad;
     }
-
-    public double getValorFactorEmision() {
-        return valorFactorEmision;
+    public String getUnidad(){
+         return tipoUnidad.getUnidad() + unidad + medidoEn;
     }
-
-    public void setFactorEmision(double factorEmision) {
-        this.valorFactorEmision = factorEmision;
-    }
-
-    public String getNombreFactor() {
-        return nombreFactor;
-    }
-
-    public void setNombreFactor(String nombreFactor) {
-        this.nombreFactor = nombreFactor;
-    }
-
-    public String getUnidad() {
-        return unidad;
-    }
-
-    public void setUnidad(String unidad) {
-        this.unidad = unidad;
-    }
-}
+     public void pasarAKg(){
+         this.tipoUnidad.pasarAKG(this);
+     }
+     public void pasarAGr(){
+         this.tipoUnidad.pasarAGR(this);
+     }
+     public void pasarATN(){
+         this.tipoUnidad.pasarATN(this);
+     }
+ }
 

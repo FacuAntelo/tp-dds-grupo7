@@ -1,21 +1,20 @@
 package Combustible;
 
 import Usuarios.FactorDeEmision;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.IOException;
 
+
+@Getter
+@Setter
 public class Combustible {
-    public String nombre;
-    public FactorDeEmision factorEmision;
+    private String nombre;
+    private FactorDeEmision factorEmision;
+    private int consumoCombustiblexKM;
 
     public Combustible(String nombre){
         this.nombre = nombre;
-    }
-    public FactorDeEmision getFactorEmision() throws IOException {
-        return this.factorEmision;
-    }
-
-    public void setFactorEmision(FactorDeEmision factorEmision) {
-        this.factorEmision = factorEmision;
     }
 }

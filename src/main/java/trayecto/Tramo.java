@@ -61,6 +61,9 @@ public class Tramo {
         public Boolean getFueCalculado() {
                 return fueCalculado;
         }
+        public void setFueCalculado(){
+                fueCalculado = true;
+        }
 
         public void setMedioDeTransporte(MediosDeTransporte medioDeTransporte) {
                 this.medioDeTransporte = medioDeTransporte;
