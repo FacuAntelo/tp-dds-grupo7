@@ -1,4 +1,4 @@
-package Unidad;
+package unidad;
 
 import Usuarios.FactorDeEmision;
 
@@ -8,7 +8,8 @@ public class GR extends Unidad {
 
     public static GR getGR(){
         if(instancia == null){
-            return new GR();
+            instancia = new GR();
+            return instancia;
         }
         return instancia;
     }

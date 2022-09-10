@@ -49,6 +49,10 @@ public class Tramo {
                         ubicacionFinal.getLocalidad().getNumeroLocalidad(), ubicacionFinal.getCalle(), ubicacionFinal.getAltura());
         }
 
+        public DistanciaAPI getDistancia() {
+                return distancia;
+        }
+
         public double getCalculoHC() throws IOException {
                 return this.medioDeTransporte.getHC(this.distancia);
 

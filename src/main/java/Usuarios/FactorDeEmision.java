@@ -1,13 +1,11 @@
 package Usuarios;
 
-import Configuracion.Configuracion;
-import Unidad.Unidad;
+import unidad.KG;
+import unidad.Unidad;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.io.IOException;
-
- @Setter
+@Setter
  @Getter
 public class FactorDeEmision {
     private double valorFactorEmision;
@@ -16,10 +14,10 @@ public class FactorDeEmision {
     private String masaUnidad;
     private Unidad tipoUnidad;
 
-     public FactorDeEmision(double valorFactorEmision,String medidoEn,Unidad tipoUnidad){
+     public FactorDeEmision(double valorFactorEmision,String medidoEn){
         this.valorFactorEmision = valorFactorEmision;
         this.medidoEn =  medidoEn;
-        this.tipoUnidad = tipoUnidad;
+        this.tipoUnidad = KG.getKG();
     }
     public String getUnidad(){
          return tipoUnidad.getUnidad() + unidad + medidoEn;

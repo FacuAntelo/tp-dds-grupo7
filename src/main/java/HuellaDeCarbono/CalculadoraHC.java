@@ -50,8 +50,12 @@ public class CalculadoraHC {
         return unMedioDeTranporte.getTipoTransporte() == otroMedioDeTransporte.getTipoTransporte();
     }
 
-    public HuellaDeCarbono calcularHCTramos(List <Tramo> tramos){
-
-        return null;
+    public int calcularHCTramos(List <Tramo> tramos){
+        tramos = this.filtrarTramos(tramos);
+        int valor = tramos.stream().mapToInt(tramo -> {
+            tramo.seCalculo();
+            return (int) ((int) tramo.getDistancia().getValor() *  tramo.getMedioDeTransporte().getConsumoXKM() * tramo.getMedioDeTransporte().getValorFactorDeEmision());
+        }).sum();
+        return valor;
     }
 }

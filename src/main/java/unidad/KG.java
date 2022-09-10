@@ -1,4 +1,4 @@
-package Unidad;
+package unidad;
 
 import Usuarios.FactorDeEmision;
 
@@ -12,7 +12,8 @@ public class KG extends Unidad{
 
     public static KG getKG(){
         if(instancia == null){
-            return new KG();
+            instancia = new KG();
+            return instancia;
         }
         return instancia;
     }

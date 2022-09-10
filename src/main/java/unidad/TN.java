@@ -1,4 +1,4 @@
-package Unidad;
+package unidad;
 
 import Usuarios.FactorDeEmision;
 
@@ -8,7 +8,8 @@ public class TN extends Unidad{
 
     public static TN getTN(){
         if(instancia == null){
-            return new TN();
+            instancia = new TN();
+            return instancia;
         }
         return instancia;
     }

@@ -1,7 +1,8 @@
-package Unidad;
+package unidad;
 
 public enum TipoDeUnidad {
     GR,
     TN,
-    KG
+    KG;
+
 }

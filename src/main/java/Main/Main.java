@@ -1,27 +1,19 @@
 package Main;
 
-import CargaExcel.ExcelUtils;
 import Combustible.Combustible;
 import HuellaDeCarbono.CalculadoraHC;
 import MediosDeTransporte.*;
-import Notificacion.*;
 import Organizacion.*;
 import Sector.Sector;
-import Unidad.GR;
-import Unidad.KG;
-import Unidad.TN;
-import Unidad.TipoDeUnidad;
-import Usuarios.Administrador;
+import unidad.GR;
+import unidad.KG;
+import unidad.TN;
 import Usuarios.FactorDeEmision;
-import ValidacionExterna.APIInterna;
-import Validador.*;
 import Miembro.*;
-import com.twilio.rest.api.v2010.account.incomingphonenumber.Local;
 import domain.services.ServicioGeoDDS;
 import domain.services.adapters.ServicioGeoDDSRetrofitAdapter;
 import trayecto.*;
 
-import javax.xml.stream.FactoryConfigurationError;
 import java.io.IOException;
 import java.text.ParseException;
 import java.time.LocalTime;
@@ -203,28 +195,29 @@ public class Main {
         teresaMarketing.agregarTrayecto(trayectoTeresa,cocaCola);
         // FIN DIRECCIONES Y TRAYECTOS DE LOS MIEMBROS
         // TRAMOS Y MEDIOS DE TRANSPORTE
-        Pie pie = new Pie();
+        MediosSinContaminar pie = new MediosSinContaminar();
         //COMBUSTIBLE Y FACTOR DE EMISIONES
 
-        FactorDeEmision naftaFactorDeEmision = new FactorDeEmision(100,"lts",gr);
+        FactorDeEmision naftaFactorDeEmision = new FactorDeEmision(100,"lts");
         Combustible nafta = new Combustible("nafta");
         nafta.setFactorEmision(naftaFactorDeEmision);
 
-        FactorDeEmision gasFactorDeEmision = new FactorDeEmision(100,"m3",gr);
+        FactorDeEmision gasFactorDeEmision = new FactorDeEmision(100,"m3");
         Combustible gas = new Combustible("gas");
         gas.setFactorEmision(gasFactorDeEmision);
 
-        FactorDeEmision electricidadFactorDeEmision = new FactorDeEmision(200,"kWh",gr);
+        FactorDeEmision electricidadFactorDeEmision = new FactorDeEmision(200,"kWh");
         Combustible electricidad = new Combustible("electricidad");
         electricidad.setFactorEmision(electricidadFactorDeEmision);
 
-        FactorDeEmision dieselFactorDeEmision = new FactorDeEmision(200,"lts",gr);
+        FactorDeEmision dieselFactorDeEmision = new FactorDeEmision(200,"lts");
         Combustible diesel = new Combustible("diesel");
         diesel.setFactorEmision(dieselFactorDeEmision);
 
         // SERVICIOS
         Servicio servicioUber = new Servicio("Uber");
         MediosDeTransporte uber = new ServicioContratado(servicioUber,false);
+        uber.setCombustible(gas);
 
         //EL TRAYECTO DE VANESA
             //DE SU CASA AL GARAJE
@@ -274,8 +267,8 @@ public class Main {
         System.out.println(tramosMiembros.size());
 
         System.out.println(gasFactorDeEmision.getUnidad());
-        gasFactorDeEmision.pasarAKg();
-        System.out.println(gasFactorDeEmision.getUnidad());
+        int suma = calculadoraHC.calcularHCTramos(tramosMiembros);
+        System.out.println(suma);
     }
 
 }

@@ -6,9 +6,6 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.Year;
-import java.time.YearMonth;
 import java.util.*;
 
 
@@ -33,7 +30,7 @@ public class ExcelUtils {
 
         indicesDeColumna.put("Actividad", 0);
         indicesDeColumna.put("Tipo de Consumo", 1);
-        indicesDeColumna.put("Unidad", 2);
+        indicesDeColumna.put("unidad", 2);
         indicesDeColumna.put("Alcance", 3);
         indicesDeColumna.put("Valor", 4);
         indicesDeColumna.put("Periodicidad", 5);
@@ -77,7 +74,7 @@ public class ExcelUtils {
                         .getCell(indicesDeColumna.get("Tipo de Consumo"))
                         .getStringCellValue();
                 datos.unidad = hoja1.getRow(r)
-                        .getCell(indicesDeColumna.get("Unidad"))
+                        .getCell(indicesDeColumna.get("unidad"))
                         .getStringCellValue();
                 datos.valor = hoja1.getRow(r)
                         .getCell(indicesDeColumna.get("Valor"))
