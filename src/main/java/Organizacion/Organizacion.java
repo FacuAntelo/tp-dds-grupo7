@@ -1,5 +1,6 @@
 package Organizacion;
 import CargaExcel.ExcelUtils;
+import EntidadPersistente.EntidadPersistente;
 import HuellaDeCarbono.RegistroHC;
 import Notificacion.Notificacion;
 import Sector.*;
@@ -8,6 +9,9 @@ import ValidacionExterna.*;
 import trayecto.Tramo;
 import trayecto.Trayecto;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -15,8 +19,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class Organizacion {
+//@Entity
+@Table(name = "organizacion")
+public class Organizacion extends EntidadPersistente{
+    @Column(name = "razonSocial")
     private String razonSocial;
+
     private TipoOrganizacion tipoOrganizacion;
     private Ubicacion ubicacion;
     private List<Sector> sectores;
