@@ -1,10 +1,13 @@
 package Main;
 
+import CargaExcel.ExcelUtils;
 import Combustible.Combustible;
 import HuellaDeCarbono.CalculadoraHC;
 import MediosDeTransporte.*;
 import Organizacion.*;
 import Sector.Sector;
+import domain.Configurador;
+import jdk.nashorn.internal.runtime.regexp.joni.Config;
 import unidad.GR;
 import unidad.KG;
 import unidad.TN;
@@ -103,9 +106,8 @@ public class Main {
 //
 //        System.out.print(trayecto.getDistanciaTotal());
 //
-//        /*Prueba excel*/
-//        /*String path = new String("C:\\Users\\NACHO\\Desktop\\TP DDS\\2022-mi-no-mino-grupo-07\\src\\main\\java\\Main\\Libro1.xlsx");
-//        ExcelUtils.leerExcel(path);*/
+        /*Prueba excel*/
+        String path = new String("C:\\Users\\NACHO\\Desktop\\TP DDS\\2022-mi-no-mino-grupo-07\\src\\main\\java\\Main\\Libro1.xlsx");
 //
 //        Administrador admi = new Administrador("Jose", "sadasda");
 //        admi.FactorDeEmision();
@@ -130,6 +132,28 @@ public class Main {
         KG kg = KG.getKG();
         TN tn = TN.getTN();
         GR gr = GR.getGR();
+        FactorDeEmision naftaFactorDeEmision = new FactorDeEmision("NAFTA",100,"lts");
+        Combustible nafta = new Combustible("nafta");
+        nafta.setFactorEmision(naftaFactorDeEmision);
+        FactorDeEmision gasFactorDeEmision = new FactorDeEmision("GAS NATURAL",100,"m3");
+        Combustible gas = new Combustible("gas");
+        gas.setFactorEmision(gasFactorDeEmision);
+        FactorDeEmision electricidadFactorDeEmision = new FactorDeEmision("ELECTRICIDAD",200,"kWh");
+        Combustible electricidad = new Combustible("electricidad");
+        electricidad.setFactorEmision(electricidadFactorDeEmision);
+
+        FactorDeEmision dieselFactorDeEmision = new FactorDeEmision("DIESEL",200,"lts");
+        Combustible diesel = new Combustible("diesel");
+        diesel.setFactorEmision(dieselFactorDeEmision);
+        FactorDeEmision gasoilFactorDeEmision = new FactorDeEmision("GASOIL",250,"lts");
+        FactorDeEmision keroseneFactorDeEmision = new FactorDeEmision("KEROSENE",250,"lts");
+        FactorDeEmision fuelOilFactorDeEmision = new FactorDeEmision("FUEL OIL",250,"lts");
+        FactorDeEmision carbonFactorDeEmision = new FactorDeEmision("CARBON",250,"kg");
+        FactorDeEmision carbonLeniaFactorDeEmision = new FactorDeEmision("CARBON LEÑA",250,"kg");
+        FactorDeEmision leniaFactorDeEmision = new FactorDeEmision("LEÑA",250,"kg");
+        FactorDeEmision gncFactorDeEmision = new FactorDeEmision("GNC",250,"lts");
+        Configurador config = Configurador.getConfigurador();
+        System.out.println();
 
         // ORGANIZACION //
         // UBICACION //
@@ -198,21 +222,6 @@ public class Main {
         MediosSinContaminar pie = new MediosSinContaminar();
         //COMBUSTIBLE Y FACTOR DE EMISIONES
 
-        FactorDeEmision naftaFactorDeEmision = new FactorDeEmision(100,"lts");
-        Combustible nafta = new Combustible("nafta");
-        nafta.setFactorEmision(naftaFactorDeEmision);
-
-        FactorDeEmision gasFactorDeEmision = new FactorDeEmision(100,"m3");
-        Combustible gas = new Combustible("gas");
-        gas.setFactorEmision(gasFactorDeEmision);
-
-        FactorDeEmision electricidadFactorDeEmision = new FactorDeEmision(200,"kWh");
-        Combustible electricidad = new Combustible("electricidad");
-        electricidad.setFactorEmision(electricidadFactorDeEmision);
-
-        FactorDeEmision dieselFactorDeEmision = new FactorDeEmision(200,"lts");
-        Combustible diesel = new Combustible("diesel");
-        diesel.setFactorEmision(dieselFactorDeEmision);
 
         // SERVICIOS
         Servicio servicioUber = new Servicio("Uber");
@@ -269,6 +278,11 @@ public class Main {
         System.out.println(gasFactorDeEmision.getUnidad());
         int suma = calculadoraHC.calcularHCTramos(tramosMiembros);
         System.out.println(suma);
+
+        cocaCola.leerExcel(path);
+
+        double sumaDA = calculadoraHC.calcularHCDatosDeActividad(cocaCola.getDatosDeActividad());
+        System.out.println(sumaDA);
     }
 
 }

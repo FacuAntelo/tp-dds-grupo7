@@ -6,6 +6,7 @@ import Notificacion.Notificacion;
 import Sector.*;
 import Miembro.*;
 import ValidacionExterna.*;
+import lombok.Getter;
 import trayecto.Tramo;
 import trayecto.Trayecto;
 
@@ -20,6 +21,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 //@Entity
+@Getter
 @Table(name = "organizacion")
 public class Organizacion extends EntidadPersistente{
     @Column(name = "razonSocial")
@@ -45,6 +47,9 @@ public class Organizacion extends EntidadPersistente{
         this.sectores = new ArrayList<>();
         this.contactos= new ArrayList<>();
         this.trayectosDeLosMiembros = new ArrayList<>();
+    }
+    public void leerExcel(String path) throws IOException {
+        this.datosDeActividad = lectorExcel.leerExcel(path);
     }
 
     public void recibePeticion(String nombre, String apellido, TipoDocumento tipoDocumento, String nroDocumento, ValidadorExterno validadorPertenencia){
@@ -91,16 +96,16 @@ public class Organizacion extends EntidadPersistente{
         this.datosDeActividad = lectorExcel.leerExcel(path);
     }
 
-    public double calcularHCDA() {
-        return datosDeActividad.stream().mapToDouble(dato-> {
-            try {
-                return dato.getValor()*dato.getFactorDeEmision().getValorFactorEmision();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return 0;
-        }).sum();
-    }
+//    public double calcularHCDA() {
+//        return datosDeActividad.stream().mapToDouble(dato-> {
+//            try {
+//                return dato.getValor()*dato.getFactorDeEmision().getValorFactorEmision();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//            return 0;
+//        }).sum();
+//    }
 
     //ENTREGA 3 --> PUNTO 4: CONTACTOS
     public void agregarContacto(Contacto uncontacto){contactos.add(uncontacto);};

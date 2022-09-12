@@ -1,6 +1,8 @@
 package HuellaDeCarbono;
 
 import MediosDeTransporte.MediosDeTransporte;
+import Organizacion.DatosDeActividad;
+import domain.Configurador;
 import domain.ubicacion.Ubicacion;
 import trayecto.Direccion;
 import trayecto.Tramo;
@@ -57,5 +59,13 @@ public class CalculadoraHC {
             return (int) ((int) tramo.getDistancia().getValor() *  tramo.getMedioDeTransporte().getConsumoXKM() * tramo.getMedioDeTransporte().getValorFactorDeEmision());
         }).sum();
         return valor;
+    }
+    public double calcularHCDatosDeActividad(List <DatosDeActividad> datosDeActividad){
+        System.out.println(datosDeActividad.size());
+        Configurador config = Configurador.getConfigurador();
+
+        System.out.println(config.getFactoresDeEmision());
+        System.out.println(datosDeActividad.get(0).getFactorDeEmision().getValorFactorEmision());
+        return datosDeActividad.stream().mapToDouble(dato -> (dato.getValor()*dato.getFactorDeEmision().getValorFactorEmision())).sum();
     }
 }

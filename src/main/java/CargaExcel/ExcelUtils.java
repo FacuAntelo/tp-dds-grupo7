@@ -1,11 +1,15 @@
 package CargaExcel;
 
 import Organizacion.DatosDeActividad;
+import Usuarios.FactorDeEmision;
+import domain.Configurador;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import javax.sound.midi.SysexMessage;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.*;
 
 
@@ -29,25 +33,21 @@ public class ExcelUtils {
         /*Inicializo indices con valores estandar*/
 
         indicesDeColumna.put("Actividad", 0);
-        indicesDeColumna.put("Tipo de Consumo", 1);
-        indicesDeColumna.put("unidad", 2);
-        indicesDeColumna.put("Alcance", 3);
-        indicesDeColumna.put("Valor", 4);
-        indicesDeColumna.put("Periodicidad", 5);
-        indicesDeColumna.put("Periodo de imputacion", 6);
+        indicesDeColumna.put("Tipo de consumo", 1);
+        indicesDeColumna.put("Valor", 2);
+        indicesDeColumna.put("Periodicidad", 3);
+        indicesDeColumna.put("Periodo de imputacion", 4);
 
-        Integer cantidadDeEncabezados = 7, alcance;
+        Integer cantidadDeEncabezados = 5;
         String titulo;
+        Configurador config = Configurador.getConfigurador();
         //Creo las key segun los alcances y sus respectivas listas
-        ArrayList arrayListInicial1 = new ArrayList<>();
-        ArrayList arrayListInicial2 = new ArrayList<>();
-        ArrayList arrayListInicial3 = new ArrayList<>();
         //  datosDeLasActividades.put(1, arrayListInicial1);
         //  datosDeLasActividades.put(2, arrayListInicial2);
         //datosDeLasActividades.put(3, arrayListInicial3);
             /*HashMap<Integer, String> map
                     = new HashMap<Integer, String>();*/
-
+        HashMap<String,FactorDeEmision> factorDeEmisionHashMap = config.getFactoresDeEmision();
         for (int r = 0; r <= hoja1.getLastRowNum(); r++) {
             if (r == 0) {
                 for (int i = 0; i < cantidadDeEncabezados; i++) {
@@ -56,46 +56,33 @@ public class ExcelUtils {
                         indicesDeColumna.put(titulo, i);
 
                     } else {
-                        //errorPorTituloInvalido TODO
+                        throw new RuntimeException("error aca");
                     }
                 }
                 System.out.println("Indices:\t" + indicesDeColumna);
             } else {
                 DatosDeActividad datos = new DatosDeActividad();
-
-                datos.alcance = hoja1.getRow(r)
-                        .getCell(indicesDeColumna.get("Alcance"))
-                        .getNumericCellValue();
-
-                datos.actividad = hoja1.getRow(r)
+                datos.setTipoDeConsumo(hoja1.getRow(r)
+                        .getCell(indicesDeColumna.get("Tipo de consumo"))
+                        .getStringCellValue());
+                datos.setActividad(hoja1.getRow(r)
                         .getCell(indicesDeColumna.get("Actividad"))
-                        .getStringCellValue();
-                datos.tipoDeConsumo = hoja1.getRow(r)
-                        .getCell(indicesDeColumna.get("Tipo de Consumo"))
-                        .getStringCellValue();
-                datos.unidad = hoja1.getRow(r)
-                        .getCell(indicesDeColumna.get("unidad"))
-                        .getStringCellValue();
-                datos.valor = hoja1.getRow(r)
+                        .getStringCellValue());
+                System.out.println(factorDeEmisionHashMap.containsKey(datos.getTipoDeConsumo().toUpperCase()));
+                datos.setFactorDeEmision(factorDeEmisionHashMap.get(datos.getTipoDeConsumo().toUpperCase()));
+                datos.setValor(hoja1.getRow(r)
                         .getCell(indicesDeColumna.get("Valor"))
-                        .getNumericCellValue();
-                datos.periodicidad = hoja1.getRow(r)
+                        .getNumericCellValue());
+                datos.setPeriodicidad(hoja1.getRow(r)
                         .getCell(indicesDeColumna.get("Periodicidad"))
-                        .getStringCellValue();
+                        .getStringCellValue());
 
-                datos.periodoDeImputacion = hoja1.getRow(r)
-                        .getCell(indicesDeColumna.get("Periodo de imputacion"))
-                        .getStringCellValue();
+                datos.setPeriodoDeImputacion(hoja1.getRow(r).getCell(indicesDeColumna.get("Periodo de imputacion")).getStringCellValue());
 
                 datosDeLasActividades.add(datos);
-
-
-
             }
 
         }
-
-        System.out.println(datosDeLasActividades);
 
         hojaDeCalculo.close();
         file.close();

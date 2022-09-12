@@ -1,5 +1,6 @@
 package Usuarios;
 
+import domain.Configurador;
 import unidad.KG;
 import unidad.Unidad;
 import lombok.Getter;
@@ -14,7 +15,9 @@ public class FactorDeEmision {
     private String masaUnidad;
     private Unidad tipoUnidad;
 
-     public FactorDeEmision(double valorFactorEmision,String medidoEn){
+     public FactorDeEmision(String nombre, double valorFactorEmision,String medidoEn){
+        Configurador configurador = Configurador.getConfigurador();
+        configurador.agregarFactor(nombre,this);
         this.valorFactorEmision = valorFactorEmision;
         this.medidoEn =  medidoEn;
         this.tipoUnidad = KG.getKG();
