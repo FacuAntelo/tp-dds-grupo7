@@ -1,18 +1,27 @@
 package Sector;
 
+import EntidadPersistente.EntidadPersistente;
 import Organizacion.Organizacion;
 import Miembro.*;
+
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Sector {
+@Entity
+@Table(name = "sector")
+public class Sector extends EntidadPersistente {
+    @Column(name = "nombre_sector")
     private String nombre;
+
+    @OneToMany
+    @JoinColumn(name = "sector_id",referencedColumnName = "id")
     private List<Miembro> miembros;
-    private Organizacion organizacion;
+
 
     public Sector(String nombre, Organizacion organizacion){
         this.nombre = nombre;
-        this.organizacion = organizacion;
+
         this.miembros = new ArrayList<>();
     }
 

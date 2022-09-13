@@ -1,5 +1,6 @@
 package Organizacion;
 
+import javax.persistence.*;
 import javax.swing.*;
 import java.util.Date;
 import java.util.HashMap;
@@ -11,18 +12,19 @@ import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-
-public class Email implements Contacto {
-    private String email;
+@Entity
+@DiscriminatorValue("email")
+public class Email extends Contacto {
+    @Transient
     private HashMap<Date, String> notificacionesEmail;
 
     public Email(String unEmail) {
-        this.email= unEmail;
+        this.setDetalle(unEmail);
         this.notificacionesEmail = new HashMap<>();
     }
-    public String obtenerContacto() {return email;}
+    public String obtenerContacto() {return this.getDetalle();}
     public HashMap<Date, String> obtenerNotificaciones() {return notificacionesEmail;}
-    public void setEmail(String email) {this.email = email;}
+    public void setEmail(String email) {this.setDetalle(email);}
 
 
     @Override
@@ -39,7 +41,7 @@ public class Email implements Contacto {
             String correo_emisor = "tp.dds.7.2022@outlook.com.ar";
             String contraseña_emisor = "tpdds72022";
 
-            String correo_receptor = email;
+            String correo_receptor = this.getDetalle();
             String asunto = "TP DDS - Grupo 7";
             String mensaje = notificacion;
 

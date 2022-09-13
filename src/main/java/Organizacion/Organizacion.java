@@ -10,9 +10,7 @@ import lombok.Getter;
 import trayecto.Tramo;
 import trayecto.Trayecto;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -20,21 +18,44 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-//@Entity
+@Entity
 @Getter
 @Table(name = "organizacion")
 public class Organizacion extends EntidadPersistente{
-    @Column(name = "razonSocial")
+
+    @Column(name = "razon_social")
     private String razonSocial;
 
+     @Enumerated(EnumType.STRING)
+     @Column(name = "tipo_organizacion")
     private TipoOrganizacion tipoOrganizacion;
+
+     @OneToOne
+     @JoinColumn(name= "ubicacion_id",referencedColumnName = "id")
     private Ubicacion ubicacion;
+
+    @OneToMany
+    @JoinColumn(name = "organizacion_id", referencedColumnName = "id")
     private List<Sector> sectores;
+
+    @Embedded
     private Clasificacion clasificacion;
+
+    @Transient
     private RegistroHC registrosHC;
+
+    @OneToMany
+    @JoinColumn(name= "id_organizacion",referencedColumnName = "id")
     private List<Contacto> contactos;
+
+    @Transient
     private List<Trayecto> trayectosDeLosMiembros;
+
+    @OneToMany
+    @JoinColumn(name= "id_organizacion",referencedColumnName = "id")
     private List<DatosDeActividad> datosDeActividad;
+
+    @Transient
     private ExcelUtils lectorExcel; // TODO NO DEBERIA SER PARTE DE LA ENTIDAD UN LECTOR DE EXCEL, QUE TIENE QUE VER EL EXCEL CON LA ORGANIZACION
 
     public Organizacion(String razonSocial,TipoOrganizacion tipoOrganizacion, Clasificacion clasificacion, Ubicacion ubicacion){

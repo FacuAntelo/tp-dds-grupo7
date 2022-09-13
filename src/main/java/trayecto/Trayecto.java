@@ -1,17 +1,33 @@
 package trayecto;
 
+import EntidadPersistente.EntidadPersistente;
 import Organizacion.Organizacion;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import domain.services.entities.DistanciaAPI;
 
+import javax.persistence.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Trayecto {
+@Entity
+@Table(name = "trayecto")
+public class Trayecto extends EntidadPersistente {
+    @OneToMany
+    @JoinColumn(name = "trayecto_id", referencedColumnName = "id")
     private List<Tramo> tramos;
+
+    @ManyToOne
+    @JoinColumn(name= "direccion_inicio_id",referencedColumnName = "id")
     private Direccion puntoInicio;
+
+    @ManyToOne
+    @JoinColumn(name= "direccion_final_id",referencedColumnName = "id")
     private Direccion puntoFin;
+
+    @Column(name = "distancia_total")
     private double distanciaTotal;
+
 
     public List<Tramo> getTramos() {
         return tramos;

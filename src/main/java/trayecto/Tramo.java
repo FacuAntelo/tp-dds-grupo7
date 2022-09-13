@@ -1,19 +1,37 @@
 package trayecto;
+import EntidadPersistente.EntidadPersistente;
 import MediosDeTransporte.*;
 import com.twilio.rest.api.v2010.account.incomingphonenumber.Local;
+import converters.ConverterAttributeLocalTime;
 import domain.services.ServicioGeoDDS;
 import domain.services.entities.DistanciaAPI;
 
+import javax.persistence.*;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
-public class Tramo {
+@Entity
+@Table(name = "tramo")
+public class Tramo extends EntidadPersistente {
+        @Transient
         private MediosDeTransporte medioDeTransporte;
+
+        @ManyToOne
+        @JoinColumn(name= "direccion_inicio_id",referencedColumnName = "id")
         private Direccion ubicacionInicio;
+
+        @ManyToOne
+        @JoinColumn(name= "direccion_final_id",referencedColumnName = "id")
         private Direccion ubicacionFinal;
+
+        @Embedded
         private DistanciaAPI distancia;
+
+        @Column(name="hora_inicio",columnDefinition = "TIME")
         private LocalTime horaInicio;
+
+        @Column(name = "fue_calculado")
         private Boolean fueCalculado = false;
 
         public LocalTime getHoraInicio() {

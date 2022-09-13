@@ -1,16 +1,36 @@
 package Miembro;
+import EntidadPersistente.EntidadPersistente;
+import lombok.Getter;
+import lombok.Setter;
 import trayecto.*;
 import Organizacion.Organizacion;
+
+import javax.persistence.*;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
-
-public class Miembro{
+@Entity
+@Table(name = "miembro")
+@Setter
+@Getter
+public class Miembro extends EntidadPersistente {
+    @Column(name = "nombre")
     private String nombre;
+
+    @Column(name = "apellido")
     private String apellido;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "tipo_documento")
     private TipoDocumento tipoDocumento;
+
+    @Column(name = "numero_documento")
     private String numDoc;
+
+//    @OneToMany
+//    @JoinColumn(name = "miembro_id", referencedColumnName = "id")
+    @Transient
     private List<Trayecto> trayectos;
 
 
@@ -23,20 +43,6 @@ public class Miembro{
         this.trayectos = new ArrayList<>();
     }
 
-    public String getNombre() {return nombre;}
-    public String getApellido() {return apellido;}
-    public TipoDocumento getTipoDocumento() {return tipoDocumento;}
-    public String getNumDoc() {return numDoc;}
-    public List<Trayecto> getTrayectos(){
-        return trayectos;
-    }
-
-
-
-    public void setNombre(String nombre) {this.nombre = nombre;}
-    public void setApellido(String apellido) {this.apellido = apellido;}
-    public void setTipoDocumento(TipoDocumento tipoDocumento) {this.tipoDocumento = tipoDocumento;}
-    public void setNumDoc(String numDoc) {this.numDoc = numDoc;}
     public void agregarTrayecto(Trayecto trayecto,Organizacion organizacion){
         trayectos.add(trayecto);
         organizacion.agregarTrayecto(trayecto);

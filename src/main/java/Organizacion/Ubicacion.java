@@ -1,24 +1,20 @@
 package Organizacion;
 
+import EntidadPersistente.EntidadPersistente;
+import lombok.Getter;
+import lombok.Setter;
 import trayecto.Direccion;
 
-public class Ubicacion {
+import javax.persistence.*;
+
+@Setter
+@Getter
+@Entity
+@Table(name = "ubicacion")
+public class Ubicacion extends EntidadPersistente {
+    @Transient
     private Direccion direccion;
+    @Column(name = "codigo_postal")
     private Integer codigoPostal;
 
-    public Direccion getDireccion() {
-        return direccion;
-    }
-
-    public void setDireccion(Direccion direccion) {
-        this.direccion = direccion;
-    }
-
-    public Integer getCodigoPostal() {
-        return codigoPostal;
-    }
-
-    public void setCodigoPostal(Integer codigoPostal) {
-        this.codigoPostal = codigoPostal;
-    }
 }

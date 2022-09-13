@@ -1,9 +1,19 @@
 package domain.services.entities;
 
+import lombok.CustomLog;
+
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+import javax.persistence.Transient;
+
 import static domain.services.entities.Unidades.KM;
 
+
+@Embeddable
 public class DistanciaAPI {
+    @Column(name = "valor")
     public double valor;
+    @Transient
     public Unidades unidad;
 
     public DistanciaAPI(){
