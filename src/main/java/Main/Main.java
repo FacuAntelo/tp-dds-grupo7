@@ -132,26 +132,26 @@ public class Main {
         KG kg = KG.getKG();
         TN tn = TN.getTN();
         GR gr = GR.getGR();
-        FactorDeEmision naftaFactorDeEmision = new FactorDeEmision("NAFTA",100,"lts");
+        FactorDeEmision naftaFactorDeEmision = new FactorDeEmision("NAFTA",10,"lts");
         Combustible nafta = new Combustible("nafta");
         nafta.setFactorEmision(naftaFactorDeEmision);
-        FactorDeEmision gasFactorDeEmision = new FactorDeEmision("GAS NATURAL",100,"m3");
+        FactorDeEmision gasFactorDeEmision = new FactorDeEmision("GAS NATURAL",10,"m3");
         Combustible gas = new Combustible("gas");
         gas.setFactorEmision(gasFactorDeEmision);
-        FactorDeEmision electricidadFactorDeEmision = new FactorDeEmision("ELECTRICIDAD",200,"kWh");
+        FactorDeEmision electricidadFactorDeEmision = new FactorDeEmision("ELECTRICIDAD",50,"kWh");
         Combustible electricidad = new Combustible("electricidad");
         electricidad.setFactorEmision(electricidadFactorDeEmision);
 
-        FactorDeEmision dieselFactorDeEmision = new FactorDeEmision("DIESEL",200,"lts");
+        FactorDeEmision dieselFactorDeEmision = new FactorDeEmision("DIESEL",50,"lts");
         Combustible diesel = new Combustible("diesel");
         diesel.setFactorEmision(dieselFactorDeEmision);
-        FactorDeEmision gasoilFactorDeEmision = new FactorDeEmision("GASOIL",250,"lts");
-        FactorDeEmision keroseneFactorDeEmision = new FactorDeEmision("KEROSENE",250,"lts");
-        FactorDeEmision fuelOilFactorDeEmision = new FactorDeEmision("FUEL OIL",250,"lts");
-        FactorDeEmision carbonFactorDeEmision = new FactorDeEmision("CARBON",250,"kg");
+        FactorDeEmision gasoilFactorDeEmision = new FactorDeEmision("GASOIL",50,"lts");
+        FactorDeEmision keroseneFactorDeEmision = new FactorDeEmision("KEROSENE",50,"lts");
+        FactorDeEmision fuelOilFactorDeEmision = new FactorDeEmision("FUEL OIL",50,"lts");
+        FactorDeEmision carbonFactorDeEmision = new FactorDeEmision("CARBON",50,"kg");
         FactorDeEmision carbonLeniaFactorDeEmision = new FactorDeEmision("CARBON LEÑA",250,"kg");
-        FactorDeEmision leniaFactorDeEmision = new FactorDeEmision("LEÑA",250,"kg");
-        FactorDeEmision gncFactorDeEmision = new FactorDeEmision("GNC",250,"lts");
+        FactorDeEmision leniaFactorDeEmision = new FactorDeEmision("LEÑA",25,"kg");
+        FactorDeEmision gncFactorDeEmision = new FactorDeEmision("GNC",25,"lts");
         Configurador config = Configurador.getConfigurador();
         System.out.println();
 
@@ -173,7 +173,7 @@ public class Main {
         Clasificacion clasificacionProductor = new Clasificacion();
         clasificacionProductor.setNombre("Productor");
         // FIN CLASIFICACION //
-        Organizacion cocaCola = new Organizacion("Los cojarudos",tipoEmpresa,clasificacionProductor, ubicacionCocaCola);
+        Organizacion cocaCola = new Organizacion("Coca Cola Company",tipoEmpresa,clasificacionProductor, ubicacionCocaCola);
         // FIN ORGANIZACION //
         // SECTOR //
         Sector ventasCocaCola = new Sector("Ventas",cocaCola);
@@ -182,7 +182,7 @@ public class Main {
         Sector administracionCocaCola = new Sector("Administracion",cocaCola);
         cocaCola.agregarSector(administracionCocaCola);
 
-        Sector marketingCocaCola = new Sector("marketing",cocaCola);
+        Sector marketingCocaCola = new Sector("Marketing",cocaCola);
         cocaCola.agregarSector(marketingCocaCola);
         // FIN SECTORES //
 
@@ -234,13 +234,13 @@ public class Main {
         LocalTime horaVanesaAlGarage = LocalTime.of(8,30);
         Tramo tramoVanesaAlGarage = new Tramo(direccionCasaTeresa,direccionGarageVanesa,horaVanesaAlGarage);
         tramoVanesaAlGarage.setMedioDeTransporte(pie);
-        trayectoTeresa.agregarTramo(tramoVanesaAlGarage);
+        trayectoVanesa.agregarTramo(tramoVanesaAlGarage);
             // DEL GARAJE A LA COCA COLA
         LocalTime horaVanesaACocaCola = LocalTime.of(9,0);
         Tramo tramoVanesaACocaCola = new Tramo(direccionGarageVanesa,direccionCocaCola,horaVanesaACocaCola);
         VehiculoParticular bmwVanesa = new VehiculoParticular(MOTO,nafta,true);
         tramoVanesaACocaCola.setMedioDeTransporte(bmwVanesa);
-        trayectoTeresa.agregarTramo(tramoVanesaACocaCola);
+        trayectoVanesa.agregarTramo(tramoVanesaACocaCola);
         //EL TRAYECTO DE EDGARDO
             // DE SU CASA AL GARAJE
         LocalTime horaGarageEdgardo = LocalTime.of(8,45);
@@ -268,21 +268,17 @@ public class Main {
 
         List<Tramo> tramosMiembros = cocaCola.obtenerTramosDeLosMiembros();
 
-        System.out.println(tramosMiembros.size());
-
-
-        tramosMiembros = calculadoraHC.filtrarTramos(tramosMiembros);
-
-        System.out.println(tramosMiembros.size());
-
-        System.out.println(gasFactorDeEmision.getUnidad());
-        int suma = calculadoraHC.calcularHCTramos(tramosMiembros);
-        System.out.println(suma);
 
         cocaCola.leerExcel(path);
 
-        double sumaDA = calculadoraHC.calcularHCDatosDeActividad(cocaCola.getDatosDeActividad());
-        System.out.println(sumaDA);
+
+
+        cocaCola.calcularHC();
+
+
+        CalculadoraHC.miembroHCrespectoOrganizacion(teresaMarketing,cocaCola);
+
+        CalculadoraHC.calculoDeHCdeSectores(cocaCola);
     }
 
 }

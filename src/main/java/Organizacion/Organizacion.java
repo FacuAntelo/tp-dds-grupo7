@@ -1,12 +1,16 @@
 package Organizacion;
 import CargaExcel.ExcelUtils;
 import EntidadPersistente.EntidadPersistente;
+import HuellaDeCarbono.CalculadoraHC;
+import HuellaDeCarbono.HuellaDeCarbono;
 import HuellaDeCarbono.RegistroHC;
+import HuellaDeCarbono.TipoRegistro;
 import Notificacion.Notificacion;
 import Sector.*;
 import Miembro.*;
 import ValidacionExterna.*;
 import lombok.Getter;
+import lombok.Setter;
 import trayecto.Tramo;
 import trayecto.Trayecto;
 
@@ -20,6 +24,7 @@ import java.util.stream.Stream;
 
 @Entity
 @Getter
+@Setter
 @Table(name = "organizacion")
 public class Organizacion extends EntidadPersistente{
 
@@ -41,12 +46,17 @@ public class Organizacion extends EntidadPersistente{
     @Embedded
     private Clasificacion clasificacion;
 
+    @OneToMany
+    @JoinColumn(name = "id_organizacion",referencedColumnName = "id")
+    private List<RegistroHC> registrosHC = new ArrayList<>();
+
     @Transient
-    private RegistroHC registrosHC;
+    private List<RegistroHC> registroHCTotales = new ArrayList<>();
 
     @OneToMany
     @JoinColumn(name= "id_organizacion",referencedColumnName = "id")
     private List<Contacto> contactos;
+
 
     @Transient
     private List<Trayecto> trayectosDeLosMiembros;
@@ -69,6 +79,37 @@ public class Organizacion extends EntidadPersistente{
         this.contactos= new ArrayList<>();
         this.trayectosDeLosMiembros = new ArrayList<>();
     }
+
+    public void calcularHC(){
+        RegistroHC registro = CalculadoraHC.calcularHC(this);
+        registrosHC.add(registro);
+        RegistroHC registroTotal;
+        if(registroHCTotales.isEmpty()){
+            HuellaDeCarbono huellaHCTotalTramos = new HuellaDeCarbono(registro.getValorHCTrayecto().getValor());
+            HuellaDeCarbono huellaHCTotalDA = new HuellaDeCarbono(registro.getValorHCDatoActividad().getValor());
+            HuellaDeCarbono huellaHCTotal = new HuellaDeCarbono(registro.getValorHCTotal().getValor());
+            registroTotal = new RegistroHC(registro.getValorHCDatoActividad(),registro.getValorHCTrayecto(),registro.getValorHCTotal(), TipoRegistro.TOTAL);
+        } else {
+            RegistroHC registroTotalAnterior = registroHCTotales.get(registroHCTotales.size()-1);
+            HuellaDeCarbono huellaHCTotalTramos = new HuellaDeCarbono(registroTotalAnterior.getValorHCTrayecto().getValor()+registro.getValorHCTrayecto().getValor());
+            HuellaDeCarbono huellaHCTotalDA = new HuellaDeCarbono(registroTotalAnterior.getValorHCDatoActividad().getValor()+registro.getValorHCDatoActividad().getValor());
+            HuellaDeCarbono huellaHCTotal = new HuellaDeCarbono(registroTotalAnterior.getValorHCTotal().getValor()+registro.getValorHCTotal().getValor());
+
+            registroTotal = new RegistroHC(huellaHCTotalDA,huellaHCTotalTramos,huellaHCTotal,TipoRegistro.TOTAL);
+        }
+        registroHCTotales.add(registroTotal);
+        registrosHC.add(registroTotal);
+        registro.imprimir(this);
+        registroTotal.imprimir(this);
+    }
+
+    public RegistroHC getUltimoRegistroHCTotal(){
+        return registroHCTotales.get(registroHCTotales.size()-1);
+    }
+
+
+
+
     public void leerExcel(String path) throws IOException {
         this.datosDeActividad = lectorExcel.leerExcel(path);
     }
@@ -81,9 +122,6 @@ public class Organizacion extends EntidadPersistente{
         }
     }
 
-    public Ubicacion getUbicacion() {
-        return ubicacion;
-    }
 
     public void darDeAltaMiembro(String nombre, String apellido, TipoDocumento tipoDocumento, String nroDocumento, ValidadorExterno validadorExterno){
         validadorExterno.sectorAlQuePertenece(nroDocumento).agregarMiembro(new Miembro(nombre, apellido, tipoDocumento, nroDocumento));
@@ -92,7 +130,6 @@ public class Organizacion extends EntidadPersistente{
     public boolean puedeSerMiembro(String nombre, String apellido, TipoDocumento tipoDocumento, String nroDocumento, ValidadorExterno validadorPertenencia){
         return validadorPertenencia.perteneceMiembro(nombre, apellido, tipoDocumento, nroDocumento);
     }
-
 
 
     public void agregarSector(Sector sector){
@@ -108,25 +145,11 @@ public class Organizacion extends EntidadPersistente{
         List<Tramo> tramos = trayectosDeLosMiembros.stream().flatMap(t -> t.getTramos().stream()).collect(Collectors.toList());
         return tramos;
     }
-    public void calcularHCdeLosMiembros(){
-        // CHEQUEAR LOS TRAYECTOS CUYO PUNTO FIN ES LA DIRECCION DE LA ORGANIZACION
-       List <Tramo> tramosDeLosMiembros = obtenerTramosDeLosMiembros();
-    }
+
 
     public void cargarDA(String path) throws IOException {
         this.datosDeActividad = lectorExcel.leerExcel(path);
     }
-
-//    public double calcularHCDA() {
-//        return datosDeActividad.stream().mapToDouble(dato-> {
-//            try {
-//                return dato.getValor()*dato.getFactorDeEmision().getValorFactorEmision();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//            return 0;
-//        }).sum();
-//    }
 
     //ENTREGA 3 --> PUNTO 4: CONTACTOS
     public void agregarContacto(Contacto uncontacto){contactos.add(uncontacto);};
@@ -152,14 +175,5 @@ public class Organizacion extends EntidadPersistente{
     public void agregarTrayecto(Trayecto trayecto){
         this.trayectosDeLosMiembros.add(trayecto);
     }
-
-    //GETTERS Y SETTERS
-    public void setRazonSocial(String razonSocial) {this.razonSocial = razonSocial;}
-
-    public String getRazonSocial() {return razonSocial;}
-    public List<Contacto> getContactos() {return contactos;}
-
-
-
 
 }

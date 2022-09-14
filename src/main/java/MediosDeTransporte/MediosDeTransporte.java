@@ -28,7 +28,7 @@ public abstract class MediosDeTransporte extends EntidadPersistente {
     private TipoTransporte tipoTransporte;
 
     @Column(name = "consumo_x_km")
-    private Double consumoXKM = 0.1;
+    private Double consumoXKM = 10.0;
 
     public void setTipoTransporte(TipoTransporte tipoTransporte) {
         this.tipoTransporte = tipoTransporte;

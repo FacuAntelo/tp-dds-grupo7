@@ -1,5 +1,6 @@
 package unidad;
 
+import HuellaDeCarbono.HuellaDeCarbono;
 import Usuarios.FactorDeEmision;
 
 public class GR extends Unidad {
@@ -19,21 +20,20 @@ public class GR extends Unidad {
     }
 
     @Override
-    public void pasarAKG(FactorDeEmision factorDeEmision) {
-        factorDeEmision.setValorFactorEmision(factorDeEmision.getValorFactorEmision()/1000);
+    public void pasarAKG(HuellaDeCarbono huella) {
+        huella.setValor(huella.getValor()/1000);
         KG kg = KG.getKG();
-        factorDeEmision.setTipoUnidad(kg);
+        huella.setTipoDeUnidad(kg);
     }
 
     @Override
-    public void pasarATN(FactorDeEmision factorDeEmision) {
-        factorDeEmision.setValorFactorEmision(factorDeEmision.getValorFactorEmision()/(1000*1000));
+    public void pasarATN(HuellaDeCarbono huella) {
+        huella.setValor(huella.getValor()/(1000*1000));
         TN tn = TN.getTN();
-        factorDeEmision.setTipoUnidad(tn);
+        huella.setTipoDeUnidad(tn);
     }
 
     @Override
-    public void pasarAGR(FactorDeEmision factorDeEmision) {
-        throw new RuntimeException("Ya estamos en gramos");
+    public void pasarAGR(HuellaDeCarbono huella) {
     }
 }

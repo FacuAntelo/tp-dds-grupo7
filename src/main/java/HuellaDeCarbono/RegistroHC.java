@@ -1,25 +1,58 @@
 package HuellaDeCarbono;
 
+import EntidadPersistente.EntidadPersistente;
+import Organizacion.Organizacion;
+import lombok.Getter;
+import lombok.Setter;
 import unidad.KG;
 import unidad.Unidad;
+
+import javax.persistence.*;
 import java.time.LocalDate;
 
+import static HuellaDeCarbono.TipoRegistro.TOTAL;
 
-public class RegistroHC {
+@Getter
+@Setter
+@Entity
+@Table(name = "registro")
+public class RegistroHC extends EntidadPersistente {
+    @Column(name = "fecha_de_registro",columnDefinition = "DATE")
     private LocalDate fecha;
-    private HuellaDeCarbono valorHCDatoActividad;
-    private HuellaDeCarbono valorHCTrayecto;
-    private HuellaDeCarbono valorHCTotal;
-    private String masaUnidad;
-    private Unidad tipoUnidad;
 
-    public RegistroHC(HuellaDeCarbono valorHCDatoActividad, HuellaDeCarbono valorHCTrayecto){
+    @Enumerated(EnumType.STRING)
+    private TipoRegistro tipoRegistro;
+
+    @OneToOne
+    private HuellaDeCarbono valorHCDatoActividad;
+
+    @OneToOne
+    private HuellaDeCarbono valorHCTrayecto;
+
+    @OneToOne
+    private HuellaDeCarbono valorHCTotal;
+
+    public RegistroHC(HuellaDeCarbono valorHCDatoActividad, HuellaDeCarbono valorHCTrayecto,HuellaDeCarbono valorHCTotal,TipoRegistro tipoRegistro){
+        this.fecha = LocalDate.now();
+        this.tipoRegistro = tipoRegistro;
         this.valorHCDatoActividad= valorHCDatoActividad;
         this.valorHCTrayecto= valorHCTrayecto;
-        this.tipoUnidad = KG.getKG();
+        this.valorHCTotal = valorHCTotal;
      }
-     public String unidad() {
-            return this.tipoUnidad.getUnidad().toString() + "CO2eq";
+
+     public void imprimir(Organizacion organizacion){
+        System.out.println("REGISTRO DE HUELLA DE CARBONO CORRESPONDIENTE A LA ORGANIZACION: " + organizacion.getRazonSocial());
+        System.out.println("FECHA: " + fecha + "|| DE TIPO: " + tipoRegistro.toString());
+        System.out.println("Huella de carbono de los datos de actividad:");
+        System.out.println(valorHCDatoActividad.getValor() + " " + valorHCDatoActividad.getTipoDeUnidad().getUnidad());
+        System.out.println("Huella de carbono de los trayectos:");
+        System.out.println(valorHCTrayecto.getValor() + " " + valorHCTrayecto.getTipoDeUnidad().getUnidad());
+        System.out.println("Huella de carbono Total:");
+        System.out.println(valorHCTotal.getValor() + " " + valorHCTotal.getTipoDeUnidad().getUnidad());
+        System.out.println();
      }
+    public void pasarDatosDeActividadAGR(){
+        valorHCTotal.getTipoDeUnidad().pasarAGR(valorHCTotal);
+    }
 
 }

@@ -3,11 +3,17 @@ package Sector;
 import EntidadPersistente.EntidadPersistente;
 import Organizacion.Organizacion;
 import Miembro.*;
+import lombok.Getter;
+import lombok.Setter;
+import trayecto.Tramo;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
+@Setter
+@Getter
 @Entity
 @Table(name = "sector")
 public class Sector extends EntidadPersistente {
@@ -25,6 +31,10 @@ public class Sector extends EntidadPersistente {
         this.miembros = new ArrayList<>();
     }
 
+    public List<Tramo> getTramosMiembros(){
+        return this.getMiembros().stream().flatMap(miembro-> miembro.getTramos().stream()).collect(Collectors.toList());
+    }
+
     public void agregarMiembro(Miembro miembro){
         this.miembros.add(miembro);
     }
@@ -37,7 +47,4 @@ public class Sector extends EntidadPersistente {
         return nombre;
     }
 
-    public double getTotalEmisionMiembros(){
-        return this.miembros.stream().mapToDouble(miembro->miembro.calcularHC()).sum();
-    }
 }

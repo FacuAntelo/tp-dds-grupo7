@@ -12,10 +12,7 @@ import Configuracion.Configuracion;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.*;
 
 @Getter
 @Setter
@@ -37,6 +34,14 @@ public class DatosDeActividad extends EntidadPersistente {
     @Column(name = "periodo_de_imputacion")
     private String periodoDeImputacion;
 
-    @Transient
+    @ManyToOne
+    @JoinColumn(name = "id_factor_de_emision",referencedColumnName = "id")
     private FactorDeEmision factorDeEmision;
+
+    @Column(name = "calculado")
+    private Boolean seCalculo = false;
+
+    public void seCalculo() {
+        seCalculo=true;
+    }
 }

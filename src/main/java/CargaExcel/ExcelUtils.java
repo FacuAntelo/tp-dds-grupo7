@@ -59,7 +59,6 @@ public class ExcelUtils {
                         throw new RuntimeException("error aca");
                     }
                 }
-                System.out.println("Indices:\t" + indicesDeColumna);
             } else {
                 DatosDeActividad datos = new DatosDeActividad();
                 datos.setTipoDeConsumo(hoja1.getRow(r)
@@ -68,7 +67,6 @@ public class ExcelUtils {
                 datos.setActividad(hoja1.getRow(r)
                         .getCell(indicesDeColumna.get("Actividad"))
                         .getStringCellValue());
-                System.out.println(factorDeEmisionHashMap.containsKey(datos.getTipoDeConsumo().toUpperCase()));
                 datos.setFactorDeEmision(factorDeEmisionHashMap.get(datos.getTipoDeConsumo().toUpperCase()));
                 datos.setValor(hoja1.getRow(r)
                         .getCell(indicesDeColumna.get("Valor"))
