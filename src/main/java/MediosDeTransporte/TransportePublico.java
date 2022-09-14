@@ -6,13 +6,21 @@ import domain.services.entities.DistanciaAPI;
 import domain.services.entities.DistanciaAPI;
 import trayecto.Direccion;
 
+import javax.persistence.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Entity
+@DiscriminatorValue("transporte_publico")
+//@Table(name = "transporte_publico")
 public class TransportePublico extends MediosDeTransporte{
+    @Enumerated(EnumType.STRING)
     private TipoTransportePublico tipo;
+
+    @ManyToOne
+    @JoinColumn(name = "id_transporte_publico",referencedColumnName = "id")
     private Linea linea;
 
     public TransportePublico(TipoTransportePublico tipo, Linea linea){

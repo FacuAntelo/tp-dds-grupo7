@@ -28,9 +28,8 @@ public class Miembro extends EntidadPersistente {
     @Column(name = "numero_documento")
     private String numDoc;
 
-//    @OneToMany
-//    @JoinColumn(name = "miembro_id", referencedColumnName = "id")
-    @Transient
+    @OneToMany
+    @JoinColumn(name = "miembro_id", referencedColumnName = "id")
     private List<Trayecto> trayectos;
 
 

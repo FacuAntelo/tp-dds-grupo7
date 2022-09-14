@@ -1,6 +1,11 @@
 package MediosDeTransporte;
 
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+
+@Embeddable
 public class Servicio {
+    @Column(name="nombre_servicio")
     private String nombre;
 
     public Servicio(String nombre) {

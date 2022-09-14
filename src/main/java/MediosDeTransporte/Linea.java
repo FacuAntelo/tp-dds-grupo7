@@ -1,13 +1,19 @@
 package MediosDeTransporte;
 
+import EntidadPersistente.EntidadPersistente;
 import trayecto.Direccion;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
-public class Linea {
+@Entity
+@Table(name = "linea")
+public class Linea extends EntidadPersistente {
+    @Column(name= "nombre")
     private String nombre;
+    @OneToMany
+    @JoinColumn(name = "id_linea",referencedColumnName = "id")
     private List<Parada> paradas;
 
     public Linea(String nombre) {

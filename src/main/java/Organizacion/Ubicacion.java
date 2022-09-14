@@ -12,7 +12,8 @@ import javax.persistence.*;
 @Entity
 @Table(name = "ubicacion")
 public class Ubicacion extends EntidadPersistente {
-    @Transient
+    @OneToOne
+    @JoinColumn(name= "id_direccion")
     private Direccion direccion;
     @Column(name = "codigo_postal")
     private Integer codigoPostal;

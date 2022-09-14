@@ -1,11 +1,22 @@
 package MediosDeTransporte;
 
+import EntidadPersistente.EntidadPersistente;
 import trayecto.Direccion;
 
-public class Parada {
+import javax.persistence.*;
+
+@Entity
+@Table(name = "parada")
+public class Parada extends EntidadPersistente {
+    @Column(name = "nombre")
     private String nombre;
+
+    @ManyToOne
+    @JoinColumn(name = "id_direccion")
     private Direccion direccion;
+    @Column(name = "distancia_proxima_parada")
     private Double distanciaProximaParada;
+    @Column(name = "distancia_parada_anterior")
     private Double distanciaParadaAnterior;
 
     public Parada(String nombre, Direccion direccion, Double distanciaProximaParada, Double distanciaParadaAnterior) {

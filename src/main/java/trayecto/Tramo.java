@@ -14,7 +14,8 @@ import java.time.LocalTime;
 @Entity
 @Table(name = "tramo")
 public class Tramo extends EntidadPersistente {
-        @Transient
+        @OneToOne
+        @JoinColumn(name = "id_medio_de_transporte")
         private MediosDeTransporte medioDeTransporte;
 
         @ManyToOne

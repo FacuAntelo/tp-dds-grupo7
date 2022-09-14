@@ -3,13 +3,21 @@ package MediosDeTransporte;
 import Combustible.Combustible;
 import domain.services.entities.DistanciaAPI;
 
+import javax.persistence.*;
+
+@Entity
+@DiscriminatorValue("vehiculo_particular")
+//@Table(name = "vehiculo_particular")
 public class VehiculoParticular extends MediosDeTransporte {
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "tipo_vehiculo_particular")
     private TipoVehiculo tipo;
-    private Combustible combustible;
+
 
     public VehiculoParticular(TipoVehiculo tipo, Combustible combustible,Boolean compartido) {
         this.tipo = tipo;
-        this.combustible = combustible;
+        this.setCombustible(combustible);
         this.setEsCompartido(compartido);
         this.setTipoTransporte(TipoTransporte.VEHICULO_PARTICULAR);
     }
@@ -17,9 +25,5 @@ public class VehiculoParticular extends MediosDeTransporte {
     public TipoVehiculo getTipo() {return tipo;}
 
     public void setTipo(TipoVehiculo tipo) {this.tipo = tipo;}
-
-    public Combustible getCombustible() {return combustible;}
-
-    public void setCombustible(Combustible combustible) {this.combustible = combustible;}
 
 }

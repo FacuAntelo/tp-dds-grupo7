@@ -1,6 +1,12 @@
 package MediosDeTransporte;
 
-public class MediosSinContaminar extends MediosDeTransporte{
+import javax.persistence.*;
+
+@Entity
+@DiscriminatorValue("medio_sin_contaminar")
+//@Table(name = "medios_sin_contaminar")
+public class MediosSinContaminar extends MediosDeTransporte {
+    @Column(name = "nombre_medio_sin_contaminar")
     private String nombre;
 
     public MediosSinContaminar(){
