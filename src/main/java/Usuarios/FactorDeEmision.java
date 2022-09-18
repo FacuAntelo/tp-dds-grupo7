@@ -2,6 +2,8 @@ package Usuarios;
 
 import EntidadPersistente.EntidadPersistente;
 import domain.Configurador;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import unidad.KG;
 import unidad.Unidad;
 import lombok.Getter;
@@ -18,8 +20,10 @@ import javax.persistence.Transient;
 @Table(name = "factor_emision")
 public class FactorDeEmision extends EntidadPersistente {
     @Column(name = "valor")
+    @Cascade({ org.hibernate.annotations.CascadeType.SAVE_UPDATE, CascadeType.REMOVE })
     private double valorFactorEmision;
     @Column(name = "unidad")
+    @Cascade({ org.hibernate.annotations.CascadeType.SAVE_UPDATE, CascadeType.REMOVE })
     private String unidad = "CO2eq/";
     @Transient
     private String medidoEn;
@@ -36,6 +40,11 @@ public class FactorDeEmision extends EntidadPersistente {
          this.tipoUnidad = KG.getKG();
          this.unidad = tipoUnidad.getUnidad() + this.unidad + medidoEn;
     }
+
+    public FactorDeEmision() {
+        super();
+    }
+
     public String getUnidad(){
          return tipoUnidad.getUnidad() + unidad + medidoEn;
     }
