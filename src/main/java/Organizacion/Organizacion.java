@@ -68,6 +68,8 @@ public class Organizacion extends EntidadPersistente{
     @Transient
     private ExcelUtils lectorExcel; // TODO NO DEBERIA SER PARTE DE LA ENTIDAD UN LECTOR DE EXCEL, QUE TIENE QUE VER EL EXCEL CON LA ORGANIZACION
 
+    public Organizacion() {}
+
     public Organizacion(String razonSocial,TipoOrganizacion tipoOrganizacion, Clasificacion clasificacion, Ubicacion ubicacion){
         this.razonSocial = razonSocial;
         this.tipoOrganizacion = tipoOrganizacion;

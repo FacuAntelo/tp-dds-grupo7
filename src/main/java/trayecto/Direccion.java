@@ -30,4 +30,6 @@ public class Direccion extends EntidadPersistente{
         this.localidad = localidad;
         this.provincia = provincia;
     }
+
+    public Direccion() {}
 }
