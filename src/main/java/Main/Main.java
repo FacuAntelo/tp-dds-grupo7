@@ -281,12 +281,14 @@ public class Main {
 
         CalculadoraHC.calculoDeHCdeSectores(cocaCola);
 
-//        GeneradorDeReportes.generarReportePorTipoDeOrganizacion(clasificacionProductor);
-//        GeneradorDeReportes.generarReporteDeOrganizacion(cocaCola);
+
         cocaCola.setId(10);
+        GeneradorDeReportes.generarReportePorTipoDeOrganizacion(clasificacionProductor);
         GeneradorDeReportes.generarReporteDeOrganizacion(cocaCola);
-
         GeneradorDeReportes.generarReporteEvolutivoDeOrganizacion(cocaCola);
-    }
+        GeneradorDeReportes.generarReporteComposicionDiscriminadoPorProvincia();
+//        GeneradorDeReportes.generarReporteComposicionDiscriminadoPorProvinciaMap();
 
+
+    }
 }
