@@ -5,6 +5,7 @@ import Combustible.Combustible;
 import HuellaDeCarbono.CalculadoraHC;
 import MediosDeTransporte.*;
 import Organizacion.*;
+import Reportes.GeneradorDeReportes;
 import Sector.Sector;
 import domain.Configurador;
 import jdk.nashorn.internal.runtime.regexp.joni.Config;
@@ -279,6 +280,8 @@ public class Main {
         CalculadoraHC.miembroHCrespectoOrganizacion(teresaMarketing,cocaCola);
 
         CalculadoraHC.calculoDeHCdeSectores(cocaCola);
+
+        GeneradorDeReportes.generarReportePorTipoDeOrganizacion(clasificacionProductor);
     }
 
 }

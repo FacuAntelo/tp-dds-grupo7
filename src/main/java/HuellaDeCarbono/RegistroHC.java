@@ -32,6 +32,8 @@ public class RegistroHC extends EntidadPersistente {
     @OneToOne
     private HuellaDeCarbono valorHCTotal;
 
+    public RegistroHC(){};
+
     public RegistroHC(HuellaDeCarbono valorHCDatoActividad, HuellaDeCarbono valorHCTrayecto,HuellaDeCarbono valorHCTotal,TipoRegistro tipoRegistro){
         this.fecha = LocalDate.now();
         this.tipoRegistro = tipoRegistro;

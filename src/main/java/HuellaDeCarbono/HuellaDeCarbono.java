@@ -25,6 +25,7 @@ public class HuellaDeCarbono extends EntidadPersistente {
     @Transient
     private Unidad tipoDeUnidad = KG.getKG();
 
+    public HuellaDeCarbono(){}
 
     public HuellaDeCarbono(int valor){
         this.valor = valor;

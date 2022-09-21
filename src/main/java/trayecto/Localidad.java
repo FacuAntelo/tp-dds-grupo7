@@ -21,24 +21,16 @@ public class Localidad extends SectorTerritorial {
 
     public Localidad(int localidad) {this.localidad = localidad;}
 
+    // lista de organizaciones
+
     public Localidad() {}
 
     public int getNumeroLocalidad(){
         return localidad;
     }
 
-    public  void generarReporte(){
-        //Busca en la base de datos, todas las organizaciones que pertenezcan a la localidad
-        //El test de la query esta en "TestPersistenciaOrganizacion"
-        this.setOrganizaciones((List<Organizacion>) EntityManagerHelper.getEntityManager()
-                .createQuery("SELECT o from Organizacion as o left join o.ubicacion.direccion.localidad as l where l.localidad = :localidad", Organizacion.class)
-                .setParameter("localidad", localidad)
-                .getResultList());
-
-        //TODO: Buscar todos los registrosHC de las organizaciones.
-        this.getOrganizaciones().forEach(organizacion -> this.getRegistrosHC().add(organizacion.getUltimoRegistroHCTotal()));
+    // localidad.agregarOrganizacion(organizacion)
 
 
-    }
 
 }
