@@ -281,7 +281,12 @@ public class Main {
 
         CalculadoraHC.calculoDeHCdeSectores(cocaCola);
 
-        GeneradorDeReportes.generarReportePorTipoDeOrganizacion(clasificacionProductor);
+//        GeneradorDeReportes.generarReportePorTipoDeOrganizacion(clasificacionProductor);
+//        GeneradorDeReportes.generarReporteDeOrganizacion(cocaCola);
+        cocaCola.setId(10);
+        GeneradorDeReportes.generarReporteDeOrganizacion(cocaCola);
+
+        GeneradorDeReportes.generarReporteEvolutivoDeOrganizacion(cocaCola);
     }
 
 }
