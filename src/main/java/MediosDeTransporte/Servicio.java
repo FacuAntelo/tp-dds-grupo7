@@ -7,6 +7,9 @@ import javax.persistence.Embeddable;
 public class Servicio {
     @Column(name="nombre_servicio")
     private String nombre;
+    public Servicio(){
+
+    }
 
     public Servicio(String nombre) {
         this.nombre = nombre;

@@ -14,15 +14,15 @@ import java.time.LocalTime;
 @Entity
 @Table(name = "tramo")
 public class Tramo extends EntidadPersistente {
-        @OneToOne
+        @OneToOne(cascade = CascadeType.ALL)
         @JoinColumn(name = "id_medio_de_transporte")
         private MediosDeTransporte medioDeTransporte;
 
-        @ManyToOne
+        @ManyToOne(cascade = CascadeType.ALL)
         @JoinColumn(name= "direccion_inicio_id",referencedColumnName = "id")
         private Direccion ubicacionInicio;
 
-        @ManyToOne
+        @ManyToOne(cascade = CascadeType.ALL)
         @JoinColumn(name= "direccion_final_id",referencedColumnName = "id")
         private Direccion ubicacionFinal;
 

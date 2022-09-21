@@ -34,7 +34,7 @@ public class DatosDeActividad extends EntidadPersistente {
     @Column(name = "periodo_de_imputacion")
     private String periodoDeImputacion;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_factor_de_emision",referencedColumnName = "id")
     private FactorDeEmision factorDeEmision;
 

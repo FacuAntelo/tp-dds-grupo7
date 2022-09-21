@@ -13,15 +13,15 @@ import java.util.List;
 @Entity
 @Table(name = "trayecto")
 public class Trayecto extends EntidadPersistente {
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "trayecto_id", referencedColumnName = "id")
     private List<Tramo> tramos;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name= "direccion_inicio_id",referencedColumnName = "id")
     private Direccion puntoInicio;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name= "direccion_final_id",referencedColumnName = "id")
     private Direccion puntoFin;
 

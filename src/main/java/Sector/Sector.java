@@ -20,7 +20,7 @@ public class Sector extends EntidadPersistente {
     @Column(name = "nombre_sector")
     private String nombre;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "sector_id",referencedColumnName = "id")
     private List<Miembro> miembros;
 

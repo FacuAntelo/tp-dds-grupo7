@@ -2,6 +2,7 @@ package HuellaDeCarbono;
 
 import EntidadPersistente.EntidadPersistente;
 import Organizacion.Organizacion;
+import db.EntityManagerHelper;
 import lombok.Getter;
 import lombok.Setter;
 import unidad.KG;
@@ -23,13 +24,13 @@ public class RegistroHC extends EntidadPersistente {
     @Enumerated(EnumType.STRING)
     private TipoRegistro tipoRegistro;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private HuellaDeCarbono valorHCDatoActividad;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private HuellaDeCarbono valorHCTrayecto;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private HuellaDeCarbono valorHCTotal;
 
     public RegistroHC(){};

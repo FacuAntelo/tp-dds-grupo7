@@ -29,11 +29,11 @@ public class Miembro extends EntidadPersistente {
     @Column(name = "numero_documento")
     private String numDoc;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "miembro_id", referencedColumnName = "id")
     private List<Trayecto> trayectos;
 
-
+    public Miembro(){}
 
     public Miembro(String nombre, String apellido, TipoDocumento tipoDocumento, String numDoc) {
         this.nombre = nombre;

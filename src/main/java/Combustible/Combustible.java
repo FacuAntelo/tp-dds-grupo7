@@ -16,7 +16,7 @@ import java.io.IOException;
 public class Combustible extends EntidadPersistente {
     @Column(name = "combustible")
     private String nombre;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private FactorDeEmision factorEmision;
     @Column(name = "consumo_por_km")
     private int consumoCombustiblexKM;

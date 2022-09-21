@@ -7,6 +7,7 @@ import MediosDeTransporte.*;
 import Organizacion.*;
 import Reportes.GeneradorDeReportes;
 import Sector.Sector;
+import db.EntityManagerHelper;
 import domain.Configurador;
 import jdk.nashorn.internal.runtime.regexp.joni.Config;
 import unidad.GR;
@@ -18,6 +19,8 @@ import domain.services.ServicioGeoDDS;
 import domain.services.adapters.ServicioGeoDDSRetrofitAdapter;
 import trayecto.*;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import java.io.IOException;
 import java.text.ParseException;
 import java.time.LocalTime;
@@ -127,43 +130,46 @@ public class Main {
 //
 //        notificacionLink.setearEnvioDeNotificaciones("09-07-2022 23:49", "Link notificacioooonnn"); //FECHA -> "dd-mm-aaaa hh:mm"
 
+
         ServicioGeoDDS servicioGeoDDS = ServicioGeoDDS.getInstance();
         servicioGeoDDS.setAdapter(new ServicioGeoDDSRetrofitAdapter());
         CalculadoraHC calculadoraHC = new CalculadoraHC();
+
+
         KG kg = KG.getKG();
         TN tn = TN.getTN();
         GR gr = GR.getGR();
-        FactorDeEmision naftaFactorDeEmision = new FactorDeEmision("NAFTA",10,"lts");
+        FactorDeEmision naftaFactorDeEmision = new FactorDeEmision("NAFTA", 10, "lts");
         Combustible nafta = new Combustible("nafta");
         nafta.setFactorEmision(naftaFactorDeEmision);
-        FactorDeEmision gasFactorDeEmision = new FactorDeEmision("GAS NATURAL",10,"m3");
+        FactorDeEmision gasFactorDeEmision = new FactorDeEmision("GAS NATURAL", 10, "m3");
         Combustible gas = new Combustible("gas");
         gas.setFactorEmision(gasFactorDeEmision);
-        FactorDeEmision electricidadFactorDeEmision = new FactorDeEmision("ELECTRICIDAD",50,"kWh");
+        FactorDeEmision electricidadFactorDeEmision = new FactorDeEmision("ELECTRICIDAD", 50, "kWh");
         Combustible electricidad = new Combustible("electricidad");
         electricidad.setFactorEmision(electricidadFactorDeEmision);
 
-        FactorDeEmision dieselFactorDeEmision = new FactorDeEmision("DIESEL",50,"lts");
+        FactorDeEmision dieselFactorDeEmision = new FactorDeEmision("DIESEL", 50, "lts");
         Combustible diesel = new Combustible("diesel");
         diesel.setFactorEmision(dieselFactorDeEmision);
-        FactorDeEmision gasoilFactorDeEmision = new FactorDeEmision("GASOIL",50,"lts");
-        FactorDeEmision keroseneFactorDeEmision = new FactorDeEmision("KEROSENE",50,"lts");
-        FactorDeEmision fuelOilFactorDeEmision = new FactorDeEmision("FUEL OIL",50,"lts");
-        FactorDeEmision carbonFactorDeEmision = new FactorDeEmision("CARBON",50,"kg");
-        FactorDeEmision carbonLeniaFactorDeEmision = new FactorDeEmision("CARBON LEÑA",250,"kg");
-        FactorDeEmision leniaFactorDeEmision = new FactorDeEmision("LEÑA",25,"kg");
-        FactorDeEmision gncFactorDeEmision = new FactorDeEmision("GNC",25,"lts");
+        FactorDeEmision gasoilFactorDeEmision = new FactorDeEmision("GASOIL", 50, "lts");
+        FactorDeEmision keroseneFactorDeEmision = new FactorDeEmision("KEROSENE", 50, "lts");
+        FactorDeEmision fuelOilFactorDeEmision = new FactorDeEmision("FUEL OIL", 50, "lts");
+        FactorDeEmision carbonFactorDeEmision = new FactorDeEmision("CARBON", 50, "kg");
+        FactorDeEmision carbonLeniaFactorDeEmision = new FactorDeEmision("CARBON LEÑA", 250, "kg");
+        FactorDeEmision leniaFactorDeEmision = new FactorDeEmision("LEÑA", 25, "kg");
+        FactorDeEmision gncFactorDeEmision = new FactorDeEmision("GNC", 25, "lts");
         Configurador config = Configurador.getConfigurador();
         System.out.println();
 
         // ORGANIZACION //
         // UBICACION //
-        Ubicacion ubicacionCocaCola= new Ubicacion();
-            // DIRECCION //
+        Ubicacion ubicacionCocaCola = new Ubicacion();
+        // DIRECCION //
         Localidad ezeiza = new Localidad(180);
         Provincia buenosAires = new Provincia("Buenos Aires");
-        Direccion direccionCocaCola = new Direccion("Medrano",1500,ezeiza,buenosAires);
-            // FIN DIRECCION
+        Direccion direccionCocaCola = new Direccion("Medrano", 1500, ezeiza, buenosAires);
+        // FIN DIRECCION
         ubicacionCocaCola.setCodigoPostal(1804);
         ubicacionCocaCola.setDireccion(direccionCocaCola);
         // FIN UBICACION //
@@ -174,50 +180,50 @@ public class Main {
         Clasificacion clasificacionProductor = new Clasificacion();
         clasificacionProductor.setNombre("Productor");
         // FIN CLASIFICACION //
-        Organizacion cocaCola = new Organizacion("Coca Cola Company",tipoEmpresa,clasificacionProductor, ubicacionCocaCola);
+        Organizacion cocaCola = new Organizacion("Coca Cola Company", tipoEmpresa, clasificacionProductor, ubicacionCocaCola);
         // FIN ORGANIZACION //
         // SECTOR //
-        Sector ventasCocaCola = new Sector("Ventas",cocaCola);
+        Sector ventasCocaCola = new Sector("Ventas", cocaCola);
         cocaCola.agregarSector(ventasCocaCola);
 
-        Sector administracionCocaCola = new Sector("Administracion",cocaCola);
+        Sector administracionCocaCola = new Sector("Administracion", cocaCola);
         cocaCola.agregarSector(administracionCocaCola);
 
-        Sector marketingCocaCola = new Sector("Marketing",cocaCola);
+        Sector marketingCocaCola = new Sector("Marketing", cocaCola);
         cocaCola.agregarSector(marketingCocaCola);
         // FIN SECTORES //
 
         // MIEMBROS //
-        Miembro oscarAdministracion = new Miembro("Oscar","Longaniza",DNI,"17545848");
+        Miembro oscarAdministracion = new Miembro("Oscar", "Longaniza", DNI, "17545848");
         administracionCocaCola.agregarMiembro(oscarAdministracion);
 
-        Miembro vanesaMarketing = new Miembro("Vanesa", "lartori",DNI,"4564564");
+        Miembro vanesaMarketing = new Miembro("Vanesa", "lartori", DNI, "4564564");
         marketingCocaCola.agregarMiembro(vanesaMarketing);
 
-        Miembro edgardoVentas = new Miembro("Edgardo","Rosales",DNI,"468465");
+        Miembro edgardoVentas = new Miembro("Edgardo", "Rosales", DNI, "468465");
         ventasCocaCola.agregarMiembro(edgardoVentas);
 
-        Miembro teresaMarketing = new Miembro("Teresa","Menta granizada",DNI,"4565465");
+        Miembro teresaMarketing = new Miembro("Teresa", "Menta granizada", DNI, "4565465");
         marketingCocaCola.agregarMiembro(teresaMarketing);
 
         // FIN MIEMBROS //
 
         // DIRECCIONES Y TRAYECTOS DE LOS MIEMBROS //
-        Direccion direccionCasaOscar = new Direccion("COD Warzone", 2, ezeiza,buenosAires);
-        Trayecto trayectoOscar = new Trayecto(direccionCasaOscar,direccionCocaCola);
-        oscarAdministracion.agregarTrayecto(trayectoOscar,cocaCola);
+        Direccion direccionCasaOscar = new Direccion("COD Warzone", 2, ezeiza, buenosAires);
+        Trayecto trayectoOscar = new Trayecto(direccionCasaOscar, direccionCocaCola);
+        oscarAdministracion.agregarTrayecto(trayectoOscar, cocaCola);
 
-        Direccion direccionCasaVanesa = new Direccion("LOL",20020,ezeiza,buenosAires);
-        Trayecto trayectoVanesa = new Trayecto(direccionCasaVanesa,direccionCocaCola);
-        vanesaMarketing.agregarTrayecto(trayectoVanesa,cocaCola);
+        Direccion direccionCasaVanesa = new Direccion("LOL", 20020, ezeiza, buenosAires);
+        Trayecto trayectoVanesa = new Trayecto(direccionCasaVanesa, direccionCocaCola);
+        vanesaMarketing.agregarTrayecto(trayectoVanesa, cocaCola);
 
-        Direccion direccionCasaEdgardo = new Direccion("CS:GO", 205,ezeiza,buenosAires);
-        Trayecto trayectoEdgardo = new Trayecto(direccionCasaEdgardo,direccionCocaCola);
-        edgardoVentas.agregarTrayecto(trayectoEdgardo,cocaCola);
+        Direccion direccionCasaEdgardo = new Direccion("CS:GO", 205, ezeiza, buenosAires);
+        Trayecto trayectoEdgardo = new Trayecto(direccionCasaEdgardo, direccionCocaCola);
+        edgardoVentas.agregarTrayecto(trayectoEdgardo, cocaCola);
 
-        Direccion direccionCasaTeresa = new Direccion("outlast",101,ezeiza,buenosAires);
-        Trayecto trayectoTeresa = new Trayecto(direccionCasaTeresa,direccionCocaCola);
-        teresaMarketing.agregarTrayecto(trayectoTeresa,cocaCola);
+        Direccion direccionCasaTeresa = new Direccion("outlast", 101, ezeiza, buenosAires);
+        Trayecto trayectoTeresa = new Trayecto(direccionCasaTeresa, direccionCocaCola);
+        teresaMarketing.agregarTrayecto(trayectoTeresa, cocaCola);
         // FIN DIRECCIONES Y TRAYECTOS DE LOS MIEMBROS
         // TRAMOS Y MEDIOS DE TRANSPORTE
         MediosSinContaminar pie = new MediosSinContaminar();
@@ -226,44 +232,44 @@ public class Main {
 
         // SERVICIOS
         Servicio servicioUber = new Servicio("Uber");
-        MediosDeTransporte uber = new ServicioContratado(servicioUber,false);
+        MediosDeTransporte uber = new ServicioContratado(servicioUber, false);
         uber.setCombustible(gas);
 
         //EL TRAYECTO DE VANESA
-            //DE SU CASA AL GARAJE
-        Direccion direccionGarageVanesa = new Direccion("SUPER GARAJE",8550,ezeiza,buenosAires);
-        LocalTime horaVanesaAlGarage = LocalTime.of(8,30);
-        Tramo tramoVanesaAlGarage = new Tramo(direccionCasaTeresa,direccionGarageVanesa,horaVanesaAlGarage);
+        //DE SU CASA AL GARAJE
+        Direccion direccionGarageVanesa = new Direccion("SUPER GARAJE", 8550, ezeiza, buenosAires);
+        LocalTime horaVanesaAlGarage = LocalTime.of(8, 30);
+        Tramo tramoVanesaAlGarage = new Tramo(direccionCasaTeresa, direccionGarageVanesa, horaVanesaAlGarage);
         tramoVanesaAlGarage.setMedioDeTransporte(pie);
         trayectoVanesa.agregarTramo(tramoVanesaAlGarage);
-            // DEL GARAJE A LA COCA COLA
-        LocalTime horaVanesaACocaCola = LocalTime.of(9,0);
-        Tramo tramoVanesaACocaCola = new Tramo(direccionGarageVanesa,direccionCocaCola,horaVanesaACocaCola);
-        VehiculoParticular bmwVanesa = new VehiculoParticular(MOTO,nafta,true);
+        // DEL GARAJE A LA COCA COLA
+        LocalTime horaVanesaACocaCola = LocalTime.of(9, 0);
+        Tramo tramoVanesaACocaCola = new Tramo(direccionGarageVanesa, direccionCocaCola, horaVanesaACocaCola);
+        VehiculoParticular bmwVanesa = new VehiculoParticular(MOTO, nafta, true);
         tramoVanesaACocaCola.setMedioDeTransporte(bmwVanesa);
         trayectoVanesa.agregarTramo(tramoVanesaACocaCola);
         //EL TRAYECTO DE EDGARDO
-            // DE SU CASA AL GARAJE
-        LocalTime horaGarageEdgardo = LocalTime.of(8,45);
-        Direccion direccionGarageEdgardo = new Direccion("SUPER GARAJE",8550,ezeiza,buenosAires);
-        Tramo tramoEdgardoAlGaraje = new Tramo(direccionCasaEdgardo,direccionGarageEdgardo,horaGarageEdgardo);
+        // DE SU CASA AL GARAJE
+        LocalTime horaGarageEdgardo = LocalTime.of(8, 45);
+        Direccion direccionGarageEdgardo = new Direccion("SUPER GARAJE", 8550, ezeiza, buenosAires);
+        Tramo tramoEdgardoAlGaraje = new Tramo(direccionCasaEdgardo, direccionGarageEdgardo, horaGarageEdgardo);
         tramoEdgardoAlGaraje.setMedioDeTransporte(pie);
         trayectoEdgardo.agregarTramo(tramoEdgardoAlGaraje);
-            // DEL GARAJE A COCA COLA
-        LocalTime horaEdgardoACocaCola = LocalTime.of(9,0);
-        Tramo tramoEdgardoACocaCola = new Tramo(direccionGarageEdgardo,direccionCocaCola,horaEdgardoACocaCola);
-        VehiculoParticular bmwEdgardo = new VehiculoParticular(MOTO,nafta,true);
+        // DEL GARAJE A COCA COLA
+        LocalTime horaEdgardoACocaCola = LocalTime.of(9, 0);
+        Tramo tramoEdgardoACocaCola = new Tramo(direccionGarageEdgardo, direccionCocaCola, horaEdgardoACocaCola);
+        VehiculoParticular bmwEdgardo = new VehiculoParticular(MOTO, nafta, true);
         tramoEdgardoACocaCola.setMedioDeTransporte(bmwEdgardo);
         trayectoEdgardo.agregarTramo(tramoEdgardoACocaCola);
         // EL TRAYECTO DE TERESA
-        LocalTime horaTeresaACocaCola = LocalTime.of(9,15);
-        Tramo tramoTeresaACocaCola = new Tramo(direccionCasaTeresa,direccionCocaCola,horaTeresaACocaCola);
+        LocalTime horaTeresaACocaCola = LocalTime.of(9, 15);
+        Tramo tramoTeresaACocaCola = new Tramo(direccionCasaTeresa, direccionCocaCola, horaTeresaACocaCola);
         tramoTeresaACocaCola.setMedioDeTransporte(uber);
         trayectoTeresa.agregarTramo(tramoTeresaACocaCola);
-            // EL TRAYECTO DE OSCAR
-        LocalTime horaOscarACocaCola = LocalTime.of(15,50);
-        Tramo tramoOscarACocaCola = new Tramo(direccionCasaOscar,direccionCocaCola,horaOscarACocaCola);
-        MediosDeTransporte porscheOscar = new VehiculoParticular(AUTO,gas,false);
+        // EL TRAYECTO DE OSCAR
+        LocalTime horaOscarACocaCola = LocalTime.of(15, 50);
+        Tramo tramoOscarACocaCola = new Tramo(direccionCasaOscar, direccionCocaCola, horaOscarACocaCola);
+        MediosDeTransporte porscheOscar = new VehiculoParticular(AUTO, gas, false);
         tramoOscarACocaCola.setMedioDeTransporte(porscheOscar);
         trayectoOscar.agregarTramo(tramoOscarACocaCola);
 
@@ -273,20 +279,22 @@ public class Main {
         cocaCola.leerExcel(path);
 
 
-
         cocaCola.calcularHC();
 
 
-        CalculadoraHC.miembroHCrespectoOrganizacion(teresaMarketing,cocaCola);
+        CalculadoraHC.miembroHCrespectoOrganizacion(teresaMarketing, cocaCola);
 
         CalculadoraHC.calculoDeHCdeSectores(cocaCola);
-
-
-        cocaCola.setId(10);
-        GeneradorDeReportes.generarReportePorTipoDeOrganizacion(clasificacionProductor);
-        GeneradorDeReportes.generarReporteDeOrganizacion(cocaCola);
-        GeneradorDeReportes.generarReporteEvolutivoDeOrganizacion(cocaCola);
-        GeneradorDeReportes.generarReporteComposicionDiscriminadoPorProvincia();
+        EntityManager em = EntityManagerHelper.getEntityManager();
+        EntityTransaction transaction = em.getTransaction();
+        transaction.begin();
+        em.persist(cocaCola);
+        transaction.commit();
+        em.close();
+//        GeneradorDeReportes.generarReportePorTipoDeOrganizacion(clasificacionProductor);
+//        GeneradorDeReportes.generarReporteDeOrganizacion(cocaCola);
+//        GeneradorDeReportes.generarReporteEvolutivoDeOrganizacion(cocaCola);
+//        GeneradorDeReportes.generarReporteComposicionDiscriminadoPorProvincia();
 //        GeneradorDeReportes.generarReporteComposicionDiscriminadoPorProvinciaMap();
 
 

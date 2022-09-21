@@ -17,7 +17,7 @@ import java.io.IOException;
 @DiscriminatorColumn(name = "medio")
 public abstract class MediosDeTransporte extends EntidadPersistente {
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "combustible_id",referencedColumnName = "id")
     private Combustible combustible;
 

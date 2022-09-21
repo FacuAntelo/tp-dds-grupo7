@@ -35,25 +35,25 @@ public class Organizacion extends EntidadPersistente{
      @Column(name = "tipo_organizacion")
     private TipoOrganizacion tipoOrganizacion;
 
-     @OneToOne
+     @OneToOne(cascade = CascadeType.ALL)
      @JoinColumn(name= "ubicacion_id",referencedColumnName = "id")
-    private Ubicacion ubicacion;
+     private Ubicacion ubicacion;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "organizacion_id", referencedColumnName = "id")
     private List<Sector> sectores;
 
     @Embedded
     private Clasificacion clasificacion;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_organizacion",referencedColumnName = "id")
     private List<RegistroHC> registrosHC = new ArrayList<>();
 
     @Transient
     private List<RegistroHC> registroHCTotales = new ArrayList<>();
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name= "id_organizacion",referencedColumnName = "id")
     private List<Contacto> contactos;
 
@@ -61,7 +61,7 @@ public class Organizacion extends EntidadPersistente{
     @Transient
     private List<Trayecto> trayectosDeLosMiembros;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name= "id_organizacion",referencedColumnName = "id")
     private List<DatosDeActividad> datosDeActividad;
 

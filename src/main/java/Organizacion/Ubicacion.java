@@ -12,10 +12,9 @@ import javax.persistence.*;
 @Entity
 @Table(name = "ubicacion")
 public class Ubicacion extends EntidadPersistente {
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name= "id_direccion")
     private Direccion direccion;
     @Column(name = "codigo_postal")
     private Integer codigoPostal;
-
 }
