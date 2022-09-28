@@ -45,7 +45,7 @@ public class Organizacion extends EntidadPersistente{
     @Embedded
     private Clasificacion clasificacion;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinColumn(name = "id_organizacion",referencedColumnName = "id")
     private List<RegistroHC> registrosHC = new ArrayList<>();
 
@@ -96,6 +96,18 @@ public class Organizacion extends EntidadPersistente{
         this.sectoresTerritoriales.add(ubicacion.getDireccion().getLocalidad().getSector());
         this.sectoresTerritoriales.add(ubicacion.getDireccion().getProvincia().getSector());
     }
+
+
+    public RegistroHC devolverUltimoRegistro(){
+        List<RegistroHC> resultado = this.registrosHC.stream().filter(r -> r.getTipoRegistro() == TipoRegistro.TOTAL).collect(Collectors.toList());
+        resultado.sort(Comparator.comparing(a -> a.getFecha()));
+        RegistroHC registroHC = new RegistroHC();
+        HuellaDeCarbono huellaDeCarbono = new HuellaDeCarbono();
+        huellaDeCarbono.setValor(0);
+        registroHC.setValorHCTotal(huellaDeCarbono);
+        return resultado.size() == 0 ?registroHC: resultado.get(0);
+    }
+
 
     public void calcularHC(){
         RegistroHC registro = CalculadoraHC.calcularHC(this);

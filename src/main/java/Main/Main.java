@@ -289,19 +289,19 @@ public class Main {
 
 
         cocaCola.calcularHC();
-
-
-        CalculadoraHC.miembroHCrespectoOrganizacion(teresaMarketing, cocaCola);
-
-        CalculadoraHC.calculoDeHCdeSectores(cocaCola);
+//
+//
+//        CalculadoraHC.miembroHCrespectoOrganizacion(teresaMarketing, cocaCola);
+//
+//        CalculadoraHC.calculoDeHCdeSectores(cocaCola);
         EntityManager em = EntityManagerHelper.getEntityManager();
         EntityTransaction transaction = em.getTransaction();
         transaction.begin();
-        em.persist(cocaCola);
+//        em.persist(cocaCola);
         SectorTerritorial sectorTerritorial1= em.find(SectorTerritorial.class,1);
-        System.out.println(sectorTerritorial1.getId());
         transaction.commit();
-        System.out.println(GeneradorDeReportes.generarReporteHCPorSectorTerritorial(sectorTerritorial1).size());
+
+        GeneradorDeReportes.generarReporteHCPorSectorTerritorial(sectorTerritorial1);
 
 
 //        GeneradorDeReportes.generarReportePorTipoDeOrganizacion(clasificacionProductor);

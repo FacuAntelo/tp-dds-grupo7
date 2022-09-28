@@ -2,13 +2,13 @@ package Reportes;
 
 
 import AgenteSectorial.SectorTerritorial;
-import HuellaDeCarbono.HuellaDeCarbono;
-import HuellaDeCarbono.RegistroHC;
+import HuellaDeCarbono.*;
 import Organizacion.Clasificacion;
 import Organizacion.Organizacion;
 import com.mysql.cj.jdbc.SuspendableXAConnection;
 import com.mysql.cj.xdevapi.SessionImpl;
 import db.EntityManagerHelper;
+import org.apache.commons.math3.geometry.hull.ConvexHull;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import trayecto.Provincia;
@@ -64,41 +64,29 @@ public class GeneradorDeReportes {
         registro.forEach(r -> System.out.println(r.getProvincia().getProvincia() + ": "+ r.getValor()));
     }
 
-    public static List<Organizacion> generarReporteHCPorSectorTerritorial(SectorTerritorial sector){
+    public static void generarReporteHCPorSectorTerritorial(SectorTerritorial sector){
         List<Organizacion> organizaciones = (List <Organizacion>) EntityManagerHelper.getEntityManager()
                 .createQuery("select o from Organizacion as o join o.sectoresTerritoriales as s ",Organizacion.class).getResultList();
-        return organizaciones.stream().filter(o->o.getSectoresTerritoriales().stream().map(s -> s.getId()).collect(Collectors.toList()).contains(sector.getId())).collect(Collectors.toList());
+       organizaciones =  organizaciones.stream().filter(o->o.getSectoresTerritoriales().stream().map(s -> s.getId()).collect(Collectors.toList()).contains(sector.getId())).collect(Collectors.toList());
+       System.out.println(organizaciones.size());
+
+       List <RegistroHC> registros = organizaciones.stream().map(o -> o.devolverUltimoRegistro()).collect(Collectors.toList());
+       HuellaDeCarbono huellaTotal = new HuellaDeCarbono();
+       huellaTotal.setValor(registros.stream().mapToInt(r-> r.getValorHCTotal().getValor()).sum());
+       HuellaDeCarbono huellaDatos = new HuellaDeCarbono();
+       huellaDatos.setValor(registros.stream().mapToInt(r-> r.getValorHCDatoActividad().getValor()).sum());
+       HuellaDeCarbono huellaTrayectos = new HuellaDeCarbono();
+       huellaTrayectos.setValor(registros.stream().mapToInt(r-> r.getValorHCTrayecto().getValor()).sum());
+
+       RegistroHC registroHC = new RegistroHC(huellaDatos,huellaTrayectos,huellaTotal, TipoRegistro.TOTAL);
+
+       sector.agregarRegistro(registroHC);
+
+        System.out.println("-----Composición de HC total de un determinado sector territorial:-----");
+       System.out.println("Del sector: " + sector.getId() +" se obtuvo el valor TOTAL: " + huellaTotal.getValorConUnidad());
+       System.out.println("Del sector: " + sector.getId() +" se obtuvo el valor DATOS DE ACTIVIDAD: " + huellaDatos.getValorConUnidad());
+       System.out.println("Del sector: " + sector.getId() +" se obtuvo el valor TRAYECTOS: " + huellaTrayectos.getValorConUnidad());
     }
-;
-//    SELECT
-//            (select
-//                     h1.valor
-//                     from huella_de_carbono as h1 inner join registro as r1 on h1.id = r1.valorHCtotal_id
-//                     where r1.id_organizacion =.id
-//                     order by r.fecha_de_registro desc
-//                     LIMIT 1)
-//    FROM registro as r inner join huella_de_carbono as h  on r.valorHCTotal_id = h.id
-//    inner join organizacion as o on r.id = o.id
-//    inner join ubicacion on o.ubicacion_id = ubicacion.id
-//    inner join direccion d on d.id = ubicacion.id_direccion
-//    inner join provincia p on p.id = d.provincia_id
-//    where p.id_sector_territorial = '1'
-//    public static void generarReporteComposicionDiscriminadoPorProvinciaMap(){
-//        Map<String, Long> registro = (Map<String, Long>) EntityManagerHelper.getEntityManager()
-//                .createQuery("SELECT NEW map( p.provincia, sum(r.valorHCTotal.valor)) " +
-//                        "from Organizacion as o " +
-//                        "inner join o.ubicacion.direccion.provincia as p " +
-//                        "inner join o.registrosHC as r where r.tipoRegistro = 'TOTAL' " +
-//                        "group by p order by r.fecha desc",Map<String, Long>.class).getFirstResult();
-//
-//        System.out.println("-----Composición de HC total a nivel país (discriminando provincias):-----");
-//
-//        registro.forEach((k, v) -> System.out.println(k.toString() + ": " + v.toString()));
-//    }
-
-
-
-
 
 
 

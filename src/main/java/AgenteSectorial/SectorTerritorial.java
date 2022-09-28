@@ -1,6 +1,7 @@
 package AgenteSectorial;
 
 import EntidadPersistente.EntidadPersistente;
+import HuellaDeCarbono.RegistroHC;
 import Organizacion.Organizacion;
 
 import javax.persistence.*;
@@ -16,6 +17,11 @@ public class SectorTerritorial extends EntidadPersistente {
     List<Territorio> territorioList = new ArrayList<>();
 
 
+    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @JoinColumn(name= "id_sector_territorial",referencedColumnName = "id")
+    List<RegistroHC> registros = new ArrayList<>();
+
+
 //    @ManyToMany
 //    private List<Organizacion> organizaciones;
 
@@ -26,5 +32,8 @@ public class SectorTerritorial extends EntidadPersistente {
     public void agregarTerritorio(Territorio territorio){
         territorioList.add(territorio);
         territorio.setSector(this);
+    }
+    public void agregarRegistro(RegistroHC registroHC){
+        this.registros.add(registroHC);
     }
 }

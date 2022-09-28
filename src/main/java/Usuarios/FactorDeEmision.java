@@ -20,10 +20,8 @@ import javax.persistence.Transient;
 @Table(name = "factor_emision")
 public class FactorDeEmision extends EntidadPersistente {
     @Column(name = "valor")
-    @Cascade({ org.hibernate.annotations.CascadeType.SAVE_UPDATE, CascadeType.REMOVE })
     private double valorFactorEmision;
     @Column(name = "unidad")
-    @Cascade({ org.hibernate.annotations.CascadeType.SAVE_UPDATE, CascadeType.REMOVE })
     private String unidad = "CO2eq/";
     @Transient
     private String medidoEn;
@@ -42,7 +40,6 @@ public class FactorDeEmision extends EntidadPersistente {
     }
 
     public FactorDeEmision() {
-        super();
     }
 
     public String getUnidad(){
