@@ -1,4 +1,5 @@
 package Organizacion;
+import AgenteSectorial.SectorTerritorial;
 import CargaExcel.ExcelUtils;
 import EntidadPersistente.EntidadPersistente;
 import HuellaDeCarbono.CalculadoraHC;
@@ -16,9 +17,7 @@ import trayecto.Trayecto;
 
 import javax.persistence.*;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -65,10 +64,23 @@ public class Organizacion extends EntidadPersistente{
     @JoinColumn(name= "id_organizacion",referencedColumnName = "id")
     private List<DatosDeActividad> datosDeActividad;
 
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "sector_territorial_organizacion",
+            joinColumns = @JoinColumn(name = "organizacion_id"),
+            inverseJoinColumns = @JoinColumn(name = "sector_territorial_id",referencedColumnName = "id")
+    )
+    private Set<SectorTerritorial> sectoresTerritoriales;
+
     @Transient
     private ExcelUtils lectorExcel; // TODO NO DEBERIA SER PARTE DE LA ENTIDAD UN LECTOR DE EXCEL, QUE TIENE QUE VER EL EXCEL CON LA ORGANIZACION
 
-    public Organizacion() {}
+    public Organizacion() {
+        this.datosDeActividad = new ArrayList<>();
+        this.sectores = new ArrayList<>();
+        this.contactos= new ArrayList<>();
+        this.sectoresTerritoriales = new HashSet<>();
+        this.trayectosDeLosMiembros = new ArrayList<>();
+    }
 
     public Organizacion(String razonSocial,TipoOrganizacion tipoOrganizacion, Clasificacion clasificacion, Ubicacion ubicacion){
         this.razonSocial = razonSocial;
@@ -79,7 +91,10 @@ public class Organizacion extends EntidadPersistente{
         this.datosDeActividad = new ArrayList<>();
         this.sectores = new ArrayList<>();
         this.contactos= new ArrayList<>();
+        this.sectoresTerritoriales = new HashSet<>();
         this.trayectosDeLosMiembros = new ArrayList<>();
+        this.sectoresTerritoriales.add(ubicacion.getDireccion().getLocalidad().getSector());
+        this.sectoresTerritoriales.add(ubicacion.getDireccion().getProvincia().getSector());
     }
 
     public void calcularHC(){

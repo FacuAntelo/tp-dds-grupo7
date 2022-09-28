@@ -47,6 +47,22 @@
               <version>5.2.2</version>
           </dependency>
           <dependency>
+              <groupId
+              >org.hibernate</groupId>
+              <artifactId
+              >hibernate-core</artifactId>
+          </dependency>
+
+          <!-- Because this is a web app, we also have a dependency on the servlet api. -->
+          <dependency>
+              <groupId
+              >javax.servlet</groupId>
+              <artifactId
+              >servlet-api</artifactId>
+          </dependency>
+
+
+          <dependency>
               <groupId>com.twilio.sdk</groupId>
               <artifactId>twilio</artifactId>
               <version>8.31.0</version>

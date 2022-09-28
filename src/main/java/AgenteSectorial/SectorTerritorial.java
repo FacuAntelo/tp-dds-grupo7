@@ -1,19 +1,30 @@
 package AgenteSectorial;
 
-import HuellaDeCarbono.RegistroHC;
+import EntidadPersistente.EntidadPersistente;
 import Organizacion.Organizacion;
-import lombok.Getter;
-import lombok.Setter;
 
+import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-@Getter
-@Setter
-public abstract class SectorTerritorial {
-    private List<Organizacion> organizaciones;
-    private List<RegistroHC> registrosHC = new ArrayList<>();
+@Entity
+@Table(name = "sector_territorial")
+public class SectorTerritorial extends EntidadPersistente {
+    @OneToMany(mappedBy = "sector",cascade = CascadeType.ALL)
+    List<Territorio> territorioList = new ArrayList<>();
 
-    public void generarReporte(){}
 
+//    @ManyToMany
+//    private List<Organizacion> organizaciones;
+
+    public SectorTerritorial(){
+//        this.organizaciones = new ArrayList<>();
+    }
+
+    public void agregarTerritorio(Territorio territorio){
+        territorioList.add(territorio);
+        territorio.setSector(this);
+    }
 }

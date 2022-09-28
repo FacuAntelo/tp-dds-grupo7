@@ -33,6 +33,7 @@ public class RegistroHC extends EntidadPersistente {
     @OneToOne(cascade = CascadeType.ALL)
     private HuellaDeCarbono valorHCTotal;
 
+
     public RegistroHC(){};
 
     public RegistroHC(HuellaDeCarbono valorHCDatoActividad, HuellaDeCarbono valorHCTrayecto,HuellaDeCarbono valorHCTotal,TipoRegistro tipoRegistro){

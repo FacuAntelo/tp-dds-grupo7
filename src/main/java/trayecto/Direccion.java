@@ -11,17 +11,17 @@ import javax.persistence.*;
 @Getter
 @Entity
 @Table(name = "direccion")
-public class Direccion extends EntidadPersistente{
+public class Direccion extends EntidadPersistente {
     @Column(name = "calle")
     private String calle;
 
     @Column(name = "altura")
     private int altura;
 
-    @Embedded
+    @ManyToOne(cascade = CascadeType.ALL)
     private Localidad localidad;
 
-    @Embedded
+    @ManyToOne(cascade = CascadeType.ALL)
     private Provincia provincia;
 
     public Direccion(String calle, int altura, Localidad localidad, Provincia provincia) {

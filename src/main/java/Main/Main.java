@@ -1,5 +1,6 @@
 package Main;
 
+import AgenteSectorial.SectorTerritorial;
 import CargaExcel.ExcelUtils;
 import Combustible.Combustible;
 import HuellaDeCarbono.CalculadoraHC;
@@ -7,6 +8,7 @@ import MediosDeTransporte.*;
 import Organizacion.*;
 import Reportes.GeneradorDeReportes;
 import Sector.Sector;
+import com.mysql.cj.xdevapi.SessionFactory;
 import db.EntityManagerHelper;
 import domain.Configurador;
 import jdk.nashorn.internal.runtime.regexp.joni.Config;
@@ -25,6 +27,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static MediosDeTransporte.TipoVehiculo.AUTO;
 import static MediosDeTransporte.TipoVehiculo.MOTO;
@@ -135,6 +138,8 @@ public class Main {
         servicioGeoDDS.setAdapter(new ServicioGeoDDSRetrofitAdapter());
         CalculadoraHC calculadoraHC = new CalculadoraHC();
 
+        SectorTerritorial sectorBonaerense = new SectorTerritorial();
+
 
         KG kg = KG.getKG();
         TN tn = TN.getTN();
@@ -161,17 +166,22 @@ public class Main {
         FactorDeEmision gncFactorDeEmision = new FactorDeEmision("GNC", 25, "lts");
         Configurador config = Configurador.getConfigurador();
         System.out.println();
-
+        SectorTerritorial sectorTerritorial = new SectorTerritorial();
         // ORGANIZACION //
         // UBICACION //
         Ubicacion ubicacionCocaCola = new Ubicacion();
         // DIRECCION //
         Localidad ezeiza = new Localidad(180);
         Provincia buenosAires = new Provincia("Buenos Aires");
+        sectorBonaerense.agregarTerritorio(ezeiza);
+        sectorBonaerense.agregarTerritorio(buenosAires);
         Direccion direccionCocaCola = new Direccion("Medrano", 1500, ezeiza, buenosAires);
         // FIN DIRECCION
         ubicacionCocaCola.setCodigoPostal(1804);
         ubicacionCocaCola.setDireccion(direccionCocaCola);
+
+        sectorTerritorial.agregarTerritorio(ezeiza);
+        sectorTerritorial.agregarTerritorio(buenosAires);
         // FIN UBICACION //
         // TIPO DE LA ORGANIZACION //
         TipoOrganizacion tipoEmpresa = EMPRESA;
@@ -234,6 +244,8 @@ public class Main {
         Servicio servicioUber = new Servicio("Uber");
         MediosDeTransporte uber = new ServicioContratado(servicioUber, false);
         uber.setCombustible(gas);
+        VehiculoParticular motoCompartidaNafta = new VehiculoParticular(MOTO, nafta, true);
+        VehiculoParticular autoSolitarioGas = new VehiculoParticular(AUTO, gas, false);
 
         //EL TRAYECTO DE VANESA
         //DE SU CASA AL GARAJE
@@ -245,8 +257,7 @@ public class Main {
         // DEL GARAJE A LA COCA COLA
         LocalTime horaVanesaACocaCola = LocalTime.of(9, 0);
         Tramo tramoVanesaACocaCola = new Tramo(direccionGarageVanesa, direccionCocaCola, horaVanesaACocaCola);
-        VehiculoParticular bmwVanesa = new VehiculoParticular(MOTO, nafta, true);
-        tramoVanesaACocaCola.setMedioDeTransporte(bmwVanesa);
+        tramoVanesaACocaCola.setMedioDeTransporte(motoCompartidaNafta);
         trayectoVanesa.agregarTramo(tramoVanesaACocaCola);
         //EL TRAYECTO DE EDGARDO
         // DE SU CASA AL GARAJE
@@ -258,8 +269,7 @@ public class Main {
         // DEL GARAJE A COCA COLA
         LocalTime horaEdgardoACocaCola = LocalTime.of(9, 0);
         Tramo tramoEdgardoACocaCola = new Tramo(direccionGarageEdgardo, direccionCocaCola, horaEdgardoACocaCola);
-        VehiculoParticular bmwEdgardo = new VehiculoParticular(MOTO, nafta, true);
-        tramoEdgardoACocaCola.setMedioDeTransporte(bmwEdgardo);
+        tramoEdgardoACocaCola.setMedioDeTransporte(motoCompartidaNafta);
         trayectoEdgardo.agregarTramo(tramoEdgardoACocaCola);
         // EL TRAYECTO DE TERESA
         LocalTime horaTeresaACocaCola = LocalTime.of(9, 15);
@@ -269,8 +279,7 @@ public class Main {
         // EL TRAYECTO DE OSCAR
         LocalTime horaOscarACocaCola = LocalTime.of(15, 50);
         Tramo tramoOscarACocaCola = new Tramo(direccionCasaOscar, direccionCocaCola, horaOscarACocaCola);
-        MediosDeTransporte porscheOscar = new VehiculoParticular(AUTO, gas, false);
-        tramoOscarACocaCola.setMedioDeTransporte(porscheOscar);
+        tramoOscarACocaCola.setMedioDeTransporte(autoSolitarioGas);
         trayectoOscar.agregarTramo(tramoOscarACocaCola);
 
         List<Tramo> tramosMiembros = cocaCola.obtenerTramosDeLosMiembros();
@@ -289,14 +298,16 @@ public class Main {
         EntityTransaction transaction = em.getTransaction();
         transaction.begin();
         em.persist(cocaCola);
+        SectorTerritorial sectorTerritorial1= em.find(SectorTerritorial.class,1);
+        System.out.println(sectorTerritorial1.getId());
         transaction.commit();
-        em.close();
+        System.out.println(GeneradorDeReportes.generarReporteHCPorSectorTerritorial(sectorTerritorial1).size());
+
+
 //        GeneradorDeReportes.generarReportePorTipoDeOrganizacion(clasificacionProductor);
 //        GeneradorDeReportes.generarReporteDeOrganizacion(cocaCola);
 //        GeneradorDeReportes.generarReporteEvolutivoDeOrganizacion(cocaCola);
 //        GeneradorDeReportes.generarReporteComposicionDiscriminadoPorProvincia();
-//        GeneradorDeReportes.generarReporteComposicionDiscriminadoPorProvinciaMap();
-
-
+//        GeneradorDeReportes.reporteDeHCdeSectores(cocaCola);
     }
 }

@@ -38,6 +38,6 @@ public class HuellaDeCarbono extends EntidadPersistente {
         return suma;
     }
     public String getValorConUnidad(){
-        return valor + tipoDeUnidad.getUnidad() + unidad;
+        return valor + tipoDeUnidad.getUnidad();
     }
 }

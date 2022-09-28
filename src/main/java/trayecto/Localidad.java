@@ -1,21 +1,21 @@
 package trayecto;
-import AgenteSectorial.SectorTerritorial;
+import AgenteSectorial.Territorio;
 import Combustible.Combustible;
+import EntidadPersistente.EntidadPersistente;
 import HuellaDeCarbono.CalculadoraHC;
 import Organizacion.Organizacion;
 import db.EntityManagerHelper;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
+import javax.persistence.*;
 import java.util.List;
 
-//
-@Embeddable
 @Getter
 @Setter
-public class Localidad extends SectorTerritorial {
+@Entity
+@Table(name = "localidad")
+public class Localidad extends Territorio {
     @Column(name = "localidad")
     private int localidad;
 
@@ -30,7 +30,5 @@ public class Localidad extends SectorTerritorial {
     }
 
     // localidad.agregarOrganizacion(organizacion)
-
-
 
 }
