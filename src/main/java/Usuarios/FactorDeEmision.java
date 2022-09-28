@@ -2,8 +2,6 @@ package Usuarios;
 
 import EntidadPersistente.EntidadPersistente;
 import domain.Configurador;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 import unidad.KG;
 import unidad.Unidad;
 import lombok.Getter;

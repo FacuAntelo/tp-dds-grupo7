@@ -289,8 +289,7 @@ public class Main {
 
 
         cocaCola.calcularHC();
-//
-//
+
 //        CalculadoraHC.miembroHCrespectoOrganizacion(teresaMarketing, cocaCola);
 //
 //        CalculadoraHC.calculoDeHCdeSectores(cocaCola);
@@ -301,8 +300,8 @@ public class Main {
         SectorTerritorial sectorTerritorial1= em.find(SectorTerritorial.class,1);
         transaction.commit();
 
-        GeneradorDeReportes.generarReporteHCPorSectorTerritorial(sectorTerritorial1);
-
+//        GeneradorDeReportes.generarReporteHCPorSectorTerritorial(sectorTerritorial1);
+            GeneradorDeReportes.generarReporteHCPorMiembroDeOrganizacion(cocaCola);
 
 //        GeneradorDeReportes.generarReportePorTipoDeOrganizacion(clasificacionProductor);
 //        GeneradorDeReportes.generarReporteDeOrganizacion(cocaCola);

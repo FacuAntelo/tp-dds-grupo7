@@ -3,6 +3,7 @@ package Reportes;
 
 import AgenteSectorial.SectorTerritorial;
 import HuellaDeCarbono.*;
+import Miembro.Miembro;
 import Organizacion.Clasificacion;
 import Organizacion.Organizacion;
 import com.mysql.cj.jdbc.SuspendableXAConnection;
@@ -41,6 +42,7 @@ public class GeneradorDeReportes {
         System.out.println("-----Composición de HC total de una determinada Organización:-----");
         System.out.println(organizacion.getRazonSocial() + ": " + registro.getValorHCTotal().getValor());
     }
+
     public static void generarReporteEvolutivoDeOrganizacion(Organizacion organizacion){
         List<RegistroHC> registro = (List<RegistroHC>) EntityManagerHelper.getEntityManager()
                 .createQuery("SELECT r from Organizacion as o inner join o.registrosHC as r where o.id = :organizacionId and r.tipoRegistro = 'TOTAL' order by r.fecha desc", RegistroHC.class)
@@ -99,4 +101,18 @@ public class GeneradorDeReportes {
             System.out.println(hc.getValorConUnidad());
         });
     }
+    public static void generarReporteHCPorMiembroDeOrganizacion(Organizacion organizacion){
+        List<ReportePorMiembro> registro = (List<ReportePorMiembro>) EntityManagerHelper.getEntityManager()
+                .createQuery("SELECT NEW Reportes.ReportePorMiembro( m.nombre, sum(r.valorHCTotal.valor)) "+
+                        "from Organizacion as o " +
+                        "inner join o.sectores as s " +
+                        "inner join s.miembros as m " +
+                        "inner join o.registrosHC as r where r.tipoRegistro = 'TOTAL' " +
+                        "group by m ", ReportePorMiembro.class)
+                .getResultList();
+
+        System.out.println("-----Registro de HC por Miembro de la organizacion:-----");
+        registro.forEach(r-> System.out.println(r.getMiembro()+": "+r.getValor()));
+    }
+
 }
