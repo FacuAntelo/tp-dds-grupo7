@@ -103,33 +103,33 @@ public class GeneradorDeReportes {
         });
     }
     public static void generarReporteHCPorMiembroDeOrganizacion(Organizacion organizacion){
-        List<ReportePorMiembro> registro = (List<ReportePorMiembro>) EntityManagerHelper.getEntityManager()
-                .createQuery("SELECT NEW Reportes.ReportePorMiembro( m.nombre, sum(r.valorHCTotal.valor)) "+
+        List<ReporteNombreValor> registro = (List<ReporteNombreValor>) EntityManagerHelper.getEntityManager()
+                .createQuery("SELECT NEW Reportes.ReporteNombreValor( m.nombre, sum(r.valorHCTotal.valor)) "+
                         "from Organizacion as o " +
                         "inner join o.sectores as s " +
                         "inner join s.miembros as m " +
                         "inner join o.registrosHC as r where o.id= :organizacionId and r.tipoRegistro = 'TOTAL' " +
-                        "group by m.id ", ReportePorMiembro.class)
+                        "group by m.id ", ReporteNombreValor.class)
                 .setParameter("organizacionId", organizacion.getId())
                 .getResultList();
 
         System.out.println("-----Registro de HC por Miembro de la organizacion:-----");
-        registro.forEach(r-> System.out.println(r.getMiembro()+": "+r.getValor()));
+        registro.forEach(r-> System.out.println(r.getNombre()+": "+r.getValor()));
     }
 
     public static void generarReporteHCPorSectorDeOrganizacion(Organizacion organizacion){
-        List<ReportePorSector> registro = (List<ReportePorSector>) EntityManagerHelper.getEntityManager()
-                .createQuery("SELECT NEW Reportes.ReportePorSector( s.nombre, sum(r.valorHCTotal.valor)) "+
+        List<ReporteNombreValor> registro = (List<ReporteNombreValor>) EntityManagerHelper.getEntityManager()
+                .createQuery("SELECT NEW Reportes.ReporteNombreValor( s.nombre, sum(r.valorHCTotal.valor)) "+
                         "from Organizacion as o " +
                         "inner join o.sectores as s " +
                         "inner join s.miembros as m " +
                         "inner join o.registrosHC as r where o.id= :organizacionId and r.tipoRegistro = 'TOTAL' " +
-                        "group by s.id ", ReportePorSector.class)
+                        "group by s.id ", ReporteNombreValor.class)
                 .setParameter("organizacionId", organizacion.getId())
                 .getResultList();
 
         System.out.println("-----Registro de HC por Miembro de la organizacion:-----");
-        registro.forEach(r-> System.out.println(r.getSector()+": "+r.getValor()));
+        registro.forEach(r-> System.out.println(r.getNombre()+": "+r.getValor()));
     }
 
 }
