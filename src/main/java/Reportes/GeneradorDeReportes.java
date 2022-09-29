@@ -14,6 +14,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import trayecto.Provincia;
 
+import javax.persistence.criteria.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -107,12 +108,28 @@ public class GeneradorDeReportes {
                         "from Organizacion as o " +
                         "inner join o.sectores as s " +
                         "inner join s.miembros as m " +
-                        "inner join o.registrosHC as r where r.tipoRegistro = 'TOTAL' " +
-                        "group by m ", ReportePorMiembro.class)
+                        "inner join o.registrosHC as r where o.id= :organizacionId and r.tipoRegistro = 'TOTAL' " +
+                        "group by m.id ", ReportePorMiembro.class)
+                .setParameter("organizacionId", organizacion.getId())
                 .getResultList();
 
         System.out.println("-----Registro de HC por Miembro de la organizacion:-----");
         registro.forEach(r-> System.out.println(r.getMiembro()+": "+r.getValor()));
+    }
+
+    public static void generarReporteHCPorSectorDeOrganizacion(Organizacion organizacion){
+        List<ReportePorSector> registro = (List<ReportePorSector>) EntityManagerHelper.getEntityManager()
+                .createQuery("SELECT NEW Reportes.ReportePorSector( s.nombre, sum(r.valorHCTotal.valor)) "+
+                        "from Organizacion as o " +
+                        "inner join o.sectores as s " +
+                        "inner join s.miembros as m " +
+                        "inner join o.registrosHC as r where o.id= :organizacionId and r.tipoRegistro = 'TOTAL' " +
+                        "group by s.id ", ReportePorSector.class)
+                .setParameter("organizacionId", organizacion.getId())
+                .getResultList();
+
+        System.out.println("-----Registro de HC por Miembro de la organizacion:-----");
+        registro.forEach(r-> System.out.println(r.getSector()+": "+r.getValor()));
     }
 
 }

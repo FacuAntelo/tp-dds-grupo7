@@ -18,6 +18,10 @@ public class ServicioContratado extends MediosDeTransporte{
         this.setEsCompartido(esCompartido);
     }
 
+    public ServicioContratado() {
+
+    }
+
     public Servicio getServicio() {return servicio;}
 
     public void setServicio(Servicio servicio) {this.servicio = servicio;}

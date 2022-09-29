@@ -298,15 +298,19 @@ public class Main {
         transaction.begin();
 //        em.persist(cocaCola);
         SectorTerritorial sectorTerritorial1= em.find(SectorTerritorial.class,1);
+        Organizacion organizacion1 = em.find(Organizacion.class, 1 );
         transaction.commit();
 
 //        GeneradorDeReportes.generarReporteHCPorSectorTerritorial(sectorTerritorial1);
-            GeneradorDeReportes.generarReporteHCPorMiembroDeOrganizacion(cocaCola);
+            GeneradorDeReportes.generarReporteHCPorMiembroDeOrganizacion(organizacion1);
+            GeneradorDeReportes.generarReporteHCPorSectorDeOrganizacion(organizacion1);
 
 //        GeneradorDeReportes.generarReportePorTipoDeOrganizacion(clasificacionProductor);
 //        GeneradorDeReportes.generarReporteDeOrganizacion(cocaCola);
 //        GeneradorDeReportes.generarReporteEvolutivoDeOrganizacion(cocaCola);
 //        GeneradorDeReportes.generarReporteComposicionDiscriminadoPorProvincia();
 //        GeneradorDeReportes.reporteDeHCdeSectores(cocaCola);
+        EntityManagerHelper.getEntityManager().close();
+
     }
 }

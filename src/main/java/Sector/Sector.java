@@ -31,6 +31,10 @@ public class Sector extends EntidadPersistente {
         this.miembros = new ArrayList<>();
     }
 
+    public Sector() {
+
+    }
+
     public List<Tramo> getTramosMiembros(){
         return this.getMiembros().stream().flatMap(miembro-> miembro.getTramos().stream()).collect(Collectors.toList());
     }

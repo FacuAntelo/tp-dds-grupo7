@@ -22,6 +22,10 @@ public class VehiculoParticular extends MediosDeTransporte {
         this.setTipoTransporte(TipoTransporte.VEHICULO_PARTICULAR);
     }
 
+    public VehiculoParticular() {
+
+    }
+
     public TipoVehiculo getTipo() {return tipo;}
 
     public void setTipo(TipoVehiculo tipo) {this.tipo = tipo;}

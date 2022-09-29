@@ -28,6 +28,10 @@ public class Trayecto extends EntidadPersistente {
     @Column(name = "distancia_total")
     private double distanciaTotal;
 
+    public Trayecto() {
+
+    }
+
 
     public List<Tramo> getTramos() {
         return tramos;

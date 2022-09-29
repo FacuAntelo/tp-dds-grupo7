@@ -35,6 +35,10 @@ public class Tramo extends EntidadPersistente {
         @Column(name = "fue_calculado")
         private Boolean fueCalculado = false;
 
+        public Tramo() {
+
+        }
+
         public LocalTime getHoraInicio() {
                 return horaInicio;
         }
