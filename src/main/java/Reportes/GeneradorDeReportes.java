@@ -26,10 +26,14 @@ public class GeneradorDeReportes {
 
     public static void generarReportePorTipoDeOrganizacion(Clasificacion clasificacion){
         System.out.println("REPORTE POR TIPO DE ORGANIZACION: " + clasificacion.getNombre());
-        RegistroHC registro = (RegistroHC) EntityManagerHelper.getEntityManager()
-                .createQuery("SELECT r from Organizacion as o inner join o.registrosHC as r where o.clasificacion = :clasificacion and r.tipoRegistro = 'TOTAL' order by r.fecha desc", RegistroHC.class)
-                .setParameter("clasificacion", clasificacion).getResultList().get(0);
-
+        List<Organizacion> organizaciones = (List<Organizacion>) EntityManagerHelper.getEntityManager()
+                .createQuery("SELECT o from Organizacion as o  where o.clasificacion = :clasificacion ", Organizacion.class)
+                .setParameter("clasificacion", clasificacion).getResultList();
+        List <RegistroHC> registros = organizaciones.stream().map(o -> o.devolverUltimoRegistro()).collect(Collectors.toList());
+        int valorDA = registros.stream().mapToInt(r-> r.getValorHCDatoActividad().getValor()).sum();
+        int valorTrayecto = registros.stream().mapToInt(r-> r.getValorHCTrayecto().getValor()).sum();
+        int valorTotal = registros.stream().mapToInt(r-> r.getValorHCTotal().getValor()).sum();
+        RegistroHC registro = RegistroHC.getRegistro(valorDA,valorTrayecto,valorTotal);
         System.out.println("-----HC total por tipo de Organización (según la clasificación de la Organización):-----");
         System.out.println(clasificacion.getNombre()+ ": "+ registro.getValorHCTotal().getValor());
     }

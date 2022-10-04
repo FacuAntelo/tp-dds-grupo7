@@ -43,7 +43,22 @@ public class RegistroHC extends EntidadPersistente {
         this.valorHCTrayecto= valorHCTrayecto;
         this.valorHCTotal = valorHCTotal;
      }
+    public static RegistroHC getRegistro (int valorDA, int valorTrayecto, int valorTotal){
+        RegistroHC registro = new RegistroHC();
 
+        HuellaDeCarbono huellaTotal = new HuellaDeCarbono();
+        huellaTotal.setValor(valorTotal);
+        HuellaDeCarbono huellaDatos = new HuellaDeCarbono();
+        huellaDatos.setValor(valorDA);
+        HuellaDeCarbono huellaTrayectos = new HuellaDeCarbono();
+        huellaTrayectos.setValor(valorTrayecto);
+
+        registro.setValorHCTotal(huellaTotal);
+        registro.setValorHCDatoActividad(huellaDatos);
+        registro.setValorHCTrayecto(huellaTrayectos);
+
+        return registro;
+    }
      public void imprimir(Organizacion organizacion){
         System.out.println("REGISTRO DE HUELLA DE CARBONO CORRESPONDIENTE A LA ORGANIZACION: " + organizacion.getRazonSocial());
         System.out.println("FECHA: " + fecha + "|| DE TIPO: " + tipoRegistro.toString());
