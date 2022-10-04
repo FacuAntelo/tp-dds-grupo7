@@ -21,7 +21,6 @@ public class TestPersistenciaOrganizacion {
     Localidad ezeiza;
     @Before
     public void inicializacion() throws IOException {
-        EntityManagerHelper.getEntityManagerHelper();
         Localidad ezeiza = new Localidad(180);
     }
 
