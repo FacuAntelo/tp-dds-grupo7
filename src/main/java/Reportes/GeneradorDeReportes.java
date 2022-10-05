@@ -95,18 +95,19 @@ public class GeneradorDeReportes {
 //       System.out.println("Del sector: " + sector.getId() +" se obtuvo el valor TRAYECTOS: " + huellaTrayectos.getValorConUnidad());
 //    }
     public static void generarReporteHCPorSectorTerritorial(SectorTerritorial sector){
-        RegistroHC registro = EntityManagerHelper.getEntityManager()
-                .createQuery("select r from Organizacion as o " +
+        List<ReporteOrganizacionSectorTerritorial> registros = EntityManagerHelper.getEntityManager()
+                .createQuery("select NEW Reportes.ReporteOrganizacionSectorTerritorial(o, r.id, max(r.fecha), r.valorHCTotal)" +
+                                "from Organizacion as o " +
                                 "inner join o.sectoresTerritoriales as s " +
-                                "inner join o.registrosHC as r where s.id= :id_sectorTerritorial and r.tipoRegistro= 'TOTAL'" +
-                                "order by r.fecha desc",RegistroHC.class)
+                                "inner join o.registrosHC as r " +
+                                "where s.id= :id_sectorTerritorial and r.tipoRegistro= 'TOTAL'" +
+                                "group by o ",ReporteOrganizacionSectorTerritorial.class)
                 .setParameter("id_sectorTerritorial", sector.getId())
-                .getResultList()
-                .get(0);
+                .getResultList();
+
         System.out.println("-----Composición de HC total de un determinado sector territorial:-----");
-        System.out.println("Del sector: " + sector.getId() +" se obtuvo el valor TOTAL: " + registro.getValorHCTotal().getValorConUnidad());
-        System.out.println("Del sector: " + sector.getId() +" se obtuvo el valor DATOS DE ACTIVIDAD: " + registro.getValorHCDatoActividad().getValorConUnidad());
-        System.out.println("Del sector: " + sector.getId() +" se obtuvo el valor TRAYECTOS: " + registro.getValorHCTrayecto().getValorConUnidad());
+        registros.forEach(r ->System.out.println("Organizacion con id: " + r.getOrganizacion().getId() + ": " + r.getValorHCTotal().getValorConUnidad()) );
+
     }
 
 

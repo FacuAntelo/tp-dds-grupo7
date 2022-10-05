@@ -298,13 +298,13 @@ public class Main {
         SectorTerritorial sectorTerritorial1= EntityManagerHelper.getEntityManager().find(SectorTerritorial.class,1);
         Organizacion organizacion1 = EntityManagerHelper.getEntityManager().find(Organizacion.class, 1 );
         EntityManagerHelper.commit();
-
         GeneradorDeReportes.generarReporteHCPorSectorTerritorial(sectorTerritorial1);
+//        GeneradorDeReportes.generarReporteHCPorSectorTerritorial(sectorTerritorial1);
 //            GeneradorDeReportes.generarReporteHCPorMiembroDeOrganizacion(organizacion1);
 //            GeneradorDeReportes.generarReporteHCPorSectorDeOrganizacion(organizacion1);
 
 //        GeneradorDeReportes.generarReportePorTipoDeOrganizacion(clasificacionProductor);
-        GeneradorDeReportes.generarReporteDeOrganizacion(organizacion1);
+//        GeneradorDeReportes.generarReporteDeOrganizacion(organizacion1);
 //        GeneradorDeReportes.generarReporteEvolutivoDeOrganizacion(organizacion1);
 //        GeneradorDeReportes.generarReporteComposicionDiscriminadoPorProvincia();
 //        GeneradorDeReportes.reporteDeHCdeSectores(cocaCola);
