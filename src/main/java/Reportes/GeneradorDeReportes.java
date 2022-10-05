@@ -129,7 +129,7 @@ public class GeneradorDeReportes {
 //    }
 
     //VER SI HAY QUE HACER ALGUNA SUMATORIA
-    public static void generarReporteHCEvolcionDeSectorTerritorial(SectorTerritorial sector){
+    public static void generarReporteHCEvolucionDeSectorTerritorial(SectorTerritorial sector){
         List<RegistroHC> registros = EntityManagerHelper.getEntityManager()
                 .createQuery("select r " +
                         "from Organizacion as o " +

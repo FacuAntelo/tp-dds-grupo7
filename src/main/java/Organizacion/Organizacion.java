@@ -12,6 +12,8 @@ import Miembro.*;
 import ValidacionExterna.*;
 import lombok.Getter;
 import lombok.Setter;
+import trayecto.Localidad;
+import trayecto.Provincia;
 import trayecto.Tramo;
 import trayecto.Trayecto;
 
@@ -57,6 +59,15 @@ public class Organizacion extends EntidadPersistente{
     private List<Contacto> contactos;
 
 
+    @ManyToOne(cascade = CascadeType.MERGE,fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_localidad")
+    private Localidad localidad;
+
+    @ManyToOne(cascade = CascadeType.MERGE,fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_provincia")
+    private Provincia provincia;
+
+
     @Transient
     private List<Trayecto> trayectosDeLosMiembros;
 
@@ -93,6 +104,8 @@ public class Organizacion extends EntidadPersistente{
         this.contactos= new ArrayList<>();
         this.sectoresTerritoriales = new HashSet<>();
         this.trayectosDeLosMiembros = new ArrayList<>();
+        this.provincia = ubicacion.getDireccion().getProvincia();
+        this.localidad= ubicacion.getDireccion().getLocalidad();
         this.sectoresTerritoriales.add(ubicacion.getDireccion().getLocalidad().getSector());
         this.sectoresTerritoriales.add(ubicacion.getDireccion().getProvincia().getSector());
     }
@@ -109,7 +122,7 @@ public class Organizacion extends EntidadPersistente{
     }
 
 
-    public void calcularHC(){
+    public RegistroHC calcularHC(){
         RegistroHC registro = CalculadoraHC.calcularHC(this);
         registrosHC.add(registro);
         RegistroHC registroTotal;
@@ -130,6 +143,7 @@ public class Organizacion extends EntidadPersistente{
         registrosHC.add(registroTotal);
         registro.imprimir(this);
         registroTotal.imprimir(this);
+        return registro;
     }
 
     public RegistroHC getUltimoRegistroHCTotal(){

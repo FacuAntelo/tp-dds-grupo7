@@ -4,7 +4,9 @@ import MediosDeTransporte.MediosDeTransporte;
 import Miembro.Miembro;
 import Organizacion.DatosDeActividad;
 import Organizacion.Organizacion;
+import db.EntityManagerHelper;
 import trayecto.Direccion;
+import trayecto.Localidad;
 import trayecto.Tramo;
 
 import java.time.LocalTime;
@@ -46,7 +48,16 @@ public class CalculadoraHC {
             return false;
         }
     }
+    public static RegistroHC calcularHCLocalidad(Localidad localidad) {
+        List<Organizacion> organizacionesLocalidad = (List<Organizacion>) EntityManagerHelper.getEntityManager()
+                .createQuery("select o from Organizacion as o" +
+                        "where o.localidad= :localidad.id", Organizacion.class)
+                .setParameter("localidad",localidad).getResultList();
+        List<RegistroHC> registros = organizacionesLocalidad.stream().map(o -> o.calcularHC()).collect(Collectors.toList());
 
+        return RegistroHC.unificarRegistros(registros);
+
+    }
     public static Boolean dosLocalTimeSonIguales(LocalTime unaHora, LocalTime otraHora) {
         return unaHora.equals(otraHora);
     }

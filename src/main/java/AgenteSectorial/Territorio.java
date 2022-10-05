@@ -1,6 +1,7 @@
 package AgenteSectorial;
 
 import EntidadPersistente.EntidadPersistente;
+import HuellaDeCarbono.RegistroHC;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,4 +18,6 @@ public abstract class Territorio {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_sector_territorial",referencedColumnName = "id")
     private SectorTerritorial sector;
+
+    public abstract RegistroHC calcularHC();
 }

@@ -3,6 +3,7 @@ import AgenteSectorial.Territorio;
 import Combustible.Combustible;
 import EntidadPersistente.EntidadPersistente;
 import HuellaDeCarbono.CalculadoraHC;
+import HuellaDeCarbono.RegistroHC;
 import Organizacion.Organizacion;
 import db.EntityManagerHelper;
 import lombok.Getter;
@@ -27,6 +28,11 @@ public class Localidad extends Territorio {
 
     public int getNumeroLocalidad(){
         return localidad;
+    }
+
+    @Override
+    public RegistroHC calcularHC() {
+        return CalculadoraHC.calcularHCLocalidad(this);
     }
 
     // localidad.agregarOrganizacion(organizacion)

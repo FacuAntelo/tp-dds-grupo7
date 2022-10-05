@@ -36,4 +36,5 @@ public class SectorTerritorial extends EntidadPersistente {
     public void agregarRegistro(RegistroHC registroHC){
         this.registros.add(registroHC);
     }
+
 }

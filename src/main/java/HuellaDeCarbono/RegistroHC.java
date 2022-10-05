@@ -2,6 +2,7 @@ package HuellaDeCarbono;
 
 import EntidadPersistente.EntidadPersistente;
 import Organizacion.Organizacion;
+import com.twilio.rest.api.v2010.account.incomingphonenumber.Local;
 import db.EntityManagerHelper;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,6 +11,8 @@ import unidad.Unidad;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.List;
 
 import static HuellaDeCarbono.TipoRegistro.TOTAL;
 
@@ -24,13 +27,13 @@ public class RegistroHC extends EntidadPersistente {
     @Enumerated(EnumType.STRING)
     private TipoRegistro tipoRegistro;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL,fetch= FetchType.EAGER)
     private HuellaDeCarbono valorHCDatoActividad;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private HuellaDeCarbono valorHCTrayecto;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private HuellaDeCarbono valorHCTotal;
 
 
@@ -43,6 +46,13 @@ public class RegistroHC extends EntidadPersistente {
         this.valorHCTrayecto= valorHCTrayecto;
         this.valorHCTotal = valorHCTotal;
      }
+    public RegistroHC(HuellaDeCarbono valorHCDatoActividad, HuellaDeCarbono valorHCTrayecto, HuellaDeCarbono valorHCTotal, TipoRegistro tipoRegistro, LocalDate fecha){
+        this.fecha = fecha;
+        this.tipoRegistro = tipoRegistro;
+        this.valorHCDatoActividad= valorHCDatoActividad;
+        this.valorHCTrayecto= valorHCTrayecto;
+        this.valorHCTotal = valorHCTotal;
+    }
     public static RegistroHC getRegistro (int valorDA, int valorTrayecto, int valorTotal){
         RegistroHC registro = new RegistroHC();
 
@@ -70,6 +80,15 @@ public class RegistroHC extends EntidadPersistente {
         System.out.println(valorHCTotal.getValor() + " " + valorHCTotal.getTipoDeUnidad().getUnidad());
         System.out.println();
      }
+
+     public static RegistroHC unificarRegistros(List<RegistroHC> registroHCList ){
+         int valorTotal = registroHCList.stream().mapToInt(r -> r.getValorHCTotal().getValor()).sum();
+         int valorDA = registroHCList.stream().mapToInt(r -> r.getValorHCDatoActividad().getValor()).sum();
+         int valorTrayecto = registroHCList.stream().mapToInt(r -> r.getValorHCTrayecto().getValor()).sum();
+
+         return RegistroHC.getRegistro(valorDA,valorTrayecto,valorTotal);
+     }
+
     public void pasarDatosDeActividadAGR(){
         valorHCTotal.getTipoDeUnidad().pasarAGR(valorHCTotal);
     }

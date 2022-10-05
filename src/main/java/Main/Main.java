@@ -307,7 +307,7 @@ public class Main {
         GeneradorDeReportes.generarReporteHCPorSectorTerritorial(sectorTerritorial1);
         GeneradorDeReportes.generarReporteComposicionDiscriminadoPorProvincia();
         GeneradorDeReportes.generarReporteDeOrganizacion(organizacion1);
-        GeneradorDeReportes.generarReporteHCEvolcionDeSectorTerritorial(sectorTerritorial1 );
+        GeneradorDeReportes.generarReporteHCEvolucionDeSectorTerritorial(sectorTerritorial1 );
         GeneradorDeReportes.generarReporteEvolutivoDeOrganizacion(organizacion1);
         GeneradorDeReportes.generarReporteHCPorMiembroDeOrganizacion(organizacion1);
         GeneradorDeReportes.generarReporteHCPorSectorDeOrganizacion(organizacion1);
