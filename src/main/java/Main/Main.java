@@ -293,22 +293,25 @@ public class Main {
 //        CalculadoraHC.miembroHCrespectoOrganizacion(teresaMarketing, cocaCola);
 //
 //        CalculadoraHC.calculoDeHCdeSectores(cocaCola);
+
+        //PERSISTENCIA
         EntityManagerHelper.beginTransaction();
 //        EntityManagerHelper.getEntityManager().persist(cocaCola);
         SectorTerritorial sectorTerritorial1= EntityManagerHelper.getEntityManager().find(SectorTerritorial.class,1);
         Organizacion organizacion1 = EntityManagerHelper.getEntityManager().find(Organizacion.class, 1 );
         EntityManagerHelper.commit();
-        GeneradorDeReportes.generarReporteHCPorSectorTerritorial(sectorTerritorial1);
-        GeneradorDeReportes.generarReporteHCPorSectorTerritorial();
-        GeneradorDeReportes.generarReporteHCEvolcionDeSectorTerritorial(sectorTerritorial1 );
-//        GeneradorDeReportes.generarReporteHCPorSectorTerritorial(sectorTerritorial1);
-//            GeneradorDeReportes.generarReporteHCPorMiembroDeOrganizacion(organizacion1);
-//            GeneradorDeReportes.generarReporteHCPorSectorDeOrganizacion(organizacion1);
 
-//        GeneradorDeReportes.generarReportePorTipoDeOrganizacion(clasificacionProductor);
-//        GeneradorDeReportes.generarReporteDeOrganizacion(organizacion1);
+        //REPORTES
+        GeneradorDeReportes.generarReporteHCPorSectorTerritorial();
+        GeneradorDeReportes.generarReportePorTipoDeOrganizacion(clasificacionProductor);
+        GeneradorDeReportes.generarReporteHCPorSectorTerritorial(sectorTerritorial1);
+        GeneradorDeReportes.generarReporteComposicionDiscriminadoPorProvincia();
+        GeneradorDeReportes.generarReporteDeOrganizacion(organizacion1);
+        GeneradorDeReportes.generarReporteHCEvolcionDeSectorTerritorial(sectorTerritorial1 );
         GeneradorDeReportes.generarReporteEvolutivoDeOrganizacion(organizacion1);
-//        GeneradorDeReportes.generarReporteComposicionDiscriminadoPorProvincia();
+        GeneradorDeReportes.generarReporteHCPorMiembroDeOrganizacion(organizacion1);
+        GeneradorDeReportes.generarReporteHCPorSectorDeOrganizacion(organizacion1);
+
 //        GeneradorDeReportes.reporteDeHCdeSectores(cocaCola);
         EntityManagerHelper.closeEntityManager();
         EntityManagerHelper.closeEntityManagerFactory();

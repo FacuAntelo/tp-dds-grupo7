@@ -1,23 +1,11 @@
 package Reportes;
 
-
 import AgenteSectorial.SectorTerritorial;
 import HuellaDeCarbono.*;
-import Miembro.Miembro;
 import Organizacion.Clasificacion;
 import Organizacion.Organizacion;
-import com.mysql.cj.jdbc.SuspendableXAConnection;
-import com.mysql.cj.xdevapi.SessionImpl;
 import db.EntityManagerHelper;
-import org.apache.commons.math3.geometry.hull.ConvexHull;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import trayecto.Provincia;
-
-import javax.persistence.criteria.*;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import static HuellaDeCarbono.CalculadoraHC.calcularHCMiembro;
