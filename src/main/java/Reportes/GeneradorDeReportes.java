@@ -71,30 +71,43 @@ public class GeneradorDeReportes {
         registro.forEach(r -> System.out.println(r.getProvincia().getProvincia() + ": "+ r.getValor()));
     }
 
+//    public static void generarReporteHCPorSectorTerritorial(SectorTerritorial sector){
+//        List<Organizacion> organizaciones = (List <Organizacion>) EntityManagerHelper.getEntityManager()
+//                .createQuery("select o from Organizacion as o join o.sectoresTerritoriales as s ",Organizacion.class).getResultList();
+//       organizaciones =  organizaciones.stream().filter(o->o.getSectoresTerritoriales().stream().map(s -> s.getId()).collect(Collectors.toList()).contains(sector.getId())).collect(Collectors.toList());
+//       System.out.println(organizaciones.size());
+//
+//       List <RegistroHC> registros = organizaciones.stream().map(o -> o.devolverUltimoRegistro()).collect(Collectors.toList());
+//       HuellaDeCarbono huellaTotal = new HuellaDeCarbono();
+//       huellaTotal.setValor(registros.stream().mapToInt(r-> r.getValorHCTotal().getValor()).sum());
+//       HuellaDeCarbono huellaDatos = new HuellaDeCarbono();
+//       huellaDatos.setValor(registros.stream().mapToInt(r-> r.getValorHCDatoActividad().getValor()).sum());
+//       HuellaDeCarbono huellaTrayectos = new HuellaDeCarbono();
+//       huellaTrayectos.setValor(registros.stream().mapToInt(r-> r.getValorHCTrayecto().getValor()).sum());
+//
+//       RegistroHC registroHC = new RegistroHC(huellaDatos,huellaTrayectos,huellaTotal, TipoRegistro.TOTAL);
+//
+//       sector.agregarRegistro(registroHC);
+//
+//        System.out.println("-----Composición de HC total de un determinado sector territorial:-----");
+//       System.out.println("Del sector: " + sector.getId() +" se obtuvo el valor TOTAL: " + huellaTotal.getValorConUnidad());
+//       System.out.println("Del sector: " + sector.getId() +" se obtuvo el valor DATOS DE ACTIVIDAD: " + huellaDatos.getValorConUnidad());
+//       System.out.println("Del sector: " + sector.getId() +" se obtuvo el valor TRAYECTOS: " + huellaTrayectos.getValorConUnidad());
+//    }
     public static void generarReporteHCPorSectorTerritorial(SectorTerritorial sector){
-        List<Organizacion> organizaciones = (List <Organizacion>) EntityManagerHelper.getEntityManager()
-                .createQuery("select o from Organizacion as o join o.sectoresTerritoriales as s ",Organizacion.class).getResultList();
-       organizaciones =  organizaciones.stream().filter(o->o.getSectoresTerritoriales().stream().map(s -> s.getId()).collect(Collectors.toList()).contains(sector.getId())).collect(Collectors.toList());
-       System.out.println(organizaciones.size());
-
-       List <RegistroHC> registros = organizaciones.stream().map(o -> o.devolverUltimoRegistro()).collect(Collectors.toList());
-       HuellaDeCarbono huellaTotal = new HuellaDeCarbono();
-       huellaTotal.setValor(registros.stream().mapToInt(r-> r.getValorHCTotal().getValor()).sum());
-       HuellaDeCarbono huellaDatos = new HuellaDeCarbono();
-       huellaDatos.setValor(registros.stream().mapToInt(r-> r.getValorHCDatoActividad().getValor()).sum());
-       HuellaDeCarbono huellaTrayectos = new HuellaDeCarbono();
-       huellaTrayectos.setValor(registros.stream().mapToInt(r-> r.getValorHCTrayecto().getValor()).sum());
-
-       RegistroHC registroHC = new RegistroHC(huellaDatos,huellaTrayectos,huellaTotal, TipoRegistro.TOTAL);
-
-       sector.agregarRegistro(registroHC);
-
+        RegistroHC registro = EntityManagerHelper.getEntityManager()
+                .createQuery("select r from Organizacion as o " +
+                                "inner join o.sectoresTerritoriales as s " +
+                                "inner join o.registrosHC as r where s.id= :id_sectorTerritorial and r.tipoRegistro= 'TOTAL'" +
+                                "order by r.fecha desc",RegistroHC.class)
+                .setParameter("id_sectorTerritorial", sector.getId())
+                .getResultList()
+                .get(0);
         System.out.println("-----Composición de HC total de un determinado sector territorial:-----");
-       System.out.println("Del sector: " + sector.getId() +" se obtuvo el valor TOTAL: " + huellaTotal.getValorConUnidad());
-       System.out.println("Del sector: " + sector.getId() +" se obtuvo el valor DATOS DE ACTIVIDAD: " + huellaDatos.getValorConUnidad());
-       System.out.println("Del sector: " + sector.getId() +" se obtuvo el valor TRAYECTOS: " + huellaTrayectos.getValorConUnidad());
+        System.out.println("Del sector: " + sector.getId() +" se obtuvo el valor TOTAL: " + registro.getValorHCTotal().getValorConUnidad());
+        System.out.println("Del sector: " + sector.getId() +" se obtuvo el valor DATOS DE ACTIVIDAD: " + registro.getValorHCDatoActividad().getValorConUnidad());
+        System.out.println("Del sector: " + sector.getId() +" se obtuvo el valor TRAYECTOS: " + registro.getValorHCTrayecto().getValorConUnidad());
     }
-
 
 
     public static void reporteDeHCdeSectores(Organizacion organizacion){
@@ -132,7 +145,7 @@ public class GeneradorDeReportes {
                 .setParameter("organizacionId", organizacion.getId())
                 .getResultList();
 
-        System.out.println("-----Registro de HC por Miembro de la organizacion:-----");
+        System.out.println("-----Registro de HC por Sector de la organizacion:-----");
         registro.forEach(r-> System.out.println(r.getNombre()+": "+r.getValor()));
     }
 
