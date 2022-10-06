@@ -309,9 +309,9 @@ public class Main {
         GeneradorDeReportes.generarReporteDeOrganizacion(organizacion1);
         GeneradorDeReportes.generarReporteHCEvolucionDeSectorTerritorial(sectorTerritorial1 );
         GeneradorDeReportes.generarReporteEvolutivoDeOrganizacion(organizacion1);
-        GeneradorDeReportes.generarReporteHCPorMiembroDeOrganizacion(organizacion1);
-        GeneradorDeReportes.generarReporteHCPorSectorDeOrganizacion(organizacion1);
-
+        System.out.println();
+        CalculadoraHC.miembroHCrespectoOrganizacion(oscarAdministracion,cocaCola);
+        CalculadoraHC.calculoDeHCdeSectores(cocaCola);
 //        GeneradorDeReportes.reporteDeHCdeSectores(cocaCola);
         EntityManagerHelper.closeEntityManager();
         EntityManagerHelper.closeEntityManagerFactory();

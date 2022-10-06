@@ -136,33 +136,5 @@ public class GeneradorDeReportes {
             System.out.println(hc.getValorConUnidad());
         });
     }
-    public static void generarReporteHCPorMiembroDeOrganizacion(Organizacion organizacion){
-        List<ReporteNombreValor> registro = (List<ReporteNombreValor>) EntityManagerHelper.getEntityManager()
-                .createQuery("SELECT NEW Reportes.ReporteNombreValor( m.nombre, sum(r.valorHCTotal.valor)) "+
-                        "from Organizacion as o " +
-                        "inner join o.sectores as s " +
-                        "inner join s.miembros as m " +
-                        "inner join o.registrosHC as r where o.id= :organizacionId and r.tipoRegistro = 'TOTAL' " +
-                        "group by m.id ", ReporteNombreValor.class)
-                .setParameter("organizacionId", organizacion.getId())
-                .getResultList();
-        System.out.println("\n-----Registro de HC por Miembro de la organizacion:-----");
-        registro.forEach(r-> System.out.println(r.getNombre()+": "+r.getValor()));
-    }
-
-    public static void generarReporteHCPorSectorDeOrganizacion(Organizacion organizacion){
-        List<ReporteNombreValor> registro = (List<ReporteNombreValor>) EntityManagerHelper.getEntityManager()
-                .createQuery("SELECT NEW Reportes.ReporteNombreValor( s.nombre, sum(r.valorHCTotal.valor)) "+
-                        "from Organizacion as o " +
-                        "inner join o.sectores as s " +
-                        "inner join s.miembros as m " +
-                        "inner join o.registrosHC as r where o.id= :organizacionId and r.tipoRegistro = 'TOTAL' " +
-                        "group by s.id ", ReporteNombreValor.class)
-                .setParameter("organizacionId", organizacion.getId())
-                .getResultList();
-
-        System.out.println("\n-----Registro de HC por Sector de la organizacion:-----");
-        registro.forEach(r-> System.out.println(r.getNombre()+": "+r.getValor()));
-    }
 
 }
