@@ -2,9 +2,13 @@ package Reportes;
 
 import AgenteSectorial.SectorTerritorial;
 import HuellaDeCarbono.*;
+import Miembro.Miembro;
 import Organizacion.Clasificacion;
 import Organizacion.Organizacion;
 import db.EntityManagerHelper;
+import trayecto.Provincia;
+
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -13,26 +17,24 @@ import static HuellaDeCarbono.CalculadoraHC.calcularHCMiembro;
 public class GeneradorDeReportes {
 
     public static void generarReportePorTipoDeOrganizacion(Clasificacion clasificacion){
-        System.out.println("REPORTE POR TIPO DE ORGANIZACION: " + clasificacion.getNombre());
         List<Organizacion> organizaciones = (List<Organizacion>) EntityManagerHelper.getEntityManager()
                 .createQuery("SELECT o from Organizacion as o  where o.clasificacion = :clasificacion ", Organizacion.class)
                 .setParameter("clasificacion", clasificacion).getResultList();
         List <RegistroHC> registros = organizaciones.stream().map(o -> o.devolverUltimoRegistro()).collect(Collectors.toList());
-        int valorDA = registros.stream().mapToInt(r-> r.getValorHCDatoActividad().getValor()).sum();
-        int valorTrayecto = registros.stream().mapToInt(r-> r.getValorHCTrayecto().getValor()).sum();
-        int valorTotal = registros.stream().mapToInt(r-> r.getValorHCTotal().getValor()).sum();
-        RegistroHC registro = RegistroHC.getRegistro(valorDA,valorTrayecto,valorTotal);
-        System.out.println("-----HC total por tipo de Organización (según la clasificación de la Organización):-----");
-        System.out.println(clasificacion.getNombre()+ ": "+ registro.getValorHCTotal().getValor());
+        RegistroHC registroUnificado = RegistroHC.unificarRegistros(registros);
+
+        System.out.println("\n-----HC total por tipo de Organización (según la clasificación de la Organización):-----");
+        System.out.println("REPORTE POR TIPO DE ORGANIZACION: " + clasificacion.getNombre());
+        System.out.println(clasificacion.getNombre()+ ": "+ registroUnificado.getValorHCTotal().getValorConUnidad());
     }
 
     public static void generarReporteDeOrganizacion(Organizacion organizacion){
-        System.out.println("REPORTE POR  ORGANIZACION: " + organizacion.getRazonSocial());
         RegistroHC registro = (RegistroHC) EntityManagerHelper.getEntityManager()
                 .createQuery("SELECT r from Organizacion as o inner join o.registrosHC as r where o.id = :organizacionId and r.tipoRegistro = 'TOTAL' order by r.fecha desc", RegistroHC.class)
                 .setParameter("organizacionId", organizacion.getId()).getResultList().get(0);
 
-        System.out.println("-----Composición de HC total de una determinada Organización:-----");
+        System.out.println("\n-----Composición de HC total de una determinada Organización:-----");
+        System.out.println("REPORTE POR  ORGANIZACION: " + organizacion.getRazonSocial());
         System.out.println(organizacion.getRazonSocial() + ": " + registro.getValorHCTotal().getValor());
     }
 
@@ -41,94 +43,73 @@ public class GeneradorDeReportes {
                 .createQuery("SELECT r from Organizacion as o inner join o.registrosHC as r where o.id = :organizacionId and r.tipoRegistro = 'TOTAL' order by r.fecha desc", RegistroHC.class)
                 .setParameter("organizacionId", organizacion.getId()).getResultList();
 
-        System.out.println("-----Evolución de HC total de una determinada Organización:-----");
+        System.out.println("\n-----Evolución de HC total de una determinada Organización:-----");
         System.out.println(organizacion.getRazonSocial());
         registro.forEach(r -> System.out.println(r.getFecha() + ": " + r.getValorHCTotal().getValor()));
     }
 
     public static void generarReporteComposicionDiscriminadoPorProvincia(){
-        List<ReportePorProvincia> registro = (List<ReportePorProvincia>) EntityManagerHelper.getEntityManager()
-                .createQuery("SELECT NEW Reportes.ReportePorProvincia( p, sum(r.valorHCTotal.valor)) " +
-                                "from Organizacion as o " +
-                                "inner join o.ubicacion.direccion.provincia as p " +
-                                "inner join o.registrosHC as r where r.tipoRegistro = 'TOTAL' " +
-                                "group by p order by r.fecha desc", ReportePorProvincia.class)
-                .getResultList();
-
-        System.out.println("-----Composición de HC total a nivel país (discriminando provincias):-----");
-        registro.forEach(r -> System.out.println(r.getProvincia().getProvincia() + ": "+ r.getValor()));
-    }
-
-//    public static void generarReporteHCPorSectorTerritorial(SectorTerritorial sector){
-//        List<Organizacion> organizaciones = (List <Organizacion>) EntityManagerHelper.getEntityManager()
-//                .createQuery("select o from Organizacion as o join o.sectoresTerritoriales as s ",Organizacion.class).getResultList();
-//       organizaciones =  organizaciones.stream().filter(o->o.getSectoresTerritoriales().stream().map(s -> s.getId()).collect(Collectors.toList()).contains(sector.getId())).collect(Collectors.toList());
-//       System.out.println(organizaciones.size());
-//
-//       List <RegistroHC> registros = organizaciones.stream().map(o -> o.devolverUltimoRegistro()).collect(Collectors.toList());
-//       HuellaDeCarbono huellaTotal = new HuellaDeCarbono();
-//       huellaTotal.setValor(registros.stream().mapToInt(r-> r.getValorHCTotal().getValor()).sum());
-//       HuellaDeCarbono huellaDatos = new HuellaDeCarbono();
-//       huellaDatos.setValor(registros.stream().mapToInt(r-> r.getValorHCDatoActividad().getValor()).sum());
-//       HuellaDeCarbono huellaTrayectos = new HuellaDeCarbono();
-//       huellaTrayectos.setValor(registros.stream().mapToInt(r-> r.getValorHCTrayecto().getValor()).sum());
-//
-//       RegistroHC registroHC = new RegistroHC(huellaDatos,huellaTrayectos,huellaTotal, TipoRegistro.TOTAL);
-//
-//       sector.agregarRegistro(registroHC);
-//
-//        System.out.println("-----Composición de HC total de un determinado sector territorial:-----");
-//       System.out.println("Del sector: " + sector.getId() +" se obtuvo el valor TOTAL: " + huellaTotal.getValorConUnidad());
-//       System.out.println("Del sector: " + sector.getId() +" se obtuvo el valor DATOS DE ACTIVIDAD: " + huellaDatos.getValorConUnidad());
-//       System.out.println("Del sector: " + sector.getId() +" se obtuvo el valor TRAYECTOS: " + huellaTrayectos.getValorConUnidad());
-//    }
-    public static void generarReporteHCPorSectorTerritorial(SectorTerritorial sector){
-        List<ReporteOrganizacionSectorTerritorial> registros = EntityManagerHelper.getEntityManager()
-                .createQuery("select NEW Reportes.ReporteOrganizacionSectorTerritorial(o,s.id, r.id, max(r.fecha), r.valorHCTotal)" +
-                                "from Organizacion as o " +
-                                "inner join o.sectoresTerritoriales as s " +
-                                "inner join o.registrosHC as r " +
-                                "where s.id= :id_sectorTerritorial and r.tipoRegistro= 'TOTAL'" +
-                                "group by o ",ReporteOrganizacionSectorTerritorial.class)
-                .setParameter("id_sectorTerritorial", sector.getId())
-                .getResultList();
-
-        System.out.println("-----Composición de HC total de un determinado sector territorial:-----");
-        System.out.println("Sector territorial: " + sector.getId());
-        registros.forEach(r ->System.out.println("Organizacion con id: " + r.getOrganizacion().getId() + ": " + r.getValorHCTotal().getValorConUnidad()) );
-
-    }
-
-    public static void generarReporteHCPorSectorTerritorial(){
-        List<ReporteOrganizacionSectorTerritorial> registros = EntityManagerHelper.getEntityManager()
-                .createQuery("select NEW Reportes.ReporteOrganizacionSectorTerritorial(o,s.id, r.id, max(r.fecha), r.valorHCTotal)" +
-                                "from Organizacion as o " +
-                                "inner join o.sectoresTerritoriales as s " +
-                                "inner join o.registrosHC as r " +
-                                "where r.tipoRegistro= 'TOTAL'" +
-                                "group by s ",ReporteOrganizacionSectorTerritorial.class)
-                .getResultList();
-
-        System.out.println("-----HC total por sector territorial:-----");
-        registros.forEach(r ->System.out.println("Sector territorial con id: " + r.getId_sectorTerritorial() + ": " + r.getValorHCTotal().getValorConUnidad()) );
-
-    }
-//      ES UNA SEGUNDA OPCION SI REGISTRO TIENE QUE TENER ID_SECTOR_TERRITORIAL
-//    public static void generarReporteHCPorSectorTerritorial(){
-//        List<ReporteOrganizacionSectorTerritorial> registros = EntityManagerHelper.getEntityManager()
-//                .createQuery("select NEW Reportes.ReporteOrganizacionSectorTerritorial(s, r.id, max(r.fecha), r.valorHCTotal)" +
-//                        "from SectorTerritorial as s " +
-//                        "join s.registros as r " +
-//                        "where r.tipoRegistro= 'TOTAL'" +
-//                        "group by s ",ReporteOrganizacionSectorTerritorial.class)
+//        List<ReportePorProvincia> registro = (List<ReportePorProvincia>) EntityManagerHelper.getEntityManager()
+//                .createQuery("SELECT NEW Reportes.ReportePorProvincia( p, sum(r.valorHCTotal.valor)) " +
+//                                "from Organizacion as o " +
+//                                "inner join o.ubicacion.direccion.provincia as p " +
+//                                "inner join o.registrosHC as r where r.tipoRegistro = 'TOTAL' " +
+//                                "group by p order by r.fecha desc", ReportePorProvincia.class)
 //                .getResultList();
-//
-//        System.out.println("-----HC total por sector territorial:-----");
-//        registros.forEach(r ->System.out.println("Sector territorial con id: " + r.getSectorTerritorial().getId() + ": " + r.getValorHCTotal().getValorConUnidad()) );
-//
-//    }
+        System.out.println("\n-----Composición de HC total a nivel país (discriminando provincias):-----");
+        List<Provincia> provincias = EntityManagerHelper.getEntityManager()
+                .createQuery("SELECT p from Provincia as p  ", Provincia.class)
+                .getResultList();
+        System.out.println("Cantidad provincia: "+provincias.size());
 
-    //VER SI HAY QUE HACER ALGUNA SUMATORIA
+        provincias.forEach( provincia -> {
+            RegistroHC resultado =  provincia.calcularHC();
+            System.out.println(provincia.getProvincia() + ": " + resultado.getValorHCTotal().getValorConUnidad());
+        });
+//        registro.forEach(r -> System.out.println(r.getProvincia().getProvincia() + ": "+ r.getValor()));
+    }
+
+    public static void generarReporteHCTotalPorSectorTerritorial(){
+        System.out.println("\n-----HC total por sector territorial:-----");
+        List<SectorTerritorial> sectores = EntityManagerHelper.getEntityManager()
+                .createQuery("select s from SectorTerritorial as s  ",SectorTerritorial.class).getResultList();
+
+        sectores.forEach(sector ->{
+            List<Organizacion> organizaciones = (List <Organizacion>) EntityManagerHelper.getEntityManager()
+                    .createQuery("select o from Organizacion as o ",Organizacion.class).getResultList();
+            organizaciones =  organizaciones.stream().filter(o->o.getSectoresTerritoriales().stream().map(s -> s.getId()).collect(Collectors.toList()).contains(sector.getId())).collect(Collectors.toList());
+            List <RegistroHC> registros = organizaciones.stream().map(o -> o.devolverUltimoRegistro()).collect(Collectors.toList());
+
+            RegistroHC registroUnificado = RegistroHC.unificarRegistros(registros);
+            registroUnificado.setTipoRegistro(TipoRegistro.TOTAL);
+
+//            SE REEMPLAZAN LAS LINEAS COMENTADAS POR LOS DOS METODOS DE ARRIBA
+//            HuellaDeCarbono huellaTotal = new HuellaDeCarbono();
+//            huellaTotal.setValor(registros.stream().mapToInt(r-> r.getValorHCTotal().getValor()).sum());
+//            HuellaDeCarbono huellaDatos = new HuellaDeCarbono();
+//            huellaDatos.setValor(registros.stream().mapToInt(r-> r.getValorHCDatoActividad().getValor()).sum());
+//            HuellaDeCarbono huellaTrayectos = new HuellaDeCarbono();
+//            huellaTrayectos.setValor(registros.stream().mapToInt(r-> r.getValorHCTrayecto().getValor()).sum());
+//
+//            RegistroHC registroHC = new RegistroHC(huellaDatos,huellaTrayectos,huellaTotal, TipoRegistro.TOTAL);
+
+            sector.agregarRegistro(registroUnificado);
+            System.out.println("Del sector: " + sector.getId() +" se obtuvo el valor TOTAL: " + registroUnificado.getValorHCTotal().getValorConUnidad());
+//            System.out.println("Del sector: " + sector.getId() +" se obtuvo el valor DATOS DE ACTIVIDAD: " + huellaDatos.getValorConUnidad());
+//            System.out.println("Del sector: " + sector.getId() +" se obtuvo el valor TRAYECTOS: " + huellaTrayectos.getValorConUnidad());
+        });
+    }
+
+    public static void generarReporteHCComposicionTotalDeUnSectorTerritorial(SectorTerritorial sector){
+        List<Organizacion> organizaciones = (List <Organizacion>) EntityManagerHelper.getEntityManager()
+                .createQuery("select o from Organizacion as o  ",Organizacion.class).getResultList();
+        organizaciones =  organizaciones.stream().filter(o->o.getSectoresTerritoriales().stream().map(s -> s.getId()).collect(Collectors.toList()).contains(sector.getId())).collect(Collectors.toList());
+
+        System.out.println("\n-----Composición de HC total de un determinado sector territorial:-----");
+        System.out.println("REPORTE POR  SECTOR TERRITORIAL: " + sector.getId());
+        organizaciones.forEach(o -> System.out.println("Organizacion: " + o.getId() + " obtuvo valor total: "+ o.devolverUltimoRegistro().getValorHCTotal().getValorConUnidad()));
+    }
+
     public static void generarReporteHCEvolucionDeSectorTerritorial(SectorTerritorial sector){
         List<RegistroHC> registros = EntityManagerHelper.getEntityManager()
                 .createQuery("select r " +
@@ -139,8 +120,7 @@ public class GeneradorDeReportes {
                         "order by r.fecha desc ",RegistroHC.class)
                 .setParameter("id_sectorTerritorial", sector.getId())
                 .getResultList();
-
-        System.out.println("-----Evolución de HC total de un determinado sector territorial:-----");
+        System.out.println("\n-----Evolución de HC total de un determinado sector territorial:-----");
         System.out.println("Sector territorial: " + sector.getId());
         registros.forEach(r ->System.out.println( r.getFecha() + ": " + r.getValorHCTotal().getValorConUnidad()) );
 
@@ -166,8 +146,7 @@ public class GeneradorDeReportes {
                         "group by m.id ", ReporteNombreValor.class)
                 .setParameter("organizacionId", organizacion.getId())
                 .getResultList();
-
-        System.out.println("-----Registro de HC por Miembro de la organizacion:-----");
+        System.out.println("\n-----Registro de HC por Miembro de la organizacion:-----");
         registro.forEach(r-> System.out.println(r.getNombre()+": "+r.getValor()));
     }
 
@@ -182,7 +161,7 @@ public class GeneradorDeReportes {
                 .setParameter("organizacionId", organizacion.getId())
                 .getResultList();
 
-        System.out.println("-----Registro de HC por Sector de la organizacion:-----");
+        System.out.println("\n-----Registro de HC por Sector de la organizacion:-----");
         registro.forEach(r-> System.out.println(r.getNombre()+": "+r.getValor()));
     }
 

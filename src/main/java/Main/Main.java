@@ -302,9 +302,9 @@ public class Main {
         EntityManagerHelper.commit();
 
         //REPORTES
-        GeneradorDeReportes.generarReporteHCPorSectorTerritorial();
+        GeneradorDeReportes.generarReporteHCTotalPorSectorTerritorial();
         GeneradorDeReportes.generarReportePorTipoDeOrganizacion(clasificacionProductor);
-        GeneradorDeReportes.generarReporteHCPorSectorTerritorial(sectorTerritorial1);
+        GeneradorDeReportes.generarReporteHCComposicionTotalDeUnSectorTerritorial(sectorTerritorial1);
         GeneradorDeReportes.generarReporteComposicionDiscriminadoPorProvincia();
         GeneradorDeReportes.generarReporteDeOrganizacion(organizacion1);
         GeneradorDeReportes.generarReporteHCEvolucionDeSectorTerritorial(sectorTerritorial1 );

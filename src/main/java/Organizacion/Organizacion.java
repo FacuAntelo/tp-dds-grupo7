@@ -219,4 +219,9 @@ public class Organizacion extends EntidadPersistente{
         this.trayectosDeLosMiembros.add(trayecto);
     }
 
+    public List<Miembro> obtenerMiembros(){
+        List<Miembro> resultado = null;
+        sectores.forEach(sector -> resultado.addAll(sector.getMiembros()));
+        return resultado;
+    }
 }
