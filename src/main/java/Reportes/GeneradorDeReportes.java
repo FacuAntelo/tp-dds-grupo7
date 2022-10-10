@@ -29,13 +29,8 @@ public class GeneradorDeReportes {
     }
 
     public static void generarReporteDeOrganizacion(Organizacion organizacion){
-        RegistroHC registro = (RegistroHC) EntityManagerHelper.getEntityManager()
-                .createQuery("SELECT r from Organizacion as o inner join o.registrosHC as r where o.id = :organizacionId and r.tipoRegistro = 'TOTAL' order by r.fecha desc", RegistroHC.class)
-                .setParameter("organizacionId", organizacion.getId()).getResultList().get(0);
-
         System.out.println("\n-----Composición de HC total de una determinada Organización:-----");
-        System.out.println("REPORTE POR  ORGANIZACION: " + organizacion.getRazonSocial());
-        System.out.println(organizacion.getRazonSocial() + ": " + registro.getValorHCTotal().getValor());
+        CalculadoraHC.calculoDeHCdeSectores(organizacion);
     }
 
     public static void generarReporteEvolutivoDeOrganizacion(Organizacion organizacion){
