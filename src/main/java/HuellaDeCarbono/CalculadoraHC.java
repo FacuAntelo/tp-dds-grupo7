@@ -51,8 +51,9 @@ public class CalculadoraHC {
     public static RegistroHC calcularHCLocalidad(Localidad localidad) {
         List<Organizacion> organizacionesLocalidad = (List<Organizacion>) EntityManagerHelper.getEntityManager()
                 .createQuery("select o from Organizacion as o" +
-                        "where o.localidad= :localidad.id", Organizacion.class)
-                .setParameter("localidad",localidad).getResultList();
+                        "where o.localidad= :localidad_id", Organizacion.class)
+                .setParameter("localidad_id",localidad.getId())
+                .getResultList();
         List<RegistroHC> registros = organizacionesLocalidad.stream().map(o -> o.calcularHC()).collect(Collectors.toList());
 
         return RegistroHC.unificarRegistros(registros);

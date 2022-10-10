@@ -303,16 +303,13 @@ public class Main {
 
         //REPORTES
         GeneradorDeReportes.generarReporteHCTotalPorSectorTerritorial();
-        GeneradorDeReportes.generarReportePorTipoDeOrganizacion(clasificacionProductor);
-        GeneradorDeReportes.generarReporteHCComposicionTotalDeUnSectorTerritorial(sectorTerritorial1);
-        GeneradorDeReportes.generarReporteComposicionDiscriminadoPorProvincia();
-        GeneradorDeReportes.generarReporteDeOrganizacion(organizacion1);
-        GeneradorDeReportes.generarReporteHCEvolucionDeSectorTerritorial(sectorTerritorial1 );
-        GeneradorDeReportes.generarReporteEvolutivoDeOrganizacion(organizacion1);
-        System.out.println();
-        CalculadoraHC.miembroHCrespectoOrganizacion(oscarAdministracion,cocaCola);
-        CalculadoraHC.calculoDeHCdeSectores(cocaCola);
-//        GeneradorDeReportes.reporteDeHCdeSectores(cocaCola);
+        GeneradorDeReportes.generarReporteHCTotalPorTipoDeOrganizacion(clasificacionProductor);
+        GeneradorDeReportes.generarReporteComposicionHCTotalDeUnSectorTerritorial(sectorTerritorial1);
+        GeneradorDeReportes.generarReporteComposicionHCTotalDiscriminadoPorProvincia();
+        GeneradorDeReportes.ggenerarReporteComposicionHCTotalDeOrganizacion(organizacion1);
+        GeneradorDeReportes.generarReporteEvolucionHCTotalDeSectorTerritorial(sectorTerritorial1 );
+        GeneradorDeReportes.generarReporteEvolucionHCTotalDeOrganizacion(organizacion1);
+
         EntityManagerHelper.closeEntityManager();
         EntityManagerHelper.closeEntityManagerFactory();
 
