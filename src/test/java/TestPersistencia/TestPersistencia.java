@@ -1,6 +1,6 @@
 package TestPersistencia;
 
-import Usuarios.FactorDeEmision;
+import models.Usuarios.FactorDeEmision;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,7 +17,7 @@ public class TestPersistencia {
 
     @Before
     public void inicializacion() throws IOException {
-        emf = Persistence.createEntityManagerFactory("db");
+        emf = Persistence.createEntityManagerFactory("models");
         em = emf.createEntityManager();
     }
 

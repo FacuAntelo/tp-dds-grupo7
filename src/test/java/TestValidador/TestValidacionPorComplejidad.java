@@ -1,6 +1,7 @@
 package TestValidador;
 
-import Validador.CriterioValidador;
+import models.Validador.CriterioValidador;
+import models.Validador.ValidacionPorComplejidad;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,7 +16,7 @@ public class TestValidacionPorComplejidad {
 
         @Before
         public void inicializacion(){
-            validacionPorComplejidad = new Validador.ValidacionPorComplejidad();
+            validacionPorComplejidad = new ValidacionPorComplejidad();
         }
         @Test
         public void contieneMinuscula() throws FileNotFoundException {

@@ -1,6 +1,6 @@
 package TestValidador;
-import Validador.CriterioValidador;
-import Validador.ValidacionCompararContraPeores;
+import models.Validador.CriterioValidador;
+import models.Validador.ValidacionCompararContraPeores;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -10,7 +10,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class TestValidacionCompararContraPeores {
-    CriterioValidador validacionCompararContraPeores = new Validador.ValidacionCompararContraPeores();
+    CriterioValidador validacionCompararContraPeores = new ValidacionCompararContraPeores();
 
     @Before
     public void inicializacion(){

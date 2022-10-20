@@ -1,5 +1,6 @@
 package TestValidador;
-import Validador.CriterioValidador;
+import models.Validador.CriterioValidador;
+import models.Validador.ValidacionPorLongitud;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -9,11 +10,11 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class TestValidacionPorLongitud {
-    CriterioValidador validacionPorLongitud = new Validador.ValidacionPorLongitud();
+    CriterioValidador validacionPorLongitud = new ValidacionPorLongitud();
 
     @Before
     public void inicializacion(){
-        validacionPorLongitud = new Validador.ValidacionPorLongitud();
+        validacionPorLongitud = new ValidacionPorLongitud();
     }
     @Test
     public void longitudCorrecta() throws FileNotFoundException {

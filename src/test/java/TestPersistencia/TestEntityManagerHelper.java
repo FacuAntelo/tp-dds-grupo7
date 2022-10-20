@@ -1,25 +1,13 @@
 package TestPersistencia;
 
-import Combustible.Combustible;
-import Organizacion.Clasificacion;
-import Organizacion.Organizacion;
-import Organizacion.TipoOrganizacion;
-import Organizacion.Ubicacion;
-import Usuarios.FactorDeEmision;
-import db.EntityManagerHelper;
+import models.Combustible.Combustible;
+import models.Usuarios.FactorDeEmision;
+import models.db.EntityManagerHelper;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
-import trayecto.Direccion;
-import trayecto.Localidad;
-import trayecto.Provincia;
-import unidad.KG;
 
-import javax.persistence.EntityManagerFactory;
 import java.io.IOException;
 import java.util.List;
-
-import static Organizacion.TipoOrganizacion.EMPRESA;
 
 public class TestEntityManagerHelper {
     @Test
