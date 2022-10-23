@@ -41,4 +41,13 @@ public class RepositorioMiembro {
     public Miembro buscar(int id){
         return EntityManagerHelper.getEntityManager().find(Miembro.class,id);
     }
+
+    public Organizacion buscarOrganizacionQuePertenece(Miembro miembro){
+        return EntityManagerHelper.getEntityManager()
+                .createQuery("select o from Organizacion as o " +
+                        "inner join o.sectores as s " +
+                        "inner join s.miembros as m " +
+                        "where m.id = :id", Organizacion.class)
+                .setParameter("id", miembro.getId()).getSingleResult();
+    }
 }
