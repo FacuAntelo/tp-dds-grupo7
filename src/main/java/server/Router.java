@@ -29,6 +29,7 @@ public class Router {
 
     private static void configure() {
         LoginController loginController = new LoginController();
+        OrganizacionController organizacionController= new OrganizacionController();
 
         Spark.path("/login", () -> {
             Spark.get("", loginController::pantallaDeLogin, engine);
@@ -36,8 +37,8 @@ public class Router {
             Spark.post("/logout", loginController::logout);
         });
 
-        Spark.path("/organizacion/:id", () -> {
-            Spark.get("", OrganizacionController::traerOrganizacion);
+        Spark.path("/organizacion", () -> {
+            Spark.get("/:idOrganizacion", organizacionController::mostrar,engine);
         });
     }
 }
