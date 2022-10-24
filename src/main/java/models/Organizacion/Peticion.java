@@ -21,13 +21,13 @@ public class Peticion extends EntidadPersistente {
     private TipoDocumento tipoDocumento;
     @Column(name = "numDoc")
     private String numDoc;
-    @Column(name = "mail")
-    private String mail;
+    @Column(name = "email")
+    private String email;
     @OneToOne(fetch = FetchType.LAZY)
     private Organizacion organizacion;
 
     @Enumerated(EnumType.STRING)
-    private EstadoPeticion peticion;
+    private EstadoPeticion estadoPeticion;
 
     public Miembro aceptarPeticion(Sector sector){
         Miembro nuevoMiembro = new Miembro(nombre, apellido, tipoDocumento,numDoc);

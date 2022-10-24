@@ -42,10 +42,16 @@ public class Router {
             Spark.post("/logout", loginController::logout);
         });
 
+        Spark.path("/peticion", () ->{
+            Spark.get("", peticionController::pantallaDePeticion, engine);
+            Spark.post("", peticionController::guardar);
+        });
+
         Spark.path("/organizacion", () -> {
             Spark.get("/:idOrganizacion", organizacionController::mostrar,engine);
             Spark.get("/:idOrganizacion/reportes",reporteController::mostrar, engine);
             Spark.post("/:idOrganizacion/:idPeticion/:idSector", peticionController::aceptarPeticion);
+            Spark.get("/:idOrganizacion/peticion", peticionController::mostrar, engine);
         });
     }
 }
