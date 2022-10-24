@@ -102,14 +102,18 @@ public class GeneradorDeReportes {
     }
 
 
-    public static void reporteDeHCdeSectores(Organizacion organizacion){
+    public static List<ReporteSectoresOrganizacionDTO> reporteDeHCdeSectores(Organizacion organizacion){
+        List<ReporteSectoresOrganizacionDTO> reportes=new ArrayList<ReporteSectoresOrganizacionDTO>();
+
         System.out.println("IMPACTO DE LOS SECTORES DE LA ORGANIZACION: " + organizacion.getRazonSocial());
         organizacion.getSectores().stream().forEach(sector -> {
             System.out.println("IMPACTO DEL SECTOR " + sector.getNombre());
             int valorHC = sector.getMiembros().stream().mapToInt(m -> CalculadoraHC.calcularHCMiembro(m).getValor()).sum();
             HuellaDeCarbono hc = new HuellaDeCarbono(valorHC);
             System.out.println(hc.getValorConUnidad());
+            reportes.add(new ReporteSectoresOrganizacionDTO(sector.getNombre(), hc.getValorConUnidad()));
         });
+        return reportes;
     }
 
 }

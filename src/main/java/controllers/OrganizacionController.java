@@ -1,6 +1,7 @@
 package controllers;
 
 import models.Organizacion.Organizacion;
+import models.Reportes.GeneradorDeReportes;
 import repositories.RepositorioOrganizacion;
 import spark.ModelAndView;
 import spark.Request;
@@ -27,7 +28,8 @@ public class OrganizacionController {
         }
         return new ModelAndView(new HashMap<String, Object>(){{
             put("organizacion", organizacionBuscado);
-            put("sectores", organizacionBuscado.getSectores()); //Prueba para el each en hbs
+//            put("sectores", organizacionBuscado.getSectores()); //Prueba para el each en hbs
+            put("reportes", GeneradorDeReportes.reporteDeHCdeSectores(organizacionBuscado));
         }},"dashboard.hbs");
     }
 

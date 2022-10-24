@@ -2,6 +2,7 @@ package server;
 
 import controllers.LoginController;
 import controllers.OrganizacionController;
+import controllers.ReporteController;
 import spark.Route;
 import spark.Spark;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -30,6 +31,7 @@ public class Router {
     private static void configure() {
         LoginController loginController = new LoginController();
         OrganizacionController organizacionController= new OrganizacionController();
+        ReporteController reporteController = new ReporteController();
 
         Spark.path("/login", () -> {
             Spark.get("", loginController::pantallaDeLogin, engine);
@@ -39,6 +41,7 @@ public class Router {
 
         Spark.path("/organizacion", () -> {
             Spark.get("/:idOrganizacion", organizacionController::mostrar,engine);
+            Spark.get("/:idOrganizacion/reportes",reporteController::mostrar, engine );
         });
     }
 }
