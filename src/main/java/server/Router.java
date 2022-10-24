@@ -2,9 +2,11 @@ package server;
 
 import controllers.LoginController;
 import controllers.OrganizacionController;
+import controllers.PeticionController;
 import controllers.ReporteController;
 import spark.Route;
 import spark.Spark;
+import spark.TemplateViewRoute;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 import spark.utils.BooleanHelper;
 import spark.utils.HandlebarsTemplateEngineBuilder;
@@ -32,6 +34,7 @@ public class Router {
         LoginController loginController = new LoginController();
         OrganizacionController organizacionController= new OrganizacionController();
         ReporteController reporteController = new ReporteController();
+        PeticionController peticionController = new PeticionController();
 
         Spark.path("/login", () -> {
             Spark.get("", loginController::pantallaDeLogin, engine);
@@ -41,7 +44,8 @@ public class Router {
 
         Spark.path("/organizacion", () -> {
             Spark.get("/:idOrganizacion", organizacionController::mostrar,engine);
-            Spark.get("/:idOrganizacion/reportes",reporteController::mostrar, engine );
+            Spark.get("/:idOrganizacion/reportes",reporteController::mostrar, engine);
+            Spark.post("/:idOrganizacion/:idPeticion/:idSector", peticionController::aceptarPeticion);
         });
     }
 }

@@ -1,6 +1,7 @@
 package models.Usuarios;
 
 import models.EntidadPersistente.EntidadPersistente;
+import models.Miembro.Miembro;
 import models.Validador.Validable;
 
 import lombok.Getter;
@@ -14,17 +15,15 @@ import javax.persistence.*;
 @Setter
 @Getter
 public class Usuario extends EntidadPersistente {
-    @Column
-    private String nombre;
-
-    @Column
-    private String apellido;
 
     @Column
     private String nombreDeUsuario;
 
     @Column
     private String contrasenia;
+
+    @OneToOne(fetch = FetchType.EAGER)
+    private Miembro miembro;
 
     @ManyToOne
     @JoinColumn(name = "rol_id", referencedColumnName = "id")

@@ -2,9 +2,12 @@ package controllers;
 
 import models.Miembro.Miembro;
 import models.Organizacion.Organizacion;
+import models.Organizacion.Peticion;
 import models.Reportes.GeneradorDeReportes;
+import models.Sector.Sector;
 import repositories.RepositorioMiembro;
 import repositories.RepositorioOrganizacion;
+import repositories.RepositorioPeticion;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -12,6 +15,8 @@ import spark.Response;
 import java.util.HashMap;
 
 public class OrganizacionController {
+
+    RepositorioOrganizacion repo = new RepositorioOrganizacion();
 
     public static String traerOrganizacion(Request request, Response response) {
         RepositorioOrganizacion repo = new RepositorioOrganizacion();

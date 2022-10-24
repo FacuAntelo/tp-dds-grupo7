@@ -85,6 +85,10 @@ public class Organizacion extends EntidadPersistente {
     @Transient
     private ExcelUtils lectorExcel; // TODO NO DEBERIA SER PARTE DE LA ENTIDAD UN LECTOR DE EXCEL, QUE TIENE QUE VER EL EXCEL CON LA ORGANIZACION
 
+    @OneToMany(fetch =FetchType.LAZY, mappedBy = "organizacion")
+    private List<Peticion> peticiones;
+
+
     public Organizacion() {
         this.datosDeActividad = new ArrayList<>();
         this.sectores = new ArrayList<>();
@@ -110,6 +114,9 @@ public class Organizacion extends EntidadPersistente {
         this.sectoresTerritoriales.add(ubicacion.getDireccion().getProvincia().getSector());
     }
 
+    public void agregarMiembroASector(Sector sector, Miembro miembro){
+        sector.agregarMiembro(miembro);
+    }
 
     public RegistroHC devolverUltimoRegistro(){
         List<RegistroHC> resultado = this.registrosHC.stream().filter(r -> r.getTipoRegistro() == TipoRegistro.TOTAL).collect(Collectors.toList());
@@ -223,5 +230,9 @@ public class Organizacion extends EntidadPersistente {
         List<Miembro> resultado = null;
         sectores.forEach(sector -> resultado.addAll(sector.getMiembros()));
         return resultado;
+    }
+
+    public void agregarPeticion(Peticion peticion){
+        peticiones.add(peticion);
     }
 }
