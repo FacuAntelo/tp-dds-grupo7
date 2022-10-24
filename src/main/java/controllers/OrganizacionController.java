@@ -1,7 +1,9 @@
 package controllers;
 
+import models.Miembro.Miembro;
 import models.Organizacion.Organizacion;
 import models.Reportes.GeneradorDeReportes;
+import repositories.RepositorioMiembro;
 import repositories.RepositorioOrganizacion;
 import spark.ModelAndView;
 import spark.Request;
@@ -20,6 +22,7 @@ public class OrganizacionController {
     }
     public ModelAndView mostrar (Request request, Response response){
         RepositorioOrganizacion repositorioOrganizacion= new RepositorioOrganizacion();
+
         String idOrganización = request.params("idOrganizacion");
         Organizacion organizacionBuscado = repositorioOrganizacion.buscar(Integer.parseInt(idOrganización));
 
@@ -28,7 +31,6 @@ public class OrganizacionController {
         }
         return new ModelAndView(new HashMap<String, Object>(){{
             put("organizacion", organizacionBuscado);
-//            put("sectores", organizacionBuscado.getSectores()); //Prueba para el each en hbs
             put("reportes", GeneradorDeReportes.reporteDeHCdeSectores(organizacionBuscado));
         }},"dashboard.hbs");
     }
