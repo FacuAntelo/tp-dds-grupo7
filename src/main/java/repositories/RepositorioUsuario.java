@@ -6,17 +6,18 @@ import models.db.EntityManagerHelper;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import java.util.List;
 
 
 public class RepositorioUsuario {
-//    public Usuario buscarPorNombreYContrasenia(String nombreUsuario, String constrasenia){
-//        Usuario usuario = new Usuario();
-//
-//        EntityManagerHelper.getEntityManager().createQuery("select u from Usuario as u where u.nombreDeUsuario = " +
-//                nombreUsuario + " and u.contraseña")
-//
-//        return usuario;
-//    }
+    public Usuario buscarPorNombreUsuarioYContrasenia(String nombreUsuario, String constrasenia){
+        return EntityManagerHelper.getEntityManager().
+                createQuery("from Usuario as u where u.nombreDeUsuario= :usuario and u.contrasenia= :pass", Usuario.class)
+                .setParameter("usuario",nombreUsuario)
+                .setParameter("pass",constrasenia)
+                .getSingleResult();
+
+    }
     public Usuario find(Integer id){
         return EntityManagerHelper.getEntityManager().find(Usuario.class,id);
     }

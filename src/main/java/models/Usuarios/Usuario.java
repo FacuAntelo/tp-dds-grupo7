@@ -32,13 +32,13 @@ public class Usuario extends EntidadPersistente {
     private String email;
 
 //    @OneToOne(fetch = FetchType.EAGER)
-    @Transient
-    private Miembro miembro;
-
-//    @ManyToOne
-//    @JoinColumn(name = "rol_id", referencedColumnName = "id")
-    @Transient
-    private Rol rol;
+//    @Transient
+//    private Miembro miembro;
+//
+////    @ManyToOne
+////    @JoinColumn(name = "rol_id", referencedColumnName = "id")
+//    @Transient
+//    private Rol rol;
 
     public Usuario(){}
 

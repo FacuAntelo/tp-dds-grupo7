@@ -47,24 +47,9 @@ public class LoginController {
 //    }
 
     public Response login(Request request, Response response) {
-        System.out.println("HOLLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-        System.out.println(request.queryParams("usuario"));
-        System.out.println(request.queryParams("password"));
         try {
-            String query = "from "
-                    + Usuario.class.getName()
-                    +" WHERE usuario='"
-                    + request.params("usuario")
-                    +"' AND contrasenia='"
-                    + request.params("password")
-                    +"'";
-            Usuario usuario = (Usuario) EntityManagerHelper
-                    .getEntityManager()
-                    .createQuery(query)
-                    .getSingleResult();
+            Usuario usuario = repositorioUsuario.buscarPorNombreUsuarioYContrasenia(request.queryParams("usuario"),request.queryParams("password"));
 
-            System.out.println(request.params("usuario"));
-            System.out.println(request.params("password"));
             if(usuario != null) {
                 RepositorioUsuario repo = new RepositorioUsuario();
 
