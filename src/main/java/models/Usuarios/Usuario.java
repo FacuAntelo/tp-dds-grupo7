@@ -16,11 +16,20 @@ import javax.persistence.*;
 @Getter
 public class Usuario extends EntidadPersistente {
 
-    @Column
+    @Column(name = "nombre")
+    private String nombre;
+
+    @Column(name = "apellido")
+    private String apellido;
+
+    @Column(name ="usuario")
     private String nombreDeUsuario;
 
-    @Column
+    @Column(name = "contraseña")
     private String contrasenia;
+
+    @Column(name = "email")
+    private String email;
 
     @OneToOne(fetch = FetchType.EAGER)
     private Miembro miembro;
@@ -28,6 +37,8 @@ public class Usuario extends EntidadPersistente {
     @ManyToOne
     @JoinColumn(name = "rol_id", referencedColumnName = "id")
     private Rol rol;
+
+    public Usuario(){}
 
     public Usuario(String usuario, String contrasenia) {
         super();

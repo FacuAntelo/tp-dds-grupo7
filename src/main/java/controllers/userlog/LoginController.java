@@ -1,14 +1,17 @@
-package controllers;
+package controllers.userlog;
 
 import models.Miembro.Miembro;
 import models.Usuarios.Usuario;
 import models.db.EntityManagerHelper;
 import repositories.RepositorioMiembro;
+import repositories.RepositorioUsuario;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 
 public class LoginController {
+
+    RepositorioUsuario repositorioUsuario = new RepositorioUsuario();
 
     public ModelAndView pantallaDeLogin(Request request, Response response) {
         return new ModelAndView(null, "login.hbs");

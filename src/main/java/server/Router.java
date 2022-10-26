@@ -1,12 +1,10 @@
 package server;
 
 import controllers.*;
-import spark.Route;
+import controllers.userlog.LoginController;
+import controllers.userlog.RegisterController;
 import spark.Spark;
-import spark.TemplateViewRoute;
 import spark.template.handlebars.HandlebarsTemplateEngine;
-import spark.utils.BooleanHelper;
-import spark.utils.HandlebarsTemplateEngineBuilder;
 import spark.utils.BooleanHelper;
 import spark.utils.HandlebarsTemplateEngineBuilder;
 
@@ -33,11 +31,19 @@ public class Router {
         ReporteController reporteController = new ReporteController();
         PeticionController peticionController = new PeticionController();
         MiembroController miembroController = new MiembroController();
+        RegisterController registerController = new RegisterController();
+
 
         Spark.path("/login", () -> {
             Spark.get("", loginController::pantallaDeLogin, engine);
             Spark.post("", loginController::login);
             Spark.post("/logout", loginController::logout);
+        });
+
+        Spark.path("/register", () -> {
+            Spark.get("", RegisterController::getPantallaRegister);
+            Spark.post("/", RegisterController::obtenerDatos);
+            Spark.get("/sucess", RegisterController::succesRegister);
         });
 
         Spark.path("/peticion", () ->{

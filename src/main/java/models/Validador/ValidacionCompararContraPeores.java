@@ -12,7 +12,7 @@ public class ValidacionCompararContraPeores extends CriterioValidador{
 
     @Override
     public boolean esValida(String clave) throws FileNotFoundException {
-        Path path = Paths.get("src\\main\\java\\Validador\\password-list-top-10000.txt");
+        Path path = Paths.get("src/main/java/models/Validador/password-list-top-10000.txt");
 
         File archivo = new File(path.toAbsolutePath().toString());
         Scanner lector = new Scanner(archivo);
