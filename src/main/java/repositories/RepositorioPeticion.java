@@ -16,6 +16,19 @@ public class RepositorioPeticion {
         peticionList.forEach(EntityManagerHelper::persist);
         EntityManagerHelper.commit();
     }
+    public void actualizar(Peticion... peticion){
+        EntityManagerHelper.beginTransaction();
+        List<Peticion> peticionList = Arrays.asList(peticion);
+        peticionList.forEach(EntityManagerHelper.entityManager()::merge);
+        EntityManagerHelper.commit();
+    }
+    public void eliminar(Peticion... peticion){
+        EntityManagerHelper.beginTransaction();
+        List<Peticion> peticionList = Arrays.asList(peticion);
+        peticionList.forEach(EntityManagerHelper.entityManager()::remove);
+        EntityManagerHelper.commit();
+    }
+
     public List<Peticion> buscarTodos(int idOrganizacion){
         List<Peticion> peticionList = EntityManagerHelper.getEntityManager().createQuery("from Peticion",Peticion.class).getResultList();
         peticionList = peticionList.stream().filter(x -> x.getOrganizacion().getId()==idOrganizacion).collect(Collectors.toList());
@@ -23,7 +36,7 @@ public class RepositorioPeticion {
         return peticionList;
     }
 
-    public Peticion findByID(Long id){
+    public Peticion findByID(int id){
         return EntityManagerHelper.getEntityManager().find(Peticion.class,id);
     }
 }

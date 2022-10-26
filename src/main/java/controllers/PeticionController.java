@@ -57,12 +57,30 @@ public class PeticionController {
     }
 
     //TODOS LOS DATOS SE OBTIENEN DE LOS TEMPLATES, NO POR RUTA
+//    public Response aceptarPeticion(Request request, Response response){
+//        Peticion peticion = repositorioPeticion.findByID(Long.valueOf(request.queryParams("idPeticion")));
+//
+//        Miembro nuevoMiembro = new Miembro(peticion.getNombre(), peticion.getApellido(), peticion.getTipoDocumento(), peticion.getNumDoc());
+//
+//        response.redirect("/organizacion"+request.queryParams("idOrganizacion"));
+//        return response;
+//    }
+
     public Response aceptarPeticion(Request request, Response response){
-        Peticion peticion = repositorioPeticion.findByID(Long.valueOf(request.queryParams("idPeticion")));
+        Peticion peticion = repositorioPeticion.findByID(Integer.parseInt(request.params("idPeticion")));
+        peticion.setEstadoPeticion(EstadoPeticion.ACEPTADA);
+        repositorioPeticion.actualizar(peticion);
 
-        Miembro nuevoMiembro = new Miembro(peticion.getNombre(), peticion.getApellido(), peticion.getTipoDocumento(), peticion.getNumDoc());
+        response.redirect("/organizacion/"+request.params("idOrganizacion")+"/peticion");
+        return response;
+    }
 
-        response.redirect("/organizacion"+request.queryParams("idOrganizacion"));
+    public Response rechazarPeticion(Request request, Response response){
+        Peticion peticion = repositorioPeticion.findByID(Integer.parseInt(request.params("idPeticion")));
+        peticion.setEstadoPeticion(EstadoPeticion.RECHAZADA);
+        repositorioPeticion.actualizar(peticion);
+
+        response.redirect("/organizacion/"+request.params("idOrganizacion")+"/peticion");
         return response;
     }
 

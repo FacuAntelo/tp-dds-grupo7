@@ -11,22 +11,53 @@
                                     <th scope="col">Numero de documento</th>
                                     <th scope="col">Email</th>
                                     <th scope="col">Estado</th>
+                                    <th scope="col"></th>
                                 </tr>
                             </thead>
+
                             <tbody>
                             {{#each peticiones}}
                                 <tr>
-                                    <th scope="row"></th>
+                                    <td>{{id}}</td>
                                     <td>{{nombre}}</td>
                                     <td>{{apellido}}</td>
                                     <td>{{numDoc}}</td>
                                     <td>{{email}}</td>
                                     <td>{{estadoPeticion}}</td>
+                                    <td class="check-state">
+                                        <form method="POST" action="/organizacion/{{organizacion.id}}/peticion/{{id}}/aceptar">
+                                            <button class="bi bi-check-circle" onclick="aceptarPeticion(this)" type="submit"></button>
+                                        </form>
+                                        <form method="POST" action="/organizacion/{{organizacion.id}}/peticion/{{id}}/rechazar">
+                                            <button class="bi bi-x-circle" onclick="rechazarPeticion(this)" type="submit"></button>
+                                        </form>
+                                    </td>
                                 </tr>
                             {{/each}}
                             </tbody>
+
                         </table>
                     </div>
                 </div>
+{{/partial}}
+{{> base.hbs }}
+
+{{#partial "script" }}
+    function aceptarPeticion(element){
+                const xCircle = document.getElementsByClassName('bi-x-circle');
+                if(!element.classList.contains("block")){
+                    element.classList.add("acept");
+                    xCircle[0].classList.add("block");
+                }
+            }
+
+            function rechazarPeticion(element){
+                const checkCircle = document.getElementsByClassName('bi-check-circle');
+
+                if(!element.classList.contains("block")){
+                    element.classList.add("decline");
+                    checkCircle[0].classList.add("block");
+                }
+            }
 {{/partial}}
 {{> base.hbs }}

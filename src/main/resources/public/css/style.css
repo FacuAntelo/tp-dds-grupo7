@@ -117,7 +117,31 @@
     font-weight: bold;
     border: none;
   }
-  
+
+  td.check-state{
+      display: flex;
+  }
+.check-state .bi{
+    font-size: 25px;
+    cursor: pointer;
+    border: none;
+    background: none;
+
+}
+.bi-check-circle:hover,
+.acept{
+    color: green;
+}
+.bi-x-circle:hover,
+.decline{
+    color: red;
+}
+
+.block,
+.block:hover{
+    color: rgb(133, 133, 133);
+}
+
   @media (min-width : 500px) {
     #sidebar-wrapper {
       margin-left: 0;

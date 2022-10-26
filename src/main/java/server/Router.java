@@ -47,11 +47,12 @@ public class Router {
             Spark.post("", peticionController::guardar);
         });
 
-        Spark.path("/organizacion", () -> {
-            Spark.get("/:idOrganizacion", organizacionController::mostrar,engine);
-            Spark.get("/:idOrganizacion/reportes",reporteController::mostrar, engine);
-            Spark.post("/:idOrganizacion/:idPeticion/:idSector", peticionController::aceptarPeticion);
-            Spark.get("/:idOrganizacion/peticion", peticionController::mostrar, engine);
+        Spark.path("/organizacion/:idOrganizacion", () -> {
+            Spark.get("", organizacionController::mostrar,engine);
+            Spark.get("/reportes",reporteController::mostrar, engine);
+            Spark.get("/peticion", peticionController::mostrar, engine);
+            Spark.post("/peticion/:idPeticion/aceptar", peticionController::aceptarPeticion);
+            Spark.post("/peticion/:idPeticion/rechazar", peticionController::rechazarPeticion);
         });
     }
 }
