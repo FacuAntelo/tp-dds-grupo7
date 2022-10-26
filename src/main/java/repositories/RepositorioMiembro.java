@@ -1,15 +1,17 @@
 package repositories;
 
+        import models.DTO.TramoDTO;
+        import models.DTO.TrayectoDTO;
         import models.Miembro.Miembro;
         import models.Organizacion.Organizacion;
-        import models.Sector.Sector;
         import models.db.EntityManagerHelper;
+        import models.trayecto.Tramo;
         import models.trayecto.Trayecto;
 
         import javax.persistence.EntityManager;
+        import java.util.ArrayList;
         import java.util.Arrays;
         import java.util.List;
-        import java.util.stream.Collectors;
 
 public class RepositorioMiembro {
 
@@ -50,4 +52,50 @@ public class RepositorioMiembro {
                         "where m.id = :id", Organizacion.class)
                 .setParameter("id", miembro.getId()).getSingleResult();
     }
+
+    public List<TrayectoDTO>buscarTrayectos(Miembro miembro){
+        List<Trayecto> trayectos = this.buscar(miembro.getId()).getTrayectos();
+        List<TrayectoDTO> trayectoDTOList= new ArrayList<>();
+
+        trayectos.forEach(t ->{
+            TrayectoDTO trayectoDTO= new TrayectoDTO();
+            trayectoDTO.setId(t.getId());
+            trayectoDTO.setDistanciaTotal(t.getDistanciaTotal());
+            trayectoDTO.setDireccionInicioCalle(t.getPuntoInicio().getCalle());
+            trayectoDTO.setDireccionInicioAltura(t.getPuntoInicio().getAltura());
+            trayectoDTO.setDireccionFinLocalidad(Integer.toString(t.getPuntoInicio().getLocalidad().getNumeroLocalidad()));
+            trayectoDTO.setDireccionInicioProvincia(t.getPuntoInicio().getProvincia().getProvincia());
+            trayectoDTO.setDireccionFinCalle(t.getPuntoFin().getCalle());
+            trayectoDTO.setDireccionFinAltura(t.getPuntoFin().getAltura());
+            trayectoDTO.setDireccionFinLocalidad(Integer.toString(t.getPuntoFin().getLocalidad().getNumeroLocalidad()));
+            trayectoDTO.setDireccionFinProvincia(t.getPuntoFin().getProvincia().getProvincia());
+            trayectoDTOList.add(trayectoDTO);
+        });
+
+        return trayectoDTOList;
+    }
+
+    public List<TramoDTO>buscarTramos(Miembro miembro, int idTrayecto){
+        List<Tramo> tramos = this.buscar(miembro.getId()).getTramos();
+        List<TramoDTO> tramoDTOList= new ArrayList<>();
+
+        tramos.forEach(t ->{
+            TramoDTO tramoDTO= new TramoDTO();
+            tramoDTO.setId(t.getId());
+            tramoDTO.setTipoTransporte(t.getMedioDeTransporte().getTipoTransporte());
+            tramoDTO.setHoraInicio(t.getHoraInicio());
+            tramoDTO.setDireccionInicioCalle(t.getUbicacionInicio().getCalle());
+            tramoDTO.setDireccionInicioAltura(t.getUbicacionInicio().getAltura());
+            tramoDTO.setDireccionFinLocalidad(Integer.toString(t.getUbicacionInicio().getLocalidad().getNumeroLocalidad()));
+            tramoDTO.setDireccionInicioProvincia(t.getUbicacionInicio().getProvincia().getProvincia());
+            tramoDTO.setDireccionFinCalle(t.getUbicacionFinal().getCalle());
+            tramoDTO.setDireccionFinAltura(t.getUbicacionFinal().getAltura());
+            tramoDTO.setDireccionFinLocalidad(Integer.toString(t.getUbicacionFinal().getLocalidad().getNumeroLocalidad()));
+            tramoDTO.setDireccionFinProvincia(t.getUbicacionFinal().getProvincia().getProvincia());
+            tramoDTOList.add(tramoDTO);
+        });
+
+        return tramoDTOList;
+    }
+
 }

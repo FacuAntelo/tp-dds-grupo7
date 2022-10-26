@@ -1,0 +1,30 @@
+{{#partial "contenido" }}
+<div class="row my-5">
+    <h3 class="fs-4 mb-3">Tramos</h3>
+    <div class="col">
+        <table class="table bg-white rounded shadow-sm  table-hover">
+            <thead>
+            <tr>
+                <th scope="col" width="10"></th>
+                <th scope="col">Hora inicio</th>
+                <th scope="col">Medio de transporte</th>
+                <th scope="col">Direccion Inicio</th>
+                <th scope="col">Direccion Fin</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#each tramos}}
+            <tr>
+                <th scope="row"></th>
+                <td>{{horaInicio}}</td>
+                <td>{{tipoTransporte}}</td>
+                <td>{{direccionInicioCalle}}, {{direccionInicioAltura}}, {{direccionInicioLocalidad}}, {{direccionInicioProvincia}}</td>
+                <td>{{direccionFinCalle}}, {{direccionFinAltura}}, {{direccionFinLocalidad}}, {{direccionFinProvincia}}</td>
+            </tr>
+            {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>
+{{/partial}}
+{{> baseMiembro.hbs }}

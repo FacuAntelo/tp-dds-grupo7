@@ -1,3 +1,7 @@
+{{#partial "titulo" }}
+<title>Peticiones</title>
+{{/partial}}
+
 {{#partial "contenido" }}
                 <div class="row my-5">
                     <h3 class="fs-4 mb-3">Peticiones</h3>
@@ -25,10 +29,10 @@
                                     <td>{{email}}</td>
                                     <td>{{estadoPeticion}}</td>
                                     <td class="check-state">
-                                        <form method="POST" action="/organizacion/{{organizacion.id}}/peticion/{{id}}/aceptar">
+                                        <form method="POST" action="/organizacion/{{organizacion.id}}/peticiones/{{id}}/aceptar">
                                             <button class="bi bi-check-circle" onclick="aceptarPeticion(this)" type="submit"></button>
                                         </form>
-                                        <form method="POST" action="/organizacion/{{organizacion.id}}/peticion/{{id}}/rechazar">
+                                        <form method="POST" action="/organizacion/{{organizacion.id}}/peticiones/{{id}}/rechazar">
                                             <button class="bi bi-x-circle" onclick="rechazarPeticion(this)" type="submit"></button>
                                         </form>
                                     </td>
@@ -40,7 +44,7 @@
                     </div>
                 </div>
 {{/partial}}
-{{> base.hbs }}
+
 
 {{#partial "script" }}
     function aceptarPeticion(element){
@@ -60,4 +64,4 @@
                 }
             }
 {{/partial}}
-{{> base.hbs }}
+{{> baseOrganizacion.hbs }}

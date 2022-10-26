@@ -1,9 +1,6 @@
 package server;
 
-import controllers.LoginController;
-import controllers.OrganizacionController;
-import controllers.PeticionController;
-import controllers.ReporteController;
+import controllers.*;
 import spark.Route;
 import spark.Spark;
 import spark.TemplateViewRoute;
@@ -35,6 +32,7 @@ public class Router {
         OrganizacionController organizacionController= new OrganizacionController();
         ReporteController reporteController = new ReporteController();
         PeticionController peticionController = new PeticionController();
+        MiembroController miembroController = new MiembroController();
 
         Spark.path("/login", () -> {
             Spark.get("", loginController::pantallaDeLogin, engine);
@@ -50,9 +48,14 @@ public class Router {
         Spark.path("/organizacion/:idOrganizacion", () -> {
             Spark.get("", organizacionController::mostrar,engine);
             Spark.get("/reportes",reporteController::mostrar, engine);
-            Spark.get("/peticion", peticionController::mostrar, engine);
-            Spark.post("/peticion/:idPeticion/aceptar", peticionController::aceptarPeticion);
-            Spark.post("/peticion/:idPeticion/rechazar", peticionController::rechazarPeticion);
+            Spark.get("/peticiones", peticionController::mostrar, engine);
+            Spark.post("/peticiones/:idPeticion/aceptar", peticionController::aceptarPeticion);
+            Spark.post("/peticiones/:idPeticion/rechazar", peticionController::rechazarPeticion);
+        });
+
+        Spark.path("/miembro/:idMiembro", () -> {
+            Spark.get("", miembroController::mostrarTrayectos,engine);
+            Spark.get("/:idTrayecto/tramos",miembroController::mostrarTramos, engine);
         });
     }
 }

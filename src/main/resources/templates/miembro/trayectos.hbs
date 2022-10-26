@@ -1,0 +1,30 @@
+{{#partial "contenido" }}
+<div class="row my-5">
+    <h3 class="fs-4 mb-3">Trayectos</h3>
+    <div class="col">
+        <table class="table bg-white rounded shadow-sm  table-hover">
+            <thead>
+            <tr>
+                <th scope="col" width="50">#</th>
+                <th scope="col">Distancia total</th>
+                <th scope="col">Direccion Inicio</th>
+                <th scope="col">Direccion Fin</th>
+                <th scope="col">Tramos</th>
+            </tr>
+            </thead>
+            <tbody>
+                {{#each trayectos}}
+                    <tr>
+                        <th scope="row"></th>
+                        <td>{{distanciaTotal}}</td>
+                        <td>{{direccionInicioCalle}}, {{direccionInicioAltura}}, {{direccionInicioLocalidad}}, {{direccionInicioProvincia}}</td>
+                        <td>{{direccionFinCalle}}, {{direccionFinAltura}}, {{direccionFinLocalidad}}, {{direccionFinProvincia}}</td>
+                        <td><a href="/miembro/{{nombre.id}}/{{id}}/tramos">Ver tramos</a></td>
+                    </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>
+{{/partial}}
+{{> baseMiembro.hbs }}

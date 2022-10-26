@@ -117,7 +117,9 @@
     font-weight: bold;
     border: none;
   }
-
+td{
+    vertical-align: middle !important;
+}
   td.check-state{
       display: flex;
   }

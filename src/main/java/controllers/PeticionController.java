@@ -71,7 +71,7 @@ public class PeticionController {
         peticion.setEstadoPeticion(EstadoPeticion.ACEPTADA);
         repositorioPeticion.actualizar(peticion);
 
-        response.redirect("/organizacion/"+request.params("idOrganizacion")+"/peticion");
+        response.redirect("/organizacion/"+request.params("idOrganizacion")+"/peticiones");
         return response;
     }
 
@@ -80,7 +80,7 @@ public class PeticionController {
         peticion.setEstadoPeticion(EstadoPeticion.RECHAZADA);
         repositorioPeticion.actualizar(peticion);
 
-        response.redirect("/organizacion/"+request.params("idOrganizacion")+"/peticion");
+        response.redirect("/organizacion/"+request.params("idOrganizacion")+"/peticiones");
         return response;
     }
 

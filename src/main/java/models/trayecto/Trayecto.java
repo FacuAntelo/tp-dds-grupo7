@@ -1,12 +1,15 @@
 package models.trayecto;
 
+import lombok.Getter;
+import lombok.Setter;
 import models.EntidadPersistente.EntidadPersistente;
 
 import javax.persistence.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
+@Getter
+@Setter
 @Entity
 @Table(name = "trayecto")
 public class Trayecto extends EntidadPersistente {
