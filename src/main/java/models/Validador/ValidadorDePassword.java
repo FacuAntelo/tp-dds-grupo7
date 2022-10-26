@@ -9,6 +9,9 @@ public class ValidadorDePassword implements Validable{
 
     public ValidadorDePassword() {
         this.criterios = new ArrayList<>();
+        this.criterios.add(new ValidacionCompararContraPeores());
+        this.criterios.add(new ValidacionPorLongitud());
+        this.criterios.add(new ValidacionPorComplejidad());
     }
 
     @Override

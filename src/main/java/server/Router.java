@@ -41,9 +41,9 @@ public class Router {
         });
 
         Spark.path("/register", () -> {
-            Spark.get("", RegisterController::getPantallaRegister);
-            Spark.post("/", RegisterController::obtenerDatos);
-            Spark.get("/sucess", RegisterController::succesRegister);
+            Spark.get("", registerController::getPantallaRegister, engine);
+            Spark.post("", registerController::obtenerDatos);
+            Spark.get("/sucess", RegisterController::succesRegister, engine);
         });
 
         Spark.path("/peticion", () ->{
