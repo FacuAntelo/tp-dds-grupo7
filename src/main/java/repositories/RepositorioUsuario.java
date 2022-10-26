@@ -9,6 +9,14 @@ import javax.persistence.NoResultException;
 
 
 public class RepositorioUsuario {
+//    public Usuario buscarPorNombreYContrasenia(String nombreUsuario, String constrasenia){
+//        Usuario usuario = new Usuario();
+//
+//        EntityManagerHelper.getEntityManager().createQuery("select u from Usuario as u where u.nombreDeUsuario = " +
+//                nombreUsuario + " and u.contraseña")
+//
+//        return usuario;
+//    }
     public Usuario find(Integer id){
         return EntityManagerHelper.getEntityManager().find(Usuario.class,id);
     }

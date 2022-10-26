@@ -46,27 +46,31 @@ public class LoginController {
 //        return response;
 //    }
 
-    //MODIFICO LOGIN PARA QUE TOME NOMBRE Y DNI DEL MIEMBRO
     public Response login(Request request, Response response) {
+        System.out.println("HOLLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+        System.out.println(request.queryParams("usuario"));
+        System.out.println(request.queryParams("password"));
         try {
             String query = "from "
-                    + Miembro.class.getName()
-                    +" WHERE nombre='"
-                    + request.queryParams("email")
-                    +"' AND numDoc='"
-                    + request.queryParams("password")
+                    + Usuario.class.getName()
+                    +" WHERE usuario='"
+                    + request.params("usuario")
+                    +"' AND contrasenia='"
+                    + request.params("password")
                     +"'";
-            Miembro usuario = (Miembro) EntityManagerHelper //Despues modificar para que sea usuario
+            Usuario usuario = (Usuario) EntityManagerHelper
                     .getEntityManager()
                     .createQuery(query)
                     .getSingleResult();
 
+            System.out.println(request.params("usuario"));
+            System.out.println(request.params("password"));
             if(usuario != null) {
-                RepositorioMiembro repo = new RepositorioMiembro();
+                RepositorioUsuario repo = new RepositorioUsuario();
 
                 request.session(true);
                 request.session().attribute("id", usuario.getId());
-                response.redirect("/organizacion/"+ repo.buscarOrganizacionQuePertenece(usuario).getId());
+                response.redirect("/organizacion/1");
             }
             else {
                 response.redirect("/login");
