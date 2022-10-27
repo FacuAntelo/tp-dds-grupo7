@@ -29,16 +29,23 @@
 
                     <h2 class="fw-bold mb-2 text-uppercase">Peticion</h2>
 
-                    <form method="POST" action="/usuario/{{usuario.id}}/peticion">
+                    <form method="GET" action="/usuario/{{usuario.id}}/peticion/{{razonSocial}}">
                         <div class="elegirOrganizacion-container">
                             <select class="form-select" aria-label="Default select example" name ="idOrganizacion">
-                              <option selected>elegir</option>
+                              <option selected>Organizacion a elegir</option>
                               {{#each organizaciones}}
-                              <option type="submit" value="{{id}}">{{razonSocial}}</option>
+                              <option type="submit" value="{{id}}" href"/usuario/{{usuario.id}}/peticion/{{id}}">{{razonSocial}}</option>
                               {{/each}}
                             </select>
+
+{{!--                             <select class="form-select" aria-label="Default select example" name ="idSector"> --}}
+{{!--                               <option selected>Sector a elegir</option> --}}
+{{!--                               {{#each sectores}} --}}
+{{!--                               <option type="submit" value="{{id}}">{{nombre}}</option> --}}
+{{!--                               {{/each}} --}}
+{{!--                             </select> --}}
                         </div>
-                        <button class="btn btn-outline-light btn-lg px-5" type="submit" href"/usuario/{{usuario.id}}/peticion">Enviar</button>
+                        <button class="btn btn-outline-light btn-lg px-5" type="submit" href"/usuario/{{usuario.id}}/peticion/1">Siguiente</button>
                      </form>
                   </div>
 
@@ -49,6 +56,16 @@
         </div>
       </section>
     </main>
+
+  <script>
+        var organizacionId;
+        function guardarOrganizacionId(element){
+                    organizacionId=element.value;
+                    console.log(organizacionId);
+                }
+
+
+  </script>
 
 </body>
 </html>

@@ -58,6 +58,7 @@ public class Router {
             Spark.get("/organizaciones/",usuarioController::mostrarOrganizaciones);
             Spark.get("/peticion", usuarioController::pantallaDePeticion, engine);
             Spark.post("/peticion", peticionController::guardar);
+            Spark.get("/peticion/:idOrganizacion", usuarioController::pantallaDePeticionSiguiente,engine);
 
         });
 

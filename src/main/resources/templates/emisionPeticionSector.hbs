@@ -29,23 +29,17 @@
 
                     <h2 class="fw-bold mb-2 text-uppercase">Peticion</h2>
 
-                    <form method="GET" action="/usuario/{{usuario.id}}/peticion/{{razonSocial}}">
+                    <form method="POST" action="/usuario/{{usuario.id}}/peticion">
                         <div class="elegirOrganizacion-container">
-                            <select class="form-select" aria-label="Default select example" name ="idOrganizacion">
-                              <option selected>Organizacion a elegir</option>
-                              {{#each organizaciones}}
-                              <option type="submit" value="{{id}}" href"/usuario/{{usuario.id}}/peticion/{{id}}">{{razonSocial}}</option>
+
+                            <select class="form-select" aria-label="Default select example" name ="idSector">
+                              <option selected>Sector a elegir</option>
+                              {{#each sectores}}
+                              <option type="submit" value="{{id}}">{{nombre}}</option>
                               {{/each}}
                             </select>
-
-{{!--                             <select class="form-select" aria-label="Default select example" name ="idSector"> --}}
-{{!--                               <option selected>Sector a elegir</option> --}}
-{{!--                               {{#each sectores}} --}}
-{{!--                               <option type="submit" value="{{id}}">{{nombre}}</option> --}}
-{{!--                               {{/each}} --}}
-{{!--                             </select> --}}
                         </div>
-                        <button class="btn btn-outline-light btn-lg px-5" type="submit" href"/usuario/{{usuario.id}}/peticion/1">Siguiente</button>
+                        <button class="btn btn-outline-light btn-lg px-5" type="submit" href"/usuario/{{usuario.id}}/peticion">Enviar</button>
                      </form>
                   </div>
 
@@ -58,11 +52,12 @@
     </main>
 
   <script>
-        var organizacionId;
-        function guardarOrganizacionId(element){
-                    organizacionId=element.value;
-                    console.log(organizacionId);
-                }
+        const sectoresList = sectores;
+
+        const sector = document.querySelector('[name=idSector]');
+        document.querySelector('[name=idOrganizacion]').addEventListener('change', function(e) {
+          price.innerHTML = prices[this.value].reduce((acc, elem) => `${acc}<option value="${elem.value}">${elem.desc}</option>`, "");
+        });
 
 
   </script>
