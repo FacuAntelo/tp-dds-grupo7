@@ -51,7 +51,6 @@ public class LoginController {
             Usuario usuario = repositorioUsuario.buscarPorNombreUsuarioYContrasenia(request.queryParams("usuario"),request.queryParams("password"));
 
             if(usuario != null) {
-                RepositorioUsuario repo = new RepositorioUsuario();
 
                 request.session(true);
                 request.session().attribute("id", usuario.getId());

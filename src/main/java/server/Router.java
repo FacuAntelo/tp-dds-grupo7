@@ -55,6 +55,7 @@ public class Router {
 
         Spark.path("/usuario/:idUsuario", () -> {
             Spark.get("", usuarioController::pantallaHome, engine);
+            Spark.get("/organizaciones/",usuarioController::mostrarOrganizaciones);
         });
 
         Spark.path("/organizacion/:idOrganizacion", () -> {

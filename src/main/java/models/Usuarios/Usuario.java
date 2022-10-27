@@ -9,6 +9,8 @@ import lombok.Setter;
 
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "usuario")
@@ -31,9 +33,8 @@ public class Usuario extends EntidadPersistente {
     @Column(name = "email")
     private String email;
 
-//    @OneToOne(fetch = FetchType.EAGER)
-//    @Transient
-//    private Miembro miembro;
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "usuario")
+    private List<Miembro> miembros = new ArrayList<>();
 //
 ////    @ManyToOne
 ////    @JoinColumn(name = "rol_id", referencedColumnName = "id")

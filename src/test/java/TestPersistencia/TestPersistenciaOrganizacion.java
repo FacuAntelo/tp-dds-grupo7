@@ -54,10 +54,17 @@ public class TestPersistenciaOrganizacion {
 
 
     }
+
+    @Test
+    public void recuperarOrganizacionConIdUsuario(){
+        Integer idUsuario = 1;
+        List<Organizacion> organizaciones = repo.buscarOrganizacionesDeUsuario(idUsuario);
+        Assert.assertEquals(2,organizaciones.size());
+    }
     
 
     public Organizacion getOrganizacion() throws IOException {
-        String path = new String("src\\main\\java\\models\\Main\\Libro1.xlsx");
+        String path = new String("src\\main\\java\\models\\Libro1.xlsx");
 
         ServicioGeoDDS servicioGeoDDS = ServicioGeoDDS.getInstance();
         servicioGeoDDS.setAdapter(new ServicioGeoDDSRetrofitAdapter());

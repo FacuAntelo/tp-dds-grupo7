@@ -40,4 +40,6 @@ public class RepositorioUsuario {
         em.persist(usuario);
         EntityManagerHelper.commit();
     }
+
+
 }

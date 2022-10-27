@@ -53,4 +53,13 @@ public class RepositorioOrganizacion {
                 createQuery("select s from Organizacion as o inner join o.sectores as s where o.id = :idOrganizacion", Sector.class).
                 setParameter("idOrganizacion", idOrganizacion).getResultList();
     }
+
+    public List<Organizacion> buscarOrganizacionesDeUsuario(Integer idUsuario) {
+        List<Organizacion> organizacionList = EntityManagerHelper.getEntityManager().createQuery("" +
+                "select o from Organizacion as o", Organizacion.class).getResultList();
+        organizacionList = organizacionList.stream().filter(
+                o -> o.getSectores().stream().flatMap(s -> s.getMiembros().stream())
+                        .anyMatch(m -> m.getUsuario().getId() == idUsuario)).collect(Collectors.toList());
+        return organizacionList;
+    }
 }
