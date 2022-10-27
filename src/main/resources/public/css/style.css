@@ -144,6 +144,30 @@ td{
     color: rgb(133, 133, 133);
 }
 
+.elegirOrganizacion-container{
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+
+}
+
+.desplegableOrganizacion{
+    display: flex;
+    text-align: center;
+    width: 800px;
+
+
+}
+.desplegableOrganizacion,
+.desplegableOrganizacion:focus{
+    border: none !important;
+    background: none !important;
+}
+.elegirOrganizacion-container .show {
+    width: 800px !important;
+    min-width: 500px;
+}
+
   @media (min-width : 500px) {
     #sidebar-wrapper {
       margin-left: 0;

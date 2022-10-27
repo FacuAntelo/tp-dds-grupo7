@@ -55,7 +55,7 @@ public class LoginController {
 
                 request.session(true);
                 request.session().attribute("id", usuario.getId());
-                response.redirect("/organizacion/1");
+                response.redirect("/usuario/"+usuario.getId());
             }
             else {
                 response.redirect("/login");

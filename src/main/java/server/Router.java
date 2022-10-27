@@ -3,6 +3,7 @@ package server;
 import controllers.*;
 import controllers.userlog.LoginController;
 import controllers.userlog.RegisterController;
+import controllers.userlog.UsuarioController;
 import spark.Spark;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 import spark.utils.BooleanHelper;
@@ -32,6 +33,7 @@ public class Router {
         PeticionController peticionController = new PeticionController();
         MiembroController miembroController = new MiembroController();
         RegisterController registerController = new RegisterController();
+        UsuarioController usuarioController = new UsuarioController();
 
 
         Spark.path("/login", () -> {
@@ -49,6 +51,10 @@ public class Router {
         Spark.path("/peticion", () ->{
             Spark.get("", peticionController::pantallaDePeticion, engine);
             Spark.post("", peticionController::guardar);
+        });
+
+        Spark.path("/usuario/:idUsuario", () -> {
+            Spark.get("", usuarioController::pantallaHome, engine);
         });
 
         Spark.path("/organizacion/:idOrganizacion", () -> {
