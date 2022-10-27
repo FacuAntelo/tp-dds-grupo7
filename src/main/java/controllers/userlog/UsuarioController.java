@@ -16,6 +16,7 @@ import java.util.List;
 public class UsuarioController {
     RepositorioUsuario repositorioUsuario = new RepositorioUsuario();
     RepositorioOrganizacion repositorioOrganizacion = new RepositorioOrganizacion();
+
     public ModelAndView pantallaHome(Request request, Response response) {
         String idUsuario = request.params("idUsuario");
         Usuario usuario = repositorioUsuario.find(Integer.parseInt(idUsuario));
@@ -53,5 +54,17 @@ public class UsuarioController {
         List<Organizacion> organizacionList = repositorioOrganizacion.buscarOrganizacionesDeUsuario(Integer.valueOf(request.queryParams("idUsuario")));
         return null;
     }
+
+    public ModelAndView pantallaDePeticion(Request request, Response response) {
+        String idUsuario = request.params("idUsuario");
+        Usuario usuario = repositorioUsuario.find(Integer.parseInt(idUsuario));
+        List<Organizacion> organizaciones = repositorioOrganizacion.buscarTodos();
+
+        return new ModelAndView(new HashMap<String, Object>(){{
+            put("organizaciones", organizaciones);
+            put("usuario", usuario);
+        }},"emisionPeticion.hbs");
+    }
+
 
 }

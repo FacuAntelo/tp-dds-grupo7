@@ -1,5 +1,6 @@
 package repositories;
 
+import models.Organizacion.EstadoPeticion;
 import models.Organizacion.Organizacion;
 import models.Organizacion.Peticion;
 import models.Sector.Sector;
@@ -32,6 +33,13 @@ public class RepositorioPeticion {
     public List<Peticion> buscarTodos(int idOrganizacion){
         List<Peticion> peticionList = EntityManagerHelper.getEntityManager().createQuery("from Peticion",Peticion.class).getResultList();
         peticionList = peticionList.stream().filter(x -> x.getOrganizacion().getId()==idOrganizacion).collect(Collectors.toList());
+
+        return peticionList;
+    }
+
+    public List<Peticion> buscarPendientes(int idOrganizacion){
+        List<Peticion> peticionList = EntityManagerHelper.getEntityManager().createQuery("from Peticion",Peticion.class).getResultList();
+        peticionList = peticionList.stream().filter(x -> x.getOrganizacion().getId()==idOrganizacion && x.getEstadoPeticion()== EstadoPeticion.PENDIENTE).collect(Collectors.toList());
 
         return peticionList;
     }

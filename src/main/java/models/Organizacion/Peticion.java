@@ -6,6 +6,7 @@ import models.EntidadPersistente.EntidadPersistente;
 import models.Miembro.Miembro;
 import models.Miembro.TipoDocumento;
 import models.Sector.Sector;
+import models.Usuarios.Usuario;
 
 import javax.persistence.*;
 @Getter
@@ -25,6 +26,11 @@ public class Peticion extends EntidadPersistente {
     private String email;
     @OneToOne(fetch = FetchType.LAZY)
     private Organizacion organizacion;
+
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_usuario")
+    private Usuario usuario;
+
 
     @Enumerated(EnumType.STRING)
     private EstadoPeticion estadoPeticion;

@@ -24,6 +24,9 @@ public class Usuario extends EntidadPersistente {
     @Column(name = "apellido")
     private String apellido;
 
+    @Column(name = "DNI")
+    private String dni;
+
     @Column(name ="usuario")
     private String nombreDeUsuario;
 

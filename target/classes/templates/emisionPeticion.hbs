@@ -20,7 +20,7 @@
     <main class="row" style="position:relative;">
       <section class="form_huella vh-100 gradient-custom col-12">
         <div class="container py-5 h-100">
-          <div class="row d-flex justify-content-center align-items-center h-100">
+          <div class="row d-flex justify-content-center align-items-center h-100" style="margin-left: 90px;">
             <div class="col-12 col-md-6 col-md-8 col-lg-6 col-xl-5">
               <div class="card text-white" style="border-radius: 1rem;background-color:#0976ad;">
                 <div class="card-body p-5 text-center">
@@ -29,33 +29,16 @@
 
                     <h2 class="fw-bold mb-2 text-uppercase">Peticion</h2>
 
-                    <form method="POST" action="/peticion">
-                        <div class="form-outline form-white mb-4 form-group">
-                          <input type="text" id="typeEmailX" class="form-control form-control-lg" name="nombre"/>
-                          <label class="form-label" for="typeEmailX">Nombre</label>
+                    <form method="POST" action="/usuario/{{usuario.id}}/peticion">
+                        <div class="elegirOrganizacion-container">
+                            <select class="form-select" aria-label="Default select example" name ="idOrganizacion">
+                              <option selected>elegir</option>
+                              {{#each organizaciones}}
+                              <option type="submit" value="{{id}}">{{razonSocial}}</option>
+                              {{/each}}
+                            </select>
                         </div>
-                        <div class="form-outline form-white mb-4 form-group">
-                           <input type="text" id="typeEmailX" class="form-control form-control-lg" name="apellido"/>
-                           <label class="form-label" for="typeEmailX">Apellido</label>
-                        </div>
-                        <div class="form-outline form-white mb-4 form-group">
-                            <input type="text" id="typeEmailX" class="form-control form-control-lg" name="tipo_documento"/>
-                            <label class="form-label" for="typeEmailX">Tipo de documento</label>
-                        </div>
-                        <div class="form-outline form-white mb-4 form-group">
-                            <input type="text" id="typeEmailX" class="form-control form-control-lg" name="nro_docu"/>
-                            <label class="form-label" for="typeEmailX">DNI</label>
-                        </div>
-                        <div class="form-outline form-white mb-4 form-group">
-                                                    <input type="text" id="typeEmailX" class="form-control form-control-lg" name="email"/>
-                                                    <label class="form-label" for="typeEmailX">EMAIL</label>
-                                                </div>
-
-                        <div class="form-outline form-white mb-4 form-group">
-                             <input type="text" id="typeEmailX" class="form-control form-control-lg" name="organizacion"/>
-                             <label class="form-label" for="typeEmailX">Organizacion</label>
-                        </div>
-                        <button class="btn btn-outline-light btn-lg px-5" type="submit">Enviar</button>
+                        <button class="btn btn-outline-light btn-lg px-5" type="submit" href"/usuario/{{usuario.id}}/peticion">Enviar</button>
                      </form>
                   </div>
 

@@ -6,10 +6,10 @@
     </a>
     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
         {{#each organizaciones}}
-        <li><a class="dropdown-item" href="/organizacion/{{id}}">{{razonSocial}}</a></li>
+        <li><a class="dropdown-item" >{{razonSocial}}</a></li>
         {{/each}}
         <div class="dropdown-divider"></div>
-        <li><a class="dropdown-item" href="/peticion">Enviar peticion a nueva organizacion</a></li>
+        <li><a class="dropdown-item" href="/usuario/{{nombre.id}}/peticion">Enviar peticion a nueva organizacion</a></li>
     </ul>
 
 </div>

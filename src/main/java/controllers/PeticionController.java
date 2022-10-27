@@ -6,8 +6,10 @@ import models.Organizacion.EstadoPeticion;
 import models.Organizacion.Organizacion;
 import models.Organizacion.Peticion;
 import models.Reportes.GeneradorDeReportes;
+import models.Usuarios.Usuario;
 import repositories.RepositorioOrganizacion;
 import repositories.RepositorioPeticion;
+import repositories.RepositorioUsuario;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -19,10 +21,12 @@ public class PeticionController {
 
     RepositorioPeticion repositorioPeticion;
     RepositorioOrganizacion repositorioOrganizacion;
+    RepositorioUsuario repositorioUsuario;
 
     public PeticionController() {
         repositorioPeticion = new RepositorioPeticion();
         repositorioOrganizacion = new RepositorioOrganizacion();
+        repositorioUsuario = new RepositorioUsuario();
     }
 
     public ModelAndView pantallaDePeticion(Request request, Response response) {
@@ -30,24 +34,29 @@ public class PeticionController {
     }
 
     public Response guardar(Request request, Response response){
+        Usuario usuario = repositorioUsuario.find(Integer.valueOf(request.params("idUsuario")));
+
         Peticion peticion = new Peticion();
-        peticion.setNombre(request.queryParams("nombre"));
-        peticion.setApellido(request.queryParams("apellido"));
-//        peticion.setTipoDocumento(request.queryParams("tipo_documento"));
-        peticion.setNumDoc(request.queryParams("nro_docu"));
-        peticion.setEmail(request.queryParams("email"));
+        peticion.setNombre(usuario.getNombre());
+        peticion.setApellido(usuario.getApellido());
+        peticion.setUsuario(usuario);
+//        peticion.setTipoDocumento(usuario.get);
+//        peticion.setNumDoc(request.queryParams("nro_docu"));
+        peticion.setEmail(usuario.getEmail());
         peticion.setEstadoPeticion(EstadoPeticion.PENDIENTE);
 
-        Organizacion organizacionBuscada = repositorioOrganizacion.buscar(Integer.parseInt(request.queryParams("organizacion")));
-        peticion.setOrganizacion(organizacionBuscada);
+        System.out.println(request.queryParams("idOrganizacion"));
 
+        Organizacion organizacionBuscada = repositorioOrganizacion.buscar(Integer.parseInt(request.queryParams("idOrganizacion")));
+        peticion.setOrganizacion(organizacionBuscada);
+        System.out.println(request.queryParams("idOrganizacion") + "---------------------------------------------------");
         repositorioPeticion.guardar(peticion);
-        response.redirect("/login");
+        response.redirect("/usuario/"+usuario.getId());
         return response;
     }
 
     public ModelAndView mostrar(Request request, Response response){
-        List<Peticion> peticionList = repositorioPeticion.buscarTodos(Integer.parseInt(request.params("idOrganizacion")));
+        List<Peticion> peticionList = repositorioPeticion.buscarPendientes(Integer.parseInt(request.params("idOrganizacion")));
         Organizacion organizacionBuscado = repositorioOrganizacion.buscar(Integer.parseInt(request.params("idOrganizacion")));
 
         return new ModelAndView(new HashMap<String, Object>(){{
@@ -66,20 +75,21 @@ public class PeticionController {
 //        return response;
 //    }
 
-    public Response aceptarPeticion(Request request, Response response){
+    public Response aceptarPeticion(Request request, Response response) throws InterruptedException {
         Peticion peticion = repositorioPeticion.findByID(Integer.parseInt(request.params("idPeticion")));
         peticion.setEstadoPeticion(EstadoPeticion.ACEPTADA);
         repositorioPeticion.actualizar(peticion);
 
+        Thread.sleep(1000);
         response.redirect("/organizacion/"+request.params("idOrganizacion")+"/peticiones");
         return response;
     }
 
-    public Response rechazarPeticion(Request request, Response response){
+    public Response rechazarPeticion(Request request, Response response) throws InterruptedException {
         Peticion peticion = repositorioPeticion.findByID(Integer.parseInt(request.params("idPeticion")));
         peticion.setEstadoPeticion(EstadoPeticion.RECHAZADA);
         repositorioPeticion.actualizar(peticion);
-
+        Thread.sleep(1000);
         response.redirect("/organizacion/"+request.params("idOrganizacion")+"/peticiones");
         return response;
     }
