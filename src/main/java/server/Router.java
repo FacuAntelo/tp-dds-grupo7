@@ -60,7 +60,8 @@ public class Router {
             Spark.get("/peticion", usuarioController::pantallaDePeticion, engine);
             Spark.get("/peticion/organizacion", usuarioController::pantallaDePeticionSector);
             Spark.get("/peticion/organizacion/:idOrganizacion", usuarioController::pantallaDePeticionSectores,engine);
-//            Spark.post("/peticion/sector", usuarioController::pantallaDePeticionSector,engine);
+            Spark.post("/peticion/organizacion/:idOrganizacion",usuarioController::guardarPeticion);
+        //            Spark.post("/peticion/sector", usuarioController::pantallaDePeticionSector,engine);
         });
 
         Spark.path("/organizacion/:idOrganizacion", () -> {

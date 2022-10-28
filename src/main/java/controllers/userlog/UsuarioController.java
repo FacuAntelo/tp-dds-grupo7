@@ -1,12 +1,15 @@
 package controllers.userlog;
 
 import controllers.ReporteController;
+import models.Organizacion.EstadoPeticion;
 import models.Organizacion.Organizacion;
+import models.Organizacion.Peticion;
 import models.Reportes.GeneradorDeReportes;
 import models.Sector.Sector;
 import models.Usuarios.Usuario;
 import models.db.EntityManagerHelper;
 import repositories.RepositorioOrganizacion;
+import repositories.RepositorioPeticion;
 import repositories.RepositorioUsuario;
 import spark.ModelAndView;
 import spark.Request;
@@ -101,5 +104,28 @@ public class UsuarioController {
             put("usuario", usuario);
             put("sectores",organizacion.getSectores());
         }},"emisionPeticionSector.hbs");
+    }
+    public String guardarPeticion(Request request, Response response){
+        Usuario usuario = repositorioUsuario.find(Integer.valueOf(request.params("idUsuario")));
+        RepositorioPeticion repositorioPeticion = new RepositorioPeticion();
+
+        Peticion peticion = new Peticion();
+        peticion.setNombre(usuario.getNombre());
+        peticion.setApellido(usuario.getApellido());
+        peticion.setUsuario(usuario);
+//        peticion.setTipoDocumento(usuario.get);
+//        peticion.setNumDoc(request.queryParams("nro_docu"));
+        peticion.setEmail(usuario.getEmail());
+        peticion.setEstadoPeticion(EstadoPeticion.PENDIENTE);
+
+        System.out.println(request.queryParams("idOrganizacion"));
+
+        Organizacion organizacionBuscada = repositorioOrganizacion.buscar(Integer.parseInt(request.params("idOrganizacion")));
+        peticion.setOrganizacion(organizacionBuscada);
+        organizacionBuscada.agregarPeticion(peticion);
+        System.out.println(request.params("idOrganizacion") + "---------------------------------------------------");
+        repositorioOrganizacion.guardar(organizacionBuscada);
+        repositorioPeticion.guardar(peticion);
+        return "OK PETICION GUARDADA BRO";
     }
 }

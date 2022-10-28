@@ -85,7 +85,7 @@ public class Organizacion extends EntidadPersistente {
     @Transient
     private ExcelUtils lectorExcel; // TODO NO DEBERIA SER PARTE DE LA ENTIDAD UN LECTOR DE EXCEL, QUE TIENE QUE VER EL EXCEL CON LA ORGANIZACION
 
-    @OneToMany(fetch =FetchType.LAZY, mappedBy = "organizacion")
+    @OneToMany(fetch =FetchType.LAZY, mappedBy = "organizacion",cascade = CascadeType.REFRESH )
     private List<Peticion> peticiones;
 
 
