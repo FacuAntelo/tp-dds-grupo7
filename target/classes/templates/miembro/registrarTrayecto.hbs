@@ -1,0 +1,128 @@
+{{#partial "contenido" }}
+<div class="row my-5">
+    <h3 class="fs-4 mb-3">Registrar trayectos</h3>
+    <div class="col">
+        <section class="container-fluid p-5 bg-light" id="def">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-xl-6 col-md-6 col-sm-12 col-12">
+                        <h1 class="pb-5">Tramos del trayecto</h1>
+                        {{#each tramos}}
+                        <h3 class="pb-5">{{id}}</h1>
+                        {{/each}}
+                    </div>
+                    <div class="col-lg-6 col-xl-6 col-md-6 col-sm-12 col-12">
+                        <h2 class="pb-3 text-center mb-5">Nuevo tramo</h2>
+{{!--                          /{{trayecto.id}}--}}
+                            <form class="needs-validation" method="POST" action="/miembro/{{usuario.id}}/registrarTrayecto" novalidate>
+                                  <h4>Hora inicio</h4>
+                                <div class="form-row">
+                                <div class="col-md-2 mb-3">
+                                  <label for="validationCustom03">Hora</label>
+                                  <input type="text" class="form-control" id="validationCustom03" placeholder="Hora" required name="hora">
+
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                  <label for="validationCustom04">Minuto</label>
+                                  <input type="text" class="form-control" id="validationCustom04" placeholder="Minuto" required name="minuto">
+                                </div>
+
+                                </div>
+                                <div class="form-row">
+                                  <h4>Direccion Inicio</h4>
+                                </div>
+                                <div class="form-row">
+                                <div class="col-md-3 mb-3">
+                                  <label for="validationCustom03">Calle</label>
+                                  <input type="text" class="form-control" id="validationCustom03" placeholder="Calle" required name="calleInicio">
+                                  <div class="invalid-feedback">
+                                    Please provide a valid city.
+                                  </div>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                  <label for="validationCustom04">Altura</label>
+                                  <input type="text" class="form-control" id="validationCustom04" placeholder="Altura" required name="alturaInicio">
+                                  <div class="invalid-feedback">
+                                    Please provide a valid state.
+                                  </div>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                  <label for="validationCustom05">Localidad</label>
+                                  <input type="text" class="form-control" id="validationCustom05" placeholder="Localidad" required name="localidadInicio">
+                                  <div class="invalid-feedback">
+                                    Please provide a valid zip.
+                                  </div>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <label for="validationCustom05">Provincia</label>
+                                    <input type="text" class="form-control" id="validationCustom05" placeholder="Provincia" required name"provinciaInicio">
+                                    <div class="invalid-feedback">
+                                      Please provide a valid zip.
+                                    </div>
+                                  </div>
+                              </div>
+                              <div class="form-row">
+                              <h4>Direccion Fin</h4>
+                              </div>
+                                <div class="form-row">
+                                <div class="col-md-3 mb-3">
+                                  <label for="validationCustom03">Calle</label>
+                                  <input type="text" class="form-control" id="validationCustom03" placeholder="Calle" required name="calleFin">
+                                  <div class="invalid-feedback">
+                                    Please provide a valid city.
+                                  </div>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                  <label for="validationCustom04">Altura</label>
+                                  <input type="text" class="form-control" id="validationCustom04" placeholder="Altura" required name="alturaFin">
+                                  <div class="invalid-feedback">
+                                    Please provide a valid state.
+                                  </div>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                  <label for="validationCustom05">Localidad</label>
+                                  <input type="text" class="form-control" id="validationCustom05" placeholder="Localidad" required name="localidadFin">
+                                  <div class="invalid-feedback">
+                                    Please provide a valid zip.
+                                  </div>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <label for="validationCustom05">Provincia</label>
+                                    <input type="text" class="form-control" id="validationCustom05" placeholder="Provincia" required name"provinciaFin">
+                                    <div class="invalid-feedback">
+                                      Please provide a valid zip.
+                                    </div>
+                                  </div>
+                              </div>
+                              <button class="btn btn-primary" type="submit">Agregar tramo</button>
+                            </form>
+
+{{!--  <script>
+// // Example starter JavaScript for disabling form submissions if there are invalid fields
+// (function() {
+//   'use strict';
+//   window.addEventListener('load', function() {
+//     // Fetch all the forms we want to apply custom Bootstrap validation styles to
+//     var forms = document.getElementsByClassName('needs-validation');
+//     // Loop over them and prevent submission
+//     var validation = Array.prototype.filter.call(forms, function(form) {
+//       form.addEventListener('submit', function(event) {
+//         if (form.checkValidity() === false) {
+//           event.preventDefault();
+//           event.stopPropagation();
+//         }
+//         form.classList.add('was-validated');
+//       }, false);
+//     });
+//   }, false);
+// })();
+// </script>--}}
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</div>
+{{/partial}}
+{{> miembro/baseMiembro.hbs }}

@@ -73,6 +73,9 @@ public class Router {
         Spark.path("/miembro/:idMiembro", () -> {
             Spark.get("", miembroController::mostrarTrayectos,engine);
             Spark.get("/:idTrayecto/tramos",miembroController::mostrarTramos, engine);
+            Spark.get("/registrarTrayecto", miembroController::pantallaDeRegistrarTrayectos, engine);
+            Spark.post("/registrarTrayecto", miembroController::guardarNuevoTrayecto);
+            Spark.get("/registrarTrayecto/:idTrayecto", miembroController::pantallaDeEditarTrayecto, engine);
         });
     }
 }

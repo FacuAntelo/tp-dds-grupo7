@@ -23,8 +23,6 @@ public class UsuarioController {
         String idUsuario = request.params("idUsuario");
         Usuario usuario = repositorioUsuario.find(Integer.parseInt(idUsuario));
 
-        //BUSCO LAS ORGANIZACIONES QUE ES MIEMBRO EL USUARIO
-
         List<Organizacion> organizacionList = repositorioOrganizacion.buscarOrganizacionesDeUsuario(Integer.valueOf(idUsuario));
 
         if(organizacionList.isEmpty()){
@@ -32,7 +30,7 @@ public class UsuarioController {
         }
         return new ModelAndView(new HashMap<String, Object>(){{
             put("organizaciones", organizacionList);
-            put("nombre", usuario);
+            put("usuario", usuario);
         }},"homeUsuario.hbs");
     }
 
@@ -48,7 +46,7 @@ public class UsuarioController {
         return new ModelAndView(new HashMap<String, Object>(){{
             put("organizacion", organizacionBuscado);
             put("reportes", GeneradorDeReportes.reporteDeHCdeSectores(organizacionBuscado));
-        }},"dashboard.hbs");
+        }},"homeOrganizacion.hbs");
     }
 
 

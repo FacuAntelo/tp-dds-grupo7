@@ -30,10 +30,10 @@
                                     <td>{{estadoPeticion}}</td>
                                     <td class="check-state">
                                         <form method="POST" action="/organizacion/{{organizacion.id}}/peticiones/{{id}}/aceptar">
-                                            <button class="bi bi-check-circle" onclick="aceptarPeticion(this)" type="submit"></button>
+                                            <button class="bi bi-check-circle" type="submit"></button>
                                         </form>
                                         <form method="POST" action="/organizacion/{{organizacion.id}}/peticiones/{{id}}/rechazar">
-                                            <button class="bi bi-x-circle" onclick="rechazarPeticion(this)" type="submit"></button>
+                                            <button class="bi bi-x-circle" type="submit"></button>
                                         </form>
                                     </td>
                                 </tr>
@@ -43,25 +43,5 @@
                         </table>
                     </div>
                 </div>
-{{/partial}}
-
-
-{{#partial "script" }}
-    function aceptarPeticion(element){
-                const xCircle = document.getElementsByClassName('bi-x-circle');
-                if(!element.classList.contains("block")){
-                    element.classList.add("acept");
-                    xCircle[0].classList.add("block");
-                }
-            }
-
-            function rechazarPeticion(element){
-                const checkCircle = document.getElementsByClassName('bi-check-circle');
-
-                if(!element.classList.contains("block")){
-                    element.classList.add("decline");
-                    checkCircle[0].classList.add("block");
-                }
-            }
 {{/partial}}
 {{> baseOrganizacion.hbs }}

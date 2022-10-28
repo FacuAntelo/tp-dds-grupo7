@@ -124,19 +124,20 @@ td{
       display: flex;
   }
 .check-state .bi{
-    font-size: 25px;
+    font-size: 30px;
     cursor: pointer;
     border: none;
     background: none;
 
 }
-.bi-check-circle:hover,
-.acept{
+.bi-check-circle:hover{
     color: green;
+    font-weight: 600 !important;
+    -webkit-text-stroke: 0.5px;
 }
-.bi-x-circle:hover,
-.decline{
+.bi-x-circle:hover{
     color: red;
+    -webkit-text-stroke: 0.5px;
 }
 
 .block,
@@ -144,29 +145,17 @@ td{
     color: rgb(133, 133, 133);
 }
 
-.elegirOrganizacion-container{
+.elegirOrganizacion-container {
     display: flex;
     justify-content: center;
     margin-top: 30px;
 
 }
-
-.desplegableOrganizacion{
-    display: flex;
-    text-align: center;
-    width: 800px;
+.elegirOrganizacion-container a{
+    text-align: center !important;
+}
 
 
-}
-.desplegableOrganizacion,
-.desplegableOrganizacion:focus{
-    border: none !important;
-    background: none !important;
-}
-.elegirOrganizacion-container .show {
-    width: 800px !important;
-    min-width: 500px;
-}
 
   @media (min-width : 500px) {
     #sidebar-wrapper {

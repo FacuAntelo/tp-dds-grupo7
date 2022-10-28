@@ -39,8 +39,8 @@ public class RepositorioTrayecto {
                 setParameter("idMiembro", idMiembro).getResultList();
     }
 
-    public Organizacion buscar(int id){
-        return EntityManagerHelper.getEntityManager().find(Organizacion.class,id);
+    public Trayecto buscar(int id){
+        return EntityManagerHelper.getEntityManager().find(Trayecto.class,id);
     }
 }
 

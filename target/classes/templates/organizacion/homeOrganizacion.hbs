@@ -1,0 +1,42 @@
+{{#partial "contenido" }}
+<div class="container-fluid px-4">
+    <div class="row g-3 my-2">
+        {{#each reportes}}
+        <div class="col-lg-3 col-md-6 col-sm-12">
+            <div class="p-3 shadow-sm d-flex justify-content-around align-items-center rounded"
+                style="background: #B4D8FD">
+                <div>
+                    <h3 class="fs-2">{{sector}}</h3>
+                    <p class="fs-5">{{valorHCconUnidad}}</p>
+                </div>
+                <i class="bi bi-1-square display-5 "></i>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+</div>
+<div class="row my-5">
+    <h3 class="fs-4 mb-3">Huella de carbono por sector </h3>
+    <div class="col">
+        <table class="table bg-white rounded shadow-sm  table-hover">
+            <thead>
+                <tr>
+                    <th scope="col" width="50">#</th>
+                    <th scope="col">Sector</th>
+                    <th scope="col">Huella de carbono</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each reportes}}
+                <tr>
+                    <th scope="row"></th>
+                    <td>{{sector}}</td>
+                    <td>{{valorHCconUnidad}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>
+{{/partial}}
+{{> organizacion/baseOrganizacion.hbs }}
