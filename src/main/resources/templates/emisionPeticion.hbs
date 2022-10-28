@@ -29,12 +29,12 @@
 
                     <h2 class="fw-bold mb-2 text-uppercase">Peticion</h2>
 
-                    <form method="GET" action="/usuario/{{usuario.id}}/peticion/{{razonSocial}}">
+                    <form method="GET" action="/usuario/{{usuario.id}}/peticion/organizacion" enctype="multipart/form-data">
                         <div class="elegirOrganizacion-container">
                             <select class="form-select" aria-label="Default select example" name ="idOrganizacion">
                               <option selected>Organizacion a elegir</option>
                               {{#each organizaciones}}
-                              <option type="submit" value="{{id}}" href"/usuario/{{usuario.id}}/peticion/{{id}}">{{razonSocial}}</option>
+                              <option type="submit" value="{{id}}">{{razonSocial}}</option>
                               {{/each}}
                             </select>
 
@@ -45,7 +45,7 @@
 {{!--                               {{/each}} --}}
 {{!--                             </select> --}}
                         </div>
-                        <button class="btn btn-outline-light btn-lg px-5" type="submit" href"/usuario/{{usuario.id}}/peticion/1">Siguiente</button>
+                        <button class="btn btn-outline-light btn-lg px-5" type="submit" href ="/usuario/{{usuario.id}}/peticion">Siguiente</button>
                      </form>
                   </div>
 

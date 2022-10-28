@@ -37,7 +37,7 @@ public class RepositorioOrganizacion {
         return (List<Organizacion>) EntityManagerHelper.getEntityManager().createQuery("from Organizacion",Organizacion.class).getResultList();
     }
 
-    public Organizacion buscar(int id){
+    public Organizacion buscar(Integer id){
         return EntityManagerHelper.getEntityManager().find(Organizacion.class,id);
     }
 

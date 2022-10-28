@@ -4,6 +4,7 @@ import controllers.*;
 import controllers.userlog.LoginController;
 import controllers.userlog.RegisterController;
 import controllers.userlog.UsuarioController;
+import spark.Route;
 import spark.Spark;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 import spark.utils.BooleanHelper;
@@ -48,18 +49,18 @@ public class Router {
             Spark.get("/sucess", RegisterController::succesRegister, engine);
         });
 
-        Spark.path("/peticion", () ->{
-            Spark.get("", peticionController::pantallaDePeticion, engine);
-            Spark.post("", peticionController::guardar);
-        });
+//        Spark.path("/peticion", () ->{
+//            Spark.get("", peticionController::pantallaDePeticion, engine);
+//            Spark.post("", peticionController::guardar);
+//        });
 
         Spark.path("/usuario/:idUsuario", () -> {
             Spark.get("", usuarioController::pantallaHome, engine);
             Spark.get("/organizaciones/",usuarioController::mostrarOrganizaciones);
             Spark.get("/peticion", usuarioController::pantallaDePeticion, engine);
-            Spark.post("/peticion", peticionController::guardar);
-            Spark.get("/peticion/:idOrganizacion", usuarioController::pantallaDePeticionSiguiente,engine);
-
+            Spark.get("/peticion/organizacion", usuarioController::pantallaDePeticionSector);
+            Spark.get("/peticion/organizacion/:idOrganizacion", usuarioController::pantallaDePeticionSectores,engine);
+//            Spark.post("/peticion/sector", usuarioController::pantallaDePeticionSector,engine);
         });
 
         Spark.path("/organizacion/:idOrganizacion", () -> {

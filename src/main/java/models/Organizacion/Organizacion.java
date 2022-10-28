@@ -40,7 +40,7 @@ public class Organizacion extends EntidadPersistente {
      @JoinColumn(name= "ubicacion_id",referencedColumnName = "id")
      private Ubicacion ubicacion;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinColumn(name = "organizacion_id", referencedColumnName = "id")
     private List<Sector> sectores;
 
