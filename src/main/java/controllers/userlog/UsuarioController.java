@@ -28,9 +28,6 @@ public class UsuarioController {
 
         List<Organizacion> organizacionList = repositorioOrganizacion.buscarOrganizacionesDeUsuario(Integer.valueOf(idUsuario));
 
-        if(organizacionList.isEmpty()){
-            return new ModelAndView(null,"homeUsuario.hbs");
-        }
         return new ModelAndView(new HashMap<String, Object>(){{
             put("organizaciones", organizacionList);
             put("usuario", usuario);
@@ -68,23 +65,9 @@ public class UsuarioController {
         }},"emisionPeticion.hbs");
     }
 
-//    public ModelAndView pantallaDePeticionSector(Request request, Response response) {
-//        String idUsuario = request.params("idUsuario");
-//        Usuario usuario = repositorioUsuario.find(Integer.parseInt(idUsuario));
-//
-//        Organizacion organizacion = repositorioOrganizacion.buscar(Integer.parseInt(request.queryParams("idOrganizacion")));
-//
-//        return new ModelAndView(new HashMap<String, Object>(){{
-//            put("organizacion", organizacion);
-//            put("usuario", usuario);
-//            put("sectores", organizacion.getSectores());
-//        }},"emisionPeticionSector.hbs");
-//    }
-
-    public Response pantallaDePeticionSector(Request r, Response res){
-        System.out.println(r.queryParams("idOrganizacion") + "----------------------------------------------");
-        res.redirect("/usuario/" + r.params("idUsuario") + "/peticion/organizacion/"+ r.queryParams("idOrganizacion"));
-        return res;
+    public Response pantallaDePeticionSector(Request request, Response response){
+        response.redirect("/usuario/" + request.params("idUsuario") + "/peticion/organizacion/"+ request.queryParams("idOrganizacion"));
+        return response;
     }
 
 
@@ -105,7 +88,7 @@ public class UsuarioController {
             put("sectores",organizacion.getSectores());
         }},"emisionPeticionSector.hbs");
     }
-    public String guardarPeticion(Request request, Response response){
+    public Response guardarPeticion(Request request, Response response){
         Usuario usuario = repositorioUsuario.find(Integer.valueOf(request.params("idUsuario")));
         RepositorioPeticion repositorioPeticion = new RepositorioPeticion();
 
@@ -113,19 +96,28 @@ public class UsuarioController {
         peticion.setNombre(usuario.getNombre());
         peticion.setApellido(usuario.getApellido());
         peticion.setUsuario(usuario);
-//        peticion.setTipoDocumento(usuario.get);
-//        peticion.setNumDoc(request.queryParams("nro_docu"));
+        peticion.setTipoDocumento(usuario.getTipoDocumento());
+        peticion.setNumDoc(usuario.getNumeroDocumento());
         peticion.setEmail(usuario.getEmail());
         peticion.setEstadoPeticion(EstadoPeticion.PENDIENTE);
-
-        System.out.println(request.queryParams("idOrganizacion"));
 
         Organizacion organizacionBuscada = repositorioOrganizacion.buscar(Integer.parseInt(request.params("idOrganizacion")));
         peticion.setOrganizacion(organizacionBuscada);
         organizacionBuscada.agregarPeticion(peticion);
-        System.out.println(request.params("idOrganizacion") + "---------------------------------------------------");
+
         repositorioOrganizacion.guardar(organizacionBuscada);
         repositorioPeticion.guardar(peticion);
-        return "OK PETICION GUARDADA BRO";
+
+        response.redirect("/usuario/"+usuario.getId()+"/peticion/success");
+        return response;
     }
+
+    public ModelAndView pantallaDePeticionSuccess(Request request, Response response) {
+        Usuario usuario = repositorioUsuario.find(Integer.parseInt(request.params("idUsuario")));
+        return new ModelAndView(new HashMap<String, Object>(){{
+            put("usuario", usuario);
+        }},"emisionPeticionSuccess.hbs");
+    }
+
+
 }

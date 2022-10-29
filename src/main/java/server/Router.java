@@ -45,7 +45,7 @@ public class Router {
 
         Spark.path("/register", () -> {
             Spark.get("", registerController::getPantallaRegister, engine);
-            Spark.post("", registerController::obtenerDatos);
+            Spark.post("", registerController::registrarUsuario);
             Spark.get("/sucess", RegisterController::succesRegister, engine);
         });
 
@@ -61,7 +61,7 @@ public class Router {
             Spark.get("/peticion/organizacion", usuarioController::pantallaDePeticionSector);
             Spark.get("/peticion/organizacion/:idOrganizacion", usuarioController::pantallaDePeticionSectores,engine);
             Spark.post("/peticion/organizacion/:idOrganizacion",usuarioController::guardarPeticion);
-        //            Spark.post("/peticion/sector", usuarioController::pantallaDePeticionSector,engine);
+            Spark.get("/peticion/success", usuarioController::pantallaDePeticionSuccess,engine);
         });
 
         Spark.path("/organizacion/:idOrganizacion", () -> {

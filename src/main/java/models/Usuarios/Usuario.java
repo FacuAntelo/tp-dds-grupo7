@@ -2,6 +2,7 @@ package models.Usuarios;
 
 import models.EntidadPersistente.EntidadPersistente;
 import models.Miembro.Miembro;
+import models.Miembro.TipoDocumento;
 import models.Validador.Validable;
 
 import lombok.Getter;
@@ -24,8 +25,12 @@ public class Usuario extends EntidadPersistente {
     @Column(name = "apellido")
     private String apellido;
 
-    @Column(name = "DNI")
-    private String dni;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "tipo_documento")
+    private TipoDocumento tipoDocumento;
+
+    @Column(name = "numero_documento")
+    private String numeroDocumento;
 
     @Column(name ="usuario")
     private String nombreDeUsuario;

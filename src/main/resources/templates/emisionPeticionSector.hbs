@@ -1,66 +1,24 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset='utf-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Login</title>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="/css/normalize.css">
-    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
-    <!-- Fin Bootstrap Css -->
-    <script src='main.js'></script>
-</head>
-<body class=" logo_principal body " style="overflow-wrap: break-word;"> <!--style="overflow-wrap: break-word;"-->
-    <main class="row" style="position:relative;">
-      <section class="form_huella vh-100 gradient-custom col-12">
-        <div class="container py-5 h-100">
-          <div class="row d-flex justify-content-center align-items-center h-100" style="margin-left: 90px;">
-            <div class="col-12 col-md-6 col-md-8 col-lg-6 col-xl-5">
-              <div class="card text-white" style="border-radius: 1rem;background-color:#0976ad;">
-                <div class="card-body p-5 text-center">
+{{#partial "titulo"}}
+<title>Peticion</title>
+{{/partial}}
 
-                  <div class="mb-md-5 mt-md-4 pb-5">
+{{#partial "contenido" }}
+<div class="mb-md-5 mt-md-4 pb-5">
+    <h2 class="fw-bold mb-2 text-uppercase">Peticion</h2>
+    <label class="form-label" for="typeEmailX">Seleccione el sector al que pertenece</label>
+    <form method="POST" action="/usuario/{{usuario.id}}/peticion/organizacion/{{organizacion.id}}">
+        <div class="elegirOrganizacion-container">
 
-                    <h2 class="fw-bold mb-2 text-uppercase">Peticion</h2>
+            <select class="form-select" aria-label="Default select example" name="idSector">
+                <option selected>Sector a elegir</option>
+                {{#each sectores}}
+                <option type="submit" value="{{id}}">{{nombre}}</option>
+                {{/each}}
+            </select>
 
-                    <form method="POST" action="/usuario/{{usuario.id}}/peticion/organizacion/{{organizacion.id}}">
-                        <div class="elegirOrganizacion-container">
-
-                            <select class="form-select" aria-label="Default select example" name ="idSector">
-                              <option selected>Sector a elegir</option>
-                              {{#each sectores}}
-                              <option type="submit" value="{{id}}">{{nombre}}</option>
-                              {{/each}}
-                            </select>
-                        </div>
-                        <button class="btn btn-outline-light btn-lg px-5" type="submit" href"/usuario/{{usuario.id}}/peticion">Enviar</button>
-                     </form>
-                  </div>
-
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
-      </section>
-    </main>
-
-  <script>
-        const sectoresList = sectores;
-
-        const sector = document.querySelector('[name=idSector]');
-        document.querySelector('[name=idOrganizacion]').addEventListener('change', function(e) {
-          price.innerHTML = prices[this.value].reduce((acc, elem) => `${acc}<option value="${elem.value}">${elem.desc}</option>`, "");
-        });
-
-
-  </script>
-
-</body>
-</html>
+        <button class="btn btn-outline-light btn-lg px-5" type="submit" href"/usuario/{{usuario.id}}/peticion">Enviar</button>
+    </form>
+</div>
+{{/partial}}
+{{> baseLogin.hbs }}
