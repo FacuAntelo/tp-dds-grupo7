@@ -4,6 +4,7 @@ import controllers.*;
 import controllers.userlog.LoginController;
 import controllers.userlog.RegisterController;
 import controllers.userlog.UsuarioController;
+import middlewares.AuthMiddleware;
 import spark.Route;
 import spark.Spark;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -65,6 +66,9 @@ public class Router {
         });
 
         Spark.path("/organizacion/:idOrganizacion", () -> {
+            Spark.before("", AuthMiddleware::verificarSesion);
+            Spark.before("/*", AuthMiddleware::verificarSesion);
+
             Spark.get("", organizacionController::mostrar,engine);
             Spark.get("/reportes",reporteController::mostrar, engine);
             Spark.get("/peticiones", peticionController::pantallaDePeticiones, engine);
@@ -73,6 +77,9 @@ public class Router {
         });
 
         Spark.path("/miembro/:idMiembro", () -> {
+            Spark.before("", AuthMiddleware::verificarSesion);
+            Spark.before("/*", AuthMiddleware::verificarSesion);
+
             Spark.get("", miembroController::mostrarTrayectos,engine);
             Spark.get("/:idTrayecto/tramos",miembroController::mostrarTramos, engine);
             Spark.get("/registrarTrayecto", miembroController::pantallaDeRegistrarTrayectos, engine);
