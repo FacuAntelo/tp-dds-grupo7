@@ -12,6 +12,7 @@ package repositories;
         import java.util.ArrayList;
         import java.util.Arrays;
         import java.util.List;
+        import java.util.stream.Collectors;
 
 public class RepositorioMiembro {
 
@@ -29,6 +30,22 @@ public class RepositorioMiembro {
         miembroList.forEach(entityManager::remove);
         entityManager.getTransaction().commit();
     }
+
+    public Miembro buscarOrganizacion(Integer idOrganizacion,Integer idUsuario){
+        List<Miembro> miembroList = EntityManagerHelper.getEntityManager()
+                .createQuery("select m from Organizacion as o " +
+                        "inner join o.sectores as s " +
+                        "inner join s.miembros as m " +
+                        "where o.id = :id", Miembro.class)
+                .setParameter("id", idOrganizacion).getResultList();
+        miembroList = miembroList.stream().filter(m-> m.getUsuario().getId()==idUsuario).collect(Collectors.toList());
+    if(miembroList.isEmpty()){
+        return null;
+    } else{
+        return  miembroList.get(0);
+    }
+    }
+
 
     public void actualizar(Miembro... miembro){
         EntityManager entityManager = EntityManagerHelper.getEntityManager();
@@ -96,6 +113,14 @@ public class RepositorioMiembro {
         });
 
         return tramoDTOList;
+    }
+
+    public Miembro buscarUsuario(int idUsuario){
+        List<Miembro> miembroList = EntityManagerHelper.getEntityManager().createQuery("" +
+                "select o from Miembro as o", Miembro.class).getResultList();
+        miembroList = miembroList.stream().filter(m-> m.getUsuario().getId() == idUsuario).collect(Collectors.toList());
+
+        return miembroList.get(0);
     }
 
 }

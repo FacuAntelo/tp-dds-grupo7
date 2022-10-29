@@ -59,7 +59,6 @@ public class Organizacion extends EntidadPersistente {
     @JoinColumn(name= "id_organizacion",referencedColumnName = "id")
     private List<Contacto> contactos;
 
-
     @ManyToOne(cascade = CascadeType.MERGE,fetch = FetchType.LAZY)
     @JoinColumn(name = "id_localidad")
     private Localidad localidad;
@@ -67,7 +66,6 @@ public class Organizacion extends EntidadPersistente {
     @ManyToOne(cascade = CascadeType.MERGE,fetch = FetchType.LAZY)
     @JoinColumn(name = "id_provincia")
     private Provincia provincia;
-
 
     @Transient
     private List<Trayecto> trayectosDeLosMiembros;
