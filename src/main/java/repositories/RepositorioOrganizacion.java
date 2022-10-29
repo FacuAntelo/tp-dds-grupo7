@@ -1,5 +1,6 @@
 package repositories;
 
+import models.DTO.MiembroOrganizacionDTO;
 import models.Miembro.Miembro;
 import models.Organizacion.Organizacion;
 import models.Sector.Sector;
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class RepositorioOrganizacion {
+    RepositorioMiembro repositorioMiembro= new RepositorioMiembro();
 
     public void guardar(Organizacion ... organizacion){
         EntityManagerHelper.beginTransaction();
@@ -62,6 +64,16 @@ public class RepositorioOrganizacion {
                         .anyMatch(m -> m.getUsuario().getId() == idUsuario)).collect(Collectors.toList());
         return organizacionList;
     }
+
+//    public MiembroOrganizacionDTO buscarOrganizacionMiembroDTO(int idUsuario){
+//        List<Organizacion> organizacionList = buscarOrganizacionesDeUsuario(Integer.valueOf(idUsuario));
+//        Miembro miembro = repositorioMiembro.buscarUsuario(idUsuario);
+//        MiembroOrganizacionDTO dto = new MiembroOrganizacionDTO();
+//        dto.setIdMiembro(miembro.getId());
+//        dto.setIdOrganizacion();
+//
+//
+//    }
 
     public Sector buscarSector(int idOrganizacion, int idSector){
         return buscarTodosLosSectores(Integer.valueOf(idOrganizacion)).stream().filter(x->x.getId()==idSector).collect(Collectors.toList()).get(0);

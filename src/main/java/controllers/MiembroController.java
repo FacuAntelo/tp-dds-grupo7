@@ -25,6 +25,7 @@ import java.util.stream.Collectors;
 public class MiembroController {
     RepositorioMiembro repositorioMiembro = new RepositorioMiembro();
     RepositorioTrayecto repositorioTrayecto= new RepositorioTrayecto();
+    RepositorioOrganizacion repositorioOrganizacion = new RepositorioOrganizacion();
 
     public ModelAndView mostrarTrayectos (Request request, Response response){
 
@@ -41,6 +42,13 @@ public class MiembroController {
             put("organizacion", organizacion);
             put("trayectos",trayectoDTOList);
         }},"miembro/trayectos.hbs");
+    }
+
+    public ModelAndView mostrarDetalleOrganizacion(Request request, Response response){
+        Miembro miembro = repositorioMiembro.buscar(Integer.valueOf(request.params("idMiembro")));
+        Organizacion organizacion = repositorioOrganizacion.buscar(Integer.valueOf(request.params("idOrganizacion")));
+
+        return null;
     }
 
     public ModelAndView mostrarTramos (Request request, Response response){
@@ -63,9 +71,7 @@ public class MiembroController {
     }
 
     public ModelAndView pantallaDeRegistrarTrayectos (Request request, Response response){
-
         int idMiembro = Integer.parseInt(request.params("idMiembro"));
-
         Miembro miembroBuscado = repositorioMiembro.buscar(idMiembro);
         return new ModelAndView(new HashMap<String, Object>(){{
             put("usuario", miembroBuscado);

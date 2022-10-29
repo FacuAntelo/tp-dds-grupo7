@@ -1,6 +1,7 @@
 package controllers.userlog;
 
 import controllers.ReporteController;
+import models.Miembro.Miembro;
 import models.Organizacion.EstadoPeticion;
 import models.Organizacion.Organizacion;
 import models.Organizacion.Peticion;
@@ -8,6 +9,7 @@ import models.Reportes.GeneradorDeReportes;
 import models.Sector.Sector;
 import models.Usuarios.Usuario;
 import models.db.EntityManagerHelper;
+import repositories.RepositorioMiembro;
 import repositories.RepositorioOrganizacion;
 import repositories.RepositorioPeticion;
 import repositories.RepositorioUsuario;
@@ -15,6 +17,7 @@ import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.HashMap;
 import java.util.List;
 
@@ -22,6 +25,7 @@ public class UsuarioController {
     RepositorioUsuario repositorioUsuario = new RepositorioUsuario();
     RepositorioOrganizacion repositorioOrganizacion = new RepositorioOrganizacion();
     RepositorioPeticion repositorioPeticion = new RepositorioPeticion();
+    RepositorioMiembro repositorioMiembro = new RepositorioMiembro();
 
     public ModelAndView pantallaHome(Request request, Response response) {
         String idUsuario = request.params("idUsuario");
@@ -122,4 +126,9 @@ public class UsuarioController {
     }
 
 
+    public Response mostrarMiembroDeOrganizacion(Request request, Response response) {
+        Organizacion organizacion = repositorioOrganizacion.buscar(Integer.valueOf(request.params("idOrganizacion")));
+        Miembro miembro = repositorioMiembro.buscarOrganizacion(organizacion.getId(), Integer.valueOf(request.params("idUsuario")));
+        return null;
+    }
 }
