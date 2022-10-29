@@ -4,7 +4,9 @@ import controllers.*;
 import controllers.userlog.LoginController;
 import controllers.userlog.RegisterController;
 import controllers.userlog.UsuarioController;
+import helpers.PermisoHelper;
 import middlewares.AuthMiddleware;
+import models.Usuarios.Permiso;
 import spark.Route;
 import spark.Spark;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -50,6 +52,8 @@ public class Router {
             Spark.get("/sucess", RegisterController::succesRegister, engine);
         });
 
+        Spark.get("/prohibido", loginController::prohibido, engine);
+
 //        Spark.path("/peticion", () ->{
 //            Spark.get("", peticionController::pantallaDePeticion, engine);
 //            Spark.post("", peticionController::guardar);
@@ -68,6 +72,19 @@ public class Router {
         Spark.path("/organizacion/:idOrganizacion", () -> {
             Spark.before("", AuthMiddleware::verificarSesion);
             Spark.before("/*", AuthMiddleware::verificarSesion);
+//            Spark.before("", (request, response) -> {
+//                if(!PermisoHelper.usuarioTienePermisos(request, Permiso.VER_SECTORES)){
+//                    response.redirect("/prohibido");
+//                    Spark.halt();
+//                }
+//            });
+//            Spark.before("/*", (request, response) -> {
+//                if(!PermisoHelper.usuarioTienePermisos(request, Permiso.VER_SECTORES)){
+//                    response.redirect("/prohibido");
+//                    Spark.halt();
+//                }
+//            });
+
 
             Spark.get("", organizacionController::mostrar,engine);
             Spark.get("/reportes",reporteController::mostrar, engine);

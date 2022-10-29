@@ -41,6 +41,8 @@ public class Usuario extends EntidadPersistente {
     @Column(name = "email")
     private String email;
 
+    private Rol rol;
+
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "usuario")
     private List<Miembro> miembros = new ArrayList<>();
 //
@@ -58,4 +60,6 @@ public class Usuario extends EntidadPersistente {
     public boolean validarClave(Validable validable){
         return validable.esValida(this.getContrasenia());
     }
+
+    public Rol getRol() { return rol; }
 }
