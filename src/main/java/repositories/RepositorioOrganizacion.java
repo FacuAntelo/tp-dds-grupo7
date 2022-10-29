@@ -62,4 +62,9 @@ public class RepositorioOrganizacion {
                         .anyMatch(m -> m.getUsuario().getId() == idUsuario)).collect(Collectors.toList());
         return organizacionList;
     }
+
+    public Sector buscarSector(int idOrganizacion, int idSector){
+        return buscarTodosLosSectores(Integer.valueOf(idOrganizacion)).stream().filter(x->x.getId()==idSector).collect(Collectors.toList()).get(0);
+
+    }
 }

@@ -67,7 +67,7 @@ public class Router {
         Spark.path("/organizacion/:idOrganizacion", () -> {
             Spark.get("", organizacionController::mostrar,engine);
             Spark.get("/reportes",reporteController::mostrar, engine);
-            Spark.get("/peticiones", peticionController::mostrar, engine);
+            Spark.get("/peticiones", peticionController::pantallaDePeticiones, engine);
             Spark.post("/peticiones/:idPeticion/aceptar", peticionController::aceptarPeticion);
             Spark.post("/peticiones/:idPeticion/rechazar", peticionController::rechazarPeticion);
         });

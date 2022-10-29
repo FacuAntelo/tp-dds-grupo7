@@ -5,6 +5,7 @@ import models.Organizacion.Organizacion;
 import lombok.Getter;
 import lombok.Setter;
 import models.Miembro.Miembro;
+import models.Organizacion.Peticion;
 import models.trayecto.Tramo;
 
 import javax.persistence.*;
@@ -24,6 +25,8 @@ public class Sector extends EntidadPersistente {
     @JoinColumn(name = "sector_id",referencedColumnName = "id")
     private List<Miembro> miembros;
 
+    @OneToMany(fetch =FetchType.LAZY, mappedBy = "sector",cascade = CascadeType.REFRESH )
+    private List<Peticion> peticiones;
 
     public Sector(String nombre, Organizacion organizacion){
         this.nombre = nombre;

@@ -21,6 +21,7 @@ import java.util.List;
 public class UsuarioController {
     RepositorioUsuario repositorioUsuario = new RepositorioUsuario();
     RepositorioOrganizacion repositorioOrganizacion = new RepositorioOrganizacion();
+    RepositorioPeticion repositorioPeticion = new RepositorioPeticion();
 
     public ModelAndView pantallaHome(Request request, Response response) {
         String idUsuario = request.params("idUsuario");
@@ -90,7 +91,8 @@ public class UsuarioController {
     }
     public Response guardarPeticion(Request request, Response response){
         Usuario usuario = repositorioUsuario.find(Integer.valueOf(request.params("idUsuario")));
-        RepositorioPeticion repositorioPeticion = new RepositorioPeticion();
+        Organizacion organizacionBuscada = repositorioOrganizacion.buscar(Integer.parseInt(request.params("idOrganizacion")));
+        Sector sectorElegido = repositorioOrganizacion.buscarSector(organizacionBuscada.getId(), Integer.parseInt(request.queryParams("idSector")));
 
         Peticion peticion = new Peticion();
         peticion.setNombre(usuario.getNombre());
@@ -100,8 +102,8 @@ public class UsuarioController {
         peticion.setNumDoc(usuario.getNumeroDocumento());
         peticion.setEmail(usuario.getEmail());
         peticion.setEstadoPeticion(EstadoPeticion.PENDIENTE);
+        peticion.setSector(sectorElegido);
 
-        Organizacion organizacionBuscada = repositorioOrganizacion.buscar(Integer.parseInt(request.params("idOrganizacion")));
         peticion.setOrganizacion(organizacionBuscada);
         organizacionBuscada.agregarPeticion(peticion);
 

@@ -17,6 +17,7 @@ import models.trayecto.Localidad;
 import models.trayecto.Provincia;
 import models.trayecto.Tramo;
 import models.trayecto.Trayecto;
+import repositories.RepositorioOrganizacion;
 
 import javax.persistence.*;
 import java.io.IOException;
@@ -234,5 +235,14 @@ public class Organizacion extends EntidadPersistente {
 
     public void agregarPeticion(Peticion peticion){
         peticiones.add(peticion);
+    }
+
+
+    public void rechazarPeticionesPendientesDelUsuario(int idUsuario){
+       peticiones.forEach(peticion -> {
+           if( peticion.getEstadoPeticion()==EstadoPeticion.PENDIENTE && peticion.getUsuario().getId()==idUsuario){
+               peticion.setEstadoPeticion(EstadoPeticion.RECHAZADA);
+           }
+       });
     }
 }

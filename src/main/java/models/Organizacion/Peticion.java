@@ -27,6 +27,9 @@ public class Peticion extends EntidadPersistente {
     @OneToOne(fetch = FetchType.LAZY)
     private Organizacion organizacion;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    private Sector sector;
+
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_usuario")
     private Usuario usuario;

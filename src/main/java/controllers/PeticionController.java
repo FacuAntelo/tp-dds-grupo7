@@ -18,9 +18,9 @@ import spark.Response;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class PeticionController {
-
     RepositorioPeticion repositorioPeticion;
     RepositorioOrganizacion repositorioOrganizacion;
     RepositorioUsuario repositorioUsuario;
@@ -57,7 +57,7 @@ public class PeticionController {
         return response;
     }
 
-    public ModelAndView mostrar(Request request, Response response){
+    public ModelAndView pantallaDePeticiones(Request request, Response response){
         List<Peticion> peticionList = repositorioPeticion.buscarPendientes(Integer.parseInt(request.params("idOrganizacion")));
         Organizacion organizacionBuscado = repositorioOrganizacion.buscar(Integer.parseInt(request.params("idOrganizacion")));
 
@@ -67,20 +67,32 @@ public class PeticionController {
         }},"organizacion/peticiones.hbs");
     }
 
-    //TODOS LOS DATOS SE OBTIENEN DE LOS TEMPLATES, NO POR RUTA
-//    public Response aceptarPeticion(Request request, Response response){
-//        Peticion peticion = repositorioPeticion.findByID(Long.valueOf(request.queryParams("idPeticion")));
-//
-//        Miembro nuevoMiembro = new Miembro(peticion.getNombre(), peticion.getApellido(), peticion.getTipoDocumento(), peticion.getNumDoc());
-//
-//        response.redirect("/organizacion"+request.queryParams("idOrganizacion"));
-//        return response;
-//    }
-
     public Response aceptarPeticion(Request request, Response response) throws InterruptedException {
         Peticion peticion = repositorioPeticion.findByID(Integer.parseInt(request.params("idPeticion")));
+
+        //Estas dos busquedas hace falta??, sirve para verificar??? o se puede sacar desde peticion??
+//        asi??
+//        Organizacion organizacion = repositorioOrganizacion.buscar(Integer.valueOf(peticion.getOrganizacion().getId()));
+//        Sector sector = repositorioOrganizacion.buscarSector(organizacion.getId(), peticion.getSector().getId());
+//        O asi??:
+        Organizacion organizacion = peticion.getOrganizacion();
+        Sector sector = peticion.getSector();
+
         peticion.setEstadoPeticion(EstadoPeticion.ACEPTADA);
         repositorioPeticion.actualizar(peticion);
+
+        Miembro miembro = new Miembro();
+        miembro.setNombre(peticion.getNombre());
+        miembro.setApellido(peticion.getApellido());
+        miembro.setTipoDocumento(peticion.getTipoDocumento());
+        miembro.setNumDoc(peticion.getNumDoc());
+        miembro.setUsuario(peticion.getUsuario());
+        organizacion.agregarMiembroASector(sector, miembro);
+
+        
+        organizacion.rechazarPeticionesPendientesDelUsuario(peticion.getUsuario().getId());
+
+        repositorioOrganizacion.guardar(organizacion);
 
         Thread.sleep(1000);
         response.redirect("/organizacion/"+request.params("idOrganizacion")+"/peticiones");

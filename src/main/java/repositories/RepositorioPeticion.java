@@ -47,4 +47,14 @@ public class RepositorioPeticion {
     public Peticion findByID(int id){
         return EntityManagerHelper.getEntityManager().find(Peticion.class,id);
     }
+
+//    public void rechazarPeticionesPendientesDelUsuarioDeLaOrganizacion(int idUsuario, int idOrganizacion) {
+//        List<Peticion> peticionesABorrar = buscarTodos(idOrganizacion)
+//                .stream()
+//                .filter(p-> p.getEstadoPeticion()==EstadoPeticion.PENDIENTE && p.getUsuario().getId()==idUsuario)
+//                .collect(Collectors.toList());
+//
+//        actualizar((Peticion) peticionesABorrar);
+//
+//    }
 }

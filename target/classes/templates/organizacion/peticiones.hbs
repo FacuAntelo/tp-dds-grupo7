@@ -14,7 +14,7 @@
                                     <th scope="col">Apellido</th>
                                     <th scope="col">Numero de documento</th>
                                     <th scope="col">Email</th>
-                                    <th scope="col">Estado</th>
+                                    <th scope="col">Sector</th>
                                     <th scope="col"></th>
                                 </tr>
                             </thead>
@@ -27,7 +27,7 @@
                                     <td>{{apellido}}</td>
                                     <td>{{numDoc}}</td>
                                     <td>{{email}}</td>
-                                    <td>{{estadoPeticion}}</td>
+                                    <td>{{sector.nombre}}</td>
                                     <td class="check-state">
                                         <form method="POST" action="/organizacion/{{organizacion.id}}/peticiones/{{id}}/aceptar">
                                             <button class="bi bi-check-circle" type="submit"></button>
@@ -44,4 +44,4 @@
                     </div>
                 </div>
 {{/partial}}
-{{> baseOrganizacion.hbs }}
+{{> organizacion/baseOrganizacion.hbs }}
