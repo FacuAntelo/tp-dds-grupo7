@@ -31,17 +31,17 @@ public class Trayecto extends EntidadPersistente {
     public Trayecto() {
 
     }
+    public Trayecto(Direccion inicial, Direccion ffinal){
+        this.puntoInicio= inicial;
+        this.puntoFin = ffinal;
+        this.tramos = new ArrayList<>();
+    }
 
 
     public List<Tramo> getTramos() {
         return tramos;
     }
 
-    public Trayecto(Direccion inicial, Direccion ffinal){
-        this.puntoInicio= inicial;
-        this.puntoFin = ffinal;
-        this.tramos = new ArrayList<>();
-    }
 
     public void setPuntoInicio(Direccion puntoInicio) {
         this.puntoInicio = puntoInicio;

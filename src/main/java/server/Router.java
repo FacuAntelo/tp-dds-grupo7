@@ -6,12 +6,21 @@ import controllers.userlog.RegisterController;
 import controllers.userlog.UsuarioController;
 import helpers.PermisoHelper;
 import middlewares.AuthMiddleware;
+import models.Combustible.Combustible;
+import models.MediosDeTransporte.MediosDeTransporte;
+import models.Usuarios.FactorDeEmision;
 import models.Usuarios.Permiso;
+import models.db.EntityManagerHelper;
+import repositories.RepositorioOrganizacion;
 import spark.Route;
 import spark.Spark;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 import spark.utils.BooleanHelper;
 import spark.utils.HandlebarsTemplateEngineBuilder;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class Router {
     private static HandlebarsTemplateEngine engine;
@@ -28,6 +37,7 @@ public class Router {
         Router.initEngine();
         Spark.staticFileLocation("/public");
         Router.configure();
+
     }
 
     private static void configure() {
@@ -38,6 +48,8 @@ public class Router {
         MiembroController miembroController = new MiembroController();
         RegisterController registerController = new RegisterController();
         UsuarioController usuarioController = new UsuarioController();
+
+
 
 
         Spark.path("/login", () -> {
@@ -61,7 +73,6 @@ public class Router {
 
         Spark.path("/usuario/:idUsuario", () -> {
             Spark.get("", usuarioController::pantallaHome, engine);
-            Spark.post("/usuario/:idUsuario",usuarioController::mostrarMiembroDeOrganizacion);
             Spark.get("/organizaciones/",usuarioController::mostrarOrganizaciones);
             Spark.get("/peticion", usuarioController::pantallaDePeticion, engine);
             Spark.get("/peticion/organizacion", usuarioController::pantallaDePeticionSector);
@@ -71,8 +82,8 @@ public class Router {
         });
 
         Spark.path("/organizacion/:idOrganizacion", () -> {
-            Spark.before("", AuthMiddleware::verificarSesion);
-            Spark.before("/*", AuthMiddleware::verificarSesion);
+//            Spark.before("", AuthMiddleware::verificarSesion);
+//            Spark.before("/*", AuthMiddleware::verificarSesion);
 //            Spark.before("", (request, response) -> {
 //                if(!PermisoHelper.usuarioTienePermisos(request, Permiso.VER_SECTORES)){
 //                    response.redirect("/prohibido");
@@ -95,17 +106,17 @@ public class Router {
         });
 
         Spark.path("/miembro/:idMiembro", () -> {
-            Spark.before("", AuthMiddleware::verificarSesion);
-            Spark.before("/*", AuthMiddleware::verificarSesion);
-
+//            Spark.before("", AuthMiddleware::verificarSesion);
+//            Spark.before("/*", AuthMiddleware::verificarSesion);
             Spark.get("/miembro/:idMiembro/organizacion/:idOrganizacion",miembroController::mostrarDetalleOrganizacion,engine);
             Spark.get("", miembroController::mostrarTrayectos,engine);
             Spark.get("/:idTrayecto/tramos",miembroController::mostrarTramos, engine);
-            Spark.get("/miembro/:idMiembro/organizacion/:idOrganizacion/registrarTrayecto",
-                    miembroController::pantallaDeRegistrarTrayectos, engine);
-            Spark.post("/miembro/:idMiembro/organizacion/:idOrganizacion/registrarTrayecto",
-                    miembroController::guardarNuevoTrayecto);
-            Spark.get("/registrarTrayecto/:idTrayecto", miembroController::pantallaDeEditarTrayecto, engine);
+            Spark.get("/registrarTrayecto",miembroController::pantallaDeRegistrarTrayectos, engine);
+            Spark.post("/registrarTrayecto",miembroController::instanciacionDeTrayecto);
+            Spark.get("/registrarTrayecto/:idTrayecto", miembroController::pantallaDeAgregarTramos, engine);
+//            Spark.post("/miembro/:idMiembro/organizacion/:idOrganizacion/registrarTrayecto",miembroController::guardarNuevoTrayecto);
+//            Spark.get("/registrarTrayecto/:idTrayecto", miembroController::pantallaDeEditarTrayecto, engine);
         });
     }
+
 }

@@ -69,12 +69,6 @@ public class PeticionController {
 
     public Response aceptarPeticion(Request request, Response response) throws InterruptedException {
         Peticion peticion = repositorioPeticion.findByID(Integer.parseInt(request.params("idPeticion")));
-
-        //Estas dos busquedas hace falta??, sirve para verificar??? o se puede sacar desde peticion??
-//        asi??
-//        Organizacion organizacion = repositorioOrganizacion.buscar(Integer.valueOf(peticion.getOrganizacion().getId()));
-//        Sector sector = repositorioOrganizacion.buscarSector(organizacion.getId(), peticion.getSector().getId());
-//        O asi??:
         Organizacion organizacion = peticion.getOrganizacion();
         Sector sector = peticion.getSector();
 
@@ -87,14 +81,16 @@ public class PeticionController {
         miembro.setTipoDocumento(peticion.getTipoDocumento());
         miembro.setNumDoc(peticion.getNumDoc());
         miembro.setUsuario(peticion.getUsuario());
+
         organizacion.agregarMiembroASector(sector, miembro);
 
+
+        peticion.getUsuario().agregarMiembro(miembro);
         
         organizacion.rechazarPeticionesPendientesDelUsuario(peticion.getUsuario().getId());
 
         repositorioOrganizacion.guardar(organizacion);
 
-        Thread.sleep(1000);
         response.redirect("/organizacion/"+request.params("idOrganizacion")+"/peticiones");
         return response;
     }
@@ -103,7 +99,7 @@ public class PeticionController {
         Peticion peticion = repositorioPeticion.findByID(Integer.parseInt(request.params("idPeticion")));
         peticion.setEstadoPeticion(EstadoPeticion.RECHAZADA);
         repositorioPeticion.actualizar(peticion);
-        Thread.sleep(1000);
+
         response.redirect("/organizacion/"+request.params("idOrganizacion")+"/peticiones");
         return response;
     }

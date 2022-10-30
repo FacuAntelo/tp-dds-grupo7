@@ -20,21 +20,18 @@ public class RepositorioOrganizacion {
         organizacionList.forEach(EntityManagerHelper::persist);
         EntityManagerHelper.commit();
     }
-
     public void eliminar(Organizacion... organizacion){
         EntityManagerHelper.beginTransaction();
         List<Organizacion> organizacionList = Arrays.asList(organizacion);
         organizacionList.forEach(EntityManagerHelper.entityManager()::remove);
         EntityManagerHelper.commit();
     }
-
     public void actualizar(Organizacion... organizacion){
         EntityManagerHelper.beginTransaction();
         List<Organizacion> organizacionList = Arrays.asList(organizacion);
         organizacionList.forEach(EntityManagerHelper.entityManager()::refresh);
         EntityManagerHelper.commit();
     }
-
     public List<Organizacion> buscarTodos(){
         return (List<Organizacion>) EntityManagerHelper.getEntityManager().createQuery("from Organizacion",Organizacion.class).getResultList();
     }

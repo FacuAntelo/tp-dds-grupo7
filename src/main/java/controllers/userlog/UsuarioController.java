@@ -126,9 +126,4 @@ public class UsuarioController {
     }
 
 
-    public Response mostrarMiembroDeOrganizacion(Request request, Response response) {
-        Organizacion organizacion = repositorioOrganizacion.buscar(Integer.valueOf(request.params("idOrganizacion")));
-        Miembro miembro = repositorioMiembro.buscarOrganizacion(organizacion.getId(), Integer.valueOf(request.params("idUsuario")));
-        return null;
-    }
 }

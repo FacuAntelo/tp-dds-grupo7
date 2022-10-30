@@ -1,5 +1,8 @@
 package models.Usuarios;
 
+import javax.persistence.Entity;
+
+
 public enum Permiso {
     CREAR_ORGANIZACIONES,
     VER_ORGANIZACIONES,

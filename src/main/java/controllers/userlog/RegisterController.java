@@ -17,15 +17,11 @@ import java.util.stream.Collectors;
 public class RegisterController {
 
     public ModelAndView getPantallaRegister(Request request, Response response) {
-//        List<TipoDocumento> tipoDocumentoList = Arrays.asList(TipoDocumento.values());
         List<String> tipoDocumentoList= Arrays.stream(TipoDocumento.values()).map(x-> x.name()).collect(Collectors.toList());
         return new ModelAndView(new HashMap<String, Object>(){{
             put("tipoDocumentos", tipoDocumentoList);
         }},"login/register.hbs");
     }
-//    public ModelAndView pantallaDeLogin(Request request, Response response) {
-//        return new ModelAndView(null, "login.hbs");
-//    }
 
     public Response registrarUsuario(Request request, Response response){
         RepositorioUsuario repoUsuario = new RepositorioUsuario();

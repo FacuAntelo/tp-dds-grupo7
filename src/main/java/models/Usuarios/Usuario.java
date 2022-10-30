@@ -41,6 +41,8 @@ public class Usuario extends EntidadPersistente {
     @Column(name = "email")
     private String email;
 
+//    @Column(name = "rol")
+    @Transient
     private Rol rol;
 
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "usuario")
@@ -62,4 +64,8 @@ public class Usuario extends EntidadPersistente {
     }
 
     public Rol getRol() { return rol; }
+
+    public void agregarMiembro(Miembro miembro) {
+        miembros.add(miembro);
+    }
 }

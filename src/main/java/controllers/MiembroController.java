@@ -3,7 +3,9 @@ package controllers;
 import models.DTO.TramoDTO;
 import models.DTO.TrayectoDTO;
 import models.MediosDeTransporte.MediosSinContaminar;
+import models.MediosDeTransporte.TipoTransporte;
 import models.Miembro.Miembro;
+import models.Miembro.TipoDocumento;
 import models.Organizacion.Organizacion;
 import models.Reportes.GeneradorDeReportes;
 import models.Usuarios.Usuario;
@@ -18,6 +20,7 @@ import spark.Service;
 
 import java.io.IOException;
 import java.time.LocalTime;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -131,9 +134,46 @@ public class MiembroController {
     }
 
 
+    public Response instanciacionDeTrayecto(Request request, Response response) {
+        Miembro miembro = repositorioMiembro.buscar(Integer.parseInt(request.params("idMiembro")));
+        Organizacion organizacion = repositorioMiembro.buscarOrganizacionQuePertenece(miembro);
 
 
+        Direccion direccionInicio = new Direccion(request.queryParams("calleInicio"),
+                Integer.parseInt(request.queryParams("alturaInicio")),
+                    new Localidad(Integer.parseInt(request.queryParams("localidadInicio"))),
+                    new Provincia(request.queryParams("provinciaInicio"))
+
+        );
+        Direccion direccionFin = new Direccion(request.queryParams("calleFin"),
+                Integer.parseInt(request.queryParams("alturaFin")),
+                    new Localidad(Integer.parseInt(request.queryParams("localidadFin"))),
+                    new Provincia(request.queryParams("provinciaFin"))
+        );
+
+        Trayecto trayecto = new Trayecto(direccionInicio,direccionFin);
+        miembro.agregarTrayecto(trayecto, organizacion);
+
+        repositorioTrayecto.guardar(trayecto);
+        repositorioOrganizacion.guardar(organizacion);
 
 
+        response.redirect("/miembro/"+ miembro.getId()+"/registrarTrayecto/"+ trayecto.getId());
+        
+        return response;
+    }
 
+    public ModelAndView pantallaDeAgregarTramos(Request request, Response response) {
+        int idMiembro = Integer.parseInt(request.params("idMiembro"));
+        int idTrayecto = Integer.parseInt(request.params("idTrayecto"));
+        Miembro miembroBuscado = repositorioMiembro.buscar(idMiembro);
+        Trayecto trayecto = repositorioTrayecto.buscar(idTrayecto);
+        List<String> tipoTransporteList= Arrays.stream(TipoTransporte.values()).map(x-> x.name()).collect(Collectors.toList());
+
+        return new ModelAndView(new HashMap<String, Object>(){{
+            put("miembro", miembroBuscado);
+            put("trayecto", trayecto);
+            put("tiposDeTransporte", tipoTransporteList);
+        }},"miembro/registrarTramo.hbs");
+    }
 }

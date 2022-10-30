@@ -6,30 +6,12 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-6 col-xl-6 col-md-6 col-sm-12 col-12">
-                        <h1 class="pb-5">Tramos del trayecto</h1>
-                        {{#each tramos}}
-                        <h3 class="pb-5">{{id}}</h1>
-                        {{/each}}
-                    </div>
-                    <div class="col-lg-6 col-xl-6 col-md-6 col-sm-12 col-12">
-                        <h2 class="pb-3 text-center mb-5">Nuevo tramo</h2>
+                        <h2 class="pb-3 text-center mb-5">Nuevo Trayecto</h2>
+                        <h4 class="pb-3 text-center mb-5">Ingrese la ubicacion de inicio y fin del trayecto</h4>
 {{!--                          /{{trayecto.id}}--}}
                             <form class="needs-validation" method="POST" action="/miembro/{{usuario.id}}/registrarTrayecto" novalidate>
-                                  <h4>Hora inicio</h4>
                                 <div class="form-row">
-                                <div class="col-md-2 mb-3">
-                                  <label for="validationCustom03">Hora</label>
-                                  <input type="text" class="form-control" id="validationCustom03" placeholder="Hora" required name="hora">
-
-                                </div>
-                                <div class="col-md-3 mb-3">
-                                  <label for="validationCustom04">Minuto</label>
-                                  <input type="text" class="form-control" id="validationCustom04" placeholder="Minuto" required name="minuto">
-                                </div>
-
-                                </div>
-                                <div class="form-row">
-                                  <h4>Direccion Inicio</h4>
+                                  <h4>Ubicacion Inicio</h4>
                                 </div>
                                 <div class="form-row">
                                 <div class="col-md-3 mb-3">
@@ -62,7 +44,7 @@
                                   </div>
                               </div>
                               <div class="form-row">
-                              <h4>Direccion Fin</h4>
+                              <h4>Ubicacion Fin</h4>
                               </div>
                                 <div class="form-row">
                                 <div class="col-md-3 mb-3">
@@ -94,7 +76,7 @@
                                     </div>
                                   </div>
                               </div>
-                              <button class="btn btn-primary" type="submit">Agregar tramo</button>
+                              <button class="btn btn-primary" type="submit">Agregar trayecto</button>
                             </form>
 
 {{!--  <script>
