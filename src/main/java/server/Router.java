@@ -38,7 +38,7 @@ public class Router {
         Router.initEngine();
         Spark.staticFileLocation("/public");
         Router.configure();
-        PersistenciaInicial.persistirCombistibles();
+//        PersistenciaInicial.persistirCombustibles();
 
     }
 

@@ -108,28 +108,35 @@
                             <div class="form-row">
                                 <h4>Medio de transporte</h4>
                             </div>
+                            <div class="form-row">
+                                <select class="form-select" aria-label="Default select example" name="tiposDeTransporte">
+                                    <option selected>Elegir</option>
+                                    {{#each tiposDeTransporte}}
+                                    <option type="hidden" value="{{this}}"><a class="dropdown-item" href="/miembro/{{miembro.id}}/registrarTrayecto/ {{trayecto.id}}/{{this}}">{{this}}</a></option>
+                                    {{/each}}
+                                </select>
+                            </div>
 {{!--                             <div class="form-row"> --}}
-{{!--                                 <select class="form-select" aria-label="Default select example" name="tiposDeTransporte"> --}}
-{{!--                                     <option selected>Elegir</option> --}}
-{{!--                                     {{#each tiposDeTransporte}} --}}
-{{!--                                     <option type="hidden" value="{{this}}"><a class="dropdown-item" href="/miembro/{{miembro.id}}/registrarTrayecto/ {{trayecto.id}}/{{this}}">{{this}}</a></option> --}}
-{{!--                                     {{/each}} --}}
-{{!--                                 </select> --}}
+{{!--                                 <div style="margin-bottom: 100px;"> --}}
+{{!--                                     <a class="nav-link dropdown-toggle second-text fw-bold" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"> --}}
+{{!--                                         Elegir medio de transporte --}}
+{{!--                                     </a> --}}
+{{!--                                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown"> --}}
+{{!--                                         {{#each tiposDeTransporte}} --}}
+{{!--                                         <li><a class="dropdown-item" href="/miembro/{{miembro.id}}/registrarTrayecto/{{trayecto.id}}/{{this}}">{{this}}</a></li> --}}
+{{!--                                         {{/each}} --}}
+
+{{!--                                     </ul> --}}
+{{!--                                 </div> --}}
 {{!--                             </div> --}}
                             <div class="form-row">
-                                <div style="margin-bottom: 100px;">
-                                    <a class="nav-link dropdown-toggle second-text fw-bold" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Elegir medio de transporte
-                                    </a>
-                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        {{#each tiposDeTransporte}}
-                                        <li><a class="dropdown-item" href="/miembro/{{miembro.id}}/registrarTrayecto/{{trayecto.id}}/{{this}}">{{this}}</a></li>
-                                        {{/each}}
-
-                                    </ul>
-                                </div>
+                                <select class="form-select" aria-label="Default select example" name="tipoDeCombustible">
+                                    <option selected>Elegir tipo de combustible</option>
+                                    {{#each tipoDeCombustible}}
+                                    <option type="hidden" value="{{this}}"><a class="dropdown-item" href="/miembro/{{miembro.id}}/registrarTrayecto/ {{trayecto.id}}/{{this}}">{{this}}</a></option>
+                                    {{/each}}
+                                </select>
                             </div>
-
                             <button class="btn btn-primary" type="submit">Agregar tramo</button>
                         </form>
                     </div>
