@@ -1,12 +1,10 @@
 package controllers;
 
 import models.Combustible.Combustible;
+import models.DTO.ServicioContratadoDTO;
 import models.DTO.TramoDTO;
 import models.DTO.TrayectoDTO;
-import models.MediosDeTransporte.MediosSinContaminar;
-import models.MediosDeTransporte.TipoTransporte;
-import models.MediosDeTransporte.TipoVehiculo;
-import models.MediosDeTransporte.VehiculoParticular;
+import models.MediosDeTransporte.*;
 import models.Miembro.Miembro;
 import models.Miembro.TipoDocumento;
 import models.Organizacion.Organizacion;
@@ -177,6 +175,7 @@ public class MiembroController {
         List<String> tipoVehiculoParticular = Arrays.stream(TipoVehiculo.values()).map(x-> x.name()).collect(Collectors.toList());
         List<Combustible> combustibleList= repositorioCombustible.buscarTodos();
         List<MediosSinContaminar> mediosSinContaminar= repositorioMedioDeTransporte.obtenerTodosLosMediosSinContaminar();
+        List<ServicioContratadoDTO> servicioContratadoDTOList= repositorioMedioDeTransporte.obtenerTodosLosServiciosContratadosDTO();
 
         return new ModelAndView(new HashMap<String, Object>(){{
             put("miembro", miembroBuscado);
@@ -185,6 +184,7 @@ public class MiembroController {
             put("tipo_de_vehiculo", tipoVehiculoParticular);
             put("tipos_de_combustible", combustibleList);
             put("mediosSinContaminar", mediosSinContaminar);
+            put("servicios_contratados", servicioContratadoDTOList);
         }},"miembro/registrarTramo.hbs");
     }
 
@@ -196,6 +196,7 @@ public class MiembroController {
         TipoTransporte tipoTransporte = Enum.valueOf(TipoTransporte.class,request.queryParams("tipos_de_transporte"));
 
         Boolean esCompartido = Boolean.parseBoolean(request.queryParams("es_compartido"));
+
 
         LocalTime hora=LocalTime.of(Integer.parseInt(request.queryParams("hora")), Integer.parseInt(request.queryParams("minuto")));
 //        Direccion direccionInicio = new Direccion(request.queryParams("calleInicio"),
@@ -210,20 +211,20 @@ public class MiembroController {
 //                new Provincia(request.queryParams("provinciaFin"))
 //        );
 //
+//        Tramo tramo = new Tramo(direccionInicio,direccionFin,hora);
+//
 //        if(tipoTransporte== TipoTransporte.VEHICULO_PARTICULAR){
 //            TipoVehiculo tipoVehiculo = Enum.valueOf(TipoVehiculo.class,request.queryParams("tipo_de_vehiculo"));
 //            Combustible combustible = repositorioCombustible.buscarPorId(Integer.parseInt(request.queryParams("tipo_de_combustible")));
 //
 //            VehiculoParticular vehiculoParticular = repositorioMedioDeTransporte.obtenerMedioDeTransporte(tipoVehiculo,combustible,esCompartido);
 //
-//            Tramo tramo = new Tramo(direccionInicio,direccionFin,hora);
 //            tramo.setMedioDeTransporte(vehiculoParticular);
-//            trayecto.agregarTramo(tramo);
 //        }
 //        else if (tipoTransporte== TipoTransporte.MEDIOS_SIN_CONTAMINAR){
 //            MediosSinContaminar medioSinContaminar;
 //
-//            if(request.queryParams("tipo_de_medio_sin_contaminar") =="-1"){
+//            if(request.queryParams("tipo_de_medio_sin_contaminar").equals("-1")){
 //                medioSinContaminar = new MediosSinContaminar(request.queryParams("otro_medio_sin_contaminar"),esCompartido);
 //                repositorioMedioDeTransporte.guardar(medioSinContaminar);
 //            }
@@ -231,14 +232,19 @@ public class MiembroController {
 //                medioSinContaminar = repositorioMedioDeTransporte.obtenerMedioDeTransporte(request.queryParams("tipo_de_medio_sin_contaminar"), esCompartido);
 //            }
 //
-//            Tramo tramo = new Tramo(direccionInicio,direccionFin,hora);
 //            tramo.setMedioDeTransporte(medioSinContaminar);
-//            trayecto.agregarTramo(tramo);
-//        }
 //
+//        }
+//        else if (tipoTransporte== TipoTransporte.SERVICIO_CONTRATADO){
+//            ServicioContratado servicioContratado = (ServicioContratado) repositorioMedioDeTransporte.buscar(Integer.parseInt(request.queryParams("servicio_contratado")));
+//            tramo.setMedioDeTransporte(servicioContratado);
+//
+//        }
+//        trayecto.agregarTramo(tramo);
 //        repositorioTrayecto.guardar(trayecto);
 //
 //        response.redirect("/miembro/"+ miembro.getId()+"/registrarTrayecto/"+ trayecto.getId());
+
         return response;
     }
 }
