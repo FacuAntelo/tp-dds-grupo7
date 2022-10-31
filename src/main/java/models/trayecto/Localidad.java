@@ -6,17 +6,16 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Getter
 @Setter
 @Entity
 @Table(name = "localidad")
-public class Localidad extends Territorio {
+public class Localidad extends Territorio implements Serializable {
 
     @Column(name = "nombre_provincia")
     private String nombre;
-
-    // lista de organizaciones
 
     public Localidad() {}
 

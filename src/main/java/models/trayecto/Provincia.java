@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,17 +16,20 @@ import java.util.stream.Collectors;
 @Setter
 @Entity
 @Table(name = "provincia")
-public class Provincia extends Territorio {
+public class Provincia extends Territorio implements Serializable {
+
+
     @Column(name = "provincia")
     private String nombre;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+        @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_provincia", referencedColumnName = "id")
     private List<Localidad> localidades;
 
 
     public Provincia(String provincia) {
         this.nombre = provincia;
+        this.localidades = new ArrayList<>();
     }
 
     public Provincia() {}

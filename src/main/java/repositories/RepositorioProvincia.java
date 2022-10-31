@@ -1,24 +1,33 @@
+package repositories;
+
 import ServicioGeoRefAPIgob.ServicioGeoRefAPI;
 import ServicioGeoRefAPIgob.retrofit.ServicioGeoRefAPIRetrofit;
+import models.db.EntityManagerHelper;
 import models.trayecto.Localidad;
 import models.trayecto.Provincia;
-import org.junit.Test;
-import repositories.RepositorioProvincia;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TestGeoRefAPI {
+public class RepositorioProvincia {
+    public void persistirTodas(List<Provincia> provincias){
+        EntityManagerHelper.getEntityManager().getTransaction().begin();
+        provincias.forEach(EntityManagerHelper::persist);
+        EntityManagerHelper.getEntityManager().getTransaction().commit();
+    }
+    public List<Provincia> traerTodas(){
+        return EntityManagerHelper.getEntityManager().createQuery("select p from Provincia as p",Provincia.class).getResultList();
+    }
 
-    @Test
-    public void testAPI() throws IOException {
+    public List<Provincia> cargarProvincias() throws IOException {
+
+        System.out.println("EMPEZANDO LA CARGA DE PROVINCIAS");
+
         ServicioGeoRefAPI servicioGeoRefAPI = new ServicioGeoRefAPI();
         servicioGeoRefAPI.setAdapter(new ServicioGeoRefAPIRetrofit());
 
-
         List<Provincia> provinciaAPIList = servicioGeoRefAPI.getProvincias();
-
         provinciaAPIList.forEach(p -> {
             List<Localidad> localidadAPIList = new ArrayList<>();
             try {
@@ -33,34 +42,7 @@ public class TestGeoRefAPI {
             System.out.println(p.getNombre() + " " + p.getId());
             p.getLocalidades().forEach(l -> System.out.println(l.getNombre() + " " + l.getId()));
         });
-    }
-    @Test
-    public void persistirProvincias() throws IOException {
-        ServicioGeoRefAPI servicioGeoRefAPI = new ServicioGeoRefAPI();
-        servicioGeoRefAPI.setAdapter(new ServicioGeoRefAPIRetrofit());
-
-
-        List<Provincia> provinciaAPIList = servicioGeoRefAPI.getProvincias();
-
-        RepositorioProvincia repositorioProvincia = new RepositorioProvincia();
-
-        repositorioProvincia.persistirTodas(provinciaAPIList);
-    }
-    @Test
-    public void traerProvincias(){
-        RepositorioProvincia repositorioProvincia = new RepositorioProvincia();
-
-        List<Provincia> provincias = repositorioProvincia.traerTodas();
-        provincias.forEach(p -> {
-            System.out.println("--------------------------------------------------------------------");
-            System.out.println(p.getNombre() + " " + p.getId());
-            p.getLocalidades().forEach(l -> System.out.println(l.getNombre() + " " + l.getId()));
-        });
-    }
-    @Test
-    public void persistirLocalidad(){
-
-
-
+        System.out.println("TERMINO LA CARGA");
+        return provinciaAPIList;
     }
 }

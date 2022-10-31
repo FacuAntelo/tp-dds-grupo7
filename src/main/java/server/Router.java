@@ -1,5 +1,7 @@
 package server;
 
+import ServicioGeoRefAPIgob.ServicioGeoRefAPI;
+import ServicioGeoRefAPIgob.retrofit.ServicioGeoRefAPIRetrofit;
 import controllers.*;
 import controllers.userlog.LoginController;
 import controllers.userlog.RegisterController;
@@ -14,13 +16,17 @@ import models.db.EntityManagerHelper;
 import models.db.PersistenciaInicial;
 import models.domain.services.ServicioGeoDDS;
 import models.domain.services.adapters.ServicioGeoDDSRetrofitAdapter;
+import models.trayecto.Provincia;
 import repositories.RepositorioOrganizacion;
+import repositories.RepositorioProvincia;
 import spark.Route;
 import spark.Spark;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 import spark.utils.BooleanHelper;
 import spark.utils.HandlebarsTemplateEngineBuilder;
 
+import javax.swing.plaf.synth.SynthUI;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -36,14 +42,21 @@ public class Router {
                 .build();
     }
 
-    public static void init() {
+    public static void init() throws IOException {
         Router.initEngine();
+
+        RepositorioProvincia repositorioProvincia = new RepositorioProvincia();
+        System.out.println(repositorioProvincia.traerTodas().size()+ "-------------------------------------------------------");
+        if(repositorioProvincia.traerTodas().isEmpty()) {
+            ServicioGeoRefAPI servicioGeoRefAPI = new ServicioGeoRefAPI();
+            servicioGeoRefAPI.setAdapter(new ServicioGeoRefAPIRetrofit());
+            List<Provincia> provincias = repositorioProvincia.cargarProvincias();
+            repositorioProvincia.persistirTodas(provincias);
+        }
+
         Spark.staticFileLocation("/public");
         Router.configure();
 //        PersistenciaInicial.persistirCombustibles();
-        ServicioGeoDDS servicioGeoDDS = ServicioGeoDDS.getInstance();
-        servicioGeoDDS.setAdapter(new ServicioGeoDDSRetrofitAdapter());
-
     }
 
     private static void configure() {
