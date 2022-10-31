@@ -1,18 +1,23 @@
 package TestMediosDeTransporte;
 
 import models.Combustible.Combustible;
+import models.DTO.ServicioContratadoDTO;
 import models.MediosDeTransporte.MediosSinContaminar;
+import models.MediosDeTransporte.ServicioContratado;
 import models.MediosDeTransporte.TipoVehiculo;
 import models.MediosDeTransporte.VehiculoParticular;
 import models.Organizacion.Organizacion;
 import models.db.EntityManagerHelper;
 import org.junit.Test;
 import repositories.RepositorioCombustible;
+import repositories.RepositorioMedioDeTransporte;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class TestMediosDeTransporte {
+    RepositorioMedioDeTransporte repositorioMedioDeTransporte = new RepositorioMedioDeTransporte();
 
 
     @Test
@@ -45,6 +50,14 @@ public class TestMediosDeTransporte {
                 .stream().filter(m-> m.getNombre().equals("pie")).collect(Collectors.toList());
 
         System.out.println(mediosSinContaminarList.size());
+
+    }
+
+    @Test
+    public void servicioContratado(){
+        List<ServicioContratadoDTO> servicioContratadoDTOList = repositorioMedioDeTransporte.obtenerTodosLosServiciosContratadosDTO();
+
+        System.out.println(servicioContratadoDTOList.size());
 
     }
 }

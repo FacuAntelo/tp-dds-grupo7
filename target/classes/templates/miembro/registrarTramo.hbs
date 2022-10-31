@@ -109,10 +109,10 @@
                                 <h4>Medio de transporte</h4>
                             </div>
                             <div class="form-row">
-                                <select class="form-select" aria-label="Default select example" name="tipos_de_transporte">
+                                <select class="form-select" aria-label="Default select example" name="tipos_de_transporte" id="medioDeTransporte" onchange="clickeado(this.value)">
                                     <option selected>Elegir</option>
                                     {{#each tipos_de_transporte}}
-                                    <option type="hidden" value="{{this}}"><a class="dropdown-item" href="/miembro/{{miembro.id}}/registrarTrayecto/ {{trayecto.id}}/{{this}}">{{this}}</a></option>
+                                    <option type="hidden" value="{{this}}"><a class="dropdown-item" >{{this}}</a></option>
                                     {{/each}}
                                 </select>
                             </div>
@@ -131,6 +131,7 @@
 {{!--                             </div> --}}
 
 {{!--  INICIO FORM PARA VEHICULOS PARTICULARES--}}
+                            <div class="mediosDeTransporte" id="VEHICULO_PARTICULAR" style="display:none">
                             <div class="form-row">
                             <h4>Tipo de vehiculo particular - VehiculoParticular </h4>
                                 <select class="form-select" aria-label="Default select example" name="tipo_de_vehiculo">
@@ -149,9 +150,11 @@
                                     {{/each}}
                                 </select>
                             </div>
+                            </div>
  {{!--  FIN FORM PARA VEHICULOS PARTICULARES--}}
 
  {{!--  INICIO FORM PARA MEDIOS SIN CONTAMINAR--}}
+                             <div class="mediosDeTransporte" id="MEDIOS_SIN_CONTAMINAR" style="display:none">
                              <div class="form-row">
                              <h4>Tipo de medio sin contaminar - Medio sin contaminar </h4>
                                  <select class="form-select" aria-label="Default select example" name="tipo_de_medio_sin_contaminar">
@@ -166,10 +169,22 @@
                                  <label for="validationCustom05">Otro medio sin contaminar - Medio sin contaminar</label>
                                  <input type="text" class="form-control" id="validationCustom05" placeholder="Otro medio" required name"otro_medio_sin_contaminar">
                              </div>
+                             </div>
 
  {{!--  FIN FORM PARA MEDIOS SIN CONTAMINAR--}}
 
  {{!--  INICIO FORM PARA SERVICIO CONTRATADO--}}
+                             <div class="mediosDeTransporte" id="SERVICIO_CONTRATADO" style="display:none">
+                             <div class="form-row">
+                             <h4>Tipo servicio contratado - Servicio contratado </h4>
+                                 <select class="form-select" aria-label="Default select example" name="servicio_contratado">
+                                     <option selected>Elegir servicio contratado</option>
+                                     {{#each servicios_contratados}}
+                                     <option type="hidden" value="{{id}}">{{nombre}}</option>
+                                     {{/each}}
+                                 </select>
+                             </div>
+                             </div>
  {{!--  FIN FORM PARA SERVICIO CONTRATADO--}}
 
 {{!--  INICIO FORM PARA TRANSPORTE PUBLICO--}}

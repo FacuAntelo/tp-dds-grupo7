@@ -155,7 +155,9 @@ td{
     text-align: center !important;
 }
 
-
+.aparecer{
+    display: block !important;
+}
 
   @media (min-width : 500px) {
     #sidebar-wrapper {

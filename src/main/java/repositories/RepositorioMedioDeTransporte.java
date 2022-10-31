@@ -1,14 +1,13 @@
 package repositories;
 
 import models.Combustible.Combustible;
-import models.MediosDeTransporte.MediosDeTransporte;
-import models.MediosDeTransporte.MediosSinContaminar;
-import models.MediosDeTransporte.TipoVehiculo;
-import models.MediosDeTransporte.VehiculoParticular;
+import models.DTO.ServicioContratadoDTO;
+import models.MediosDeTransporte.*;
 import models.Miembro.Miembro;
 import models.db.EntityManagerHelper;
 
 import javax.persistence.EntityManager;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -50,6 +49,18 @@ public class RepositorioMedioDeTransporte {
     public List<MediosSinContaminar> obtenerTodosLosMediosSinContaminar(){
         return EntityManagerHelper.getEntityManager()
                 .createQuery("from MediosSinContaminar", MediosSinContaminar.class).getResultList();
+    }
+
+    public List<ServicioContratadoDTO> obtenerTodosLosServiciosContratadosDTO(){
+        List<ServicioContratadoDTO> servicioContratadoDTOList= new ArrayList<>();
+        List<ServicioContratado> servicioContratadoList = EntityManagerHelper.getEntityManager()
+                .createQuery("from ServicioContratado", ServicioContratado.class).getResultList();
+
+        servicioContratadoList.forEach(s-> {
+            servicioContratadoDTOList.add(new ServicioContratadoDTO(s.getId(),s.getServicio().getNombre()));
+        });
+
+        return servicioContratadoDTOList;
     }
 
     public VehiculoParticular obtenerMedioDeTransporte(TipoVehiculo tipoVehiculo, Combustible combustible, boolean esCompartido){

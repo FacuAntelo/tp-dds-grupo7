@@ -131,8 +131,17 @@
     toggleButton.onclick = function () {
         el.classList.toggle("toggled");
     };
-    { { #block "script" } }
-    { { /block}}
+    let mediosDeTransportes = document.getElementsByClassName("mediosDeTransporte");
+    let medioSeleccionado = document.getElementById("medioDeTransporte");
+
+    medioSeleccionado.clickeado;
+    function clickeado(value) {
+        Array.from(mediosDeTransportes).forEach((m) => {
+            m.classList.remove("aparecer");
+        });
+        let medio = document.getElementById(String(value));
+        medio.classList.add("aparecer");
+    }
 
 </script>
 </body>
