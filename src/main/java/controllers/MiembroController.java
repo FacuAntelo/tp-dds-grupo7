@@ -1,18 +1,21 @@
 package controllers;
 
+import models.Combustible.Combustible;
 import models.DTO.TramoDTO;
 import models.DTO.TrayectoDTO;
 import models.MediosDeTransporte.MediosSinContaminar;
 import models.MediosDeTransporte.TipoTransporte;
+import models.MediosDeTransporte.TipoVehiculo;
+import models.MediosDeTransporte.VehiculoParticular;
 import models.Miembro.Miembro;
 import models.Miembro.TipoDocumento;
 import models.Organizacion.Organizacion;
 import models.Reportes.GeneradorDeReportes;
 import models.Usuarios.Usuario;
+import models.domain.services.ServicioGeoDDS;
+import models.domain.services.adapters.ServicioGeoDDSRetrofitAdapter;
 import models.trayecto.*;
-import repositories.RepositorioMiembro;
-import repositories.RepositorioOrganizacion;
-import repositories.RepositorioTrayecto;
+import repositories.*;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -29,6 +32,8 @@ public class MiembroController {
     RepositorioMiembro repositorioMiembro = new RepositorioMiembro();
     RepositorioTrayecto repositorioTrayecto= new RepositorioTrayecto();
     RepositorioOrganizacion repositorioOrganizacion = new RepositorioOrganizacion();
+    RepositorioCombustible repositorioCombustible= new RepositorioCombustible();
+    RepositorioMedioDeTransporte repositorioMedioDeTransporte=new RepositorioMedioDeTransporte();
 
     public ModelAndView mostrarTrayectos (Request request, Response response){
 
@@ -169,11 +174,71 @@ public class MiembroController {
         Miembro miembroBuscado = repositorioMiembro.buscar(idMiembro);
         Trayecto trayecto = repositorioTrayecto.buscar(idTrayecto);
         List<String> tipoTransporteList= Arrays.stream(TipoTransporte.values()).map(x-> x.name()).collect(Collectors.toList());
+        List<String> tipoVehiculoParticular = Arrays.stream(TipoVehiculo.values()).map(x-> x.name()).collect(Collectors.toList());
+        List<Combustible> combustibleList= repositorioCombustible.buscarTodos();
+        List<MediosSinContaminar> mediosSinContaminar= repositorioMedioDeTransporte.obtenerTodosLosMediosSinContaminar();
 
         return new ModelAndView(new HashMap<String, Object>(){{
             put("miembro", miembroBuscado);
             put("trayecto", trayecto);
-            put("tiposDeTransporte", tipoTransporteList);
+            put("tipos_de_transporte", tipoTransporteList);
+            put("tipo_de_vehiculo", tipoVehiculoParticular);
+            put("tipos_de_combustible", combustibleList);
+            put("mediosSinContaminar", mediosSinContaminar);
         }},"miembro/registrarTramo.hbs");
+    }
+
+    public Response registrarTramo(Request request, Response response) throws IOException {
+        int idMiembro = Integer.parseInt(request.params("idMiembro"));
+        int idTrayecto = Integer.parseInt(request.params("idTrayecto"));
+        Miembro miembro = repositorioMiembro.buscar(idMiembro);
+        Trayecto trayecto = repositorioTrayecto.buscar(idTrayecto);
+        TipoTransporte tipoTransporte = Enum.valueOf(TipoTransporte.class,request.queryParams("tipos_de_transporte"));
+
+        Boolean esCompartido = Boolean.parseBoolean(request.queryParams("es_compartido"));
+
+        LocalTime hora=LocalTime.of(Integer.parseInt(request.queryParams("hora")), Integer.parseInt(request.queryParams("minuto")));
+        Direccion direccionInicio = new Direccion(request.queryParams("calleInicio"),
+                Integer.parseInt(request.queryParams("alturaInicio")),
+                new Localidad(Integer.parseInt(request.queryParams("localidadInicio"))),
+                new Provincia(request.queryParams("provinciaInicio"))
+
+        );
+        Direccion direccionFin = new Direccion(request.queryParams("calleFin"),
+                Integer.parseInt(request.queryParams("alturaFin")),
+                new Localidad(Integer.parseInt(request.queryParams("localidadFin"))),
+                new Provincia(request.queryParams("provinciaFin"))
+        );
+
+        if(tipoTransporte== TipoTransporte.VEHICULO_PARTICULAR){
+            TipoVehiculo tipoVehiculo = Enum.valueOf(TipoVehiculo.class,request.queryParams("tipo_de_vehiculo"));
+            Combustible combustible = repositorioCombustible.buscarPorId(Integer.parseInt(request.queryParams("tipo_de_combustible")));
+
+            VehiculoParticular vehiculoParticular = repositorioMedioDeTransporte.obtenerMedioDeTransporte(tipoVehiculo,combustible,esCompartido);
+
+            Tramo tramo = new Tramo(direccionInicio,direccionFin,hora);
+            tramo.setMedioDeTransporte(vehiculoParticular);
+            trayecto.agregarTramo(tramo);
+        }
+        else if (tipoTransporte== TipoTransporte.MEDIOS_SIN_CONTAMINAR){
+            MediosSinContaminar medioSinContaminar;
+
+            if(request.queryParams("tipo_de_medio_sin_contaminar") =="-1"){
+                medioSinContaminar = new MediosSinContaminar(request.queryParams("otro_medio_sin_contaminar"),esCompartido);
+                repositorioMedioDeTransporte.guardar(medioSinContaminar);
+            }
+            else {
+                medioSinContaminar = repositorioMedioDeTransporte.obtenerMedioDeTransporte(request.queryParams("tipo_de_medio_sin_contaminar"), esCompartido);
+            }
+
+            Tramo tramo = new Tramo(direccionInicio,direccionFin,hora);
+            tramo.setMedioDeTransporte(medioSinContaminar);
+            trayecto.agregarTramo(tramo);
+        }
+
+        repositorioTrayecto.guardar(trayecto);
+
+        response.redirect("/miembro/"+ miembro.getId()+"/registrarTrayecto/"+ trayecto.getId());
+        return response;
     }
 }

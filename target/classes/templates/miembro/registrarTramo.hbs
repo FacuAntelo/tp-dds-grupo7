@@ -14,7 +14,7 @@
                     <div class="col-lg-6 col-xl-6 col-md-6 col-sm-12 col-12">
                         <h2 class="pb-3 text-center mb-5">Nuevo tramo</h2>
                         {{!-- /{{trayecto.id}}--}}
-                        <form class="needs-validation" method="POST" action="/miembro/{{usuario.id}}/registrarTrayecto"
+                        <form class="needs-validation" method="POST" action="/miembro/{{miembro.id}}/registrarTrayecto/{{trayecto.id}}"
                             novalidate>
                             <h4>Hora inicio</h4>
                             <div class="form-row">
@@ -109,9 +109,9 @@
                                 <h4>Medio de transporte</h4>
                             </div>
                             <div class="form-row">
-                                <select class="form-select" aria-label="Default select example" name="tiposDeTransporte">
+                                <select class="form-select" aria-label="Default select example" name="tipos_de_transporte">
                                     <option selected>Elegir</option>
-                                    {{#each tiposDeTransporte}}
+                                    {{#each tipos_de_transporte}}
                                     <option type="hidden" value="{{this}}"><a class="dropdown-item" href="/miembro/{{miembro.id}}/registrarTrayecto/ {{trayecto.id}}/{{this}}">{{this}}</a></option>
                                     {{/each}}
                                 </select>
@@ -130,6 +130,59 @@
 {{!--                                 </div> --}}
 {{!--                             </div> --}}
 
+{{!--  INICIO FORM PARA VEHICULOS PARTICULARES--}}
+                            <div class="form-row">
+                            <h4>Tipo de vehiculo particular - VehiculoParticular </h4>
+                                <select class="form-select" aria-label="Default select example" name="tipo_de_vehiculo">
+                                    <option selected>Elegir tipo de vehiculo</option>
+                                    {{#each tipo_de_vehiculo}}
+                                    <option type="hidden" value="{{this}}">{{this}}</option>
+                                    {{/each}}
+                                </select>
+                            </div>
+                            <div class="form-row">
+                            <h4>Tipo de combustible - VehiculoParticular </h4>
+                                <select class="form-select" aria-label="Default select example" name="tipo_de_combustible">
+                                    <option selected>Elegir tipo de combustible</option>
+                                    {{#each tipos_de_combustible}}
+                                    <option type="hidden" value="{{id}}">{{nombre}}</option>
+                                    {{/each}}
+                                </select>
+                            </div>
+ {{!--  FIN FORM PARA VEHICULOS PARTICULARES--}}
+
+ {{!--  INICIO FORM PARA MEDIOS SIN CONTAMINAR--}}
+                             <div class="form-row">
+                             <h4>Tipo de medio sin contaminar - Medio sin contaminar </h4>
+                                 <select class="form-select" aria-label="Default select example" name="tipo_de_medio_sin_contaminar">
+                                     <option selected>Elegir medio sin contaminar</option>
+                                     {{#each mediosSinContaminar}}
+                                     <option type="hidden" value="{{nombre}}">{{nombre}}</option>
+                                     {{/each}}
+                                     <option type="hidden" value="-1">Otro medio</option>
+                                 </select>
+                             </div>
+                             <div class="form-row">
+                                 <label for="validationCustom05">Otro medio sin contaminar - Medio sin contaminar</label>
+                                 <input type="text" class="form-control" id="validationCustom05" placeholder="Otro medio" required name"otro_medio_sin_contaminar">
+                             </div>
+
+ {{!--  FIN FORM PARA MEDIOS SIN CONTAMINAR--}}
+
+ {{!--  INICIO FORM PARA SERVICIO CONTRATADO--}}
+ {{!--  FIN FORM PARA SERVICIO CONTRATADO--}}
+
+{{!--  INICIO FORM PARA TRANSPORTE PUBLICO--}}
+{{!--  FIN FORM PARA TRANSPORTE PUBLICO--}}
+
+
+                            <div class="form-row" style="margin-top: 50px;">
+                                <select class="form-select" aria-label="Default select example" name="es_compartido">
+                                    <option selected>Es compartido?</option>
+                                    <option type="hidden" value="true">Si</option>
+                                    <option type="hidden" value="false">No</option>
+                                </select>
+                            </div>
                             <button class="btn btn-primary" type="submit">Agregar tramo</button>
                         </form>
                     </div>

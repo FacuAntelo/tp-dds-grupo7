@@ -1,12 +1,17 @@
 package repositories;
 
+import models.Combustible.Combustible;
 import models.MediosDeTransporte.MediosDeTransporte;
+import models.MediosDeTransporte.MediosSinContaminar;
+import models.MediosDeTransporte.TipoVehiculo;
+import models.MediosDeTransporte.VehiculoParticular;
 import models.Miembro.Miembro;
 import models.db.EntityManagerHelper;
 
 import javax.persistence.EntityManager;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class RepositorioMedioDeTransporte {
     public void guardar(MediosDeTransporte... mediosDeTransportes){
@@ -37,4 +42,48 @@ public class RepositorioMedioDeTransporte {
     public MediosDeTransporte buscar(int id){
         return EntityManagerHelper.getEntityManager().find(MediosDeTransporte.class,id);
     }
+
+    public List<VehiculoParticular> obtenerTodosLosVehiculos(){
+        return EntityManagerHelper.getEntityManager()
+                .createQuery("from VehiculoParticular",VehiculoParticular.class).getResultList();
+    }
+    public List<MediosSinContaminar> obtenerTodosLosMediosSinContaminar(){
+        return EntityManagerHelper.getEntityManager()
+                .createQuery("from MediosSinContaminar", MediosSinContaminar.class).getResultList();
+    }
+
+    public VehiculoParticular obtenerMedioDeTransporte(TipoVehiculo tipoVehiculo, Combustible combustible, boolean esCompartido){
+        List<VehiculoParticular> vehiculoParticularList= EntityManagerHelper.getEntityManager()
+                .createQuery("from VehiculoParticular",VehiculoParticular.class)
+                .getResultList()
+                .stream().filter(v-> v.getTipo()==tipoVehiculo && v.getCombustible()==combustible && v.getEsCompartido()==esCompartido).collect(Collectors.toList());
+
+        if(vehiculoParticularList.isEmpty()){
+            VehiculoParticular vehiculoParticular = new VehiculoParticular(tipoVehiculo,combustible,esCompartido);
+            this.guardar(vehiculoParticular);
+            return vehiculoParticular;
+        }
+        else {
+            return vehiculoParticularList.get(0);
+        }
+    }
+
+    public MediosSinContaminar obtenerMedioDeTransporte(String nombre, boolean esCompartido){
+        List<MediosSinContaminar>  mediosSinContaminarList=EntityManagerHelper.getEntityManager()
+                .createQuery("from MediosSinContaminar",MediosSinContaminar.class)
+                .getResultList()
+                .stream().filter(m-> m.getNombre().equals(nombre) && m.getEsCompartido()==esCompartido).collect(Collectors.toList());
+
+        if(mediosSinContaminarList.isEmpty()){
+            MediosSinContaminar mediosSinContaminar = new MediosSinContaminar(nombre,esCompartido);
+            this.guardar(mediosSinContaminar);
+            return mediosSinContaminar;
+        }
+        else {
+            return mediosSinContaminarList.get(0);
+        }
+
+    }
+
+
 }

@@ -13,6 +13,11 @@ public class MediosSinContaminar extends MediosDeTransporte {
         this.setEsCompartido(false);
         this.setTipoTransporte(TipoTransporte.MEDIOS_SIN_CONTAMINAR);
     }
+    public MediosSinContaminar(String nombre, Boolean esCompartido){
+        this.setEsCompartido(esCompartido);
+        this.setTipoTransporte(TipoTransporte.MEDIOS_SIN_CONTAMINAR);
+        this.nombre=nombre;
+    }
     public String getNombre() {
         return nombre;
     }

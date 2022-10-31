@@ -12,6 +12,8 @@ import models.Usuarios.FactorDeEmision;
 import models.Usuarios.Permiso;
 import models.db.EntityManagerHelper;
 import models.db.PersistenciaInicial;
+import models.domain.services.ServicioGeoDDS;
+import models.domain.services.adapters.ServicioGeoDDSRetrofitAdapter;
 import repositories.RepositorioOrganizacion;
 import spark.Route;
 import spark.Spark;
@@ -39,6 +41,8 @@ public class Router {
         Spark.staticFileLocation("/public");
         Router.configure();
 //        PersistenciaInicial.persistirCombustibles();
+        ServicioGeoDDS servicioGeoDDS = ServicioGeoDDS.getInstance();
+        servicioGeoDDS.setAdapter(new ServicioGeoDDSRetrofitAdapter());
 
     }
 
@@ -116,6 +120,7 @@ public class Router {
             Spark.get("/registrarTrayecto",miembroController::pantallaDeRegistrarTrayectos, engine);
             Spark.post("/registrarTrayecto",miembroController::instanciacionDeTrayecto);
             Spark.get("/registrarTrayecto/:idTrayecto", miembroController::pantallaDeAgregarTramos, engine);
+            Spark.post("/registrarTrayecto/:idTrayecto", miembroController::registrarTramo);
 //            Spark.post("/miembro/:idMiembro/organizacion/:idOrganizacion/registrarTrayecto",miembroController::guardarNuevoTrayecto);
 //            Spark.get("/registrarTrayecto/:idTrayecto", miembroController::pantallaDeEditarTrayecto, engine);
         });

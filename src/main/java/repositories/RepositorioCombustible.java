@@ -17,7 +17,9 @@ public class RepositorioCombustible {
         combustibleList.forEach(EntityManagerHelper::persist);
         EntityManagerHelper.commit();
     }
-
+    public Combustible buscarPorId(int id){
+        return EntityManagerHelper.getEntityManager().find(Combustible.class,id);
+    }
     public List<Combustible> buscarTodos(){
         return EntityManagerHelper.getEntityManager().createQuery("from Combustible",Combustible.class).getResultList();
     }
