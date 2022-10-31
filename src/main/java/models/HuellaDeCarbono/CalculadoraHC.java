@@ -65,7 +65,7 @@ public class CalculadoraHC {
 
     public static Boolean dosDireccionesSonIguales(Direccion unaDireccion, Direccion otraDireccion) {
         // NO COMPARE POR CALLE PORQUE NO SE SI SON KEY SENSISITIVE
-        return unaDireccion.getLocalidad().getLocalidad() == otraDireccion.getLocalidad().getLocalidad() && unaDireccion.getAltura() == otraDireccion.getAltura();
+        return unaDireccion.getLocalidad() == otraDireccion.getLocalidad() && unaDireccion.getAltura() == otraDireccion.getAltura();
     }
 
     public static Boolean dosMediosDeTransporteSonIguales(MediosDeTransporte unMedioDeTranporte, MediosDeTransporte otroMedioDeTransporte) {

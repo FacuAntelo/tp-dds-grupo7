@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @Table(name = "provincia")
 public class Provincia extends Territorio {
     @Column(name = "provincia")
-    private String provincia;
+    private String nombre;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "id_provincia", referencedColumnName = "id")
@@ -24,7 +24,7 @@ public class Provincia extends Territorio {
 
 
     public Provincia(String provincia) {
-        this.provincia = provincia;
+        this.nombre = provincia;
     }
 
     public Provincia() {}

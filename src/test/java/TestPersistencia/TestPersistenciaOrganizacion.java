@@ -129,7 +129,7 @@ public class TestPersistenciaOrganizacion {
         // UBICACION //
         Ubicacion ubicacionCocaCola = new Ubicacion();
         // DIRECCION //
-        Localidad ezeiza = new Localidad(180);
+        Localidad ezeiza = new Localidad();
         Provincia buenosAires = new Provincia("Buenos Aires");
         sectorBonaerense.agregarTerritorio(ezeiza);
         sectorBonaerense.agregarTerritorio(buenosAires);
@@ -286,7 +286,7 @@ public class TestPersistenciaOrganizacion {
         // UBICACION //
         Ubicacion ubicacionCocaCola = new Ubicacion();
         // DIRECCION //
-        Localidad ezeiza = new Localidad(180);
+        Localidad ezeiza = new Localidad();
         Provincia buenosAires = new Provincia("Buenos Aires");
         sectorBonaerense.agregarTerritorio(ezeiza);
         sectorBonaerense.agregarTerritorio(buenosAires);

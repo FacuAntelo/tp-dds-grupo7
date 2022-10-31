@@ -80,12 +80,12 @@ public class RepositorioMiembro {
             trayectoDTO.setDistanciaTotal(t.getDistanciaTotal());
             trayectoDTO.setDireccionInicioCalle(t.getPuntoInicio().getCalle());
             trayectoDTO.setDireccionInicioAltura(t.getPuntoInicio().getAltura());
-            trayectoDTO.setDireccionFinLocalidad(Integer.toString(t.getPuntoInicio().getLocalidad().getNumeroLocalidad()));
-            trayectoDTO.setDireccionInicioProvincia(t.getPuntoInicio().getProvincia().getProvincia());
+            trayectoDTO.setDireccionFinLocalidad(Integer.toString((int) t.getPuntoInicio().getLocalidad().getId()));
+            trayectoDTO.setDireccionInicioProvincia(t.getPuntoInicio().getProvincia().getNombre());
             trayectoDTO.setDireccionFinCalle(t.getPuntoFin().getCalle());
             trayectoDTO.setDireccionFinAltura(t.getPuntoFin().getAltura());
-            trayectoDTO.setDireccionFinLocalidad(Integer.toString(t.getPuntoFin().getLocalidad().getNumeroLocalidad()));
-            trayectoDTO.setDireccionFinProvincia(t.getPuntoFin().getProvincia().getProvincia());
+            trayectoDTO.setDireccionFinLocalidad(Integer.toString( (int) t.getPuntoFin().getLocalidad().getId()));
+            trayectoDTO.setDireccionFinProvincia(t.getPuntoFin().getProvincia().getNombre());
             trayectoDTOList.add(trayectoDTO);
         });
 
@@ -103,12 +103,12 @@ public class RepositorioMiembro {
             tramoDTO.setHoraInicio(t.getHoraInicio());
             tramoDTO.setDireccionInicioCalle(t.getUbicacionInicio().getCalle());
             tramoDTO.setDireccionInicioAltura(t.getUbicacionInicio().getAltura());
-            tramoDTO.setDireccionFinLocalidad(Integer.toString(t.getUbicacionInicio().getLocalidad().getNumeroLocalidad()));
-            tramoDTO.setDireccionInicioProvincia(t.getUbicacionInicio().getProvincia().getProvincia());
+            tramoDTO.setDireccionFinLocalidad(Integer.toString((int) t.getUbicacionInicio().getLocalidad().getId()));
+            tramoDTO.setDireccionInicioProvincia(t.getUbicacionInicio().getProvincia().getNombre());
             tramoDTO.setDireccionFinCalle(t.getUbicacionFinal().getCalle());
             tramoDTO.setDireccionFinAltura(t.getUbicacionFinal().getAltura());
-            tramoDTO.setDireccionFinLocalidad(Integer.toString(t.getUbicacionFinal().getLocalidad().getNumeroLocalidad()));
-            tramoDTO.setDireccionFinProvincia(t.getUbicacionFinal().getProvincia().getProvincia());
+            tramoDTO.setDireccionFinLocalidad(Integer.toString((int) t.getUbicacionFinal().getLocalidad().getId()));
+            tramoDTO.setDireccionFinProvincia(t.getUbicacionFinal().getProvincia().getNombre());
             tramoDTOList.add(tramoDTO);
         });
 

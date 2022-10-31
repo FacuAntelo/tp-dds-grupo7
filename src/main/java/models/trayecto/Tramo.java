@@ -65,8 +65,8 @@ public class Tramo extends EntidadPersistente {
 
         public void calcularDistanciaTramo() throws IOException {
                 ServicioGeoDDS servicioGeoDDS = ServicioGeoDDS.getInstance();
-                this.distancia = servicioGeoDDS.distanciaAPI(ubicacionInicio.getLocalidad().getNumeroLocalidad(), ubicacionInicio.getCalle(), ubicacionInicio.getAltura(),
-                        ubicacionFinal.getLocalidad().getNumeroLocalidad(), ubicacionFinal.getCalle(), ubicacionFinal.getAltura());
+                this.distancia = servicioGeoDDS.distanciaAPI((int) ubicacionInicio.getLocalidad().getId(), ubicacionInicio.getCalle(), ubicacionInicio.getAltura(),
+                        (int) ubicacionFinal.getLocalidad().getId(), ubicacionFinal.getCalle(), ubicacionFinal.getAltura());
         }
 
         public DistanciaAPI getDistancia() {

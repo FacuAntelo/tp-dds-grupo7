@@ -100,7 +100,7 @@ public class MiembroController {
             Direccion direccionInicio = new Direccion(request.queryParams("calleInicio"),
                     Integer.parseInt(request.queryParams("alturaInicio")),
 //                    new Localidad(Integer.parseInt(request.queryParams("localidadInicio"))),
-                    new Localidad(180),
+                    new Localidad(),
 //                    new Provincia(request.queryParams("provinciaInicio"))
                     new Provincia(request.queryParams("Buenos Aires"))
             );
@@ -108,7 +108,7 @@ public class MiembroController {
                     Integer.parseInt(request.queryParams("alturaFin")),
 //                    new Localidad(Integer.parseInt(request.queryParams("localidadFin"))),
 //                    new Provincia(request.queryParams("provinciaFin"))
-                    new Localidad(180),
+                    new Localidad(),
                     new Provincia(request.queryParams("Buenos Aires"))
             );
             Tramo tramo = new Tramo(direccionInicio,direccionFin,hora);
@@ -144,26 +144,26 @@ public class MiembroController {
         Organizacion organizacion = repositorioMiembro.buscarOrganizacionQuePertenece(miembro);
 
 
-        Direccion direccionInicio = new Direccion(request.queryParams("calleInicio"),
-                Integer.parseInt(request.queryParams("alturaInicio")),
-                    new Localidad(Integer.parseInt(request.queryParams("localidadInicio"))),
-                    new Provincia(request.queryParams("provinciaInicio"))
+//        Direccion direccionInicio = new Direccion(request.queryParams("calleInicio"),
+//                Integer.parseInt(request.queryParams("alturaInicio")),
+//                    new Localidad(Integer.parseInt(request.queryParams("localidadInicio"))),
+//                    new Provincia(request.queryParams("provinciaInicio"))
+//
+//        );
+//        Direccion direccionFin = new Direccion(request.queryParams("calleFin"),
+//                Integer.parseInt(request.queryParams("alturaFin")),
+//                    new Localidad(Integer.parseInt(request.queryParams("localidadFin"))),
+//                    new Provincia(request.queryParams("provinciaFin"))
+//        );
 
-        );
-        Direccion direccionFin = new Direccion(request.queryParams("calleFin"),
-                Integer.parseInt(request.queryParams("alturaFin")),
-                    new Localidad(Integer.parseInt(request.queryParams("localidadFin"))),
-                    new Provincia(request.queryParams("provinciaFin"))
-        );
-
-        Trayecto trayecto = new Trayecto(direccionInicio,direccionFin);
-        miembro.agregarTrayecto(trayecto, organizacion);
-
-        repositorioTrayecto.guardar(trayecto);
-        repositorioOrganizacion.guardar(organizacion);
+//        Trayecto trayecto = new Trayecto(direccionInicio,direccionFin);
+//        miembro.agregarTrayecto(trayecto, organizacion);
+//
+//        repositorioTrayecto.guardar(trayecto);
+//        repositorioOrganizacion.guardar(organizacion);
 
 
-        response.redirect("/miembro/"+ miembro.getId()+"/registrarTrayecto/"+ trayecto.getId());
+//        response.redirect("/miembro/"+ miembro.getId()+"/registrarTrayecto/"+ trayecto.getId());
         
         return response;
     }
@@ -198,47 +198,47 @@ public class MiembroController {
         Boolean esCompartido = Boolean.parseBoolean(request.queryParams("es_compartido"));
 
         LocalTime hora=LocalTime.of(Integer.parseInt(request.queryParams("hora")), Integer.parseInt(request.queryParams("minuto")));
-        Direccion direccionInicio = new Direccion(request.queryParams("calleInicio"),
-                Integer.parseInt(request.queryParams("alturaInicio")),
-                new Localidad(Integer.parseInt(request.queryParams("localidadInicio"))),
-                new Provincia(request.queryParams("provinciaInicio"))
-
-        );
-        Direccion direccionFin = new Direccion(request.queryParams("calleFin"),
-                Integer.parseInt(request.queryParams("alturaFin")),
-                new Localidad(Integer.parseInt(request.queryParams("localidadFin"))),
-                new Provincia(request.queryParams("provinciaFin"))
-        );
-
-        if(tipoTransporte== TipoTransporte.VEHICULO_PARTICULAR){
-            TipoVehiculo tipoVehiculo = Enum.valueOf(TipoVehiculo.class,request.queryParams("tipo_de_vehiculo"));
-            Combustible combustible = repositorioCombustible.buscarPorId(Integer.parseInt(request.queryParams("tipo_de_combustible")));
-
-            VehiculoParticular vehiculoParticular = repositorioMedioDeTransporte.obtenerMedioDeTransporte(tipoVehiculo,combustible,esCompartido);
-
-            Tramo tramo = new Tramo(direccionInicio,direccionFin,hora);
-            tramo.setMedioDeTransporte(vehiculoParticular);
-            trayecto.agregarTramo(tramo);
-        }
-        else if (tipoTransporte== TipoTransporte.MEDIOS_SIN_CONTAMINAR){
-            MediosSinContaminar medioSinContaminar;
-
-            if(request.queryParams("tipo_de_medio_sin_contaminar") =="-1"){
-                medioSinContaminar = new MediosSinContaminar(request.queryParams("otro_medio_sin_contaminar"),esCompartido);
-                repositorioMedioDeTransporte.guardar(medioSinContaminar);
-            }
-            else {
-                medioSinContaminar = repositorioMedioDeTransporte.obtenerMedioDeTransporte(request.queryParams("tipo_de_medio_sin_contaminar"), esCompartido);
-            }
-
-            Tramo tramo = new Tramo(direccionInicio,direccionFin,hora);
-            tramo.setMedioDeTransporte(medioSinContaminar);
-            trayecto.agregarTramo(tramo);
-        }
-
-        repositorioTrayecto.guardar(trayecto);
-
-        response.redirect("/miembro/"+ miembro.getId()+"/registrarTrayecto/"+ trayecto.getId());
+//        Direccion direccionInicio = new Direccion(request.queryParams("calleInicio"),
+//                Integer.parseInt(request.queryParams("alturaInicio")),
+//                new Localidad(Integer.parseInt(request.queryParams("localidadInicio"))),
+//                new Provincia(request.queryParams("provinciaInicio"))
+//
+//        );
+//        Direccion direccionFin = new Direccion(request.queryParams("calleFin"),
+//                Integer.parseInt(request.queryParams("alturaFin")),
+//                new Localidad(Integer.parseInt(request.queryParams("localidadFin"))),
+//                new Provincia(request.queryParams("provinciaFin"))
+//        );
+//
+//        if(tipoTransporte== TipoTransporte.VEHICULO_PARTICULAR){
+//            TipoVehiculo tipoVehiculo = Enum.valueOf(TipoVehiculo.class,request.queryParams("tipo_de_vehiculo"));
+//            Combustible combustible = repositorioCombustible.buscarPorId(Integer.parseInt(request.queryParams("tipo_de_combustible")));
+//
+//            VehiculoParticular vehiculoParticular = repositorioMedioDeTransporte.obtenerMedioDeTransporte(tipoVehiculo,combustible,esCompartido);
+//
+//            Tramo tramo = new Tramo(direccionInicio,direccionFin,hora);
+//            tramo.setMedioDeTransporte(vehiculoParticular);
+//            trayecto.agregarTramo(tramo);
+//        }
+//        else if (tipoTransporte== TipoTransporte.MEDIOS_SIN_CONTAMINAR){
+//            MediosSinContaminar medioSinContaminar;
+//
+//            if(request.queryParams("tipo_de_medio_sin_contaminar") =="-1"){
+//                medioSinContaminar = new MediosSinContaminar(request.queryParams("otro_medio_sin_contaminar"),esCompartido);
+//                repositorioMedioDeTransporte.guardar(medioSinContaminar);
+//            }
+//            else {
+//                medioSinContaminar = repositorioMedioDeTransporte.obtenerMedioDeTransporte(request.queryParams("tipo_de_medio_sin_contaminar"), esCompartido);
+//            }
+//
+//            Tramo tramo = new Tramo(direccionInicio,direccionFin,hora);
+//            tramo.setMedioDeTransporte(medioSinContaminar);
+//            trayecto.agregarTramo(tramo);
+//        }
+//
+//        repositorioTrayecto.guardar(trayecto);
+//
+//        response.redirect("/miembro/"+ miembro.getId()+"/registrarTrayecto/"+ trayecto.getId());
         return response;
     }
 }

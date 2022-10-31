@@ -12,18 +12,14 @@ import javax.persistence.*;
 @Entity
 @Table(name = "localidad")
 public class Localidad extends Territorio {
-    @Column(name = "localidad")
-    private int localidad;
 
-    public Localidad(int localidad) {this.localidad = localidad;}
+    @Column(name = "nombre_provincia")
+    private String nombre;
 
     // lista de organizaciones
 
     public Localidad() {}
 
-    public int getNumeroLocalidad(){
-        return localidad;
-    }
 
     @Override
     public RegistroHC calcularHC() {

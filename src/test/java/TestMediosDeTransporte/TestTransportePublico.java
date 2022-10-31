@@ -15,10 +15,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class TestTransportePublico {
-    Direccion direccion1 = new Direccion("mitre", 10, new Localidad(100), new Provincia("BsAs"));
-    Direccion direccion2 = new Direccion("belgrano", 350, new Localidad(10), new Provincia("BsAs"));
-    Direccion direccion3 = new Direccion("guemes", 350, new Localidad(10), new Provincia("BsAs"));
-    Direccion direccion4 = new Direccion("nacho", 350, new Localidad(10), new Provincia("BsAs"));
+    Direccion direccion1 = new Direccion("mitre", 10, new Localidad(), new Provincia("BsAs"));
+    Direccion direccion2 = new Direccion("belgrano", 350, new Localidad(), new Provincia("BsAs"));
+    Direccion direccion3 = new Direccion("guemes", 350, new Localidad(), new Provincia("BsAs"));
+    Direccion direccion4 = new Direccion("nacho", 350, new Localidad(), new Provincia("BsAs"));
     TransportePublico unTransportePublico;
     Parada unaParada= new Parada("2",direccion1, 2.0,0.0);
     Parada otraParada= new Parada("4",direccion1, 6.0,0.0);

@@ -68,7 +68,7 @@ public class GeneradorDeReportes {
 
         provincias.forEach( provincia -> {
             RegistroHC resultado =  provincia.calcularHC();
-            System.out.println(provincia.getProvincia() + ": " + resultado.getValorHCTotal().getValorConUnidad());
+            System.out.println(provincia.getNombre() + ": " + resultado.getValorHCTotal().getValorConUnidad());
         });
     }
 
