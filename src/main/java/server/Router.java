@@ -11,6 +11,7 @@ import models.MediosDeTransporte.MediosDeTransporte;
 import models.Usuarios.FactorDeEmision;
 import models.Usuarios.Permiso;
 import models.db.EntityManagerHelper;
+import models.db.PersistenciaInicial;
 import repositories.RepositorioOrganizacion;
 import spark.Route;
 import spark.Spark;
@@ -37,6 +38,7 @@ public class Router {
         Router.initEngine();
         Spark.staticFileLocation("/public");
         Router.configure();
+        PersistenciaInicial.persistirCombistibles();
 
     }
 

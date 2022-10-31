@@ -8,7 +8,7 @@ import java.util.List;
 
 public class PersistenciaInicial {
 
-    public void persistirCombistibles(){
+    public static void persistirCombistibles(){
 
         FactorDeEmision naftaFactorDeEmision = new FactorDeEmision("NAFTA", 10, "lts");
         Combustible nafta = new Combustible("nafta");
