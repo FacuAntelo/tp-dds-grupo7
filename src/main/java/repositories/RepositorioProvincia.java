@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RepositorioProvincia {
-    public void persistirTodas(List<Provincia> provincias){
+    public void persistirProvincias(List<Provincia> provincias){
         EntityManagerHelper.getEntityManager().getTransaction().begin();
         provincias.forEach(EntityManagerHelper::persist);
         EntityManagerHelper.getEntityManager().getTransaction().commit();

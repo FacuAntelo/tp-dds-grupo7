@@ -10,7 +10,7 @@ import java.util.List;
 @Entity
 @Table(name = "sector_territorial")
 public class SectorTerritorial extends EntidadPersistente {
-    @OneToMany(mappedBy = "sector",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "sector",cascade= CascadeType.ALL)
     List<Territorio> territorioList = new ArrayList<>();
 
 

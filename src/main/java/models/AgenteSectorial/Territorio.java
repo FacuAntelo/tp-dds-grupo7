@@ -12,9 +12,10 @@ import javax.persistence.*;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Territorio {
     @Id
-    private long id;
+    @GeneratedValue(strategy = GenerationType.TABLE)
+    private int id_territorio;
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_sector_territorial",referencedColumnName = "id")
+    @JoinColumn(name = "id_sector_territorial")
     private SectorTerritorial sector;
 
     public abstract RegistroHC calcularHC();

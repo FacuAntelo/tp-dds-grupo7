@@ -51,7 +51,7 @@ public class Router {
             ServicioGeoRefAPI servicioGeoRefAPI = new ServicioGeoRefAPI();
             servicioGeoRefAPI.setAdapter(new ServicioGeoRefAPIRetrofit());
             List<Provincia> provincias = repositorioProvincia.cargarProvincias();
-            repositorioProvincia.persistirTodas(provincias);
+            repositorioProvincia.persistirProvincias(provincias);
         }
 
         Spark.staticFileLocation("/public");

@@ -3,6 +3,7 @@ import ServicioGeoRefAPIgob.retrofit.ServicioGeoRefAPIRetrofit;
 import models.trayecto.Localidad;
 import models.trayecto.Provincia;
 import org.junit.Test;
+import repositories.RepositorioLocalidad;
 import repositories.RepositorioProvincia;
 
 import java.io.IOException;
@@ -44,7 +45,7 @@ public class TestGeoRefAPI {
 
         RepositorioProvincia repositorioProvincia = new RepositorioProvincia();
 
-        repositorioProvincia.persistirTodas(provinciaAPIList);
+        repositorioProvincia.persistirProvincias(provinciaAPIList);
     }
     @Test
     public void traerProvincias(){
@@ -58,9 +59,14 @@ public class TestGeoRefAPI {
         });
     }
     @Test
-    public void persistirLocalidad(){
+    public void persistirLocalidad() throws IOException {
+        RepositorioLocalidad repositorioLocalidad = new RepositorioLocalidad();
+        ServicioGeoRefAPI servicioGeoRefAPI = new ServicioGeoRefAPI();
+        servicioGeoRefAPI.setAdapter(new ServicioGeoRefAPIRetrofit());
+        List<Localidad> localidadList = servicioGeoRefAPI.getLocalidadesPorProvincia("chubut");
 
+        localidadList.forEach(l -> System.out.println(l.getNombre()));
 
-
+        repositorioLocalidad.guardarLocalidades(localidadList);
     }
 }

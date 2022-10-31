@@ -18,12 +18,13 @@ import java.util.stream.Collectors;
 @Table(name = "provincia")
 public class Provincia extends Territorio implements Serializable {
 
+    @Column(name = "id_provincia")
+    private long id;
 
     @Column(name = "provincia")
     private String nombre;
 
-        @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_provincia", referencedColumnName = "id")
+    @OneToMany(fetch = FetchType.LAZY,cascade =CascadeType.ALL,mappedBy = "provincia")
     private List<Localidad> localidades;
 
 

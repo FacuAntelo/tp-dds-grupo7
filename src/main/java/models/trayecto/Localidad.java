@@ -14,8 +14,16 @@ import java.io.Serializable;
 @Table(name = "localidad")
 public class Localidad extends Territorio implements Serializable {
 
+    @Column(name = "id_localidad")
+    private long id;
+
     @Column(name = "nombre_provincia")
     private String nombre;
+
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_provincia")
+    private Provincia provincia;
 
     public Localidad() {}
 
