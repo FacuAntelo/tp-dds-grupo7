@@ -97,4 +97,20 @@ public class RepositorioMedioDeTransporte {
     }
 
 
+    public ServicioContratado obtenerMedioDeTransporte(Servicio servicio, Combustible combustible, Boolean esCompartido) {
+
+        List<ServicioContratado>  servicioContratadoList=EntityManagerHelper.getEntityManager()
+                .createQuery("from ServicioContratado",ServicioContratado.class)
+                .getResultList()
+                .stream().filter(s-> s.getServicio()==servicio && s.getCombustible()==combustible &&s.getEsCompartido()==esCompartido).collect(Collectors.toList());
+
+        if(servicioContratadoList.isEmpty()){
+            ServicioContratado servicioContratado = new ServicioContratado(servicio,combustible,esCompartido);
+            this.guardar(servicioContratado);
+            return servicioContratado;
+        }
+        else {
+            return servicioContratadoList.get(0);
+        }
+    }
 }

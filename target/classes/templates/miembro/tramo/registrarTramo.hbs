@@ -120,7 +120,7 @@
                                 <div class="form-row">
                                     <h4>Tipo de combustible</h4>
                                     <select class="form-select" aria-label="Default select example"
-                                        name="tipo_de_combustible">
+                                        name="tipo_de_combustible_vehiculo_particular">
                                         <option selected>Elegir tipo de combustible</option>
                                         {{#each tipos_de_combustible}}
                                         <option type="hidden" value="{{id}}">{{nombre}}</option>
@@ -160,6 +160,16 @@
                                         name="servicio_contratado">
                                         <option selected>Elegir servicio contratado</option>
                                         {{#each servicios_contratados}}
+                                        <option type="hidden" value="{{id}}">{{nombre}}</option>
+                                        {{/each}}
+                                    </select>
+                                </div>
+                                <div class="form-row">
+                                    <h4>Tipo de combustible</h4>
+                                    <select class="form-select" aria-label="Default select example"
+                                        name="tipo_de_combustible_servicio_contratado">
+                                        <option selected>Elegir tipo de combustible</option>
+                                        {{#each tipos_de_combustible}}
                                         <option type="hidden" value="{{id}}">{{nombre}}</option>
                                         {{/each}}
                                     </select>

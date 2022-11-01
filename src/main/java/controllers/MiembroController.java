@@ -409,7 +409,7 @@ public class MiembroController {
 
         if(tipoTransporte== TipoTransporte.VEHICULO_PARTICULAR){
             TipoVehiculo tipoVehiculo = Enum.valueOf(TipoVehiculo.class,request.queryParams("tipo_de_vehiculo"));
-            Combustible combustible = repositorioCombustible.buscarPorId(Integer.parseInt(request.queryParams("tipo_de_combustible")));
+            Combustible combustible = repositorioCombustible.buscarPorId(Integer.parseInt(request.queryParams("tipo_de_combustible_vehiculo_particular")));
 
             VehiculoParticular vehiculoParticular = repositorioMedioDeTransporte.obtenerMedioDeTransporte(tipoVehiculo,combustible,esCompartido);
 
@@ -430,7 +430,11 @@ public class MiembroController {
 
         }
         else if (tipoTransporte== TipoTransporte.SERVICIO_CONTRATADO){
-            ServicioContratado servicioContratado = (ServicioContratado) repositorioMedioDeTransporte.buscar(Integer.parseInt(request.queryParams("servicio_contratado")));
+
+            ServicioContratado servicio = (ServicioContratado) repositorioMedioDeTransporte.buscar(Integer.parseInt(request.queryParams("servicio_contratado")));
+            Combustible combustible = repositorioCombustible.buscarPorId(Integer.parseInt(request.queryParams("tipo_de_combustible_servicio_contratado")));
+            ServicioContratado servicioContratado = repositorioMedioDeTransporte.obtenerMedioDeTransporte(servicio.getServicio(),combustible,esCompartido);
+
             tramo.setMedioDeTransporte(servicioContratado);
 
         }
