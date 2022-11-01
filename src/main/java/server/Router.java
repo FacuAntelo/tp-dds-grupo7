@@ -44,7 +44,7 @@ public class Router {
 
     public static void init() throws IOException {
         Router.initEngine();
-
+        // TODO: MANDAR ESTO AL CONFIGURADOR //
         RepositorioProvincia repositorioProvincia = new RepositorioProvincia();
         System.out.println(repositorioProvincia.traerTodas().size()+ "-------------------------------------------------------");
         if(repositorioProvincia.traerTodas().isEmpty()) {
@@ -53,7 +53,6 @@ public class Router {
             List<Provincia> provincias = repositorioProvincia.cargarProvincias();
             repositorioProvincia.persistirProvincias(provincias);
         }
-
         Spark.staticFileLocation("/public");
         Router.configure();
 //        PersistenciaInicial.persistirCombustibles();
@@ -67,8 +66,6 @@ public class Router {
         MiembroController miembroController = new MiembroController();
         RegisterController registerController = new RegisterController();
         UsuarioController usuarioController = new UsuarioController();
-
-
 
 
         Spark.path("/login", () -> {
@@ -115,8 +112,6 @@ public class Router {
 //                    Spark.halt();
 //                }
 //            });
-
-
             Spark.get("", organizacionController::mostrar,engine);
             Spark.get("/reportes",reporteController::mostrar, engine);
             Spark.get("/peticiones", peticionController::pantallaDePeticiones, engine);
@@ -131,6 +126,7 @@ public class Router {
             Spark.get("", miembroController::mostrarTrayectos,engine);
             Spark.get("/:idTrayecto/tramos",miembroController::mostrarTramos, engine);
             Spark.get("/registrarTrayecto",miembroController::pantallaDeRegistrarTrayectos, engine);
+            Spark.get("/registrarTrayecto/Provincia/:idProvincia", miembroController::pantallaDeRegistrarDireccionInicialTrayecto, engine);
             Spark.post("/registrarTrayecto",miembroController::instanciacionDeTrayecto);
             Spark.get("/registrarTrayecto/:idTrayecto", miembroController::pantallaDeAgregarTramos, engine);
             Spark.post("/registrarTrayecto/:idTrayecto", miembroController::registrarTramo);

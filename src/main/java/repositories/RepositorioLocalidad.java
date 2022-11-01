@@ -11,4 +11,15 @@ public class RepositorioLocalidad {
         localidadList.forEach(EntityManagerHelper::persist);
         EntityManagerHelper.commit();
     }
+
+    public List<Localidad> buscarPorIdProvincia(int idProvincia){
+        List<Localidad> localidadList = EntityManagerHelper.getEntityManager().createQuery("select l from Provincia p join p.localidades as l where p.id = :idProvincia",Localidad.class)
+                .setParameter("idProvincia",idProvincia)
+                .getResultList();
+        if(localidadList.isEmpty()){
+            System.out.println("ee");
+        }
+        System.out.println(localidadList.size());
+        return localidadList;
+    }
 }

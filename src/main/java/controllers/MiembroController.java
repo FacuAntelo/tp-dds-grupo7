@@ -32,6 +32,7 @@ public class MiembroController {
     RepositorioOrganizacion repositorioOrganizacion = new RepositorioOrganizacion();
     RepositorioCombustible repositorioCombustible= new RepositorioCombustible();
     RepositorioMedioDeTransporte repositorioMedioDeTransporte=new RepositorioMedioDeTransporte();
+    RepositorioProvincia repositorioProvincia=new RepositorioProvincia();
 
     public ModelAndView mostrarTrayectos (Request request, Response response){
 
@@ -78,10 +79,29 @@ public class MiembroController {
 
     public ModelAndView pantallaDeRegistrarTrayectos (Request request, Response response){
         int idMiembro = Integer.parseInt(request.params("idMiembro"));
+        List<Provincia> provincias = repositorioProvincia.traerTodas();
         Miembro miembroBuscado = repositorioMiembro.buscar(idMiembro);
         return new ModelAndView(new HashMap<String, Object>(){{
             put("usuario", miembroBuscado);
+            put("provincias", provincias);
         }},"miembro/registrarTrayecto.hbs");
+    }
+
+    public ModelAndView pantallaDeRegistrarDireccionInicialTrayecto(Request request, Response response){
+        int idMiembro = Integer.parseInt(request.params("idMiembro"));
+        Miembro miembroBuscado = repositorioMiembro.buscar(idMiembro);
+        int idProvincia = Integer.parseInt(request.params("idProvincia"));
+        System.out.println(idProvincia);
+        Provincia provincia= repositorioProvincia.buscarPorId(idProvincia);
+
+        System.out.println(provincia.getNombre());
+//        RepositorioLocalidad repositorioLocalidad = new RepositorioLocalidad();
+//        List<Localidad> localidadList = repositorioLocalidad.buscarPorIdProvincia((int) provincia.getId());
+        return new ModelAndView(new HashMap<String, Object>(){{
+            put("usuario", miembroBuscado);
+            put("provincia", provincia);
+            put("localidades", provincia.getLocalidades());
+        }},"miembro/localidad_de_provincia.hbs");
     }
 
     //PARA MEDIO DE TRANSPORTE: MODIFICAR PARA QUE SEA EL SELECCIONADO
@@ -89,10 +109,7 @@ public class MiembroController {
     public Response guardarNuevoTrayecto(Request request, Response response) throws IOException {
         //MODIFICAR PARA QUE SEA DEL SERVICIO SELECCIONADO
         MediosSinContaminar pie = new MediosSinContaminar();
-
         Trayecto trayecto = new Trayecto();
-
-
             LocalTime hora=LocalTime.of(Integer.parseInt(request.queryParams("hora")), Integer.parseInt(request.queryParams("minuto")));
 //            tramo.setMedioDeTransporte();
             Direccion direccionInicio = new Direccion(request.queryParams("calleInicio"),
@@ -140,18 +157,20 @@ public class MiembroController {
     public Response instanciacionDeTrayecto(Request request, Response response) {
         Miembro miembro = repositorioMiembro.buscar(Integer.parseInt(request.params("idMiembro")));
         Organizacion organizacion = repositorioMiembro.buscarOrganizacionQuePertenece(miembro);
+        Provincia provinciaInicio = repositorioProvincia.buscarPorId(Integer.parseInt(request.queryParams("provinciaInicio")));
+        Provincia provinciaFin = repositorioProvincia.buscarPorId(Integer.parseInt(request.queryParams("provinciaFin")));
 
 
 //        Direccion direccionInicio = new Direccion(request.queryParams("calleInicio"),
 //                Integer.parseInt(request.queryParams("alturaInicio")),
 //                    new Localidad(Integer.parseInt(request.queryParams("localidadInicio"))),
-//                    new Provincia(request.queryParams("provinciaInicio"))
+//                provinciaInicio)
 //
 //        );
 //        Direccion direccionFin = new Direccion(request.queryParams("calleFin"),
 //                Integer.parseInt(request.queryParams("alturaFin")),
 //                    new Localidad(Integer.parseInt(request.queryParams("localidadFin"))),
-//                    new Provincia(request.queryParams("provinciaFin"))
+//                provinciaFin)
 //        );
 
 //        Trayecto trayecto = new Trayecto(direccionInicio,direccionFin);
@@ -159,7 +178,7 @@ public class MiembroController {
 //
 //        repositorioTrayecto.guardar(trayecto);
 //        repositorioOrganizacion.guardar(organizacion);
-
+//
 
 //        response.redirect("/miembro/"+ miembro.getId()+"/registrarTrayecto/"+ trayecto.getId());
         

@@ -20,6 +20,11 @@ public class RepositorioProvincia {
         return EntityManagerHelper.getEntityManager().createQuery("select p from Provincia as p",Provincia.class).getResultList();
     }
 
+    public Provincia buscarPorId(int id){
+        return EntityManagerHelper.getEntityManager().createQuery("select p from Provincia p where p.id="+id,Provincia.class).getSingleResult();
+
+    }
+
     public List<Provincia> cargarProvincias() throws IOException {
 
         System.out.println("EMPEZANDO LA CARGA DE PROVINCIAS");
