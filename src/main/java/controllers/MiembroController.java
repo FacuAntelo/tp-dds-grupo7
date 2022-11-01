@@ -272,20 +272,21 @@ public class MiembroController {
     public String registrarDireccionInicialTrayecto(Request request, Response response) {
         int idProvincia = Integer.parseInt(request.params("idProvincia"));
         Provincia provincia= repositorioProvincia.buscarPorId(idProvincia);
-        System.out.println("Registrar direccion inicial trayecto: ------------------------");
-        System.out.println(provincia.getId());
-        System.out.println("Request: "+request.queryParams("localidadInicio"));
         long idLocalidad = Long.parseLong(request.queryParams("localidadInicio"));
         Localidad localidad = repositorioLocalidad.buscarPorId(idLocalidad);
 
-        Direccion direccionInicio = new Direccion(request.queryParams("calleInicio"),
+        Direccion direccionInicio = repositorioDireccion.buscarYGuardar(request.queryParams("calleInicio"),
                 Integer.parseInt(request.queryParams("alturaInicio")),
                 localidad,
                 provincia);
-        repositorioDireccion.guardar(direccionInicio);
 
 
 
-        return "Direccion inicial registrada";
+//        response.redirect("/miembro/"+request.params("idMiembro")+"/registrarTrayecto/DireccionInicial/"+ direccionInicio.getId());
+//        return response;
+        return "Direccion persistida";
     }
+
+//    public Object pantallaDeRegistrarTrayectosConDireccionInicial(Request request, Response response) {
+//    }
 }

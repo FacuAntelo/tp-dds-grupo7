@@ -128,6 +128,7 @@ public class Router {
             Spark.get("/registrarTrayecto",miembroController::pantallaDeRegistrarTrayectos, engine);
             Spark.get("/registrarTrayecto/Provincia/:idProvincia", miembroController::pantallaDeRegistrarDireccionInicialTrayecto, engine);
             Spark.post("/registrarTrayecto/Provincia/:idProvincia", miembroController::registrarDireccionInicialTrayecto);
+//            Spark.get("/registrarTrayecto/DireccionInicial/:idDireccionInicial", miembroController::pantallaDeRegistrarTrayectosConDireccionInicial, engine);
             Spark.post("/registrarTrayecto",miembroController::instanciacionDeTrayecto);
             Spark.get("/registrarTrayecto/:idTrayecto", miembroController::pantallaDeAgregarTramos, engine);
             Spark.post("/registrarTrayecto/:idTrayecto", miembroController::registrarTramo);
