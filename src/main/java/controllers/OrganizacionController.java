@@ -1,5 +1,6 @@
 package controllers;
 
+import models.HuellaDeCarbono.CalculadoraHC;
 import models.Miembro.Miembro;
 import models.Organizacion.Organizacion;
 import models.Organizacion.Peticion;
@@ -40,4 +41,17 @@ public class OrganizacionController {
         }},"organizacion/homeOrganizacion.hbs");
     }
 
+    public Response calcularHC(Request request, Response response) {
+        RepositorioOrganizacion repositorioOrganizacion = new RepositorioOrganizacion();
+        Organizacion organizacion = repositorioOrganizacion.buscar(Integer.valueOf(request.params("idOrganizacion")));
+        organizacion.calcularHC();
+        //Se podria redirigir a una pantalla que muestre los datos obtenidos
+        return null;
+    }
+
+    public Response verRegistros(Request request, Response response) {
+        Organizacion organizacion = new RepositorioOrganizacion().buscar(Integer.valueOf(request.params("idOrganizacion")));
+        // TODO organizacion.getRegistrosHC();
+        return null;
+    }
 }

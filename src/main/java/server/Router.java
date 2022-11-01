@@ -89,6 +89,8 @@ public class Router {
 
         Spark.path("/usuario/:idUsuario", () -> {
             Spark.get("", usuarioController::pantallaHome, engine);
+            Spark.get("/crearOrganizacion",usuarioController::pantallaCrearOrganizacion); // agregar engine
+            Spark.post("/crearOrganizacion",usuarioController::crearOrganizacion);
             Spark.get("/organizaciones/",usuarioController::mostrarOrganizaciones);
             Spark.get("/peticion", usuarioController::pantallaDePeticion, engine);
             Spark.get("/peticion/organizacion", usuarioController::pantallaDePeticionSector);
@@ -113,6 +115,8 @@ public class Router {
 //                }
 //            });
             Spark.get("", organizacionController::mostrar,engine);
+            Spark.get("/calcularHC",organizacionController::calcularHC);
+            Spark.get("/registros",organizacionController::verRegistros);
             Spark.get("/reportes",reporteController::mostrar, engine);
             Spark.get("/peticiones", peticionController::pantallaDePeticiones, engine);
             Spark.post("/peticiones/:idPeticion/aceptar", peticionController::aceptarPeticion);

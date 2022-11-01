@@ -2,9 +2,7 @@ package controllers.userlog;
 
 import controllers.ReporteController;
 import models.Miembro.Miembro;
-import models.Organizacion.EstadoPeticion;
-import models.Organizacion.Organizacion;
-import models.Organizacion.Peticion;
+import models.Organizacion.*;
 import models.Reportes.GeneradorDeReportes;
 import models.Sector.Sector;
 import models.Usuarios.Usuario;
@@ -126,4 +124,17 @@ public class UsuarioController {
     }
 
 
+    public String pantallaCrearOrganizacion(Request request, Response response) {
+        // TODO: DEVOLVER LA PANTALLA CON LOS CAMPOS PARA EL USUARIO
+        return null;
+    }
+
+    public Response crearOrganizacion(Request request, Response response) {
+//      Organizacion(String razonSocial, TipoOrganizacion tipoOrganizacion, Clasificacion clasificacion, Ubicacion ubicacion)
+        String razonSocial = request.params("razonSocial");
+        TipoOrganizacion tipoOrganizacion = TipoOrganizacion.valueOf(request.params("tipoOrganizacion"));
+        Clasificacion clasificacion = new Clasificacion(request.params("clasificacion"));
+        //TODO SEGUIR REGISTRANDO CON UBICACION
+        return response;
+    }
 }

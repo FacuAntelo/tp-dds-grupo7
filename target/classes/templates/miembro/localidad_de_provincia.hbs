@@ -9,7 +9,7 @@
                         <h2 class="pb-3 text-center mb-5">Nuevo Trayecto</h2>
                         <h4 class="pb-3 text-center mb-5">Ingrese la ubicacion de inicio y fin del trayecto</h4>
 {{!--                          /{{trayecto.id}}--}}
-{{!--                             <form class="needs-validation" method="POST" action="/miembro/{{usuario.id}}/registrarTrayecto" novalidate> --}}
+                            <form class="needs-validation" method="GET" action="/miembro/{{usuario.id}}/registrarTrayecto/Provincia/{{provinci.id}}/Provincia" novalidate>
                                 <div class="form-row">
                                   <h4>Ubicacion Inicio</h4>
                                 </div>
@@ -44,6 +44,7 @@
                                   </div>
                                 </div>
                               </div>
+                             </form>
 {{!--                               <div class="form-row"> --}}
 {{!--                               <h4>Ubicacion Fin</h4> --}}
 {{!--                               </div> --}}
@@ -82,7 +83,7 @@
 {{!--                                   </div> --}}
 {{!--                               </div> --}}
 {{!--                               <button class="btn btn-primary" type="submit">Agregar trayecto</button> --}}
-{{!--                             </form> --}}
+                            </form>
 
 {{!--  <script>
 // // Example starter JavaScript for disabling form submissions if there are invalid fields
