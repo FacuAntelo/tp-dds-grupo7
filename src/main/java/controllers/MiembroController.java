@@ -348,7 +348,7 @@ public class MiembroController {
 //            put("tipos_de_combustible", combustibleList);
 //            put("mediosSinContaminar", mediosSinContaminar);
 //            put("servicios_contratados", servicioContratadoDTOList);
-        }},"miembro/tramo/registrarTramo.hbs");
+        }},"miembro/tramo/registrarTramoProvinciaInicio.hbs");
     }
 
     public ModelAndView pantallaDeRegistrarTramoDireccionInicial(Request request, Response response) {
@@ -402,8 +402,31 @@ public class MiembroController {
             put("localidadInicio", direccionInicial.getLocalidad());
             put("provinciaInicio", direccionInicial.getProvincia());
             put("provincias", provincias);
-        }},"miembro/tramo/registrarTramo.hbs");
+        }},"miembro/tramo/registrarTramoProvinciaFin.hbs");
 
+
+    }
+
+    public ModelAndView pantallaDeRegistrarTramo(Request request, Response response) {
+        int idMiembro = Integer.parseInt(request.params("idMiembro"));
+        Miembro miembroBuscado = repositorioMiembro.buscar(idMiembro);
+        int idTrayecto = Integer.parseInt(request.params("idTrayecto"));
+        Trayecto trayecto = repositorioTrayecto.buscar(idTrayecto);
+        List<TramoDTO> tramosDeTrayecto = repositorioMiembro.buscarTramos(miembroBuscado,trayecto.getId());
+
+        int idProvinciaFin = Integer.parseInt(request.params("idProvinciaFin"));
+        Provincia provinciaFin= repositorioProvincia.buscarPorId(idProvinciaFin);
+        Direccion direccionInicial = repositorioDireccion.buscar(Integer.valueOf(request.params("idDireccionInicial")));
+        return new ModelAndView(new HashMap<String, Object>(){{
+            put("miembro", miembroBuscado);
+            put("trayecto", trayecto);
+            put("tramosDelTrayecto", tramosDeTrayecto);
+            put("direccionInicial", direccionInicial);
+            put("localidadInicio", direccionInicial.getLocalidad());
+            put("provinciaInicio", direccionInicial.getProvincia());
+            put("provinciaFin", provinciaFin);
+            put("localidades", provinciaFin.getLocalidades());
+        }},"miembro/tramo/registrarTramo.hbs");
 
     }
 }
