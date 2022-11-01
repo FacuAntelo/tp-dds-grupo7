@@ -93,7 +93,6 @@ public class MiembroController {
         int idMiembro = Integer.parseInt(request.params("idMiembro"));
         Miembro miembroBuscado = repositorioMiembro.buscar(idMiembro);
         int idProvincia = Integer.parseInt(request.params("idProvincia"));
-        System.out.println(idProvincia);
         Provincia provincia= repositorioProvincia.buscarPorId(idProvincia);
 
         System.out.println(provincia.getNombre());
@@ -269,7 +268,7 @@ public class MiembroController {
         return response;
     }
 
-    public String registrarDireccionInicialTrayecto(Request request, Response response) {
+    public Response registrarDireccionInicialTrayecto(Request request, Response response) {
         int idProvincia = Integer.parseInt(request.params("idProvincia"));
         Provincia provincia= repositorioProvincia.buscarPorId(idProvincia);
         long idLocalidad = Long.parseLong(request.queryParams("localidadInicio"));
@@ -280,13 +279,71 @@ public class MiembroController {
                 localidad,
                 provincia);
 
-
-
-//        response.redirect("/miembro/"+request.params("idMiembro")+"/registrarTrayecto/DireccionInicial/"+ direccionInicio.getId());
-//        return response;
-        return "Direccion persistida";
+        response.redirect("/miembro/"+request.params("idMiembro")+"/registrarTrayecto/DireccionInicial/"+ direccionInicio.getId());
+        return response;
     }
 
-//    public Object pantallaDeRegistrarTrayectosConDireccionInicial(Request request, Response response) {
-//    }
+    public ModelAndView pantallaDeRegistrarTrayectosConDireccionInicial(Request request, Response response) {
+        int idMiembro = Integer.parseInt(request.params("idMiembro"));
+        Miembro miembro = repositorioMiembro.buscar(idMiembro);
+        Organizacion organizacion = repositorioMiembro.buscarOrganizacionQuePertenece(miembro);
+        Direccion direccionInicial = repositorioDireccion.buscar(Integer.valueOf(request.params("idDireccionInicial")));
+        List<Provincia> provincias = repositorioProvincia.traerTodas();
+
+        return new ModelAndView(new HashMap<String, Object>(){{
+            put("miembro", miembro);
+            put("organizacion", organizacion);
+            put("direccionInicial", direccionInicial);
+            put("localidadInicio", direccionInicial.getLocalidad());
+            put("provinciaInicio", direccionInicial.getProvincia());
+            put("provincias", provincias);
+        }},"miembro/trayecto/registrarTrayectosConDireccionInicial.hbs");
+    }
+
+    public ModelAndView pantallaDeRegistrarDireccionFinalTrayecto(Request request, Response response) {
+        int idMiembro = Integer.parseInt(request.params("idMiembro"));
+        Miembro miembro = repositorioMiembro.buscar(idMiembro);
+        int idProvinciaFin = Integer.parseInt(request.params("idProvinciaFin"));
+        Provincia provinciaFin= repositorioProvincia.buscarPorId(idProvinciaFin);
+        Direccion direccionInicial = repositorioDireccion.buscar(Integer.valueOf(request.params("idDireccionInicial")));
+
+
+        return new ModelAndView(new HashMap<String, Object>(){{
+            put("miembro", miembro);
+            put("direccionInicial", direccionInicial);
+            put("localidadInicio", direccionInicial.getLocalidad());
+            put("provinciaInicio", direccionInicial.getProvincia());
+            put("provinciaFin", provinciaFin);
+            put("localidades", provinciaFin.getLocalidades());
+        }},"miembro/trayecto/registrarTrayectoDireccionFinal.hbs");
+
+    }
+
+    public String  registrarTrayecto(Request request, Response response) {
+        Miembro miembro = repositorioMiembro.buscar(Integer.parseInt(request.params("idMiembro")));
+        Organizacion organizacion = repositorioMiembro.buscarOrganizacionQuePertenece(miembro);
+        Direccion direccionInicio = repositorioDireccion.buscar(Integer.valueOf(request.params("idDireccionInicial")));
+
+
+        Provincia provinciaFin = repositorioProvincia.buscarPorId(Integer.parseInt(request.params("idProvinciaFin")));
+        long idLocalidadFin = Long.parseLong(request.queryParams("localidadFin"));
+        Localidad localidadFin = repositorioLocalidad.buscarPorId(idLocalidadFin);
+
+        Direccion direccionFin = repositorioDireccion.buscarYGuardar(request.queryParams("calleFin"),
+                Integer.parseInt(request.queryParams("alturaFin")),
+                localidadFin,
+                provinciaFin);
+
+
+        Trayecto trayecto = new Trayecto(direccionInicio,direccionFin);
+        miembro.agregarTrayecto(trayecto, organizacion);
+
+//        repositorioTrayecto.guardar(trayecto);
+        repositorioOrganizacion.guardar(organizacion);
+
+
+//        response.redirect("/miembro/"+ miembro.getId()+"/registrarTrayecto/"+ trayecto.getId());
+//        return response;
+        return "Trayecto registrado con exito";
+    }
 }
