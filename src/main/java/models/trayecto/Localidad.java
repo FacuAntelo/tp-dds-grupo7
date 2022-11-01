@@ -20,10 +20,9 @@ public class Localidad extends Territorio implements Serializable {
     @Column(name = "nombre_provincia")
     private String nombre;
 
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_provincia")
-    private Provincia provincia;
+//    @ManyToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "id_provincia")
+//    private Provincia provincia;
 
     public Localidad() {}
 

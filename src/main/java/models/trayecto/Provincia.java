@@ -24,9 +24,9 @@ public class Provincia extends Territorio implements Serializable {
     @Column(name = "provincia")
     private String nombre;
 
-    @OneToMany(fetch = FetchType.LAZY,cascade =CascadeType.ALL,mappedBy = "provincia")
+    @OneToMany(fetch = FetchType.LAZY,cascade =CascadeType.ALL/*,mappedBy = "provincia"*/)
+    @JoinColumn(name = "id_provincia",referencedColumnName = "id_provincia")
     private List<Localidad> localidades;
-
 
     public Provincia(String provincia) {
         this.nombre = provincia;
