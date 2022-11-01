@@ -17,84 +17,191 @@
                     </div>
 
                     <div class="col-lg-6 col-xl-6 col-md-6 col-sm-12 col-12">
-                    <form class="needs-validation" method="POST" action="/miembro/{{miembro.id}}/registrarTrayecto/{{trayecto.id}}/agregarTramo/DireccionInicial/{{direccionInicial.id}}/ProvinciaFin/{{provinciaFin.id}}"
                         <h2 class="pb-3 text-center mb-5">Nuevo tramo</h2>
-                        <div class="form-row">
-                            <h4>Direccion Inicio</h4>
-                        </div>
-                        <div class="form-row">
-                            <div class="col-md-3 mb-3">
-                                <label for="validationCustom05">Provincia</label>
-                                <select class="form-select" aria-label="Default select example" name="provinciaInicio"
-                                    disabled>
-                                    <option selected value="{{provinciaInicio.id}}">{{provinciaInicio.nombre}}</option>
-                                </select>
+                        <form class="needs-validation" method="POST"
+                            action="/miembro/{{miembro.id}}/registrarTrayecto/{{trayecto.id}}/agregarTramo/DireccionInicial/{{direccionInicial.id}}/ProvinciaFin/{{provinciaFin.id}}"
+                            novalidate>
+                            <div class="form-row">
+                                <h4>Direccion Inicio</h4>
                             </div>
-                            <div class="col-md-3 mb-3">
-                                <label for="validationCustom05">Localidad</label>
-                                <select class="form-select" aria-label="Default select example" name="localidadInicio"
-                                    disabled>
-                                    <option selected value="{{localidadInicio.id}}">{{localidadInicio.nombre}}</option>
-                                </select>
-                            </div>
-                            <div class="col-md-3 mb-3">
-                                <label for="validationCustom03">Calle</label>
-                                <input type="text" class="form-control" id="validationCustom03" placeholder="Calle"
-                                    value="{{direccionInicial.calle}}" disabled name="calleInicio">
-                                <div class="invalid-feedback">Please provide a valid city.</div>
-                            </div>
-                            <div class="col-md-3 mb-3">
-                                <label for="validationCustom04">Altura</label>
-                                <input type="text" class="form-control" id="validationCustom04" placeholder="Altura"
-                                    value="{{direccionInicial.altura}}" disabled name="alturaInicio">
-                                <div class="invalid-feedback">
-                                    Please provide a valid state.
+                            <div class="form-row">
+                                <div class="col-md-3 mb-3">
+                                    <label for="validationCustom05">Provincia</label>
+                                    <select class="form-select" aria-label="Default select example"
+                                        name="provinciaInicio" disabled>
+                                        <option selected value="{{provinciaInicio.id}}">{{provinciaInicio.nombre}}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <label for="validationCustom05">Localidad</label>
+                                    <select class="form-select" aria-label="Default select example"
+                                        name="localidadInicio" disabled>
+                                        <option selected value="{{localidadInicio.id}}">{{localidadInicio.nombre}}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <label for="validationCustom03">Calle</label>
+                                    <input type="text" class="form-control" id="validationCustom03" placeholder="Calle"
+                                        value="{{direccionInicial.calle}}" disabled name="calleInicio">
+                                    <div class="invalid-feedback">Please provide a valid city.</div>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <label for="validationCustom04">Altura</label>
+                                    <input type="text" class="form-control" id="validationCustom04" placeholder="Altura"
+                                        value="{{direccionInicial.altura}}" disabled name="alturaInicio">
+                                    <div class="invalid-feedback">
+                                        Please provide a valid state.
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="form-row">
-                            <h4>Direccion fin</h4>
-                        </div>
-                        <div class="form-row">
-                            <div class="col-md-3 mb-3">
-                                <label for="validationCustom05">Provincia</label>
-                                <select class="form-select" aria-label="Default select example" name="provinciaFin" disabled>
-                                    <option selected value="{{provinciaInicio.id}}">{{provinciaInicio.nombre}}</option>
+                            <div class="form-row">
+                                <h4>Direccion fin</h4>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-3 mb-3">
+                                    <label for="validationCustom05">Provincia</label>
+                                    <select class="form-select" aria-label="Default select example" name="provinciaFin"
+                                        disabled>
+                                        <option selected value="{{provinciaInicio.id}}">{{provinciaInicio.nombre}}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <label for="validationCustom05">Localidad</label>
+                                    <select class="form-select" aria-label="Default select example" name="localidadFin">
+                                        <option selected>Elegir localidadd fin</option>
+                                        {{#each localidades}}
+                                        <option type="hidden" value="{{id}}">{{nombre}}</option>
+                                        {{/each}}
+                                    </select>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <label for="validationCustom03">Calle</label>
+                                    <input type="text" class="form-control" id="validationCustom03" placeholder="Calle"
+                                        required name="calleFin">
+                                    <div class="invalid-feedback">Please provide a valid city.</div>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <label for="validationCustom04">Altura</label>
+                                    <input type="text" class="form-control" id="validationCustom04" placeholder="Altura"
+                                        required name="alturaFin">
+                                    <div class="invalid-feedback">
+                                        Please provide a valid state.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <h4>Medio de transporte</h4>
+                            </div>
+                            <div class="form-row">
+                                <select class="form-select" aria-label="Default select example"
+                                    name="tipos_de_transporte" id="medioDeTransporte" onchange="clickeado(this.value)">
+                                    <option selected>Elegir</option>
+                                    {{#each tipos_de_transporte}}
+                                    <option type="hidden" value="{{this}}"><a class="dropdown-item">{{this}}</a>
+                                    </option>
+                                    {{/each}}
                                 </select>
                             </div>
-                        <div class="col-md-3 mb-3">
-                            <label for="validationCustom05">Localidad</label>
-                            <select class="form-select" aria-label="Default select example" name="localidadFin">
-                                <option selected>Elegir localidadd fin</option>
-                                {{#each localidades}}
-                                <option type="hidden" value="{{id}}">{{nombre}}</option>
-                                {{/each}}
-                            </select>
-                        </div>
-                        <div class="col-md-3 mb-3">
-                            <label for="validationCustom03">Calle</label>
-                            <input type="text" class="form-control" id="validationCustom03" placeholder="Calle"
-                                required name="calleFin">
-                            <div class="invalid-feedback">Please provide a valid city.</div>
-                        </div>
-                        <div class="col-md-3 mb-3">
-                            <label for="validationCustom04">Altura</label>
-                            <input type="text" class="form-control" id="validationCustom04" placeholder="Altura"
-                                required name="alturaFin">
-                            <div class="invalid-feedback">
-                                Please provide a valid state.
+                            {{!-- INICIO FORM PARA VEHICULOS PARTICULARES--}}
+                            <div class="mediosDeTransporte" id="VEHICULO_PARTICULAR" style="display:none">
+                                <div class="form-row">
+                                    <h4>Tipo de vehiculo particular</h4>
+                                    <select class="form-select" aria-label="Default select example"
+                                        name="tipo_de_vehiculo">
+                                        <option selected>Elegir tipo de vehiculo</option>
+                                        {{#each tipo_de_vehiculo}}
+                                        <option type="hidden" value="{{this}}">{{this}}</option>
+                                        {{/each}}
+                                    </select>
+                                </div>
+                                <div class="form-row">
+                                    <h4>Tipo de combustible</h4>
+                                    <select class="form-select" aria-label="Default select example"
+                                        name="tipo_de_combustible">
+                                        <option selected>Elegir tipo de combustible</option>
+                                        {{#each tipos_de_combustible}}
+                                        <option type="hidden" value="{{id}}">{{nombre}}</option>
+                                        {{/each}}
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-                        </div>
-                        <div class="form-row">
-                            <button class="btn btn-primary" type="submit">Agregar tramo</button>
-                        </div>
-                    </form>
+                            {{!-- FIN FORM PARA VEHICULOS PARTICULARES--}}
+
+                            {{!-- INICIO FORM PARA MEDIOS SIN CONTAMINAR--}}
+                            <div class="mediosDeTransporte" id="MEDIOS_SIN_CONTAMINAR" style="display:none">
+                                <div class="form-row">
+                                    <h4>Tipo de medio sin contaminar</h4>
+                                    <select class="form-select" aria-label="Default select example"
+                                        name="tipo_de_medio_sin_contaminar">
+                                        <option selected>Elegir medio sin contaminar</option>
+                                        {{#each mediosSinContaminar}}
+                                        <option type="hidden" value="{{nombre}}">{{nombre}}</option>
+                                        {{/each}}
+                                        <option type="hidden" value="-1">Otro medio</option>
+                                    </select>
+                                </div>
+                                <div class="form-row">
+                                    <label for="validationCustom05">Otro medio sin contaminar</label>
+                                    <input type="text" class="form-control" id="validationCustom05"
+                                        placeholder="Otro medio" required name"otro_medio_sin_contaminar">
+                                </div>
+                            </div>
+
+                            {{!-- FIN FORM PARA MEDIOS SIN CONTAMINAR--}}
+
+                            {{!-- INICIO FORM PARA SERVICIO CONTRATADO--}}
+                            <div class="mediosDeTransporte" id="SERVICIO_CONTRATADO" style="display:none">
+                                <div class="form-row">
+                                    <h4>Tipo servicio contratado</h4>
+                                    <select class="form-select" aria-label="Default select example"
+                                        name="servicio_contratado">
+                                        <option selected>Elegir servicio contratado</option>
+                                        {{#each servicios_contratados}}
+                                        <option type="hidden" value="{{id}}">{{nombre}}</option>
+                                        {{/each}}
+                                    </select>
+                                </div>
+                            </div>
+                            {{!-- FIN FORM PARA SERVICIO CONTRATADO--}}
+
+                            {{!-- INICIO FORM PARA TRANSPORTE PUBLICO--}}
+                            {{!-- FIN FORM PARA TRANSPORTE PUBLICO--}}
+
+
+                            <div class="form-row" style="margin-top: 50px;display:none" id="es_compartido">
+                                <select class="form-select" aria-label="Default select example" name="es_compartido">
+                                    <option selected>Es compartido?</option>
+                                    <option type="hidden" value="true">Si</option>
+                                    <option type="hidden" value="false">No</option>
+                                </select>
+                            </div>
+                            <div class="form-row" style="margin-top:20px;">
+                            <h4>Hora inicio del tramo</h4>
+                            </div>
+                            <div class="form-row">
+
+                                <div class="col-md-2 mb-3">
+                                    <label for="validationCustom03">Hora</label>
+                                    <input type="text" class="form-control" id="validationCustom03" placeholder="Hora"
+                                        required name="hora">
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <label for="validationCustom04">Minuto</label>
+                                    <input type="text" class="form-control" id="validationCustom04" placeholder="Minuto"
+                                        required name="minuto">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <button class="btn btn-primary" type="submit" style="margin: 20px 0;">Agregar tramo</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </section>
-
     </div>
 </div>
 {{/partial}}

@@ -55,7 +55,9 @@ public class Router {
         }
         Spark.staticFileLocation("/public");
         Router.configure();
-//        PersistenciaInicial.persistirCombustibles();
+        PersistenciaInicial.persistirCombustibles();
+        ServicioGeoDDS servicioGeoDDS = ServicioGeoDDS.getInstance();
+        servicioGeoDDS.setAdapter(new ServicioGeoDDSRetrofitAdapter());
     }
 
     private static void configure() {
@@ -137,8 +139,9 @@ public class Router {
             Spark.post("/registrarTrayecto/:idTrayecto/agregarTramo/DireccionInicial/Provincia/:idProvinciaInicio", miembroController::registrarTramoDireccionInicial);
             Spark.get("/registrarTrayecto/:idTrayecto/agregarTramo/DireccionInicial/:idDireccionInicial", miembroController::registrarTramoProvinciaFin, engine);
             Spark.get("/registrarTrayecto/:idTrayecto/agregarTramo/DireccionInicial/:idDireccionInicial/ProvinciaFin/:idProvinciaFin", miembroController::pantallaDeRegistrarTramo, engine);
+            Spark.post("/registrarTrayecto/:idTrayecto/agregarTramo/DireccionInicial/:idDireccionInicial/ProvinciaFin/:idProvinciaFin", miembroController::registrarTramo);
 
-            Spark.post("/registrarTrayecto/:idTrayecto", miembroController::registrarTramo);
+//            Spark.post("/registrarTrayecto/:idTrayecto", miembroController::registrarTramo);
 //            Spark.post("/miembro/:idMiembro/organizacion/:idOrganizacion/registrarTrayecto",miembroController::guardarNuevoTrayecto);
 //            Spark.get("/registrarTrayecto/:idTrayecto", miembroController::pantallaDeEditarTrayecto, engine);
         });

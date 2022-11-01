@@ -155,6 +155,11 @@ td{
     text-align: center !important;
 }
 
+.mediosDeTransporte,
+.mediosDeTransporte .form-row{
+    margin-top: 20px;
+}
+
 .aparecer{
     display: block !important;
 }

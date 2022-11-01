@@ -136,6 +136,7 @@
 
     medioSeleccionado.clickeado;
     function clickeado(value) {
+        document.getElementById("es_compartido").classList.add("aparecer");
         Array.from(mediosDeTransportes).forEach((m) => {
             m.classList.remove("aparecer");
         });
