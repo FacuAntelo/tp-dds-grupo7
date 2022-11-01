@@ -1,0 +1,30 @@
+{{#partial "contenido" }}
+<div class="row my-5">
+    <h3 class="fs-4 mb-3">Registrar Exel</h3>
+    <div class="col">
+        <section class="container-fluid p-5 bg-light" id="def">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-xl-6 col-md-6 col-sm-12 col-12">
+                        <h2 class="pb-3 text-center mb-5">Nuevo Form</h2>
+                        <h4 class="pb-3 text-center mb-5">Ingrese Excel datos de actividad</h4>
+                            <form action="/organizacion/{{organizacion.id}}/registrarMediciones" method="POST" enctype="multipart/form-data">
+                                <div class="col-md-3 mb-3">
+                                    <label for="validationCustom03">Ingrese archivo</label>
+                                    <input type="file" id="archivoParaSubir" name="archivoParaSubir" />
+                                     <div class="invalid-feedback">
+                                           Please provide a valid city.
+                                     </div>
+                                <input class="btn btn-primary" type="submit" value="Subir archivo" name="submit">
+                            </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</div>
+
+
+{{/partial}}
+{{> organizacion/baseOrganizacion.hbs }}
