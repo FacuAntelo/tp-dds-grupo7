@@ -178,6 +178,52 @@
                             {{!-- FIN FORM PARA SERVICIO CONTRATADO--}}
 
                             {{!-- INICIO FORM PARA TRANSPORTE PUBLICO--}}
+                            <div class="mediosDeTransporte" id="TRANSPORTE_PUBLICO" style="display:none">
+                                <div class="form-row">
+                                    <h4>Tipo TRANSPORTE_PUBLICO</h4>
+                                    <select class="form-select" aria-label="Default select example"
+                                        name="tipo_transporte_publico" id="tipoTransportePublico"onchange="clickeadoTransportePublico(this.value)">
+                                        <option selected>Elegir servicio contratado</option>
+                                        {{#each tipo_transporte_publico}}
+                                        <option type="hidden" value="{{this}}">{{this}}</option>
+                                        {{/each}}
+                                    </select>
+                                </div>
+                                {{!-- INICIO FORM PARA COLECTIVO--}}
+                                <div class="transportePublico" id="COLECTIVO" style="display:none">
+                                    <div class="form-row">
+                                        <h4>Tipo servicio contratado</h4>
+                                        <select class="form-select" aria-label="Default select example"
+                                            name="servicio_contratado">
+                                            <option selected>Elegir servicio contratado</option>
+                                            {{#each servicios_contratados}}
+                                            <option type="hidden" value="{{id}}">{{nombre}}</option>
+                                            {{/each}}
+                                        </select>
+                                    </div>
+                                    <div class="form-row">
+                                        <h4>Tipo de combustible</h4>
+                                        <select class="form-select" aria-label="Default select example"
+                                            name="tipo_de_combustible_servicio_contratado">
+                                            <option selected>Elegir tipo de combustible</option>
+                                            {{#each tipos_de_combustible}}
+                                            <option type="hidden" value="{{id}}">{{nombre}}</option>
+                                            {{/each}}
+                                        </select>
+                                    </div>
+                                </div>
+                                {{!-- FIN FORM PARA COLECTIVO--}}
+
+                                {{!-- INICIO FORM PARA SUBTE--}}
+
+                                {{!-- FIN FORM PARA SUBTE--}}
+
+                                {{!-- INICIO FORM PARA TREN--}}
+
+                                {{!-- FIN FORM PARA TREN--}}
+
+                            </div>
+
                             {{!-- FIN FORM PARA TRANSPORTE PUBLICO--}}
 
 

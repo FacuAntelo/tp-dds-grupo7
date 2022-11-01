@@ -144,6 +144,17 @@
         medio.classList.add("aparecer");
     }
 
+    let transportesPublicos = document.getElementsByClassName("transportePublico");
+    let transportePublicoSeleccionado = document.getElementById("tipoTransportePublico");
+
+    function clickeadoTransportePublico(value){
+    Array.from(transportesPublicos).forEach((m) => {
+                m.classList.remove("aparecer");
+            });
+            let medio = document.getElementById(String(value));
+            medio.classList.add("aparecer");
+    }
+
 </script>
 </body>
 

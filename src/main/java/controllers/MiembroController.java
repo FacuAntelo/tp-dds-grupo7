@@ -362,7 +362,7 @@ public class MiembroController {
         List<Combustible> combustibleList= repositorioCombustible.buscarTodos();
         List<MediosSinContaminar> mediosSinContaminar= repositorioMedioDeTransporte.obtenerTodosLosMediosSinContaminar();
         List<ServicioContratadoDTO> servicioContratadoDTOList= repositorioMedioDeTransporte.obtenerTodosLosServiciosContratadosDTO();
-
+        List<String> tipoTransportePublico= Arrays.stream(TipoTransportePublico.values()).map(x-> x.name()).collect(Collectors.toList());
         return new ModelAndView(new HashMap<String, Object>(){{
             put("miembro", miembroBuscado);
             put("trayecto", trayecto);
@@ -377,6 +377,7 @@ public class MiembroController {
             put("tipos_de_combustible", combustibleList);
             put("mediosSinContaminar", mediosSinContaminar);
             put("servicios_contratados", servicioContratadoDTOList);
+            put("tipo_transporte_publico", tipoTransportePublico);
         }},"miembro/tramo/registrarTramo.hbs");
 
     }
