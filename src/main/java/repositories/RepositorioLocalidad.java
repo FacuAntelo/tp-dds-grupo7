@@ -2,6 +2,7 @@ package repositories;
 
 import models.db.EntityManagerHelper;
 import models.trayecto.Localidad;
+import models.trayecto.Provincia;
 
 import java.util.List;
 
@@ -21,5 +22,10 @@ public class RepositorioLocalidad {
         }
         System.out.println(localidadList.size());
         return localidadList;
+    }
+
+    public Localidad buscarPorId(long id){
+        return EntityManagerHelper.getEntityManager().createQuery("select l from Localidad l where l.id="+id,Localidad.class).getSingleResult();
+
     }
 }

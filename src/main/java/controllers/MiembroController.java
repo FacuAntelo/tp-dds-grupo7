@@ -33,6 +33,8 @@ public class MiembroController {
     RepositorioCombustible repositorioCombustible= new RepositorioCombustible();
     RepositorioMedioDeTransporte repositorioMedioDeTransporte=new RepositorioMedioDeTransporte();
     RepositorioProvincia repositorioProvincia=new RepositorioProvincia();
+    RepositorioLocalidad repositorioLocalidad=new RepositorioLocalidad();
+    RepositorioDireccion repositorioDireccion=new RepositorioDireccion();
 
     public ModelAndView mostrarTrayectos (Request request, Response response){
 
@@ -265,5 +267,25 @@ public class MiembroController {
 //        response.redirect("/miembro/"+ miembro.getId()+"/registrarTrayecto/"+ trayecto.getId());
 
         return response;
+    }
+
+    public String registrarDireccionInicialTrayecto(Request request, Response response) {
+        int idProvincia = Integer.parseInt(request.params("idProvincia"));
+        Provincia provincia= repositorioProvincia.buscarPorId(idProvincia);
+        System.out.println("Registrar direccion inicial trayecto: ------------------------");
+        System.out.println(provincia.getId());
+        System.out.println("Request: "+request.queryParams("localidadInicio"));
+        long idLocalidad = Long.parseLong(request.queryParams("localidadInicio"));
+        Localidad localidad = repositorioLocalidad.buscarPorId(idLocalidad);
+
+        Direccion direccionInicio = new Direccion(request.queryParams("calleInicio"),
+                Integer.parseInt(request.queryParams("alturaInicio")),
+                localidad,
+                provincia);
+        repositorioDireccion.guardar(direccionInicio);
+
+
+
+        return "Direccion inicial registrada";
     }
 }
