@@ -131,8 +131,13 @@ public class Router {
             Spark.get("/registrarTrayecto/DireccionInicial/:idDireccionInicial", miembroController::pantallaDeRegistrarTrayectosConDireccionInicial, engine);
             Spark.get("/registrarTrayecto/DireccionInicial/:idDireccionInicial/ProvinciaFin/:idProvinciaFin",miembroController :: pantallaDeRegistrarDireccionFinalTrayecto, engine);
             Spark.post("/registrarTrayecto/DireccionInicial/:idDireccionInicial/ProvinciaFin/:idProvinciaFin",miembroController :: registrarTrayecto);
-            Spark.post("/registrarTrayecto",miembroController::instanciacionDeTrayecto);
-            Spark.get("/registrarTrayecto/:idTrayecto", miembroController::pantallaDeAgregarTramos, engine);
+//            Spark.post("/registrarTrayecto",miembroController::instanciacionDeTrayecto);
+            Spark.get("/registrarTrayecto/:idTrayecto/agregarTramo", miembroController::pantallaDeAgregarTramos, engine);
+            Spark.get("/registrarTrayecto/:idTrayecto/agregarTramo/DireccionInicial/Provincia/:idProvinciaInicio", miembroController::pantallaDeRegistrarTramoDireccionInicial, engine);
+            Spark.post("/registrarTrayecto/:idTrayecto/agregarTramo/DireccionInicial/Provincia/:idProvinciaInicio", miembroController::registrarTramoDireccionInicial);
+            Spark.get("/registrarTrayecto/:idTrayecto/agregarTramo/DireccionInicial/:idDireccionInicial", miembroController::registrarTramoProvinciaFin, engine);
+            Spark.get("/registrarTrayecto/:idTrayecto/agregarTramo/DireccionInicial/:idDireccionInicial/ProvinciaFin/:idProvinciaFin", miembroController::registrarTramoProvinciaFin, engine);
+
             Spark.post("/registrarTrayecto/:idTrayecto", miembroController::registrarTramo);
 //            Spark.post("/miembro/:idMiembro/organizacion/:idOrganizacion/registrarTrayecto",miembroController::guardarNuevoTrayecto);
 //            Spark.get("/registrarTrayecto/:idTrayecto", miembroController::pantallaDeEditarTrayecto, engine);

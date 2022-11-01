@@ -186,27 +186,7 @@ public class MiembroController {
         return response;
     }
 
-    public ModelAndView pantallaDeAgregarTramos(Request request, Response response) {
-        int idMiembro = Integer.parseInt(request.params("idMiembro"));
-        int idTrayecto = Integer.parseInt(request.params("idTrayecto"));
-        Miembro miembroBuscado = repositorioMiembro.buscar(idMiembro);
-        Trayecto trayecto = repositorioTrayecto.buscar(idTrayecto);
-        List<String> tipoTransporteList= Arrays.stream(TipoTransporte.values()).map(x-> x.name()).collect(Collectors.toList());
-        List<String> tipoVehiculoParticular = Arrays.stream(TipoVehiculo.values()).map(x-> x.name()).collect(Collectors.toList());
-        List<Combustible> combustibleList= repositorioCombustible.buscarTodos();
-        List<MediosSinContaminar> mediosSinContaminar= repositorioMedioDeTransporte.obtenerTodosLosMediosSinContaminar();
-        List<ServicioContratadoDTO> servicioContratadoDTOList= repositorioMedioDeTransporte.obtenerTodosLosServiciosContratadosDTO();
 
-        return new ModelAndView(new HashMap<String, Object>(){{
-            put("miembro", miembroBuscado);
-            put("trayecto", trayecto);
-            put("tipos_de_transporte", tipoTransporteList);
-            put("tipo_de_vehiculo", tipoVehiculoParticular);
-            put("tipos_de_combustible", combustibleList);
-            put("mediosSinContaminar", mediosSinContaminar);
-            put("servicios_contratados", servicioContratadoDTOList);
-        }},"miembro/registrarTramo.hbs");
-    }
 
     public Response registrarTramo(Request request, Response response) throws IOException {
         int idMiembro = Integer.parseInt(request.params("idMiembro"));
@@ -319,7 +299,7 @@ public class MiembroController {
 
     }
 
-    public String  registrarTrayecto(Request request, Response response) {
+    public Response  registrarTrayecto(Request request, Response response) {
         Miembro miembro = repositorioMiembro.buscar(Integer.parseInt(request.params("idMiembro")));
         Organizacion organizacion = repositorioMiembro.buscarOrganizacionQuePertenece(miembro);
         Direccion direccionInicio = repositorioDireccion.buscar(Integer.valueOf(request.params("idDireccionInicial")));
@@ -337,13 +317,93 @@ public class MiembroController {
 
         Trayecto trayecto = new Trayecto(direccionInicio,direccionFin);
         miembro.agregarTrayecto(trayecto, organizacion);
-
-//        repositorioTrayecto.guardar(trayecto);
         repositorioOrganizacion.guardar(organizacion);
 
 
-//        response.redirect("/miembro/"+ miembro.getId()+"/registrarTrayecto/"+ trayecto.getId());
-//        return response;
-        return "Trayecto registrado con exito";
+        response.redirect("/miembro/"+ miembro.getId()+"/registrarTrayecto/"+ trayecto.getId()+"/agregarTramo");
+        return response;
+    }
+
+    public ModelAndView pantallaDeAgregarTramos(Request request, Response response) {
+        int idMiembro = Integer.parseInt(request.params("idMiembro"));
+        Miembro miembroBuscado = repositorioMiembro.buscar(idMiembro);
+        int idTrayecto = Integer.parseInt(request.params("idTrayecto"));
+        Trayecto trayecto = repositorioTrayecto.buscar(idTrayecto);
+        List<TramoDTO> tramosDeTrayecto = repositorioMiembro.buscarTramos(miembroBuscado,trayecto.getId());
+        List<Provincia> provincias = repositorioProvincia.traerTodas();
+
+//        List<String> tipoTransporteList= Arrays.stream(TipoTransporte.values()).map(x-> x.name()).collect(Collectors.toList());
+//        List<String> tipoVehiculoParticular = Arrays.stream(TipoVehiculo.values()).map(x-> x.name()).collect(Collectors.toList());
+//        List<Combustible> combustibleList= repositorioCombustible.buscarTodos();
+//        List<MediosSinContaminar> mediosSinContaminar= repositorioMedioDeTransporte.obtenerTodosLosMediosSinContaminar();
+//        List<ServicioContratadoDTO> servicioContratadoDTOList= repositorioMedioDeTransporte.obtenerTodosLosServiciosContratadosDTO();
+
+        return new ModelAndView(new HashMap<String, Object>(){{
+            put("miembro", miembroBuscado);
+            put("trayecto", trayecto);
+            put("tramosDelTrayecto", tramosDeTrayecto);
+            put("provincias", provincias);
+//            put("tipos_de_transporte", tipoTransporteList);
+//            put("tipo_de_vehiculo", tipoVehiculoParticular);
+//            put("tipos_de_combustible", combustibleList);
+//            put("mediosSinContaminar", mediosSinContaminar);
+//            put("servicios_contratados", servicioContratadoDTOList);
+        }},"miembro/tramo/registrarTramo.hbs");
+    }
+
+    public ModelAndView pantallaDeRegistrarTramoDireccionInicial(Request request, Response response) {
+        int idMiembro = Integer.parseInt(request.params("idMiembro"));
+        Miembro miembroBuscado = repositorioMiembro.buscar(idMiembro);
+        int idTrayecto = Integer.parseInt(request.params("idTrayecto"));
+        Trayecto trayecto = repositorioTrayecto.buscar(idTrayecto);
+        List<TramoDTO> tramosDeTrayecto = repositorioMiembro.buscarTramos(miembroBuscado,trayecto.getId());
+        Provincia provinciaInicio = repositorioProvincia.buscarPorId(Integer.parseInt(request.params("idProvinciaInicio")));
+
+        return new ModelAndView(new HashMap<String, Object>(){{
+            put("miembro", miembroBuscado);
+            put("trayecto", trayecto);
+            put("tramosDelTrayecto", tramosDeTrayecto);
+            put("provinciaInicio", provinciaInicio);
+            put("localidades", provinciaInicio.getLocalidades());
+        }},"miembro/tramo/registrarTramoDireccionInicial.hbs");
+    }
+
+    public Response registrarTramoDireccionInicial(Request request, Response response) {
+        int idProvincia = Integer.parseInt(request.params("idProvinciaInicio"));
+        Provincia provincia= repositorioProvincia.buscarPorId(idProvincia);
+        long idLocalidad = Long.parseLong(request.queryParams("localidadInicio"));
+        Localidad localidad = repositorioLocalidad.buscarPorId(idLocalidad);
+
+        Direccion direccionInicio = repositorioDireccion.buscarYGuardar(request.queryParams("calleInicio"),
+                Integer.parseInt(request.queryParams("alturaInicio")),
+                localidad,
+                provincia);
+
+        response.redirect("/miembro/"+request.params("idMiembro")+"/registrarTrayecto/"+request.params("idTrayecto")+"/agregarTramo/DireccionInicial/"+direccionInicio.getId());
+        return response;
+    }
+
+    public ModelAndView registrarTramoProvinciaFin(Request request, Response response) {
+        int idMiembro = Integer.parseInt(request.params("idMiembro"));
+        Miembro miembroBuscado = repositorioMiembro.buscar(idMiembro);
+        int idTrayecto = Integer.parseInt(request.params("idTrayecto"));
+        Trayecto trayecto = repositorioTrayecto.buscar(idTrayecto);
+        List<TramoDTO> tramosDeTrayecto = repositorioMiembro.buscarTramos(miembroBuscado,trayecto.getId());
+
+
+        Direccion direccionInicial = repositorioDireccion.buscar(Integer.valueOf(request.params("idDireccionInicial")));
+        List<Provincia> provincias = repositorioProvincia.traerTodas();
+
+        return new ModelAndView(new HashMap<String, Object>(){{
+            put("miembro", miembroBuscado);
+            put("trayecto", trayecto);
+            put("tramosDelTrayecto", tramosDeTrayecto);
+            put("direccionInicial", direccionInicial);
+            put("localidadInicio", direccionInicial.getLocalidad());
+            put("provinciaInicio", direccionInicial.getProvincia());
+            put("provincias", provincias);
+        }},"miembro/tramo/registrarTramo.hbs");
+
+
     }
 }

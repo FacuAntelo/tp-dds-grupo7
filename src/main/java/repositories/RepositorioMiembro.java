@@ -93,7 +93,8 @@ public class RepositorioMiembro {
     }
 
     public List<TramoDTO>buscarTramos(Miembro miembro, int idTrayecto){
-        List<Tramo> tramos = this.buscar(miembro.getId()).getTramos();
+        RepositorioTrayecto repositorioTrayecto = new RepositorioTrayecto();
+        List<Tramo> tramos = repositorioTrayecto.buscar(idTrayecto).getTramos();
         List<TramoDTO> tramoDTOList= new ArrayList<>();
 
         tramos.forEach(t ->{
