@@ -1,6 +1,8 @@
 package middlewares;
 
+import models.Miembro.Miembro;
 import models.Organizacion.Organizacion;
+import repositories.RepositorioMiembro;
 import repositories.RepositorioOrganizacion;
 import repositories.RepositorioUsuario;
 import spark.Request;
@@ -20,10 +22,19 @@ public class AuthMiddleware {
     public static  Response verificarOrganizacion(Request request, Response response){
         RepositorioUsuario repositorioUsuario = new RepositorioUsuario();
         RepositorioOrganizacion repositorioOrganizacion = new RepositorioOrganizacion();
-        System.out.println("srarasa");
         List<Organizacion> organizaciones = repositorioOrganizacion.buscarOrganizacionesDelUsuario(request.session().attribute("id"));
         if(organizaciones.stream().noneMatch(o-> o.getId() == Integer.parseInt(request.params("idOrganizacion")))){
-            System.out.println("srarasa");
+            response.redirect("/prohibido");
+        }
+
+        return response;
+    }
+
+    public static Response verificarMiembro(Request request, Response response){
+        RepositorioUsuario repositorioUsuario = new RepositorioUsuario();
+        RepositorioMiembro repositorioMiembro = new RepositorioMiembro();
+        List<Miembro> miembros = repositorioMiembro.buscarMiembrosDelUsuario(request.session().attribute("id"));
+        if(miembros.stream().noneMatch(m-> m.getId() == Integer.parseInt(request.params("idMiembro")))){
             response.redirect("/prohibido");
         }
 
