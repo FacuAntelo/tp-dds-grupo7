@@ -11,7 +11,7 @@ public class Parada extends EntidadPersistente {
     @Column(name = "nombre")
     private String nombre;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinColumn(name = "id_direccion")
     private Direccion direccion;
     @Column(name = "distancia_proxima_parada")

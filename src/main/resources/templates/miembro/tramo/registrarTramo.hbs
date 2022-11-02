@@ -192,11 +192,11 @@
                                 {{!-- INICIO FORM PARA COLECTIVO--}}
                                 <div class="transportePublico" id="COLECTIVO" style="display:none">
                                     <div class="form-row">
-                                        <h4>Tipo servicio contratado</h4>
+                                        <h4>Linea Colectivo</h4>
                                         <select class="form-select" aria-label="Default select example"
                                             name="servicio_contratado">
-                                            <option selected>Elegir servicio contratado</option>
-                                            {{#each servicios_contratados}}
+                                            <option selected>Elegir linea</option>
+                                            {{#each lineas_colectivo}}
                                             <option type="hidden" value="{{id}}">{{nombre}}</option>
                                             {{/each}}
                                         </select>
