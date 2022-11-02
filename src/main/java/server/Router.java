@@ -39,10 +39,10 @@ public class Router {
 
     public static void init() {
         Router.initEngine();
-        Spark.staticFileLocation("/public");
-        //Spark.staticFiles.externalLocation(System.getProperty("upload"));
-        Router.configure();
         DebugScreen.enableDebugScreen();
+        Spark.staticFileLocation("/public");
+        Spark.staticFiles.externalLocation("upload");
+        Router.configure();
 //        PersistenciaInicial.persistirCombustibles();
 
     }

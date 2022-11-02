@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -41,11 +42,11 @@ public class ExcelController {
 
         FileUtils.copyInputStreamToFile(is, archivoASubir);
 
-        ExcelUtils cargarExcel = new ExcelUtils();
-//
-//List<DatosDeActividad> [new DatosDeActividad("facu", "asd", 33.22, "prueba", "saddasd", new FactorDeEmision("Hola",33.44, "prueba3"), true)]
-        repoDA.guardar(Integer.parseInt(request.params("idOrganizacion")),cargarExcel.leerExcel(path)  );
 
+        RepositorioOrganizacion repositorioOrganizacion= new RepositorioOrganizacion();
+        Organizacion organizacionBuscado = repositorioOrganizacion.buscar(Integer.parseInt(request.params("idOrganizacion")));
+        organizacionBuscado.leerExcel(path);
+        repositorioOrganizacion.guardar(organizacionBuscado);
 
         response.redirect("/organizacion/"+request.params("idOrganizacion")+"/todoOk");
         return response;
