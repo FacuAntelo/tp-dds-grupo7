@@ -5,6 +5,7 @@ import models.Miembro.Miembro;
 import models.Organizacion.Organizacion;
 import models.Organizacion.Peticion;
 import models.Reportes.GeneradorDeReportes;
+import models.Reportes.ReporteSectoresOrganizacionDTO;
 import models.Sector.Sector;
 import repositories.RepositorioMiembro;
 import repositories.RepositorioOrganizacion;
@@ -14,10 +15,12 @@ import spark.Request;
 import spark.Response;
 
 import java.util.HashMap;
+import java.util.List;
 
 public class OrganizacionController {
 
     RepositorioOrganizacion repo = new RepositorioOrganizacion();
+
 
     public static String traerOrganizacion(Request request, Response response) {
         RepositorioOrganizacion repo = new RepositorioOrganizacion();
@@ -35,18 +38,25 @@ public class OrganizacionController {
         if(organizacionBuscado==null){
             response.redirect("/login");
         }
+
+//        List<ReporteSectoresOrganizacionDTO> reporteSectoresOrganizacionDTOS = GeneradorDeReportes.reporteDeHCdeSectores(organizacionBuscado);
+
         return new ModelAndView(new HashMap<String, Object>(){{
             put("organizacion", organizacionBuscado);
-            put("reportes", GeneradorDeReportes.reporteDeHCdeSectores(organizacionBuscado));
+//            if(!reporteSectoresOrganizacionDTOS.isEmpty()) {
+//                put("reportes", GeneradorDeReportes.reporteDeHCdeSectores(organizacionBuscado));
+//            }
         }},"organizacion/homeOrganizacion.hbs");
     }
 
-    public Response calcularHC(Request request, Response response) {
+    public ModelAndView calcularHC(Request request, Response response) {
         RepositorioOrganizacion repositorioOrganizacion = new RepositorioOrganizacion();
         Organizacion organizacion = repositorioOrganizacion.buscar(Integer.valueOf(request.params("idOrganizacion")));
         organizacion.calcularHC();
         //Se podria redirigir a una pantalla que muestre los datos obtenidos
-        return null;
+        return new ModelAndView(new HashMap<String, Object>(){{
+            put("organizacion", organizacion);
+        }},"organizacion/homeOrganizacion.hbs");
     }
 
     public Response verRegistros(Request request, Response response) {

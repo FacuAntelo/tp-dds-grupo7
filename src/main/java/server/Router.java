@@ -119,16 +119,9 @@ public class Router {
 //                    Spark.halt();
 //                }
 //            });
-//            Spark.before("/*", (request, response) -> {
-//                if(!PermisoHelper.usuarioTienePermisos(request, Permiso.VER_SECTORES)){
-//                    response.redirect("/prohibido");
-//                    Spark.halt();
-//                }
-//            });
             Spark.get("", organizacionController::mostrar,engine);
             Spark.get("/calcularHC",organizacionController::calcularHC);
-            Spark.get("/registros",organizacionController::verRegistros);
-            Spark.get("/reportes",reporteController::mostrar, engine);
+            Spark.get("/registros",reporteController::mostrar, engine);
             Spark.get("/peticiones", peticionController::pantallaDePeticiones, engine);
             Spark.post("/peticiones/:idPeticion/aceptar", peticionController::aceptarPeticion);
             Spark.post("/peticiones/:idPeticion/rechazar", peticionController::rechazarPeticion);
