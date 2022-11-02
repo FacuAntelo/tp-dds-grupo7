@@ -1,0 +1,23 @@
+{{#partial "contenido" }}
+<div class="row my-5">
+    <h3 class="fs-4 mb-3">Calculadora de HC</h3>
+    <div class="col">
+        <section class="container-fluid p-5 bg-light" id="def">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-xl-6 col-md-6 col-sm-12 col-12">
+                        <h2 class="pb-3 text-center mb-5">EjecutarCalculadora HC</h2>
+                        <form class="needs-validation" method="POST" action="/organizacion/{{organizacion.id}}/calcularHC" novalidate>
+                            <div class="form-row">
+                                <button class="btn btn-primary" type="submit">Ejecutar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</div>
+{{/partial}}
+{{> organizacion/baseOrganizacion.hbs }}
