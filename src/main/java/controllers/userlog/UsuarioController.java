@@ -29,7 +29,7 @@ public class UsuarioController {
         String idUsuario = request.params("idUsuario");
         Usuario usuario = repositorioUsuario.find(Integer.parseInt(idUsuario));
 
-        List<Organizacion> organizacionList = repositorioOrganizacion.buscarOrganizacionesDeUsuario(Integer.valueOf(idUsuario));
+        List<Organizacion> organizacionList = repositorioOrganizacion.buscarOrganizacionesDelUsuario(Integer.valueOf(idUsuario));
 
         return new ModelAndView(new HashMap<String, Object>(){{
             put("organizaciones", organizacionList);
