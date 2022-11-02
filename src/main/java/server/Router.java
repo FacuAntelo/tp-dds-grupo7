@@ -21,6 +21,7 @@ import repositories.RepositorioOrganizacion;
 import repositories.RepositorioProvincia;
 import spark.Route;
 import spark.Spark;
+import spark.debug.DebugScreen;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 import spark.utils.BooleanHelper;
 import spark.utils.HandlebarsTemplateEngineBuilder;
@@ -30,6 +31,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import static spark.debug.DebugScreen.enableDebugScreen;
 
 public class Router {
     private static HandlebarsTemplateEngine engine;
@@ -44,6 +47,9 @@ public class Router {
 
     public static void init() throws IOException {
         Router.initEngine();
+
+        DebugScreen.enableDebugScreen();
+
         // TODO: MANDAR ESTO AL CONFIGURADOR //
         RepositorioProvincia repositorioProvincia = new RepositorioProvincia();
         System.out.println(repositorioProvincia.traerTodas().size()+ "-------------------------------------------------------");
@@ -54,6 +60,7 @@ public class Router {
             repositorioProvincia.persistirProvincias(provincias);
         }
         Spark.staticFileLocation("/public");
+        Spark.staticFiles.externalLocation("upload");
         Router.configure();
         PersistenciaInicial.persistirCombustibles();
         ServicioGeoDDS servicioGeoDDS = ServicioGeoDDS.getInstance();
@@ -68,6 +75,7 @@ public class Router {
         MiembroController miembroController = new MiembroController();
         RegisterController registerController = new RegisterController();
         UsuarioController usuarioController = new UsuarioController();
+
 
 
         Spark.path("/login", () -> {
@@ -99,6 +107,7 @@ public class Router {
             Spark.get("/peticion/organizacion/:idOrganizacion", usuarioController::pantallaDePeticionSectores,engine);
             Spark.post("/peticion/organizacion/:idOrganizacion",usuarioController::guardarPeticion);
             Spark.get("/peticion/success", usuarioController::pantallaDePeticionSuccess,engine);
+
         });
 
         Spark.path("/organizacion/:idOrganizacion", () -> {
@@ -123,6 +132,9 @@ public class Router {
             Spark.get("/peticiones", peticionController::pantallaDePeticiones, engine);
             Spark.post("/peticiones/:idPeticion/aceptar", peticionController::aceptarPeticion);
             Spark.post("/peticiones/:idPeticion/rechazar", peticionController::rechazarPeticion);
+            Spark.get("/registrarMediciones", ExcelController::pantallaCargaExcel,engine);
+            Spark.post("/registrarMediciones", ExcelController::cargar);
+            Spark.get("/todoOk", ExcelController::todoOk );
         });
 
         Spark.path("/miembro/:idMiembro", () -> {
