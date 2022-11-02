@@ -75,13 +75,17 @@ public class Router {
         MiembroController miembroController = new MiembroController();
         RegisterController registerController = new RegisterController();
         UsuarioController usuarioController = new UsuarioController();
-
-
+        RegistroController registroController = new RegistroController();
+        AdministradorController administradorController = new AdministradorController();
 
         Spark.path("/login", () -> {
             Spark.get("", loginController::pantallaDeLogin, engine);
             Spark.post("", loginController::login);
             Spark.post("/logout", loginController::logout);
+        });
+        
+        Spark.path("",()->{
+            Spark.get("/panel",administradorController::homeAdministrador,engine);
         });
 
         Spark.path("/register", () -> {
@@ -120,6 +124,7 @@ public class Router {
         Spark.path("/organizacion/:idOrganizacion", () -> {
 //            Spark.before("", AuthMiddleware::verificarSesion);
 //            Spark.before("/*", AuthMiddleware::verificarSesion);
+
 
             Spark.before("", (request, response) -> {
                 if(!PermisoHelper.usuarioTienePermisos(request, Permiso.VER_ORGANIZACIONES)){
@@ -160,11 +165,12 @@ public class Router {
                 }
             });
 
+
             Spark.get("", organizacionController::mostrar,engine);
             Spark.get("/calcularHC",organizacionController::calcularHC);
-            Spark.get("/registros",organizacionController::verRegistros);
-            Spark.get("/reportes",reporteController::mostrar, engine);
+            Spark.get("/registros",registroController::mostrar, engine);
             Spark.get("/peticiones", peticionController::pantallaDePeticiones, engine);
+            Spark.get("/reportes", reporteController::mostrarPantallaDeOpciones, engine);
             Spark.post("/peticiones/:idPeticion/aceptar", peticionController::aceptarPeticion);
             Spark.post("/peticiones/:idPeticion/rechazar", peticionController::rechazarPeticion);
             Spark.get("/registrarMediciones", ExcelController::pantallaCargaExcel,engine);
@@ -191,10 +197,11 @@ public class Router {
             Spark.get("/registrarTrayecto/:idTrayecto/agregarTramo/DireccionInicial/:idDireccionInicial", miembroController::registrarTramoProvinciaFin, engine);
             Spark.get("/registrarTrayecto/:idTrayecto/agregarTramo/DireccionInicial/:idDireccionInicial/ProvinciaFin/:idProvinciaFin", miembroController::pantallaDeRegistrarTramo, engine);
             Spark.post("/registrarTrayecto/:idTrayecto/agregarTramo/DireccionInicial/:idDireccionInicial/ProvinciaFin/:idProvinciaFin", miembroController::registrarTramo);
+        });
+        
+        Spark.path("/administrador/:idUsuario", () ->{
+            Spark.get("",administradorController::homeAdministrador,engine);
 
-//            Spark.post("/registrarTrayecto/:idTrayecto", miembroController::registrarTramo);
-//            Spark.post("/miembro/:idMiembro/organizacion/:idOrganizacion/registrarTrayecto",miembroController::guardarNuevoTrayecto);
-//            Spark.get("/registrarTrayecto/:idTrayecto", miembroController::pantallaDeEditarTrayecto, engine);
         });
     }
 
