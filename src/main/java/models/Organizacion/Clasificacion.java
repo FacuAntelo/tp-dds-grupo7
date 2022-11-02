@@ -11,4 +11,9 @@ import javax.persistence.*;
 public class Clasificacion {
     @Column(name = "clasificacion")
     private String nombre;
+
+    public Clasificacion(){}
+    public Clasificacion(String nombre){
+        this.nombre = nombre;
+    }
 }
