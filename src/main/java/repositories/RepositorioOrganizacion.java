@@ -62,6 +62,12 @@ public class RepositorioOrganizacion {
         return organizacionList;
     }
 
+    public List<Organizacion> buscarOrganizacionesDelUsuario(Integer idUsuario){
+
+        return EntityManagerHelper.getEntityManager().createQuery("select o from Organizacion o" +
+                " where o.usuario = " + idUsuario, Organizacion.class).getResultList();
+    }
+
 //    public MiembroOrganizacionDTO buscarOrganizacionMiembroDTO(int idUsuario){
 //        List<Organizacion> organizacionList = buscarOrganizacionesDeUsuario(Integer.valueOf(idUsuario));
 //        Miembro miembro = repositorioMiembro.buscarUsuario(idUsuario);

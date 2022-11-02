@@ -98,10 +98,17 @@ public class Router {
 //        });
 
         Spark.path("/usuario/:idUsuario", () -> {
+//            Spark.before("", AuthMiddleware::verificarSesion);
+//            Spark.before("/*", AuthMiddleware::verificarSesion);
+            Spark.before("/crearOrganizacion", (request, response) -> {
+                if(!PermisoHelper.usuarioTienePermisos(request, Permiso.CREAR_ORGANIZACIONES)){
+                    response.redirect("/prohibido");
+                    Spark.halt();
+                }
+            });
             Spark.get("", usuarioController::pantallaHome, engine);
             Spark.get("/crearOrganizacion",usuarioController::pantallaCrearOrganizacion); // agregar engine
             Spark.post("/crearOrganizacion",usuarioController::crearOrganizacion);
-            Spark.get("/organizaciones/",usuarioController::mostrarOrganizaciones);
             Spark.get("/peticion", usuarioController::pantallaDePeticion, engine);
             Spark.get("/peticion/organizacion", usuarioController::pantallaDePeticionSector);
             Spark.get("/peticion/organizacion/:idOrganizacion", usuarioController::pantallaDePeticionSectores,engine);
@@ -113,18 +120,46 @@ public class Router {
         Spark.path("/organizacion/:idOrganizacion", () -> {
 //            Spark.before("", AuthMiddleware::verificarSesion);
 //            Spark.before("/*", AuthMiddleware::verificarSesion);
-//            Spark.before("", (request, response) -> {
-//                if(!PermisoHelper.usuarioTienePermisos(request, Permiso.VER_SECTORES)){
-//                    response.redirect("/prohibido");
-//                    Spark.halt();
-//                }
-//            });
-//            Spark.before("/*", (request, response) -> {
-//                if(!PermisoHelper.usuarioTienePermisos(request, Permiso.VER_SECTORES)){
-//                    response.redirect("/prohibido");
-//                    Spark.halt();
-//                }
-//            });
+
+            Spark.before("", (request, response) -> {
+                if(!PermisoHelper.usuarioTienePermisos(request, Permiso.VER_ORGANIZACIONES)){
+                    response.redirect("/prohibido");
+                    Spark.halt();
+                }
+                AuthMiddleware.verificarOrganizacion(request, response);
+            });
+            Spark.before("/*", (request, response) -> {
+                if(!PermisoHelper.usuarioTienePermisos(request, Permiso.VER_ORGANIZACIONES)){
+                    response.redirect("/prohibido");
+                    Spark.halt();
+                }
+                AuthMiddleware.verificarOrganizacion(request, response);
+            });
+            Spark.before("/calcularHC", (request, response) -> {
+                if(!PermisoHelper.usuarioTienePermisos(request, Permiso.CALCULAR_HUEYA_CARBONO)){
+                    response.redirect("/prohibido");
+                    Spark.halt();
+                }
+            });
+            Spark.before("/reportes", (request, response) -> {
+                if(!PermisoHelper.usuarioTienePermisos(request, Permiso.VER_REPORTES)){
+                    response.redirect("/prohibido");
+                    Spark.halt();
+                }
+            });
+            Spark.before("/registrarMediciones", (request, response) -> {
+                if(!PermisoHelper.usuarioTienePermisos(request, Permiso.REGISTRAR_MEDICIONES)){
+                    response.redirect("/prohibido");
+                    Spark.halt();
+                }
+            });
+            Spark.before("/peticiones", (request, response) -> {
+                if(!PermisoHelper.usuarioTienePermisos(request, Permiso.VER_ORGANIZACIONES)){
+                    response.redirect("/prohibido");
+                    Spark.halt();
+                }
+            });
+
             Spark.get("", organizacionController::mostrar,engine);
             Spark.get("/calcularHC",organizacionController::calcularHC);
             Spark.get("/registros",organizacionController::verRegistros);

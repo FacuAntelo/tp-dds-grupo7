@@ -53,11 +53,6 @@ public class UsuarioController {
     }
 
 
-    public String mostrarOrganizaciones(Request request, Response response) {
-        List<Organizacion> organizacionList = repositorioOrganizacion.buscarOrganizacionesDeUsuario(Integer.valueOf(request.queryParams("idUsuario")));
-        return null;
-    }
-
     public ModelAndView pantallaDePeticion(Request request, Response response) {
         String idUsuario = request.params("idUsuario");
         Usuario usuario = repositorioUsuario.find(Integer.parseInt(idUsuario));

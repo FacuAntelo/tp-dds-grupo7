@@ -12,6 +12,7 @@ import models.Notificacion.Notificacion;
 import lombok.Getter;
 import lombok.Setter;
 import models.Sector.Sector;
+import models.Usuarios.Usuario;
 import models.ValidacionExterna.ValidadorExterno;
 import models.trayecto.Localidad;
 import models.trayecto.Provincia;
@@ -87,6 +88,9 @@ public class Organizacion extends EntidadPersistente {
     @OneToMany(fetch =FetchType.LAZY, mappedBy = "organizacion",cascade = CascadeType.REFRESH )
     private List<Peticion> peticiones;
 
+    @ManyToOne(fetch=FetchType.EAGER)
+    @JoinColumn(name = "id_usuario")
+    private Usuario usuario;
 
     public Organizacion() {
         this.datosDeActividad = new ArrayList<>();

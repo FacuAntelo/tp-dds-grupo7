@@ -37,7 +37,7 @@ public class OrganizacionController {
         }
         return new ModelAndView(new HashMap<String, Object>(){{
             put("organizacion", organizacionBuscado);
-            put("reportes", GeneradorDeReportes.reporteDeHCdeSectores(organizacionBuscado));
+//            put("reportes", GeneradorDeReportes.reporteDeHCdeSectores(organizacionBuscado));
         }},"organizacion/homeOrganizacion.hbs");
     }
 
