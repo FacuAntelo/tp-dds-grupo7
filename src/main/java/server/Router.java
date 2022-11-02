@@ -179,7 +179,8 @@ public class Router {
             });
 
             Spark.get("", organizacionController::mostrar,engine);
-            Spark.get("/calcularHC",organizacionController::calcularHC);
+            Spark.get("/calcularHC",organizacionController::calcularHC,engine);
+            Spark.post("/calcularHC", organizacionController:: ejecutarCalculadoraHC);
             Spark.get("/registros",registroController::mostrar, engine);
             Spark.get("/peticiones", peticionController::pantallaDePeticiones, engine);
             Spark.get("/reportes", reporteController::mostrarPantallaDeOpciones, engine);
