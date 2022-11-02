@@ -43,9 +43,11 @@ public class OrganizacionController {
 
         return new ModelAndView(new HashMap<String, Object>(){{
             put("organizacion", organizacionBuscado);
+
 //            if(!reporteSectoresOrganizacionDTOS.isEmpty()) {
 //                put("reportes", GeneradorDeReportes.reporteDeHCdeSectores(organizacionBuscado));
 //            }
+
         }},"organizacion/homeOrganizacion.hbs");
     }
 

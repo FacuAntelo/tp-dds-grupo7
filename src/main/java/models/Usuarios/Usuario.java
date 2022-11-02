@@ -3,6 +3,7 @@ package models.Usuarios;
 import models.EntidadPersistente.EntidadPersistente;
 import models.Miembro.Miembro;
 import models.Miembro.TipoDocumento;
+import models.Organizacion.Organizacion;
 import models.Validador.Validable;
 
 import lombok.Getter;
@@ -42,16 +43,18 @@ public class Usuario extends EntidadPersistente {
     private String email;
 
 //    @Column(name = "rol")
-    @Transient
-    private Rol rol;
+//    @Transient
+//    private Rol rol;
 
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "usuario")
     private List<Miembro> miembros = new ArrayList<>();
-//
-////    @ManyToOne
-////    @JoinColumn(name = "rol_id", referencedColumnName = "id")
-//    @Transient
-//    private Rol rol;
+
+    @ManyToOne
+    @JoinColumn(name = "rol_id", referencedColumnName = "id")
+    private Rol rol;
+
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    private List<Organizacion> organizaciones = new ArrayList<>();
 
     public Usuario(){}
 
