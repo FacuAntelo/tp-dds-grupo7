@@ -363,6 +363,10 @@ public class MiembroController {
         List<MediosSinContaminar> mediosSinContaminar= repositorioMedioDeTransporte.obtenerTodosLosMediosSinContaminar();
         List<ServicioContratadoDTO> servicioContratadoDTOList= repositorioMedioDeTransporte.obtenerTodosLosServiciosContratadosDTO();
         List<String> tipoTransportePublico= Arrays.stream(TipoTransportePublico.values()).map(x-> x.name()).collect(Collectors.toList());
+        List<Linea> lineasSubte = repositorioMedioDeTransporte.obtenerLineaPorTipoTransportePublico(TipoTransportePublico.SUBTE);
+        List<Linea> lineasColectivo = repositorioMedioDeTransporte.obtenerLineaPorTipoTransportePublico(TipoTransportePublico.COLECTIVO);
+        List<Linea> lineasTren = repositorioMedioDeTransporte.obtenerLineaPorTipoTransportePublico(TipoTransportePublico.TREN);
+
         return new ModelAndView(new HashMap<String, Object>(){{
             put("miembro", miembroBuscado);
             put("trayecto", trayecto);
@@ -378,6 +382,9 @@ public class MiembroController {
             put("mediosSinContaminar", mediosSinContaminar);
             put("servicios_contratados", servicioContratadoDTOList);
             put("tipo_transporte_publico", tipoTransportePublico);
+            put("lineasSubte", lineasSubte);
+            put("lineasColectivo", lineasColectivo);
+            put("lineasTren", lineasTren);
         }},"miembro/tramo/registrarTramo.hbs");
 
     }

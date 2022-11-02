@@ -2,10 +2,7 @@ package TestMediosDeTransporte;
 
 import models.Combustible.Combustible;
 import models.DTO.ServicioContratadoDTO;
-import models.MediosDeTransporte.MediosSinContaminar;
-import models.MediosDeTransporte.ServicioContratado;
-import models.MediosDeTransporte.TipoVehiculo;
-import models.MediosDeTransporte.VehiculoParticular;
+import models.MediosDeTransporte.*;
 import models.Organizacion.Organizacion;
 import models.db.EntityManagerHelper;
 import org.junit.Test;
@@ -58,6 +55,21 @@ public class TestMediosDeTransporte {
         List<ServicioContratadoDTO> servicioContratadoDTOList = repositorioMedioDeTransporte.obtenerTodosLosServiciosContratadosDTO();
 
         System.out.println(servicioContratadoDTOList.size());
+
+    }
+
+    @Test
+    public void obtenerParadas(){
+        List<TransportePublico> transportePublicos = EntityManagerHelper.getEntityManager()
+                .createQuery("from TransportePublico as t where t.tipo= :tipoTransportePublico",TransportePublico.class)
+                .setParameter("tipoTransportePublico",TipoTransportePublico.COLECTIVO)
+                .getResultList();
+
+
+//        List<Linea> lineas= new ArrayList<>();
+//        transportePublicos.forEach(t->lineas.add(t.getLinea()));
+        transportePublicos.forEach(c-> System.out.println(c.getLinea().getNombre()));
+        System.out.println(transportePublicos.size());
 
     }
 }

@@ -113,4 +113,15 @@ public class RepositorioMedioDeTransporte {
             return servicioContratadoList.get(0);
         }
     }
+
+    public List<Linea> obtenerLineaPorTipoTransportePublico(TipoTransportePublico tipoTransportePublico) {
+
+        List<TransportePublico> transportePublicos = EntityManagerHelper.getEntityManager()
+                .createQuery("from TransportePublico as t where t.tipo= :tipoTransportePublico",TransportePublico.class)
+                .setParameter("tipoTransportePublico",tipoTransportePublico)
+                .getResultList();
+        List<Linea> lineas= new ArrayList<>();
+        transportePublicos.forEach(t->lineas.add(t.getLinea()));
+        return lineas;
+    }
 }

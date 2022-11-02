@@ -14,6 +14,9 @@ public class TransportePublico extends MediosDeTransporte{
     @Enumerated(EnumType.STRING)
     private TipoTransportePublico tipo;
 
+    public TransportePublico() {
+    }
+
     @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinColumn(name = "id_transporte_publico",referencedColumnName = "id")
     private Linea linea;
