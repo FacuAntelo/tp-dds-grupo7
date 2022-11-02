@@ -312,6 +312,7 @@ public class MiembroController {
         Provincia provincia= repositorioProvincia.buscarPorId(idProvincia);
         long idLocalidad = Long.parseLong(request.queryParams("localidadInicio"));
         Localidad localidad = repositorioLocalidad.buscarPorId(idLocalidad);
+        // href = localidad/?nombre=localidad
 
         Direccion direccionInicio = repositorioDireccion.buscarYGuardar(request.queryParams("calleInicio"),
                 Integer.parseInt(request.queryParams("alturaInicio")),
@@ -328,7 +329,6 @@ public class MiembroController {
         int idTrayecto = Integer.parseInt(request.params("idTrayecto"));
         Trayecto trayecto = repositorioTrayecto.buscar(idTrayecto);
         List<TramoDTO> tramosDeTrayecto = repositorioMiembro.buscarTramos(miembroBuscado,trayecto.getId());
-
 
         Direccion direccionInicial = repositorioDireccion.buscar(Integer.valueOf(request.params("idDireccionInicial")));
         List<Provincia> provincias = repositorioProvincia.traerTodas();
@@ -386,7 +386,6 @@ public class MiembroController {
             put("lineasColectivo", lineasColectivo);
             put("lineasTren", lineasTren);
         }},"miembro/tramo/registrarTramo.hbs");
-
     }
 
 

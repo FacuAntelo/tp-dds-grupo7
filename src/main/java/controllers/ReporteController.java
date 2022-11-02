@@ -1,7 +1,9 @@
 package controllers;
 
 import models.HuellaDeCarbono.RegistroHC;
+import repositories.RepositorioDA;
 import repositories.RepositorioRegistro;
+import repositories.RepositorioReportes;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -9,11 +11,9 @@ import spark.Response;
 import java.util.List;
 
 public class ReporteController {
-    RepositorioRegistro repositorioRegistro=new RepositorioRegistro();
+    RepositorioReportes repositorioReportes = new RepositorioReportes();
 
-    public ModelAndView mostrar(Request request, Response response){
-        int idOrganizacion= Integer.parseInt(request.params("idOrganizacion"));
-        List<RegistroHC> registroHCList = repositorioRegistro.getRegistroHCListDeOrganizacion(idOrganizacion);
+    public ModelAndView mostrarPantallaDeOpciones(Request request, Response response){
         //TODO COMPLETAR HBS
         return new ModelAndView(null, "/parts/formReportes.hbs");
     }

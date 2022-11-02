@@ -8,12 +8,12 @@ import java.util.Arrays;
 import java.util.List;
 
 public class RepositorioDA {
-    public void guardar(Integer organizacionId, List<DatosDeActividad> dAList){
-        EntityManagerHelper.beginTransaction();
-        RepositorioOrganizacion repositorioOrganizacion= new RepositorioOrganizacion();
-        Organizacion organizacionBuscado = repositorioOrganizacion.buscar(organizacionId);
-        organizacionBuscado.setDatosDeActividad(dAList);
-        repositorioOrganizacion.guardar(organizacionBuscado);
-        EntityManagerHelper.commit();
+
+    public List<DatosDeActividad> buscarTodos(){
+        return EntityManagerHelper.getEntityManager().createQuery("from DatosDeActividad",DatosDeActividad.class).getResultList();
+    }
+
+    public DatosDeActividad buscar(Integer id){
+        return EntityManagerHelper.getEntityManager().find(DatosDeActividad.class,id);
     }
 }

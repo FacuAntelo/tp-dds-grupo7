@@ -1,14 +1,31 @@
 {{#partial "contenido" }}
-                <div class="row my-5">
-                    <h3 class="fs-4 mb-3">Registrar Reportes</h3>
-                    <div class="col">
-                        <section class="container-fluid p-5 bg-light" id="def">
-                            <div class="container">
-
-                            </div>
-                        </section>
-                    </div>
-
-                </div>
+<!-- Debe cambiarse el formReportes a formRegistrosHC-->>
+<div class="row my-5">
+    <h3 class="fs-4 mb-3">Registros de HC</h3>
+    <div class="col">
+        <table class="table bg-white rounded shadow-sm  table-hover">
+            <thead>
+            <tr>
+                <th scope="col" width="10"></th>
+                <th scope="col">Tipo de registro</th>
+                <th scope="col">Valor HC Dato de Actividad</th>
+                <th scope="col">Valor HC Trayecto</th>
+                <th scope="col">Valor HC Total</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#each registroHCList}}
+            <tr>
+                <th scope="row"></th>
+                <td>{{tipoRegistro}}</td>
+                <td>{{valorDA}}</td>
+                <td>{{valorTrayecto}}</td>
+                <td>{{valorTotal}}</td>
+            </tr>
+            {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>
 {{/partial}}
 {{> organizacion/baseOrganizacion.hbs }}

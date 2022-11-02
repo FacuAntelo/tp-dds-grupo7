@@ -1,15 +1,14 @@
 package models.domain.services.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-import javax.persistence.Transient;
+import javax.persistence.*;
 
 
 @Embeddable
 public class DistanciaAPI {
-    @Column(name = "valor")
+    @Column(name = "valor de la distancia")
     public double valor;
-    @Transient
+
+    @Enumerated(EnumType.STRING)
     public Unidades unidad;
 
     public DistanciaAPI(){
