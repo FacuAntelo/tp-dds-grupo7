@@ -124,4 +124,10 @@ public class RepositorioMiembro {
         return miembroList.get(0);
     }
 
+    public List<Miembro> buscarMiembrosDelUsuario(Integer idUsuario){
+
+        return EntityManagerHelper.getEntityManager().createQuery("select m from Miembro m" +
+                " where m.usuario = " + idUsuario, Miembro.class).getResultList();
+    }
+
 }
