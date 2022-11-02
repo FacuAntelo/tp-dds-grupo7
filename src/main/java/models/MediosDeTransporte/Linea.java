@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 public class Linea extends EntidadPersistente {
     @Column(name= "nombre")
     private String nombre;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_linea",referencedColumnName = "id")
     private List<Parada> paradas;
 
@@ -20,6 +20,10 @@ public class Linea extends EntidadPersistente {
         this.nombre = nombre;
         this.paradas = new ArrayList<Parada>();
     }
+
+    public Linea() {
+    }
+
     public String getNombre() {return nombre;}
 
     public void setNombre(String nombre) {this.nombre = nombre;}

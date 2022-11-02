@@ -6,24 +6,26 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Getter
 @Setter
 @Entity
 @Table(name = "localidad")
-public class Localidad extends Territorio {
-    @Column(name = "localidad")
-    private int localidad;
+public class Localidad extends Territorio implements Serializable {
 
-    public Localidad(int localidad) {this.localidad = localidad;}
+    @Column(name = "id_localidad")
+    private long id;
 
-    // lista de organizaciones
+    @Column(name = "nombre_provincia")
+    private String nombre;
+
+//    @ManyToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "id_provincia")
+//    private Provincia provincia;
 
     public Localidad() {}
 
-    public int getNumeroLocalidad(){
-        return localidad;
-    }
 
     @Override
     public RegistroHC calcularHC() {

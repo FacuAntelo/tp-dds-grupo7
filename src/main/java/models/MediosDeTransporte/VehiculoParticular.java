@@ -13,8 +13,11 @@ public class VehiculoParticular extends MediosDeTransporte {
     @Column(name = "tipo_vehiculo_particular")
     private TipoVehiculo tipo;
 
+    public VehiculoParticular(TipoVehiculo tipo) {
+        this.tipo = tipo;
+    }
 
-    public VehiculoParticular(TipoVehiculo tipo, Combustible combustible,Boolean compartido) {
+    public VehiculoParticular(TipoVehiculo tipo, Combustible combustible, Boolean compartido) {
         this.tipo = tipo;
         this.setCombustible(combustible);
         this.setEsCompartido(compartido);
@@ -24,6 +27,8 @@ public class VehiculoParticular extends MediosDeTransporte {
     public VehiculoParticular() {
 
     }
+
+
 
     public TipoVehiculo getTipo() {return tipo;}
 

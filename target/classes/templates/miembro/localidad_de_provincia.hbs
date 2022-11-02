@@ -1,0 +1,132 @@
+{{#partial "contenido" }}
+<div class="row my-5">
+    <h3 class="fs-4 mb-3">Registrar trayectos</h3>
+    <div class="col">
+        <section class="container-fluid p-5 bg-light" id="def">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-xl-6 col-md-6 col-sm-12 col-12">
+                        <h2 class="pb-3 text-center mb-5">Nuevo Trayecto</h2>
+                        <h4 class="pb-3 text-center mb-5">Ingrese la ubicacion de inicio y fin del trayecto</h4>
+{{!--                          /{{trayecto.id}}--}}
+<<<<<<< HEAD
+                            <form class="needs-validation" method="POST" action="/miembro/{{usuario.id}}/registrarTrayecto/Provincia/{{provincia.id}}" novalidate>
+=======
+                            <form class="needs-validation" method="GET" action="/miembro/{{usuario.id}}/registrarTrayecto/Provincia/{{provinci.id}}/Provincia" novalidate>
+>>>>>>> f47e9cc5ce4e0c8fff55e2b192f327ed26caf3c6
+                                <div class="form-row">
+                                  <h4>Ubicacion Inicio</h4>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-md-3 mb-3">
+                                        <label for="validationCustom05">Provincia</label>
+                                        <select class="form-select" aria-label="Default select example" name="provinciaInicio" disabled>
+                                            <option selected value="{{provincia.id}}" >{{provincia.nombre}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3 mb-3">
+                                        <label for="validationCustom05">Localidad</label>
+                                        <select class="form-select" aria-label="Default select example" name="localidadInicio">
+                                            <option selected>Elegir localidadd inicio</option>
+                                            {{#each localidades}}
+                                            <option type="hidden" value="{{id}}">{{nombre}}</option>
+                                            {{/each}}
+                                        </select>
+                                    </div>
+                              </div>
+                              <div class="form-row">
+                                <div class="col-md-3 mb-3">
+                                  <label for="validationCustom03">Calle</label>
+                                  <input type="text" class="form-control" id="validationCustom03" placeholder="Calle" required name="calleInicio">
+                                  <div class="invalid-feedback">Please provide a valid city.</div>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                  <label for="validationCustom04">Altura</label>
+                                  <input type="text" class="form-control" id="validationCustom04" placeholder="Altura" required name="alturaInicio">
+                                  <div class="invalid-feedback">
+                                    Please provide a valid state.
+                                  </div>
+                                </div>
+                              </div>
+<<<<<<< HEAD
+                              <div class="form-row">
+                                <button class="btn btn-primary" type="submit">Continuar</button>
+                              </div>
+                             </form>
+                               <div class="form-row">
+                                <button class="btn btn-primary" type="submit" href="/miembro/{{usuario.id}}/registrarTrayecto" style="color:white;">
+                                    <a href="/miembro/{{usuario.id}}/registrarTrayecto" style="color:white;">Volver</a>
+                                </button>
+                              </div>
+=======
+                             </form>
+>>>>>>> f47e9cc5ce4e0c8fff55e2b192f327ed26caf3c6
+{{!--                               <div class="form-row"> --}}
+{{!--                               <h4>Ubicacion Fin</h4> --}}
+{{!--                               </div> --}}
+{{!--                                 <div class="form-row"> --}}
+{{!--                                 <div class="col-md-3 mb-3"> --}}
+{{!--                                   <label for="validationCustom03">Calle</label> --}}
+{{!--                                   <input type="text" class="form-control" id="validationCustom03" placeholder="Calle" required name="calleFin"> --}}
+{{!--                                   <div class="invalid-feedback"> --}}
+{{!--                                     Please provide a valid city. --}}
+{{!--                                   </div> --}}
+{{!--                                 </div> --}}
+{{!--                                 <div class="col-md-3 mb-3"> --}}
+{{!--                                   <label for="validationCustom04">Altura</label> --}}
+{{!--                                   <input type="text" class="form-control" id="validationCustom04" placeholder="Altura" required name="alturaFin"> --}}
+{{!--                                   <div class="invalid-feedback"> --}}
+{{!--                                     Please provide a valid state. --}}
+{{!--                                   </div> --}}
+{{!--                                 </div> --}}
+{{!--                                 <div class="col-md-3 mb-3"> --}}
+{{!--                                   <label for="validationCustom05">Localidad</label> --}}
+{{!--                                     <select class="form-select" aria-label="Default select example" name="localidadFin"> --}}
+{{!--                                         <option selected>Elegir localidad fin</option> --}}
+{{!--                                         {{#each localidades}} --}}
+{{!--                                         <option type="hidden" value="{{this}}">{{nombre}}</option> --}}
+{{!--                                         {{/each}} --}}
+{{!--                                     </select> --}}
+{{!--                                 </div> --}}
+{{!--                                 <div class="col-md-3 mb-3"> --}}
+{{!--                                     <label for="validationCustom05">Provincia</label> --}}
+{{!--                                     <select class="form-select" aria-label="Default select example" name="provinciaFin"> --}}
+{{!--                                         <option selected>Elegir provincia</option> --}}
+{{!--                                         {{#each provincias}} --}}
+{{!--                                         <option type="hidden" value="{{this}}">{{nombre}}</option> --}}
+{{!--                                         {{/each}} --}}
+{{!--                                     </select> --}}
+{{!--                                   </div> --}}
+{{!--                               </div> --}}
+{{!--                               <button class="btn btn-primary" type="submit">Agregar trayecto</button> --}}
+                            </form>
+
+{{!--  <script>
+// // Example starter JavaScript for disabling form submissions if there are invalid fields
+// (function() {
+//   'use strict';
+//   window.addEventListener('load', function() {
+//     // Fetch all the forms we want to apply custom Bootstrap validation styles to
+//     var forms = document.getElementsByClassName('needs-validation');
+//     // Loop over them and prevent submission
+//     var validation = Array.prototype.filter.call(forms, function(form) {
+//       form.addEventListener('submit', function(event) {
+//         if (form.checkValidity() === false) {
+//           event.preventDefault();
+//           event.stopPropagation();
+//         }
+//         form.classList.add('was-validated');
+//       }, false);
+//     });
+//   }, false);
+// })();
+// </script>--}}
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</div>
+{{/partial}}
+{{> miembro/baseMiembro.hbs }}

@@ -1,0 +1,89 @@
+{{#partial "contenido" }}
+<div class="row my-5">
+    <h3 class="fs-4 mb-3">Registrar trayectos</h3>
+    <div class="col">
+        <section class="container-fluid p-5 bg-light" id="def">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-xl-6 col-md-6 col-sm-12 col-12">
+                        <h2 class="pb-3 text-center mb-5">Nuevo Trayecto</h2>
+                        <h4 class="pb-3 text-center mb-5">Ingrese la ubicacion de inicio y fin del trayecto</h4>
+
+                        <div class="form-row">
+                            <h4>Ubicacion Inicio</h4>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-3 mb-3">
+                                <label for="validationCustom05">Provincia</label>
+                                <select class="form-select" aria-label="Default select example" name="provinciaInicio"
+                                    disabled>
+                                    <option selected value="{{provinciaInicio.id}}">{{provinciaInicio.nombre}}</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="validationCustom05">Localidad</label>
+                                <select class="form-select" aria-label="Default select example" name="localidadInicio"
+                                    disabled>
+                                    <option selected value="{{localidadInicio.id}}">{{localidadInicio.nombre}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-3 mb-3">
+                                <label for="validationCustom03">Calle</label>
+                                <input type="text" class="form-control" id="validationCustom03" placeholder="Calle"
+                                    value="{{direccionInicial.calle}}" disabled name="calleInicio">
+                                <div class="invalid-feedback">Please provide a valid city.</div>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="validationCustom04">Altura</label>
+                                <input type="text" class="form-control" id="validationCustom04" placeholder="Altura"
+                                    value="{{direccionInicial.altura}}" disabled name="alturaInicio">
+                                <div class="invalid-feedback">
+                                    Please provide a valid state.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <button class="btn btn-primary" type="submit"
+                                href="/miembro/{{usuario.id}}/registrarTrayecto" style="color:white;">
+                                <a href="/miembro/{{miembro.id}}/registrarTrayecto/Provincia/{{provinciaInicio.id}}"
+                                    style="color:white;">Volver</a>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-xl-6 col-md-6 col-sm-12 col-12">
+                        <h2 class="pb-3 text-center mb-5">Ubicacion fin</h2>
+                        <h4 class="pb-3 text-center mb-5">Ubicacion fin</h4>
+
+                        <div class="form-row">
+                            <h4>Ubicacion fin</h4>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-3 mb-3">
+                                <label for="validationCustom05">Provincia</label>
+                                <div class="elegirOrganizacion-container">
+                                    <a class="nav-link dropdown-toggle second-text fw-bold" href="#" id="navbarDropdown"
+                                        role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Elegir provincia
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        {{#each provincias}}
+                                        <li>
+                                            <a class="dropdown-item"
+                                                href="/miembro/{{miembro.id}}/registrarTrayecto/DireccionInicial/{{direccionInicial.id}}/ProvinciaFin/{{id}}">{{nombre}}</a>
+                                        </li>
+                                        {{/each}}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</div>
+{{/partial}}
+{{> miembro/baseMiembro.hbs }}

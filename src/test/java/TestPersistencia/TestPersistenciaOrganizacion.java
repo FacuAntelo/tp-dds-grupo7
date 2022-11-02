@@ -31,15 +31,39 @@ import java.util.List;
 public class TestPersistenciaOrganizacion {
 
     RepositorioOrganizacion repo;
+    FactorDeEmision naftaFactorDeEmision ;
+    Combustible nafta ;
+    FactorDeEmision gasFactorDeEmision ;
+    Combustible gas = new Combustible("gas");
+    FactorDeEmision electricidadFactorDeEmision ;
+    Combustible electricidad = new Combustible("electricidad");
+    FactorDeEmision dieselFactorDeEmision ;
+    Combustible diesel = new Combustible("diesel");
 
     @Before
     public void init(){
+
         repo = new RepositorioOrganizacion();
+
+        naftaFactorDeEmision = new FactorDeEmision("NAFTA", 10, "lts");
+        nafta = new Combustible("nafta");
+        nafta.setFactorEmision(naftaFactorDeEmision);
+        gasFactorDeEmision = new FactorDeEmision("GAS NATURAL", 10, "m3");
+        gas = new Combustible("gas");
+        gas.setFactorEmision(gasFactorDeEmision);
+        electricidadFactorDeEmision = new FactorDeEmision("ELECTRICIDAD", 50, "kWh");
+        electricidad = new Combustible("electricidad");
+        electricidad.setFactorEmision(electricidadFactorDeEmision);
+        dieselFactorDeEmision = new FactorDeEmision("DIESEL", 50, "lts");
+        diesel = new Combustible("diesel");
+        diesel.setFactorEmision(dieselFactorDeEmision);
+
     }
 
 
     @Test
     public void persistirOrganizacion() throws IOException {
+        init();
         Organizacion cocaCola = this.getOrganizacion();
         Organizacion jumbo = this.getOrganizacion2();
         repo.guardar(cocaCola);
@@ -78,19 +102,19 @@ public class TestPersistenciaOrganizacion {
         KG kg = KG.getKG();
         TN tn = TN.getTN();
         GR gr = GR.getGR();
-        FactorDeEmision naftaFactorDeEmision = new FactorDeEmision("NAFTA", 10, "lts");
-        Combustible nafta = new Combustible("nafta");
-        nafta.setFactorEmision(naftaFactorDeEmision);
-        FactorDeEmision gasFactorDeEmision = new FactorDeEmision("GAS NATURAL", 10, "m3");
-        Combustible gas = new Combustible("gas");
-        gas.setFactorEmision(gasFactorDeEmision);
-        FactorDeEmision electricidadFactorDeEmision = new FactorDeEmision("ELECTRICIDAD", 50, "kWh");
-        Combustible electricidad = new Combustible("electricidad");
-        electricidad.setFactorEmision(electricidadFactorDeEmision);
-
-        FactorDeEmision dieselFactorDeEmision = new FactorDeEmision("DIESEL", 50, "lts");
-        Combustible diesel = new Combustible("diesel");
-        diesel.setFactorEmision(dieselFactorDeEmision);
+//        FactorDeEmision naftaFactorDeEmision = new FactorDeEmision("NAFTA", 10, "lts");
+//        Combustible nafta = new Combustible("nafta");
+//        nafta.setFactorEmision(naftaFactorDeEmision);
+//        FactorDeEmision gasFactorDeEmision = new FactorDeEmision("GAS NATURAL", 10, "m3");
+//        Combustible gas = new Combustible("gas");
+//        gas.setFactorEmision(gasFactorDeEmision);
+//        FactorDeEmision electricidadFactorDeEmision = new FactorDeEmision("ELECTRICIDAD", 50, "kWh");
+//        Combustible electricidad = new Combustible("electricidad");
+//        electricidad.setFactorEmision(electricidadFactorDeEmision);
+//
+//        FactorDeEmision dieselFactorDeEmision = new FactorDeEmision("DIESEL", 50, "lts");
+//        Combustible diesel = new Combustible("diesel");
+//        diesel.setFactorEmision(dieselFactorDeEmision);
         FactorDeEmision gasoilFactorDeEmision = new FactorDeEmision("GASOIL", 50, "lts");
         FactorDeEmision keroseneFactorDeEmision = new FactorDeEmision("KEROSENE", 50, "lts");
         FactorDeEmision fuelOilFactorDeEmision = new FactorDeEmision("FUEL OIL", 50, "lts");
@@ -105,7 +129,7 @@ public class TestPersistenciaOrganizacion {
         // UBICACION //
         Ubicacion ubicacionCocaCola = new Ubicacion();
         // DIRECCION //
-        Localidad ezeiza = new Localidad(180);
+        Localidad ezeiza = new Localidad();
         Provincia buenosAires = new Provincia("Buenos Aires");
         sectorBonaerense.agregarTerritorio(ezeiza);
         sectorBonaerense.agregarTerritorio(buenosAires);
@@ -262,7 +286,7 @@ public class TestPersistenciaOrganizacion {
         // UBICACION //
         Ubicacion ubicacionCocaCola = new Ubicacion();
         // DIRECCION //
-        Localidad ezeiza = new Localidad(180);
+        Localidad ezeiza = new Localidad();
         Provincia buenosAires = new Provincia("Buenos Aires");
         sectorBonaerense.agregarTerritorio(ezeiza);
         sectorBonaerense.agregarTerritorio(buenosAires);
