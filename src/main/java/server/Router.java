@@ -226,9 +226,12 @@ public class Router {
             Spark.get("/registrarTrayecto/:idTrayecto/agregarTramo/DireccionInicial/:idDireccionInicial/ProvinciaFin/:idProvinciaFin", miembroController::pantallaDeRegistrarTramo, engine);
             Spark.post("/registrarTrayecto/:idTrayecto/agregarTramo/DireccionInicial/:idDireccionInicial/ProvinciaFin/:idProvinciaFin", miembroController::registrarTramo);
         });
-        
+
         Spark.path("/administrador/:idUsuario", () ->{
             Spark.get("",administradorController::homeAdministrador,engine);
+            Spark.get("/factoresDeEmision", administradorController:: pantallaDeFactoresDeEmision, engine);
+            Spark.get("/factoresDeEmision/:idFactorEmision",administradorController::pantallaEditarFactorDeEmision, engine);
+            Spark.post("/factoresDeEmision/:idFactorEmision",administradorController::modificarFactorDeEmision);
 
         });
     }
