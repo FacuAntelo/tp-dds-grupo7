@@ -1,0 +1,30 @@
+{{#partial "contenido" }}
+<div class="row my-5">
+    <h3 class="fs-4 mb-3">Trayectos</h3>
+    <div class="col">
+        <table class="table bg-white rounded shadow-sm  table-hover">
+            <thead>
+            <tr>
+                <th scope="col" width="50">#</th>
+                <th scope="col">Factor de emision</th>
+                <th scope="col">Valor</th>
+                <th scope="col">Unidad</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+                {{#each factoresDeEmision}}
+                    <tr>
+                        <th scope="row"></th>
+                        <td>{{nombre}}</td>
+                        <td>{{valorFactorEmision}}</td>
+                        <td>{{unidad}}</td>
+                        <td><a href="/administrador/{{usuario.id}}/factoresDeEmision/{{id}}">Editar</a></td>
+                    </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>
+{{/partial}}
+{{> administrador/baseAdministrador.hbs }}
