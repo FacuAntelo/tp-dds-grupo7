@@ -5,7 +5,7 @@ import javax.persistence.*;
 
 @Embeddable
 public class DistanciaAPI {
-    @Column(name = "valor de la distancia")
+    @Column(name = "valor_de_la_distancia")
     public double valor;
 
     @Enumerated(EnumType.STRING)

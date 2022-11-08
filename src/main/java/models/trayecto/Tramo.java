@@ -1,4 +1,6 @@
 package models.trayecto;
+import lombok.Getter;
+import lombok.Setter;
 import models.EntidadPersistente.EntidadPersistente;
 import models.MediosDeTransporte.MediosDeTransporte;
 import models.domain.services.ServicioGeoDDS;
@@ -10,9 +12,11 @@ import java.time.LocalTime;
 
 @Entity
 @Table(name = "tramo")
+@Getter
+@Setter
 public class Tramo extends EntidadPersistente {
         @OneToOne(cascade = CascadeType.ALL)
-        @JoinColumn(name = "id_medio_de_transporte")
+        @JoinColumn(name = "id_medio_de_transporte",referencedColumnName = "id")
         private MediosDeTransporte medioDeTransporte;
 
         @ManyToOne(cascade = CascadeType.ALL)

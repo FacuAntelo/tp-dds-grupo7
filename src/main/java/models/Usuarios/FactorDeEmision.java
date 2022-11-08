@@ -17,6 +17,9 @@ import javax.persistence.Transient;
 @Entity
 @Table(name = "factor_emision")
 public class FactorDeEmision extends EntidadPersistente {
+
+    @Column(name = "nombre")
+    private String nombre;
     @Column(name = "valor")
     private double valorFactorEmision;
     @Column(name = "unidad")
@@ -31,6 +34,7 @@ public class FactorDeEmision extends EntidadPersistente {
      public FactorDeEmision(String nombre, double valorFactorEmision,String medidoEn) {
          Configurador configurador = Configurador.getConfigurador();
          configurador.agregarFactor(nombre, this);
+         this.nombre= nombre;
          this.valorFactorEmision = valorFactorEmision;
          this.medidoEn = medidoEn;
          this.tipoUnidad = KG.getKG();
