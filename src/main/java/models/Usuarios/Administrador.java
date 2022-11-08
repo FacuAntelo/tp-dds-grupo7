@@ -1,16 +1,25 @@
 package models.Usuarios;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@Table(name = "administrador")
 public class Administrador extends Usuario{
+    @Transient
     List<FactorDeEmision> facEmisiones;
+
+    @Transient
     List<String> Fes = new ArrayList<String>();
+
     public Administrador(String usuario, String contrasenia){
         super(usuario, contrasenia);
         facEmisiones = new ArrayList<>();
     }
 
+    public Administrador() {
+    }
 /*    public void FactorDeEmision() throws FileNotFoundException {
         File doc = new File("C:\\Users\\jose_\\OneDrive\\Escritorio\\2022-mi-no-mino-grupo-07\\src\\main\\java\\Usuarios\\factoresDeEmision.config");
         Scanner obj = new Scanner(doc);

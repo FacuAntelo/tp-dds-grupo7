@@ -1,5 +1,6 @@
 import ServicioGeoRefAPIgob.ServicioGeoRefAPI;
 import ServicioGeoRefAPIgob.retrofit.ServicioGeoRefAPIRetrofit;
+import models.AgenteSectorial.AgenteSectorial;
 import models.AgenteSectorial.SectorTerritorial;
 import models.Combustible.Combustible;
 import models.HuellaDeCarbono.CalculadoraHC;
@@ -12,10 +13,7 @@ import models.Organizacion.TipoOrganizacion;
 import models.Organizacion.Ubicacion;
 import models.Reportes.GeneradorDeReportes;
 import models.Sector.Sector;
-import models.Usuarios.FactorDeEmision;
-import models.Usuarios.Permiso;
-import models.Usuarios.Rol;
-import models.Usuarios.Usuario;
+import models.Usuarios.*;
 import models.db.EntityManagerHelper;
 import models.db.PersistenciaInicial;
 import models.domain.Configurador;
@@ -44,6 +42,8 @@ public class PersistirDatos {
     RepositorioCombustible repositorioCombustible= new RepositorioCombustible();
     RepositorioOrganizacion repositorioOrganizacion = new RepositorioOrganizacion();
     RepositorioRol repositorioRol = new RepositorioRol();
+    RepositorioAgenteSectorial repositorioAgenteSectorial= new RepositorioAgenteSectorial();
+    RepositorioUsuario repositorioUsuario = new RepositorioUsuario();
 
     @Before
     public void init() throws IOException {
@@ -57,9 +57,13 @@ public class PersistirDatos {
     @Test
     public void persistirDatosEjemplo() throws IOException {
 
-        Organizacion cocaCola = this.getOrganizacion();
-        Organizacion jumbo = this.getOrganizacion2();
+        Organizacion cocaCola = this.getOrganizacionCocaCola();
+        Organizacion jumbo = this.getOrganizacionJumbo();
         repositorioOrganizacion.guardar(cocaCola, jumbo);
+
+        agregarSectorTerritorialYAgenteSectorial();
+
+        crearAdministrador();
     }
 
     public void persisitrProvinciasYLocalidades() throws IOException {
@@ -165,7 +169,7 @@ public class PersistirDatos {
         EntityManagerHelper.commit();
     }
 
-    public Organizacion getOrganizacion() throws IOException {
+    public Organizacion getOrganizacionCocaCola() throws IOException {
         String path = new String("src\\main\\java\\models\\Libro1.xlsx");
 
         ServicioGeoDDS servicioGeoDDS = ServicioGeoDDS.getInstance();
@@ -353,7 +357,7 @@ public class PersistirDatos {
         return cocaCola;
     }
 
-    public Organizacion getOrganizacion2() throws IOException {
+    public Organizacion getOrganizacionJumbo() throws IOException {
         String path = new String("src\\main\\java\\models\\Libro1.xlsx");
 
         ServicioGeoDDS servicioGeoDDS = ServicioGeoDDS.getInstance();
@@ -541,6 +545,46 @@ public class PersistirDatos {
                 repositorioRol.buscar(3));
         cocaCola.setUsuario(usuarioCocacolaJumbo);
         return cocaCola;
+    }
+
+    public void agregarSectorTerritorialYAgenteSectorial(){
+        SectorTerritorial sectorBonaerense = new SectorTerritorial();
+
+        Localidad ezeiza = repositorioLocalidad.buscarPorId(Long.parseLong("6270010001"));
+        Provincia buenosAires = repositorioProvincia.buscarPorId(6);
+        sectorBonaerense.agregarTerritorio(ezeiza);
+        sectorBonaerense.agregarTerritorio(buenosAires);
+
+        Usuario usuarioAgenteSectorial= new Usuario("Bonaerense",
+                "Bonaerense",
+                DNI,
+                "2283383",
+                "Bonaerense",
+                "Bonaerense",
+                "Bonaerense@gmail.com",
+                repositorioRol.buscar(4));
+
+        AgenteSectorial agenteSectorialBonaerense = new AgenteSectorial(usuarioAgenteSectorial.getNombre(),
+                usuarioAgenteSectorial.getApellido(),
+                sectorBonaerense,
+                usuarioAgenteSectorial);
+
+        repositorioAgenteSectorial.guardar(agenteSectorialBonaerense);
+
+    }
+
+    public void crearAdministrador(){
+        Administrador administrador = new Administrador();
+        administrador.setNombreDeUsuario("Administrador");
+        administrador.setContrasenia("Administrador");
+        administrador.setNombre("Administrador");
+        administrador.setApellido("Administrador");
+        administrador.setTipoDocumento(DNI);
+        administrador.setNumeroDocumento("6838743");
+        administrador.setEmail("Administrador@admi.com");
+        administrador.setRol(repositorioRol.buscar(1));
+
+        repositorioUsuario.guardar(administrador);
     }
 
 }
