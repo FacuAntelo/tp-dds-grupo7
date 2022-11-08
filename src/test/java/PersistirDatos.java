@@ -1,5 +1,3 @@
-package TestPersistencia;
-
 import ServicioGeoRefAPIgob.ServicioGeoRefAPI;
 import ServicioGeoRefAPIgob.retrofit.ServicioGeoRefAPIRetrofit;
 import models.AgenteSectorial.SectorTerritorial;
@@ -15,6 +13,9 @@ import models.Organizacion.Ubicacion;
 import models.Reportes.GeneradorDeReportes;
 import models.Sector.Sector;
 import models.Usuarios.FactorDeEmision;
+import models.Usuarios.Permiso;
+import models.Usuarios.Rol;
+import models.Usuarios.Usuario;
 import models.db.EntityManagerHelper;
 import models.db.PersistenciaInicial;
 import models.domain.Configurador;
@@ -24,6 +25,7 @@ import models.trayecto.*;
 import models.unidad.GR;
 import models.unidad.KG;
 import models.unidad.TN;
+import org.junit.Before;
 import org.junit.Test;
 import repositories.*;
 
@@ -41,12 +43,20 @@ public class PersistirDatos {
     RepositorioLocalidad repositorioLocalidad = new RepositorioLocalidad();
     RepositorioCombustible repositorioCombustible= new RepositorioCombustible();
     RepositorioOrganizacion repositorioOrganizacion = new RepositorioOrganizacion();
-    RepositorioMiembro repositorioMiembro = new RepositorioMiembro();
+    RepositorioRol repositorioRol = new RepositorioRol();
 
+    @Before
+    public void init() throws IOException {
+        persisitrProvinciasYLocalidades();
+        PersistenciaInicial.persistirCombustibles();
+        persistirRolAdmin();
+        persistirRolMiembro();
+        persistirRolOrganizacion();
+        persistirRolAgenteSectorial();
+    }
     @Test
     public void persistirDatosEjemplo() throws IOException {
-        this.persisitrProvinciasYLocalidades();
-        PersistenciaInicial.persistirCombustibles();
+
         Organizacion cocaCola = this.getOrganizacion();
         Organizacion jumbo = this.getOrganizacion2();
         repositorioOrganizacion.guardar(cocaCola, jumbo);
@@ -63,6 +73,98 @@ public class PersistirDatos {
         }
     }
 
+    public void persistirRolAdmin(){
+        Rol admin = new Rol();
+        admin.setNombre("Admin");
+
+        admin.agregarPermiso(Permiso.CREAR_ORGANIZACIONES);
+        admin.agregarPermiso(Permiso.VER_ORGANIZACIONES);
+        admin.agregarPermiso(Permiso.EDITAR_ORGANIZACIONES);
+        admin.agregarPermiso(Permiso.ELIMIAR_ORGANIZACIONES);
+
+        admin.agregarPermiso(Permiso.CREAR_SECTORES);
+        admin.agregarPermiso(Permiso.VER_SECTORES);
+        admin.agregarPermiso(Permiso.EDITAR_SECTORES);
+        admin.agregarPermiso(Permiso.ELIMINAR_SECTORES);
+
+        admin.agregarPermiso(Permiso.VER_PETICIONES);
+        admin.agregarPermiso(Permiso.ACEPTAR_PETICIONES);
+        admin.agregarPermiso(Permiso.RECHAZAR_PETICIONES);
+
+        admin.agregarPermiso(Permiso.REGISTRAR_MEDICIONES);
+        admin.agregarPermiso(Permiso.VER_REPORTES);
+
+        admin.agregarPermiso(Permiso.VER_RECOMENDACIONES);
+
+        admin.agregarPermiso(Permiso.CREAR_TRAYECTOS);
+        admin.agregarPermiso(Permiso.VER_TRAYECTOS);
+        admin.agregarPermiso(Permiso.EDITAR_TRAYECTOS);
+        admin.agregarPermiso(Permiso.ELIMINAR_TRAYECTOS);
+
+        admin.agregarPermiso(Permiso.CALCULAR_HUEYA_CARBONO);
+
+        EntityManagerHelper.beginTransaction();
+        EntityManagerHelper.getEntityManager().persist(admin);
+        EntityManagerHelper.commit();
+    }
+
+
+    public void persistirRolMiembro(){
+        Rol miembro = new Rol();
+        miembro.setNombre("Miembro");
+
+        miembro.agregarPermiso(Permiso.CALCULAR_HUEYA_CARBONO);
+        miembro.agregarPermiso(Permiso.VER_TRAYECTOS);
+        miembro.agregarPermiso(Permiso.CREAR_TRAYECTOS);
+        miembro.agregarPermiso(Permiso.EDITAR_TRAYECTOS);
+        miembro.agregarPermiso(Permiso.ELIMINAR_TRAYECTOS);
+        miembro.agregarPermiso(Permiso.VER_ORGANIZACIONES);
+
+        EntityManagerHelper.beginTransaction();
+        EntityManagerHelper.getEntityManager().persist(miembro);
+        EntityManagerHelper.commit();
+    }
+
+    public void persistirRolOrganizacion(){
+        Rol organizacion = new Rol();
+        organizacion.setNombre("Organizacion");
+
+        organizacion.agregarPermiso(Permiso.CALCULAR_HUEYA_CARBONO);
+        organizacion.agregarPermiso(Permiso.VER_ORGANIZACIONES);
+        organizacion.agregarPermiso(Permiso.CREAR_ORGANIZACIONES);
+        organizacion.agregarPermiso(Permiso.EDITAR_ORGANIZACIONES);
+
+        organizacion.agregarPermiso(Permiso.VER_SECTORES);
+        organizacion.agregarPermiso(Permiso.CREAR_SECTORES);
+        organizacion.agregarPermiso(Permiso.EDITAR_SECTORES);
+        organizacion.agregarPermiso(Permiso.ELIMINAR_SECTORES);
+
+        organizacion.agregarPermiso(Permiso.REGISTRAR_MEDICIONES);
+        organizacion.agregarPermiso(Permiso.CALCULAR_HUEYA_CARBONO);
+        organizacion.agregarPermiso(Permiso.VER_REPORTES);
+        organizacion.agregarPermiso(Permiso.VER_RECOMENDACIONES);
+
+        organizacion.agregarPermiso(Permiso.VER_PETICIONES);
+        organizacion.agregarPermiso(Permiso.ACEPTAR_PETICIONES);
+        organizacion.agregarPermiso(Permiso.RECHAZAR_PETICIONES);
+
+        EntityManagerHelper.beginTransaction();
+        EntityManagerHelper.getEntityManager().persist(organizacion);
+        EntityManagerHelper.commit();
+    }
+
+    public void persistirRolAgenteSectorial(){
+        Rol agenteSectorial = new Rol();
+        agenteSectorial.setNombre("AgenteSectorial");
+
+        agenteSectorial.agregarPermiso(Permiso.VER_RECOMENDACIONES);
+        agenteSectorial.agregarPermiso(Permiso.VER_REPORTES);
+
+        EntityManagerHelper.beginTransaction();
+        EntityManagerHelper.getEntityManager().persist(agenteSectorial);
+        EntityManagerHelper.commit();
+    }
+
     public Organizacion getOrganizacion() throws IOException {
         String path = new String("src\\main\\java\\models\\Libro1.xlsx");
 
@@ -76,26 +178,7 @@ public class PersistirDatos {
         KG kg = KG.getKG();
         TN tn = TN.getTN();
         GR gr = GR.getGR();
-//        FactorDeEmision naftaFactorDeEmision = new FactorDeEmision("NAFTA", 10, "lts");
-//        Combustible nafta = new Combustible("nafta");
-//        nafta.setFactorEmision(naftaFactorDeEmision);
-//        FactorDeEmision gasFactorDeEmision = new FactorDeEmision("GAS NATURAL", 10, "m3");
-//        Combustible gas = new Combustible("gas");
-//        gas.setFactorEmision(gasFactorDeEmision);
-//        FactorDeEmision electricidadFactorDeEmision = new FactorDeEmision("ELECTRICIDAD", 50, "kWh");
-//        Combustible electricidad = new Combustible("electricidad");
-//        electricidad.setFactorEmision(electricidadFactorDeEmision);
-//
-//        FactorDeEmision dieselFactorDeEmision = new FactorDeEmision("DIESEL", 50, "lts");
-//        Combustible diesel = new Combustible("diesel");
-//        diesel.setFactorEmision(dieselFactorDeEmision);
-//        FactorDeEmision gasoilFactorDeEmision = new FactorDeEmision("GASOIL", 50, "lts");
-//        FactorDeEmision keroseneFactorDeEmision = new FactorDeEmision("KEROSENE", 50, "lts");
-//        FactorDeEmision fuelOilFactorDeEmision = new FactorDeEmision("FUEL OIL", 50, "lts");
-//        FactorDeEmision carbonFactorDeEmision = new FactorDeEmision("CARBON", 50, "kg");
-//        FactorDeEmision carbonLeniaFactorDeEmision = new FactorDeEmision("CARBON LEÑA", 250, "kg");
-//        FactorDeEmision leniaFactorDeEmision = new FactorDeEmision("LEÑA", 25, "kg");
-//        FactorDeEmision gncFactorDeEmision = new FactorDeEmision("GNC", 25, "lts");
+
         Configurador config = Configurador.getConfigurador();
         System.out.println();
         SectorTerritorial sectorTerritorial = new SectorTerritorial();
@@ -136,16 +219,53 @@ public class PersistirDatos {
         // FIN SECTORES //
 
         // MIEMBROS //
+        Rol rol_miembro = repositorioRol.buscar(2);
         Miembro oscarAdministracion = new Miembro("Oscar", "Longaniza", TipoDocumento.DNI, "17545848");
+        Usuario usuariooscarAdministracion= new Usuario(oscarAdministracion.getNombre(),
+                oscarAdministracion.getApellido(),
+                oscarAdministracion.getTipoDocumento(),
+                oscarAdministracion.getNumDoc(),
+                "OscarLonganiza",
+                "OscarLonganiza",
+                "OscarLonganiza@gmail.com",
+                rol_miembro);
+        oscarAdministracion.setUsuario(usuariooscarAdministracion);
         administracionCocaCola.agregarMiembro(oscarAdministracion);
 
         Miembro vanesaMarketing = new Miembro("Vanesa", "lartori", TipoDocumento.DNI, "4564564");
+        Usuario usuariovanesaMarketing= new Usuario(vanesaMarketing.getNombre(),
+                vanesaMarketing.getApellido(),
+                vanesaMarketing.getTipoDocumento(),
+                oscarAdministracion.getNumDoc(),
+                "Vanesalartori",
+                "Vanesalartori",
+                "Vanesalartori@gmail.com",
+                rol_miembro);
+        vanesaMarketing.setUsuario(usuariovanesaMarketing);
         marketingCocaCola.agregarMiembro(vanesaMarketing);
 
         Miembro edgardoVentas = new Miembro("Edgardo", "Rosales", TipoDocumento.DNI, "468465");
+        Usuario usuarioedgardoVentas= new Usuario(edgardoVentas.getNombre(),
+                edgardoVentas.getApellido(),
+                edgardoVentas.getTipoDocumento(),
+                edgardoVentas.getNumDoc(),
+                "EdgardoRosales",
+                "EdgardoRosales",
+                "EdgardoRosales@gmail.com",
+                rol_miembro);
+        edgardoVentas.setUsuario(usuarioedgardoVentas);
         ventasCocaCola.agregarMiembro(edgardoVentas);
 
         Miembro teresaMarketing = new Miembro("Teresa", "Menta granizada", TipoDocumento.DNI, "4565465");
+        Usuario usuarioteresaMarketing= new Usuario(teresaMarketing.getNombre(),
+                teresaMarketing.getApellido(),
+                teresaMarketing.getTipoDocumento(),
+                teresaMarketing.getNumDoc(),
+                "TeresaMentaGranizada",
+                "TeresaMentaGranizada",
+                "TeresaMentaGranizada@gmail.com",
+                rol_miembro);
+        teresaMarketing.setUsuario(usuarioedgardoVentas);
         marketingCocaCola.agregarMiembro(teresaMarketing);
 
         // FIN MIEMBROS //
@@ -219,6 +339,17 @@ public class PersistirDatos {
         List<Tramo> tramosMiembros = cocaCola.obtenerTramosDeLosMiembros();
 
         cocaCola.leerExcel(path);
+
+        //USUARIO DE LA ORGANIZACION
+        Usuario usuarioCocacola = new Usuario("CocaCola",
+                "CocaCola",
+                TipoDocumento.PASAPORTE,
+                "123456",
+                "CocaCola",
+                "CocaCola",
+                "CocaCola@gmail.cocacola.com",
+                repositorioRol.buscar(3));
+        cocaCola.setUsuario(usuarioCocacola);
         return cocaCola;
     }
 
@@ -235,26 +366,7 @@ public class PersistirDatos {
         KG kg = KG.getKG();
         TN tn = TN.getTN();
         GR gr = GR.getGR();
-//        FactorDeEmision naftaFactorDeEmision = new FactorDeEmision("NAFTA", 10, "lts");
-//        Combustible nafta = new Combustible("nafta");
-//        nafta.setFactorEmision(naftaFactorDeEmision);
-//        FactorDeEmision gasFactorDeEmision = new FactorDeEmision("GAS NATURAL", 10, "m3");
-//        Combustible gas = new Combustible("gas");
-//        gas.setFactorEmision(gasFactorDeEmision);
-//        FactorDeEmision electricidadFactorDeEmision = new FactorDeEmision("ELECTRICIDAD", 50, "kWh");
-//        Combustible electricidad = new Combustible("electricidad");
-//        electricidad.setFactorEmision(electricidadFactorDeEmision);
-//
-//        FactorDeEmision dieselFactorDeEmision = new FactorDeEmision("DIESEL", 50, "lts");
-//        Combustible diesel = new Combustible("diesel");
-//        diesel.setFactorEmision(dieselFactorDeEmision);
-//        FactorDeEmision gasoilFactorDeEmision = new FactorDeEmision("GASOIL", 50, "lts");
-//        FactorDeEmision keroseneFactorDeEmision = new FactorDeEmision("KEROSENE", 50, "lts");
-//        FactorDeEmision fuelOilFactorDeEmision = new FactorDeEmision("FUEL OIL", 50, "lts");
-//        FactorDeEmision carbonFactorDeEmision = new FactorDeEmision("CARBON", 50, "kg");
-//        FactorDeEmision carbonLeniaFactorDeEmision = new FactorDeEmision("CARBON LEÑA", 250, "kg");
-//        FactorDeEmision leniaFactorDeEmision = new FactorDeEmision("LEÑA", 25, "kg");
-//        FactorDeEmision gncFactorDeEmision = new FactorDeEmision("GNC", 25, "lts");
+
         Configurador config = Configurador.getConfigurador();
         System.out.println();
         SectorTerritorial sectorTerritorial = new SectorTerritorial();
@@ -295,16 +407,53 @@ public class PersistirDatos {
         // FIN SECTORES //
 
         // MIEMBROS //
+        Rol rol_miembro = repositorioRol.buscar(2);
         Miembro oscarAdministracion = new Miembro("Lucas", "Frutilla", TipoDocumento.DNI, "643546846");
+        Usuario usuariooscarAdministracion= new Usuario(oscarAdministracion.getNombre(),
+                oscarAdministracion.getApellido(),
+                oscarAdministracion.getTipoDocumento(),
+                oscarAdministracion.getNumDoc(),
+                "LucasFrutilla",
+                "LucasFrutilla",
+                "LucasFrutilla@gmail.com",
+                rol_miembro);
+        oscarAdministracion.setUsuario(usuariooscarAdministracion);
         administracionCocaCola.agregarMiembro(oscarAdministracion);
 
         Miembro vanesaMarketing = new Miembro("Leo", "Naranja", TipoDocumento.DNI, "0505878");
+        Usuario usuariovanesaMarketing= new Usuario(vanesaMarketing.getNombre(),
+                vanesaMarketing.getApellido(),
+                vanesaMarketing.getTipoDocumento(),
+                oscarAdministracion.getNumDoc(),
+                "LeoNaranja",
+                "LeoNaranja",
+                "LeoNaranja@gmail.com",
+                rol_miembro);
+        vanesaMarketing.setUsuario(usuariovanesaMarketing);
         marketingCocaCola.agregarMiembro(vanesaMarketing);
 
         Miembro edgardoVentas = new Miembro("Lucía", "Anana", TipoDocumento.DNI, "065848");
+        Usuario usuarioedgardoVentas= new Usuario(edgardoVentas.getNombre(),
+                edgardoVentas.getApellido(),
+                edgardoVentas.getTipoDocumento(),
+                edgardoVentas.getNumDoc(),
+                "LucíaAnana",
+                "LucíaAnana",
+                "LucíaAnana@gmail.com",
+                rol_miembro);
+        edgardoVentas.setUsuario(usuarioedgardoVentas);
         ventasCocaCola.agregarMiembro(edgardoVentas);
 
         Miembro teresaMarketing = new Miembro("Sofía", "Mandarina", TipoDocumento.DNI, "635107");
+        Usuario usuarioteresaMarketing= new Usuario(teresaMarketing.getNombre(),
+                teresaMarketing.getApellido(),
+                teresaMarketing.getTipoDocumento(),
+                teresaMarketing.getNumDoc(),
+                "SofíaMandarina",
+                "SofíaMandarina",
+                "SofíaMandarina@gmail.com",
+                rol_miembro);
+        teresaMarketing.setUsuario(usuarioedgardoVentas);
         marketingCocaCola.agregarMiembro(teresaMarketing);
 
 
@@ -380,6 +529,17 @@ public class PersistirDatos {
         List<Tramo> tramosMiembros = cocaCola.obtenerTramosDeLosMiembros();
 
         cocaCola.leerExcel(path);
+
+        //USUARIO DE LA ORGANIZACION
+        Usuario usuarioCocacolaJumbo= new Usuario("Jumbo",
+                "Jumbo",
+                TipoDocumento.PASAPORTE,
+                "123456",
+                "Jumbo",
+                "Jumbo",
+                "Jumbo@gmail.Jumbo.com",
+                repositorioRol.buscar(3));
+        cocaCola.setUsuario(usuarioCocacolaJumbo);
         return cocaCola;
     }
 

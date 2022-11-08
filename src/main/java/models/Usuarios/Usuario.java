@@ -42,10 +42,6 @@ public class Usuario extends EntidadPersistente {
     @Column(name = "email")
     private String email;
 
-//    @Column(name = "rol")
-//    @Transient
-//    private Rol rol;
-
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "usuario")
     private List<Miembro> miembros = new ArrayList<>();
 
@@ -60,6 +56,17 @@ public class Usuario extends EntidadPersistente {
 
     public Usuario(String usuario, String contrasenia) {
         super();
+    }
+
+    public Usuario(String nombre, String apellido, TipoDocumento tipoDocumento, String numeroDocumento, String nombreDeUsuario, String contrasenia, String email, Rol rol) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.tipoDocumento = tipoDocumento;
+        this.numeroDocumento = numeroDocumento;
+        this.nombreDeUsuario = nombreDeUsuario;
+        this.contrasenia = contrasenia;
+        this.email = email;
+        this.rol = rol;
     }
 
     public boolean validarClave(Validable validable){

@@ -88,7 +88,7 @@ public class Organizacion extends EntidadPersistente {
     @OneToMany(fetch =FetchType.LAZY, mappedBy = "organizacion",cascade = CascadeType.REFRESH )
     private List<Peticion> peticiones;
 
-    @ManyToOne(fetch=FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinColumn(name = "id_usuario")
     private Usuario usuario;
 
