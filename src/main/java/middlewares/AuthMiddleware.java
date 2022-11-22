@@ -22,7 +22,7 @@ public class AuthMiddleware {
     public static  Response verificarOrganizacion(Request request, Response response){
         RepositorioUsuario repositorioUsuario = new RepositorioUsuario();
         RepositorioOrganizacion repositorioOrganizacion = new RepositorioOrganizacion();
-        List<Organizacion> organizaciones = repositorioOrganizacion.buscarOrganizacionesDelUsuario(request.session().attribute("id"));
+        List<Organizacion> organizaciones = repositorioOrganizacion.buscarOrganizacionesDelUsuarioQueEsAdministrador(request.session().attribute("id"));
         if(organizaciones.stream().noneMatch(o-> o.getId() == Integer.parseInt(request.params("idOrganizacion")))){
             response.redirect("/prohibido");
         }

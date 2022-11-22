@@ -71,6 +71,10 @@ public class Router {
 
 
         Spark.path("/login", () -> {
+            Spark.before("", (request, response) -> {
+                request.session().invalidate();
+            });
+
             Spark.get("", loginController::pantallaDeLogin, engine);
             Spark.post("", loginController::login);
             Spark.post("/logout", loginController::logout);
@@ -105,7 +109,7 @@ public class Router {
 
             Spark.get("", usuarioController::pantallaHomeUsuario, engine);
             Spark.get("/crearOrganizacion",organizacionController::devolverFormParaDarDeAltaProvinciaOrganizacion, engine);
-            Spark.post("/crearOrganizacion",organizacionController::darDeAltaOrganizacion);
+            Spark.post("/crearOrganizacion",organizacionController::darDeAltaProvinciaOrganizacion);
             Spark.get("/crearOrganizacion/Direccion/Provincia/:idProvincia",organizacionController::pantallaCrearOrganizacionConProvinciaElegida, engine);
             Spark.post("/crearOrganizacion/Direccion/Provincia/:idProvincia",organizacionController::darDeAltaOrganizacion);
             Spark.get("/crearOrganizacion/agregarSectores",organizacionController::pantallaCrearOrganizacionAgregarSector, engine );
@@ -116,6 +120,7 @@ public class Router {
             Spark.get("/peticion/organizacion/:idOrganizacion", usuarioController::pantallaDePeticionSectores,engine);
             Spark.post("/peticion/organizacion/:idOrganizacion",usuarioController::guardarPeticion);
             Spark.get("/peticion/success", usuarioController::pantallaDePeticionSuccess,engine);
+            Spark.post("/logout", loginController::logout);
 
         });
 
@@ -186,7 +191,8 @@ public class Router {
             Spark.get("/registrarMediciones", ExcelController::pantallaCargaExcel,engine);
             Spark.post("/registrarMediciones", ExcelController::cargar);
             Spark.get("/todoOk", ExcelController::todoOk );
-             Spark.get("/agregarSector",sectorController::devolverPantallaDeSectores);
+            Spark.get("/agregarSector",sectorController::devolverPantallaDeSectores);
+            Spark.post("/logout", loginController::logout);
 
         });
 
@@ -224,6 +230,7 @@ public class Router {
             Spark.get("/registrarTrayecto/:idTrayecto/agregarTramo/DireccionInicial/:idDireccionInicial", miembroController::registrarTramoProvinciaFin, engine);
             Spark.get("/registrarTrayecto/:idTrayecto/agregarTramo/DireccionInicial/:idDireccionInicial/ProvinciaFin/:idProvinciaFin", miembroController::pantallaDeRegistrarTramo, engine);
             Spark.post("/registrarTrayecto/:idTrayecto/agregarTramo/DireccionInicial/:idDireccionInicial/ProvinciaFin/:idProvinciaFin", miembroController::registrarTramo);
+            Spark.post("/logout", loginController::logout);
         });
 
         Spark.path("/administrador/:idUsuario", () ->{
@@ -231,6 +238,7 @@ public class Router {
             Spark.get("/factoresDeEmision", administradorController:: pantallaDeFactoresDeEmision, engine);
             Spark.get("/factoresDeEmision/:idFactorEmision",administradorController::pantallaEditarFactorDeEmision, engine);
             Spark.post("/factoresDeEmision/:idFactorEmision",administradorController::modificarFactorDeEmision);
+            Spark.post("/logout", loginController::logout);
 
         });
     }

@@ -1,97 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
-          integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
-    <title>Home Usuario</title>
-</head>
-
-<body>
-<div class="d-flex" id="wrapper">
-    <!-- Sidebar -->
-    <div id="sidebar-wrapper" style="background: #ededed">
-        <div class="sidebar-heading text-center py-4  fs-4 fw-bold text-uppercase border-bottom">
-            <i class="bi bi-globe"></i> Huellas
-        </div>
-        <div class="list-group list-group-flush my-3">
-            <a href="/usuario/{{nombre.id}}/peticion" class="list-group-item list-group-item-action  second-text fw-bold"><i class="bi bi-clipboard2-data"></i> Peticion</a>
-            <a href="/login/logout" class="list-group-item list-group-item-action  fw-bold"><i class="fas fa-power-off me-2"></i>Logout</a>
-        </div>
-    </div>
-    <!-- /#sidebar-wrapper -->
-
-    <!-- Page Content -->
-    <div id="page-content-wrapper">
-        <nav class="navbar navbar-expand-lg navbar-light bg-transparent py-4 px-4">
-            <div class="d-flex align-items-center">
-                <i class="fas fa-align-left primary-text fs-4 me-3" id="menu-toggle"></i>
-                <h2 class="fs-2 m-0">Bienvenido {{usuario.nombre}} {{usuario.apellido}}</h2>
+{{#partial "contenido" }}
+<div class="row my-5">
+    <div class="col">
+        <section class="container-fluid p-5 bg-light rounded" id="def" style="height: 140px;display: inline-flex;justify-content: center;align-items: center;">
+            <div class="container">
+                <div class="row">
+                <div class="container-fluid px-4" >
+                    <form method="POST" action="/usuario/{{usuario.id}}/elegirOrganizacion" style ="justify-content: center;">
+                        <div class="input-group" style ="justify-content: center;">
+                          <select class="custom-select" id="inputGroupSelect04" name="organizacion">
+                            <option value="-1" selected>Enviar peticion a nueva organizacion</option>
+                            {{#each organizaciones}}
+                            <option value="{{id}}" name = "empresa">{{razonSocial}}</option>
+                            {{/each}}
+                          </select>
+                          <div class="input-group-append">
+                            <button class="btn btn-outline-primary" type="submit">Aceptar</button>
+                          </div>
+                        </div>
+                    </form>
+                </div>
+                </div>
             </div>
-
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle second-text fw-bold" href="#" id="navbarDropdown"
-                           role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi bi-person-circle"></i> {{usuario.nombre}} {{usuario.apellido}}
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#">Profile</a></li>
-                            <li><a class="dropdown-item" href="#">Settings</a></li>
-                            <form method="POST" action="/login/logout">
-                            <li><button class="dropdown-item" href="/login/logout" type="submit">Logout</button></li>
-                            </form>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-
-        <div class="container-fluid px-4" style="height: 91vh;">
-                <form method="POST" action="/usuario/{{usuario.id}}/elegirOrganizacion">
-                    <div class="input-group">
-                      <select class="custom-select" id="inputGroupSelect04" name="organizacion">
-                        <option value="-1" selected>Enviar peticion a nueva organizacion</option>
-                        {{#each organizaciones}}
-                        <option value="{{id}}" name = "empresa">{{razonSocial}}</option>
-                        {{/each}}
-                      </select>
-                      <div class="input-group-append">
-                        <button class="btn btn-outline-secondary" type="submit">Button</button>
-                      </div>
-                    </div>
-                </form>
-        </div>
+        </section>
     </div>
-<!-- /#page-content-wrapper -->
 </div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-    var el = document.getElementById("wrapper");
-    var toggleButton = document.getElementById("menu-toggle");
-
-    toggleButton.onclick = function () {
-        el.classList.toggle("toggled");
-    };
-    { { #block "script" } }
-    { { /block}}
-
-</script>
-</body>
-
-</html>
+{{/partial}}
+{{> homeUsuario.hbs }}

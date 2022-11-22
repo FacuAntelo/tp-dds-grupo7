@@ -84,7 +84,7 @@ public class TestPersistenciaOrganizacion {
     @Test
     public void recuperarOrganizacionConIdUsuario(){
         Integer idUsuario = 1;
-        List<Organizacion> organizaciones = repo.buscarOrganizacionesDeUsuario(idUsuario);
+        List<Organizacion> organizaciones = repo.buscarOrganizacionesDelUsuarioQueEsMiembro(idUsuario);
         Assert.assertEquals(2,organizaciones.size());
     }
     

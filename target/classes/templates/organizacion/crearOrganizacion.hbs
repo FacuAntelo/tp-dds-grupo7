@@ -6,29 +6,37 @@
                 <div class="row">
                     <div class="col-lg-6 col-xl-6 col-md-6 col-sm-12 col-12">
                         <h2 class="pb-3 text-center mb-5">Nueva organizacion</h2>
-                        <form class="needs-validation" method="POST"
-                            action="/miembro/{{miembro.id}}/registrarTrayecto/{{trayecto.id}}" novalidate>
+                        <form class="needs-validation" method="POST" action="/usuario/{{usuario.id}}/crearOrganizacion" novalidate>
                             <div class="form-row">
                                 <h4>Direccion</h4>
                             </div>
                             <div class="form-row">
-                                <div class="col-md-3 mb-3">
+                                <div class="col-md-6 mb-3">
                                     <label for="validationCustom05">Provincia</label>
-                                    <div class="elegirOrganizacion-container">
-                                        <a class="nav-link dropdown-toggle second-text fw-bold" href="#" id="navbarDropdown"
-                                            role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                            Elegir provincia
-                                        </a>
-                                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                            {{#each provincias}}
-                                            <li>
-                                                <a class="dropdown-item"
-                                                    href="/usuario/{{usuario.id}}/crearOrganizacion/Direccion/Provincia/{{id}}">{{nombre}}</a>
-                                            </li>
-                                            {{/each}}
-                                        </ul>
-                                    </div>
+                                    <select class="form-select" aria-label="Default select example" name="provincia">
+                                        <option selected>Elegir provincia</option>
+                                        {{#each provincias}}
+                                        <option type="hidden" value="{{id}}">{{nombre}}</option>
+                                        {{/each}}
+                                    </select>
+{{!--                                     <div class="elegirOrganizacion-container"> --}}
+{{!--                                         <a class="nav-link dropdown-toggle second-text fw-bold" href="#" id="navbarDropdown" --}}
+{{!--                                             role="button" data-bs-toggle="dropdown" aria-expanded="false"> --}}
+{{!--                                             Elegir provincia --}}
+{{!--                                         </a> --}}
+{{!--                                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown"> --}}
+{{!--                                             {{#each provincias}} --}}
+{{!--                                             <li> --}}
+{{!--                                                 <a class="dropdown-item" --}}
+{{!--                                                     href="/usuario/{{usuario.id}}/crearOrganizacion/Direccion/Provincia/{{id}}">{{nombre}}</a> --}}
+{{!--                                             </li> --}}
+{{!--                                             {{/each}} --}}
+{{!--                                         </ul> --}}
+{{!--                                     </div> --}}
                                 </div>
+                            </div>
+                            <div class="form-row">
+                                <button class="btn btn-primary" type="submit">Continuar</button>
                             </div>
                         </form>
                     </div>

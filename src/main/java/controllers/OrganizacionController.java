@@ -88,8 +88,8 @@ public class OrganizacionController {
     }
 
     public ModelAndView devolverFormParaDarDeAltaProvinciaOrganizacion(Request request, Response response){
-        String idUsuario = request.params("idUsuario");
-        Usuario usuario = repositorioUsuario.find(Integer.parseInt(idUsuario));
+        int idUsuario = request.session().attribute("id");
+        Usuario usuario = repositorioUsuario.find(idUsuario);
         List<Provincia> provincias = repositorioProvincia.traerTodas();
         return new ModelAndView(new HashMap<String, Object>(){{
             put("usuario", usuario);
@@ -97,9 +97,19 @@ public class OrganizacionController {
         }},"organizacion/crearOrganizacion.hbs");
     }
 
+    public Response darDeAltaProvinciaOrganizacion(Request request, Response response){
+        int idUsuario = request.session().attribute("id");
+        Usuario usuario = repositorioUsuario.find(idUsuario);
+        String idProvincia = request.queryParams("provincia");
+
+        response.redirect("/usuario/" + usuario.getId() + "/crearOrganizacion/Direccion/Provincia/" + idProvincia);
+
+        return response;
+    }
+
     public ModelAndView pantallaCrearOrganizacionConProvinciaElegida(Request request, Response response){
-        String idUsuario = request.params("idUsuario");
-        Usuario usuario = repositorioUsuario.find(Integer.parseInt(idUsuario));
+        int idUsuario = request.session().attribute("id");
+        Usuario usuario = repositorioUsuario.find(idUsuario);
 
         int idProvincia = Integer.parseInt(request.params("idProvincia"));
         Provincia provincia= repositorioProvincia.buscarPorId(idProvincia);
@@ -118,8 +128,7 @@ public class OrganizacionController {
 
         Organizacion organizacion = new Organizacion();
         Clasificacion clasificacion = new Clasificacion(request.queryParams("clasificacion"));
-//        Usuario usuario = repositorioUsuario.find(Integer.parseInt(request.session().attribute("id")));
-        Usuario usuario = repositorioUsuario.find(Integer.parseInt(request.params("idUsuario")));
+        Usuario usuario = repositorioUsuario.find(request.session().attribute("id"));
 
         organizacion.setUsuario(usuario);
         organizacion.setClasificacion(clasificacion);
@@ -156,8 +165,8 @@ public class OrganizacionController {
     }
 
     public ModelAndView pantallaCrearOrganizacionAgregarSector(Request request, Response response){
-        String idUsuario = request.params("idUsuario");
-        Usuario usuario = repositorioUsuario.find(Integer.parseInt(idUsuario));
+        int idUsuario = request.session().attribute("id");
+        Usuario usuario = repositorioUsuario.find(idUsuario);
 
         int idProvincia = Integer.parseInt(request.queryParams("provincia"));
         Provincia provincia= repositorioProvincia.buscarPorId(idProvincia);

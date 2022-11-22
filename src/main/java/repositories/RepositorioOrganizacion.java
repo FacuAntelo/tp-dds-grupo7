@@ -53,7 +53,7 @@ public class RepositorioOrganizacion {
                 setParameter("idOrganizacion", idOrganizacion).getResultList();
     }
 
-    public List<Organizacion> buscarOrganizacionesDeUsuario(Integer idUsuario) {
+    public List<Organizacion> buscarOrganizacionesDelUsuarioQueEsMiembro(Integer idUsuario) {
         List<Organizacion> organizacionList = EntityManagerHelper.getEntityManager().createQuery("" +
                 "select o from Organizacion as o", Organizacion.class).getResultList();
         organizacionList = organizacionList.stream().filter(
@@ -62,11 +62,18 @@ public class RepositorioOrganizacion {
         return organizacionList;
     }
 
-    public List<Organizacion> buscarOrganizacionesDelUsuario(Integer idUsuario){
+    public List<Organizacion> buscarOrganizacionesDelUsuarioQueEsAdministrador(Integer idUsuario){
 
         return EntityManagerHelper.getEntityManager().createQuery("select o from Organizacion o" +
                 " where o.usuario = " + idUsuario, Organizacion.class).getResultList();
     }
+    public List<Organizacion> buscarOrganizacionesDelUsuarioQueEsMiembroOAdministrador(Integer idUsuario){
+        List<Organizacion> organizacionList = buscarOrganizacionesDelUsuarioQueEsMiembro(idUsuario);
+        organizacionList.addAll(buscarOrganizacionesDelUsuarioQueEsAdministrador(idUsuario));
+
+        return organizacionList;
+    }
+
 
 //    public MiembroOrganizacionDTO buscarOrganizacionMiembroDTO(int idUsuario){
 //        List<Organizacion> organizacionList = buscarOrganizacionesDeUsuario(Integer.valueOf(idUsuario));
