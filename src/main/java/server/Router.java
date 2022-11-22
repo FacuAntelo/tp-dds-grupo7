@@ -77,6 +77,7 @@ public class Router {
 
             Spark.get("", loginController::pantallaDeLogin, engine);
             Spark.post("", loginController::login);
+            Spark.get("/logout", loginController::logout);
             Spark.post("/logout", loginController::logout);
         });
         
@@ -112,7 +113,8 @@ public class Router {
             Spark.post("/crearOrganizacion",organizacionController::darDeAltaProvinciaOrganizacion);
             Spark.get("/crearOrganizacion/Direccion/Provincia/:idProvincia",organizacionController::pantallaCrearOrganizacionConProvinciaElegida, engine);
             Spark.post("/crearOrganizacion/Direccion/Provincia/:idProvincia",organizacionController::darDeAltaOrganizacion);
-            Spark.get("/crearOrganizacion/agregarSectores",organizacionController::pantallaCrearOrganizacionAgregarSector, engine );
+            Spark.get("/crearOrganizacion/success",organizacionController::pantallaAltaDeOrganizacionSuccess, engine);
+//            Spark.get("/crearOrganizacion/agregarSectores",organizacionController::pantallaCrearOrganizacionAgregarSector, engine );
             Spark.get("/elegirOrganizacion", usuarioController:: pantallaElegirOrganizacion, engine);
             Spark.post("/elegirOrganizacion", usuarioController:: redirigirPantalla);
             Spark.get("/peticion", usuarioController::pantallaDePeticion, engine);
@@ -191,7 +193,10 @@ public class Router {
             Spark.get("/registrarMediciones", ExcelController::pantallaCargaExcel,engine);
             Spark.post("/registrarMediciones", ExcelController::cargar);
             Spark.get("/todoOk", ExcelController::todoOk );
-            Spark.get("/agregarSector",sectorController::devolverPantallaDeSectores);
+            Spark.get("/sectores",sectorController::devolverPantallaDeSectores, engine);
+            Spark.get("/agregarSector", sectorController::devolverPantallaAgregarSectores, engine);
+            Spark.post("/agregarSector", sectorController::agregarSector);
+            Spark.get("/agregarSector/success",sectorController::pantallaAltaDeSectorSuccess, engine);
             Spark.post("/logout", loginController::logout);
 
         });

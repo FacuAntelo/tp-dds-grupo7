@@ -15,14 +15,9 @@
                     </div>
                 </div>
             {{/each}}
-            <form class="needs-validation" method="POST" action="/organizacion/{{organizacion.id}}/agregarSector" novalidate>
-                <div class="input-group mb-3 mt-3">
-                    <input type="text" class="form-control" placeholder="Nuevo sector" aria-label="Nuevo sector" aria-describedby="basic-addon2" name ="sector">
-                    <div class="input-group-append">
-                      <button class="btn btn-outline-secondary" type="submit">Button</button>
-                    </div>
-                </div>
-            </form>
+            <small class="d-block text-right mt-3">
+                <a href="/organizacion/{{organizacion.id}}/agregarSector">Agregar nuevo sector</a>
+            </small>
         </div>
     </div>
 </div>

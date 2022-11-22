@@ -89,4 +89,10 @@ public class RepositorioOrganizacion {
         return buscarTodosLosSectores(Integer.valueOf(idOrganizacion)).stream().filter(x->x.getId()==idSector).collect(Collectors.toList()).get(0);
 
     }
+    public void guardarSectores(Sector ... sectores){
+        EntityManagerHelper.beginTransaction();
+        List<Sector> sectorList = Arrays.asList(sectores);
+        sectorList.forEach(EntityManagerHelper::persist);
+        EntityManagerHelper.commit();
+    }
 }

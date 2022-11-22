@@ -159,10 +159,20 @@ public class OrganizacionController {
 
         repositorioOrganizacion.guardar(organizacion);
 
-        response.redirect("/organizacion/"+organizacion.getId());
+        response.redirect("/usuario/" + usuario.getId() + "/crearOrganizacion/success");
 
         return  response;
     }
+    public ModelAndView pantallaAltaDeOrganizacionSuccess(Request request, Response response){
+        int idUsuario = request.session().attribute("id");
+        Usuario usuario = repositorioUsuario.find(idUsuario);
+
+
+        return new ModelAndView(new HashMap<String, Object>(){{
+            put("usuario", usuario);
+        }},"organizacion/altaDeOrganizacionSuccess.hbs");
+    }
+
 
     public ModelAndView pantallaCrearOrganizacionAgregarSector(Request request, Response response){
         int idUsuario = request.session().attribute("id");

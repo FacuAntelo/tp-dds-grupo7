@@ -131,12 +131,29 @@ public class PersistenciaInicial {
             Rol miembro = new Rol();
             miembro.setNombre("USUARIO");
 
-            miembro.agregarPermiso(Permiso.CALCULAR_HUEYA_CARBONO);
+
             miembro.agregarPermiso(Permiso.VER_TRAYECTOS);
             miembro.agregarPermiso(Permiso.CREAR_TRAYECTOS);
             miembro.agregarPermiso(Permiso.EDITAR_TRAYECTOS);
             miembro.agregarPermiso(Permiso.ELIMINAR_TRAYECTOS);
+
             miembro.agregarPermiso(Permiso.VER_ORGANIZACIONES);
+            miembro.agregarPermiso(Permiso.CREAR_ORGANIZACIONES);
+            miembro.agregarPermiso(Permiso.EDITAR_ORGANIZACIONES);
+
+            miembro.agregarPermiso(Permiso.VER_SECTORES);
+            miembro.agregarPermiso(Permiso.CREAR_SECTORES);
+            miembro.agregarPermiso(Permiso.EDITAR_SECTORES);
+            miembro.agregarPermiso(Permiso.ELIMINAR_SECTORES);
+
+            miembro.agregarPermiso(Permiso.REGISTRAR_MEDICIONES);
+            miembro.agregarPermiso(Permiso.CALCULAR_HUEYA_CARBONO);
+            miembro.agregarPermiso(Permiso.VER_REPORTES);
+            miembro.agregarPermiso(Permiso.VER_RECOMENDACIONES);
+
+            miembro.agregarPermiso(Permiso.VER_PETICIONES);
+            miembro.agregarPermiso(Permiso.ACEPTAR_PETICIONES);
+            miembro.agregarPermiso(Permiso.RECHAZAR_PETICIONES);
 
             EntityManagerHelper.beginTransaction();
             EntityManagerHelper.getEntityManager().persist(miembro);

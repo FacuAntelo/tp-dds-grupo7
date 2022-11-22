@@ -22,7 +22,7 @@
             <i class="bi bi-globe"></i> Huellas
         </div>
         <div class="list-group list-group-flush my-3">
-{{!--             <a href="/usuario/{{nombre.id}}/peticion" class="list-group-item list-group-item-action  second-text fw-bold"><i class="bi bi-clipboard2-data"></i> Peticion</a> --}}
+            <a href="/usuario/{{usuario.id}}/peticion" class="list-group-item list-group-item-action  second-text fw-bold"><i class="bi bi-clipboard2-data"></i> Peticion</a>
             <a href="/login/logout" class="list-group-item list-group-item-action  fw-bold"><i class="fas fa-power-off me-2"></i>Logout</a>
         </div>
     </div>
@@ -63,30 +63,31 @@
 
             <div class="container-fluid px-4" style="min-height: 91vh;">
                 <div class="row g-3 my-2 justify-content-md-center">
+                    {{#block "alerta"}}
+                    {{/block}}
+                </div>
+                <div class="row g-3 my-2 justify-content-md-center">
                     <div class="col-lg-3 col-md-6 col-sm-12">
                     <a href="/usuario/{{usuario.id}}/crearOrganizacion" >
-                        <div class="p-3 shadow-sm d-flex justify-content-between align-items-center rounded" style="background: #B4D8FD; height: 150px;justify-content: space-between;">
-                            <div>
+                        <div class="p-3 shadow-sm d-flex justify-content-center align-items-center rounded" style="background: #B4D8FD; height: 150px;">
+                            <div style="text-align: center;">
                                 <h3 class="fs-2">Organización</h3>
-                                <p class="fs-5" style="padding-left: 5px">Dar de alta a una organizacion</p>
+                                <p class="fs-5" >Dar de alta a una organizacion</p>
                             </div>
-                            <i class="bi bi-1-square display-5 "></i>
                         </div>
                     </a>
                     </div>
 
                     <div class="col-lg-3 col-md-6 col-sm-12">
                     <a href="/usuario/{{usuario.id}}/elegirOrganizacion">
-                        <div class="p-3 shadow-sm d-flex justify-content-between align-items-center rounded" style="background: #B4D8FD;height: 150px;justify-content: space-between;">
-                            <div>
+                        <div class="p-3 shadow-sm d-flex justify-content-center align-items-center rounded" style="background: #B4D8FD;height: 150px;">
+                            <div style="text-align: center;">
                                 <h3 class="fs-2">Miembro</h3>
                                 <p class="fs-5">Ingresar como miembro de una organizacion</p>
                             </div>
-                            <i class="bi bi-2-square display-5"></i>
                         </div>
                     </a>
                     </div>
-
                 </div>
                 {{#block "contenido"}}
                 {{/block}}
@@ -103,6 +104,7 @@
     toggleButton.onclick = function () {
         el.classList.toggle("toggled");
     };
+
     { { #block "script" } }
     { { /block}}
 

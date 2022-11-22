@@ -164,6 +164,11 @@ td{
     display: block !important;
 }
 
+.bi-square-fill::before{
+    font-size: 42px;
+    margin-right: 5px;
+}
+
   @media (min-width : 500px) {
     #sidebar-wrapper {
       margin-left: 0;
