@@ -61,21 +61,20 @@
             </div>
         </nav>
 
-        <div class="container-fluid px-4">
-                <div class="elegirOrganizacion-container">
-                    <a class="nav-link dropdown-toggle second-text fw-bold" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Elegir una empresa
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <div class="container-fluid px-4" style="height: 91vh;">
+                <form method="POST" action="/usuario/{{usuario.id}}/elegirOrganizacion">
+                    <div class="input-group">
+                      <select class="custom-select" id="inputGroupSelect04" name="organizacion">
+                        <option value="-1" selected>Enviar peticion a nueva organizacion</option>
                         {{#each organizaciones}}
-                        <li><a class="dropdown-item" href="/organizacion/{{id}}">{{razonSocial}}</a></li>
+                        <option value="{{id}}" name = "empresa">{{razonSocial}}</option>
                         {{/each}}
-                        <div class="dropdown-divider"></div>
-                        <li><a class="dropdown-item" href="/usuario/{{usuario.id}}/peticion">Enviar peticion a nueva organizacion</a></li>
-                    </ul>
-                </div>
-                </div>
-            </div>
+                      </select>
+                      <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="submit">Button</button>
+                      </div>
+                    </div>
+                </form>
         </div>
     </div>
 <!-- /#page-content-wrapper -->

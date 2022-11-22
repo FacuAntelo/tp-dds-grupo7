@@ -1,0 +1,82 @@
+{{#partial "contenido" }}
+<div class="row my-5">
+    <div class="col">
+        <section class="container-fluid p-5 bg-light" id="def" style="max-height: 91vh;">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-xl-6 col-md-6 col-sm-12 col-12">
+                        <h2 class="pb-3 text-center mb-5">Nueva organizacion</h2>
+                        {{!-- /{{trayecto.id}}--}}
+                        <form class="needs-validation" method="POST"
+                            action="/usuario/{{usuario.id}}/crearOrganizacion/Direccion/Provincia/{{provincia.id}}" novalidate>
+                            <div class="form-row">
+                                <h4>Direccion </h4>
+                            </div>
+                            <div class="form-row">
+                                <div class="col mb-3">
+                                    <label for="validationCustom05">Provincia</label>
+                                    <select class="form-select" aria-label="Default select example" name="provincia" disabled>
+                                        <option selected value="{{provincia.id}}">{{provincia.nombre}}</option>
+                                    </select>
+                                </div>
+                                <div class="col mb-3">
+                                    <label for="validationCustom05">Localidad</label>
+                                    <select class="form-select" aria-label="Default select example" name="localidad">
+                                        <option selected>Elegir localidad</option>
+                                        {{#each localidades}}
+                                        <option type="hidden" value="{{id}}">{{nombre}}</option>
+                                        {{/each}}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-6 mb-3">
+                                    <label>Calle</label>
+                                    <input type="text" class="form-control" placeholder="Calle" required name="calle">
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <label>Altura</label>
+                                    <input type="text" class="form-control" placeholder="Altura" required name="altura">
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <label>Codigo postal</label>
+                                    <input type="text" class="form-control" placeholder="Codigo postal" required name="codigoPostal">
+                                </div>
+                            </div>
+
+
+                            <div class="form-row">
+                                <div class="col mb-3">
+                                    <label>Clasificacion</label>
+                                    <input type="text" class="form-control" placeholder="Clasificacion" required name="clasificacion">
+                                </div>
+                                <div class="col mb-3">
+                                    <label>Tipo de organizacion</label>
+                                    <select class="form-select" aria-label="Default select example"
+                                        name="tipoOrganizacion" >
+                                        <option selected>Elegir tipo Organizacion</option>
+                                        {{#each tiposOrganizaciones}}
+                                        <option type="hidden" value="{{this}}"><a class="dropdown-item">{{this}}</a></option>
+                                        {{/each}}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col mb-5">
+                                    <label>Razon social</label>
+                                    <input type="text" class="form-control" placeholder="Razon social" required name="razonSocial">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <button class="btn btn-primary" type="submit">Continuar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</div>
+{{/partial}}
+{{> homeUsuario.hbs }}

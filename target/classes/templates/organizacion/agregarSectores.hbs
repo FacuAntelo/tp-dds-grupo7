@@ -1,0 +1,60 @@
+{{#partial "contenido" }}
+<div class="row my-5">
+    <div class="col">
+        <section class="container-fluid p-5 bg-light" id="def">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-xl-6 col-md-6 col-sm-12 col-12">
+                        <h2 class="pb-3 text-center mb-5">Nueva organizacion</h2>
+                        <form class="needs-validation" method="GET" action="/usuario/{{usuario.id}}/crearOrganizacion/agregarSectores" novalidate>
+                            <div class="form-row">
+                                <h4>Direccion Inicio</h4>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="validationCustom05">Provincia</label>
+                                    <select class="form-select" aria-label="Default select example" name="provincia"
+                                        disabled>
+                                        <option selected value="{{provincia.id}}">{{provincia.nombre}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="validationCustom05">Localidad</label>
+                                    <select class="form-select" aria-label="Default select example" name="localidad">
+                                        <option selected>Elegir localidadd inicio</option>
+                                        {{#each localidades}}
+                                        <option type="hidden" value="{{id}}">{{nombre}}</option>
+                                        {{/each}}
+                                    </select>
+                                </div>
+                            <div class="form-row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="validationCustom03">Calle</label>
+                                    <input type="text" class="form-control" id="validationCustom03" placeholder="Calle" required name="calle">
+                                    <div class="invalid-feedback">
+                                        Please provide a valid city.
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="validationCustom04">Altura</label>
+                                    <input type="text" class="form-control" id="validationCustom04" placeholder="Altura" required name="altura">
+                                    <div class="invalid-feedback">
+                                        Please provide a valid state.
+                                    </div>
+                                </div>
+                            </div>
+
+                            </div>
+                            <div class="form-row">
+                                <button class="btn btn-primary" type="submit">Continuar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</div>
+{{/partial}}
+{{> homeUsuario.hbs }}

@@ -104,11 +104,13 @@ public class Router {
 //            });
 
             Spark.get("", usuarioController::pantallaHomeUsuario, engine);
-            Spark.get("/crearOrganizacion",organizacionController::devolverFormParaDarDeAltaUnarOrganizacion, engine);
+            Spark.get("/crearOrganizacion",organizacionController::devolverFormParaDarDeAltaProvinciaOrganizacion, engine);
             Spark.post("/crearOrganizacion",organizacionController::darDeAltaOrganizacion);
-            Spark.get("/crearOrganizacion/direccion/Provincia/:idProvincia",organizacionController::pantallaCrearOrganizacionConProvinciaElegida, engine);
-
+            Spark.get("/crearOrganizacion/Direccion/Provincia/:idProvincia",organizacionController::pantallaCrearOrganizacionConProvinciaElegida, engine);
+            Spark.post("/crearOrganizacion/Direccion/Provincia/:idProvincia",organizacionController::darDeAltaOrganizacion);
+            Spark.get("/crearOrganizacion/agregarSectores",organizacionController::pantallaCrearOrganizacionAgregarSector, engine );
             Spark.get("/elegirOrganizacion", usuarioController:: pantallaElegirOrganizacion, engine);
+            Spark.post("/elegirOrganizacion", usuarioController:: redirigirPantalla);
             Spark.get("/peticion", usuarioController::pantallaDePeticion, engine);
             Spark.get("/peticion/organizacion", usuarioController::pantallaDePeticionSector);
             Spark.get("/peticion/organizacion/:idOrganizacion", usuarioController::pantallaDePeticionSectores,engine);

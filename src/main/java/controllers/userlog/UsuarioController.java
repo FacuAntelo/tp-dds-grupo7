@@ -40,12 +40,29 @@ public class UsuarioController {
         String idUsuario = request.params("idUsuario");
         Usuario usuario = repositorioUsuario.find(Integer.parseInt(idUsuario));
 
-        List<Organizacion> organizacionList = repositorioOrganizacion.buscarOrganizacionesDelUsuario(Integer.valueOf(idUsuario));
+        List<Organizacion> organizacionList = repositorioOrganizacion.buscarOrganizacionesDeUsuario(Integer.valueOf(idUsuario));
 
         return new ModelAndView(new HashMap<String, Object>(){{
             put("organizaciones", organizacionList);
             put("usuario", usuario);
         }},"elegirEmpresa.hbs");
+    }
+
+    public Response redirigirPantalla(Request request, Response response){
+        int idUsuario = Integer.parseInt(request.params("idUsuario"));
+        int idOrganizacion = Integer.parseInt(request.queryParams("organizacion"));
+
+        if(idOrganizacion < 0){
+            response.redirect("/usuario/" + idUsuario + "/peticion");
+        }
+        else if(repositorioOrganizacion.buscar(idOrganizacion).getUsuario().getId() == idUsuario){
+            response.redirect("/organizacion/" + idOrganizacion);
+        }
+        else{
+            response.redirect("/miembro/" + repositorioMiembro.buscarUsuario(idUsuario).getId());
+        }
+
+        return response;
     }
 
     public ModelAndView mostrar (Request request, Response response){

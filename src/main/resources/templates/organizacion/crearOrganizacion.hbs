@@ -1,21 +1,11 @@
 {{#partial "contenido" }}
 <div class="row my-5">
-    <h3 class="fs-4 mb-3">Registrar trayectos</h3>
     <div class="col">
-        <section class="container-fluid p-5 bg-light" id="def">
+        <section class="container-fluid p-5 bg-light" id="def" style="height: 65vh;">
             <div class="container">
                 <div class="row">
-{{!--                     <div class="col-lg-6 col-xl-6 col-md-6 col-sm-12 col-12"> --}}
-{{!--                         <h1 class="pb-5">Tramos del trayecto</h1> --}}
-{{!--                         {{#each tramosDelTrayecto}} --}}
-{{!--                         <h4 class="pb-5">Tramo: {{id}}</h4> --}}
-{{!--                         <p class="pb-5">Direccion inicial: {{direccionInicioCalle}}, {{direccionInicioAltura}}, {{direccionInicioLocalidad}}, {{direccionInicioProvincia}}</p> --}}
-{{!--                         <p class="pb-5">Direccion fin: {{direccionFinCalle}}, {{direccionFinAltura}}, {{direccionFinLocalidad}}, {{direccionFinProvincia}}</p> --}}
-{{!--                         {{/each}} --}}
-{{!--                     </div> --}}
                     <div class="col-lg-6 col-xl-6 col-md-6 col-sm-12 col-12">
                         <h2 class="pb-3 text-center mb-5">Nueva organizacion</h2>
-                        {{!-- /{{trayecto.id}}--}}
                         <form class="needs-validation" method="POST"
                             action="/miembro/{{miembro.id}}/registrarTrayecto/{{trayecto.id}}" novalidate>
                             <div class="form-row">
@@ -33,7 +23,7 @@
                                             {{#each provincias}}
                                             <li>
                                                 <a class="dropdown-item"
-                                                    href="/usuario/{{usuario.id}}/crearOrganizacion/direccion/Provincia/{{id}}">{{nombre}}</a>
+                                                    href="/usuario/{{usuario.id}}/crearOrganizacion/Direccion/Provincia/{{id}}">{{nombre}}</a>
                                             </li>
                                             {{/each}}
                                         </ul>
