@@ -4,6 +4,7 @@ import models.Organizacion.Organizacion;
 import models.Sector.Sector;
 import models.db.EntityManagerHelper;
 import repositories.RepositorioOrganizacion;
+import repositories.RepositorioSector;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -17,10 +18,8 @@ import static java.lang.Thread.sleep;
 
 public class SectorController {
     RepositorioOrganizacion repositorioOrganizacion = new RepositorioOrganizacion();
-//    esto va en el repositorio
-//    public void guardar(Sector sector){
-//        EntityManagerHelper.getEntityManager().persist(sector);
-//    }
+    RepositorioSector repositorioSector = new RepositorioSector();
+
     public ModelAndView devolverPantallaDeSectores(Request request, Response response){
         int idOrganizacion = Integer.valueOf(request.params("idOrganizacion"));
         Organizacion organizacion = repositorioOrganizacion.buscar(idOrganizacion);
@@ -49,7 +48,7 @@ public class SectorController {
         Organizacion organizacion = repositorioOrganizacion.buscar(idOrganizacion);
         organizacion.agregarSector(sector);
 
-        repositorioOrganizacion.guardarSectores(sector);
+        repositorioSector.guardar(sector);
 
         response.redirect("/organizacion/"+organizacion.getId()+"/agregarSector/success");
 

@@ -9,6 +9,7 @@ import models.Miembro.Miembro;
 import models.Miembro.TipoDocumento;
 import models.Organizacion.Organizacion;
 import models.Reportes.GeneradorDeReportes;
+import models.Sector.Sector;
 import models.Usuarios.Usuario;
 import models.domain.services.ServicioGeoDDS;
 import models.domain.services.adapters.ServicioGeoDDSRetrofitAdapter;
@@ -35,6 +36,7 @@ public class MiembroController {
     RepositorioProvincia repositorioProvincia=new RepositorioProvincia();
     RepositorioLocalidad repositorioLocalidad=new RepositorioLocalidad();
     RepositorioDireccion repositorioDireccion=new RepositorioDireccion();
+    RepositorioSector repositorioSector = new RepositorioSector();
 
     public ModelAndView mostrarTrayectos (Request request, Response response){
 
@@ -451,5 +453,18 @@ public class MiembroController {
         response.redirect("/miembro/"+ miembro.getId()+"/registrarTrayecto/"+ trayecto.getId()+"/agregarTramo");
 
         return response;
+    }
+
+    public ModelAndView pantallaMiembrosDelSector(Request request, Response response){
+        int idOrganizacion = Integer.valueOf(request.params("idOrganizacion"));
+        Organizacion organizacion = repositorioOrganizacion.buscar(idOrganizacion);
+
+        Integer idSector = Integer.valueOf(request.params("idSector"));
+        Sector sector = repositorioSector.buscar(idSector);
+        return new ModelAndView(new HashMap<String, Object>(){{
+            put("organizacion", organizacion);
+            put("sector", sector);
+            put("miembros", sector.getMiembros());
+        }},"organizacion/miembrosDelSector.hbs");
     }
 }

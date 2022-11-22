@@ -197,6 +197,7 @@ public class Router {
             Spark.get("/agregarSector", sectorController::devolverPantallaAgregarSectores, engine);
             Spark.post("/agregarSector", sectorController::agregarSector);
             Spark.get("/agregarSector/success",sectorController::pantallaAltaDeSectorSuccess, engine);
+            Spark.get("/sector/:idSector/miembros",miembroController::pantallaMiembrosDelSector, engine);
             Spark.post("/logout", loginController::logout);
 
         });
