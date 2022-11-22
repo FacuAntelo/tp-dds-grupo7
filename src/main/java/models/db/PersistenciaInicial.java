@@ -1,18 +1,34 @@
 package models.db;
 
+import ServicioGeoRefAPIgob.ServicioGeoRefAPI;
+import ServicioGeoRefAPIgob.retrofit.ServicioGeoRefAPIRetrofit;
 import models.Combustible.Combustible;
 import models.MediosDeTransporte.TipoVehiculo;
 import models.MediosDeTransporte.VehiculoParticular;
 import models.Usuarios.FactorDeEmision;
+import models.Usuarios.Permiso;
+import models.Usuarios.Rol;
+import models.trayecto.Provincia;
 import repositories.RepositorioCombustible;
+import repositories.RepositorioProvincia;
+import repositories.RepositorioRol;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class PersistenciaInicial {
 
-    public static void persistirCombustibles(){
+    public static void persistirTodoLoNecesario() throws IOException {
+        RepositorioProvincia repositorioProvincia = new RepositorioProvincia();
+        System.out.println(repositorioProvincia.traerTodas().size()+ "-------------------------------------------------------");
+        if(repositorioProvincia.traerTodas().isEmpty()) {
+            ServicioGeoRefAPI servicioGeoRefAPI = new ServicioGeoRefAPI();
+            servicioGeoRefAPI.setAdapter(new ServicioGeoRefAPIRetrofit());
+            List<Provincia> provincias = repositorioProvincia.cargarProvincias();
+            repositorioProvincia.persistirProvincias(provincias);
+        }
         RepositorioCombustible repositorioCombustible = new RepositorioCombustible();
 
         FactorDeEmision naftaFactorDeEmision = new FactorDeEmision("NAFTA", 10, "lts");
@@ -77,7 +93,56 @@ public class PersistenciaInicial {
                 .collect(Collectors.toList());
         VehiculoParticular vehiculoParticularAutoCompartido = new VehiculoParticular(TipoVehiculo.AUTO,nafta,true);
         VehiculoParticular vehiculoParticularAutoNoCompartido= new VehiculoParticular(TipoVehiculo.AUTO,nafta,false);
-//
+        RepositorioRol repositorioRol = new RepositorioRol();
+        if(repositorioRol.buscarTodos().isEmpty()) {
+            Rol admin = new Rol();
+            admin.setNombre("ADMIN");
 
+            admin.agregarPermiso(Permiso.CREAR_ORGANIZACIONES);
+            admin.agregarPermiso(Permiso.VER_ORGANIZACIONES);
+            admin.agregarPermiso(Permiso.EDITAR_ORGANIZACIONES);
+            admin.agregarPermiso(Permiso.ELIMIAR_ORGANIZACIONES);
+
+            admin.agregarPermiso(Permiso.CREAR_SECTORES);
+            admin.agregarPermiso(Permiso.VER_SECTORES);
+            admin.agregarPermiso(Permiso.EDITAR_SECTORES);
+            admin.agregarPermiso(Permiso.ELIMINAR_SECTORES);
+
+            admin.agregarPermiso(Permiso.VER_PETICIONES);
+            admin.agregarPermiso(Permiso.ACEPTAR_PETICIONES);
+            admin.agregarPermiso(Permiso.RECHAZAR_PETICIONES);
+
+            admin.agregarPermiso(Permiso.REGISTRAR_MEDICIONES);
+            admin.agregarPermiso(Permiso.VER_REPORTES);
+
+            admin.agregarPermiso(Permiso.VER_RECOMENDACIONES);
+
+            admin.agregarPermiso(Permiso.CREAR_TRAYECTOS);
+            admin.agregarPermiso(Permiso.VER_TRAYECTOS);
+            admin.agregarPermiso(Permiso.EDITAR_TRAYECTOS);
+            admin.agregarPermiso(Permiso.ELIMINAR_TRAYECTOS);
+
+            admin.agregarPermiso(Permiso.CALCULAR_HUEYA_CARBONO);
+
+            EntityManagerHelper.beginTransaction();
+            EntityManagerHelper.getEntityManager().persist(admin);
+            EntityManagerHelper.commit();
+
+            Rol miembro = new Rol();
+            miembro.setNombre("USUARIO");
+
+            miembro.agregarPermiso(Permiso.CALCULAR_HUEYA_CARBONO);
+            miembro.agregarPermiso(Permiso.VER_TRAYECTOS);
+            miembro.agregarPermiso(Permiso.CREAR_TRAYECTOS);
+            miembro.agregarPermiso(Permiso.EDITAR_TRAYECTOS);
+            miembro.agregarPermiso(Permiso.ELIMINAR_TRAYECTOS);
+            miembro.agregarPermiso(Permiso.VER_ORGANIZACIONES);
+
+            EntityManagerHelper.beginTransaction();
+            EntityManagerHelper.getEntityManager().persist(miembro);
+            EntityManagerHelper.commit();
+        }
+//
     }
+
 }

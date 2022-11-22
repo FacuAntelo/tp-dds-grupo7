@@ -5,12 +5,15 @@ import models.HuellaDeCarbono.RegistroHC;
 import models.Miembro.Miembro;
 import models.Organizacion.Organizacion;
 import models.Organizacion.Peticion;
+import models.Organizacion.Ubicacion;
 import models.Reportes.GeneradorDeReportes;
 import models.Reportes.ReporteSectoresOrganizacionDTO;
 import models.Sector.Sector;
-import repositories.RepositorioMiembro;
-import repositories.RepositorioOrganizacion;
-import repositories.RepositorioPeticion;
+import models.Usuarios.Usuario;
+import models.trayecto.Direccion;
+import models.trayecto.Localidad;
+import models.trayecto.Provincia;
+import repositories.*;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -21,7 +24,8 @@ import java.util.List;
 public class OrganizacionController {
 
     RepositorioOrganizacion repo = new RepositorioOrganizacion();
-
+    RepositorioUsuario repositorioUsuario = new RepositorioUsuario();
+    RepositorioProvincia repositorioProvincia = new RepositorioProvincia();
 
     public static String traerOrganizacion(Request request, Response response) {
         RepositorioOrganizacion repo = new RepositorioOrganizacion();
@@ -77,6 +81,68 @@ public class OrganizacionController {
 
         response.redirect("/organizacion/"+organizacion.getId()+"/registros");
         return response;
+    }
+
+    public ModelAndView devolverFormParaDarDeAltaUnarOrganizacion(Request request, Response response){
+        String idUsuario = request.params("idUsuario");
+        Usuario usuario = repositorioUsuario.find(Integer.parseInt(idUsuario));
+        return new ModelAndView(new HashMap<String, Object>(){{
+            put("usuario", usuario);
+        }},"crearOrganizacion.hbs");
+    }
+
+    public ModelAndView pantallaCrearOrganizacionConProvinciaElegida(Request request, Response response){
+        String idUsuario = request.params("idUsuario");
+        Usuario usuario = repositorioUsuario.find(Integer.parseInt(idUsuario));
+
+        int idProvincia = Integer.parseInt(request.params("idProvincia"));
+        Provincia provincia= repositorioProvincia.buscarPorId(idProvincia);
+        return new ModelAndView(new HashMap<String, Object>(){{
+            put("usuario", usuario);
+            put("provincia", provincia);
+        }},"organizacion/crearOrganizacion.hbs");
+    }
+
+
+
+    public Response darDeAltaOrganizacion(Request request, Response response){
+
+        RepositorioClasificacion repositorioClasificacion = new RepositorioClasificacion();
+        RepositorioProvincia repositorioProvincia = new RepositorioProvincia();
+        RepositorioLocalidad repositorioLocalidad = new RepositorioLocalidad();
+        RepositorioOrganizacion repositorioOrganizacion = new RepositorioOrganizacion();
+
+        Organizacion organizacion = new Organizacion();
+        organizacion.setUsuario(request.session().attribute("id"));
+        organizacion.setClasificacion(repositorioClasificacion.buscar(Integer.parseInt(request.queryParams("clasificacion"))));
+        organizacion.setRazonSocial(request.queryParams("razonSocial"));
+
+        Ubicacion ubicacion = new Ubicacion();
+
+        Direccion direccion = new Direccion();
+
+        direccion.setAltura(Integer.parseInt(request.queryParams("altura")));
+        direccion.setCalle(request.queryParams("calle"));
+
+        Provincia provincia = repositorioProvincia.buscarPorId(Integer.parseInt(request.queryParams("provincia")));
+        Localidad localidad = repositorioLocalidad.buscarPorId(Long.parseLong(request.queryParams("localidad")));
+
+        direccion.setLocalidad(localidad);
+        direccion.setProvincia(provincia);
+
+        ubicacion.setDireccion(direccion);
+        ubicacion.setCodigoPostal(Integer.valueOf(request.queryParams("codPostal")));
+
+        organizacion.setUbicacion(ubicacion);
+
+        organizacion.setLocalidad(localidad);
+        organizacion.setProvincia(provincia);
+
+        repositorioOrganizacion.guardar(organizacion);
+
+        response.redirect(request.queryParams(organizacion.getUsuario()+"/organizacion/"+organizacion.getId()+"agregarSectores"));
+
+        return  response;
     }
 
 }

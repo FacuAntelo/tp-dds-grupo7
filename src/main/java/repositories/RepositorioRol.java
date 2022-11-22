@@ -18,6 +18,11 @@ public class RepositorioRol {
     public List<Rol> buscarTodos(){
         return EntityManagerHelper.getEntityManager().createQuery("from Rol",Rol.class).getResultList();
     }
+    public Rol buscarPorNombre(String nombre){
+        return EntityManagerHelper.getEntityManager().createQuery("from Rol as r where r.nombre = :nombre",Rol.class)
+                .setParameter("nombre",nombre.toUpperCase()).getSingleResult();
+    }
+
     public Rol buscar(Integer id){
         return EntityManagerHelper.getEntityManager().find(Rol.class,id);
     }

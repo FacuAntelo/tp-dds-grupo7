@@ -61,36 +61,22 @@
             </div>
         </nav>
 
-            <div class="container-fluid px-4">
-                <div class="row g-3 my-2 justify-content-md-center">
-                    <div class="col-lg-3 col-md-6 col-sm-12">
-                    <a href="/usuario/{{usuario.id}}/crearOrganizacion" >
-                        <div class="p-3 shadow-sm d-flex justify-content-around align-items-center rounded" style="background: #B4D8FD">
-                            <div>
-                                <h3 class="fs-2">Organización</h3>
-                                <p class="fs-5">Dar de alta a una organizacion</p>
-                            </div>
-                            <i class="bi bi-1-square display-5 "></i>
-                        </div>
+        <div class="container-fluid px-4">
+                <div class="elegirOrganizacion-container">
+                    <a class="nav-link dropdown-toggle second-text fw-bold" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Elegir una empresa
                     </a>
-                    </div>
-
-                    <div class="col-lg-3 col-md-6 col-sm-12">
-                    <a href="/usuario/{{usuario.id}}/elegirOrganizacion">
-                        <div class="p-3 shadow-sm d-flex justify-content-around align-items-center rounded" style="background: #B4D8FD;">
-                            <div>
-                                <h3 class="fs-2">Miembro</h3>
-                                <p class="fs-5">Ingresar como miembro de una organizacion</p>
-                            </div>
-                            <i class="bi bi-2-square display-5"></i>
-                        </div>
-                    </a>
-                    </div>
-
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        {{#each organizaciones}}
+                        <li><a class="dropdown-item" href="/organizacion/{{id}}">{{razonSocial}}</a></li>
+                        {{/each}}
+                        <div class="dropdown-divider"></div>
+                        <li><a class="dropdown-item" href="/usuario/{{usuario.id}}/peticion">Enviar peticion a nueva organizacion</a></li>
+                    </ul>
                 </div>
-                {{#block "contenido"}}
-                {{/block}}
+                </div>
             </div>
+        </div>
     </div>
 <!-- /#page-content-wrapper -->
 </div>

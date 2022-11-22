@@ -25,7 +25,7 @@ public class UsuarioController {
     RepositorioPeticion repositorioPeticion = new RepositorioPeticion();
     RepositorioMiembro repositorioMiembro = new RepositorioMiembro();
 
-    public ModelAndView pantallaHome(Request request, Response response) {
+    public ModelAndView pantallaHomeUsuario(Request request, Response response) {
         String idUsuario = request.params("idUsuario");
         Usuario usuario = repositorioUsuario.find(Integer.parseInt(idUsuario));
 
@@ -35,6 +35,17 @@ public class UsuarioController {
             put("organizaciones", organizacionList);
             put("usuario", usuario);
         }},"homeUsuario.hbs");
+    }
+    public ModelAndView pantallaElegirOrganizacion(Request request, Response response) {
+        String idUsuario = request.params("idUsuario");
+        Usuario usuario = repositorioUsuario.find(Integer.parseInt(idUsuario));
+
+        List<Organizacion> organizacionList = repositorioOrganizacion.buscarOrganizacionesDelUsuario(Integer.valueOf(idUsuario));
+
+        return new ModelAndView(new HashMap<String, Object>(){{
+            put("organizaciones", organizacionList);
+            put("usuario", usuario);
+        }},"elegirEmpresa.hbs");
     }
 
     public ModelAndView mostrar (Request request, Response response){
@@ -118,11 +129,6 @@ public class UsuarioController {
         }},"emisionPeticionSuccess.hbs");
     }
 
-
-    public String pantallaCrearOrganizacion(Request request, Response response) {
-        // TODO: DEVOLVER LA PANTALLA CON LOS CAMPOS PARA EL USUARIO
-        return null;
-    }
 
     public Response crearOrganizacion(Request request, Response response) {
 //      Organizacion(String razonSocial, TipoOrganizacion tipoOrganizacion, Clasificacion clasificacion, Ubicacion ubicacion)

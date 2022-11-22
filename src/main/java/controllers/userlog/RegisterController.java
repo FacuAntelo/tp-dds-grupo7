@@ -2,9 +2,11 @@ package controllers.userlog;
 
 
 import com.google.gson.Gson;
+import models.Miembro.Miembro;
 import models.Miembro.TipoDocumento;
 import models.Usuarios.Usuario;
 import models.Validador.ValidadorDePassword;
+import repositories.RepositorioRol;
 import repositories.RepositorioUsuario;
 import spark.ModelAndView;
 import spark.Redirect;
@@ -15,6 +17,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class RegisterController {
+    RepositorioRol repositorioRol = new RepositorioRol();
 
     public ModelAndView getPantallaRegister(Request request, Response response) {
         List<String> tipoDocumentoList= Arrays.stream(TipoDocumento.values()).map(x-> x.name()).collect(Collectors.toList());
@@ -35,7 +38,7 @@ public class RegisterController {
         usuario.setEmail(request.queryParams("email"));
         usuario.setNombreDeUsuario(request.queryParams("usuario"));
         usuario.setContrasenia(request.queryParams("password"));
-
+        usuario.setRol(repositorioRol.buscarPorNombre("USUARIO"));
 
 
         if(validadorDePassword.esValida(usuario.getContrasenia()) && !repoUsuario.existeUsuarioConNombreUsuario(usuario.getNombreDeUsuario())) {

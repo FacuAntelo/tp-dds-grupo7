@@ -50,21 +50,11 @@ public class Router {
 
         DebugScreen.enableDebugScreen();
 
-        // TODO: MANDAR ESTO AL CONFIGURADOR //
-        RepositorioProvincia repositorioProvincia = new RepositorioProvincia();
-        System.out.println(repositorioProvincia.traerTodas().size()+ "-------------------------------------------------------");
-        if(repositorioProvincia.traerTodas().isEmpty()) {
-            ServicioGeoRefAPI servicioGeoRefAPI = new ServicioGeoRefAPI();
-            servicioGeoRefAPI.setAdapter(new ServicioGeoRefAPIRetrofit());
-            List<Provincia> provincias = repositorioProvincia.cargarProvincias();
-            repositorioProvincia.persistirProvincias(provincias);
-        }
+        PersistenciaInicial.persistirTodoLoNecesario();
+
         Spark.staticFileLocation("/public");
         Spark.staticFiles.externalLocation("upload");
         Router.configure();
-        PersistenciaInicial.persistirCombustibles();
-        ServicioGeoDDS servicioGeoDDS = ServicioGeoDDS.getInstance();
-        servicioGeoDDS.setAdapter(new ServicioGeoDDSRetrofitAdapter());
     }
 
     private static void configure() {
@@ -77,6 +67,8 @@ public class Router {
         UsuarioController usuarioController = new UsuarioController();
         RegistroController registroController = new RegistroController();
         AdministradorController administradorController = new AdministradorController();
+        SectorController sectorController = new SectorController();
+
 
         Spark.path("/login", () -> {
             Spark.get("", loginController::pantallaDeLogin, engine);
@@ -104,16 +96,19 @@ public class Router {
         Spark.path("/usuario/:idUsuario", () -> {
 //            Spark.before("", AuthMiddleware::verificarSesion);
 //            Spark.before("/*", AuthMiddleware::verificarSesion);
-            Spark.before("/crearOrganizacion", (request, response) -> {
-                if(!PermisoHelper.usuarioTienePermisos(request, Permiso.CREAR_ORGANIZACIONES)){
-                    response.redirect("/prohibido");
-                    Spark.halt();
-                }
-            });
+//            Spark.before("/crearOrganizacion", (request, response) -> {
+//                if(!PermisoHelper.usuarioTienePermisos(request, Permiso.CREAR_ORGANIZACIONES)){
+//                    response.redirect("/prohibido");
+//                    Spark.halt();
+//                }
+//            });
 
-            Spark.get("", usuarioController::pantallaHome, engine);
-            Spark.get("/crearOrganizacion",usuarioController::pantallaCrearOrganizacion); // agregar engine
-            Spark.post("/crearOrganizacion",usuarioController::crearOrganizacion);
+            Spark.get("", usuarioController::pantallaHomeUsuario, engine);
+            Spark.get("/crearOrganizacion",organizacionController::devolverFormParaDarDeAltaUnarOrganizacion, engine);
+            Spark.post("/crearOrganizacion",organizacionController::darDeAltaOrganizacion);
+            Spark.get("/crearOrganizacion/direccion/Provincia/:idProvincia",organizacionController::pantallaCrearOrganizacionConProvinciaElegida, engine);
+
+            Spark.get("/elegirOrganizacion", usuarioController:: pantallaElegirOrganizacion, engine);
             Spark.get("/peticion", usuarioController::pantallaDePeticion, engine);
             Spark.get("/peticion/organizacion", usuarioController::pantallaDePeticionSector);
             Spark.get("/peticion/organizacion/:idOrganizacion", usuarioController::pantallaDePeticionSectores,engine);
@@ -189,6 +184,8 @@ public class Router {
             Spark.get("/registrarMediciones", ExcelController::pantallaCargaExcel,engine);
             Spark.post("/registrarMediciones", ExcelController::cargar);
             Spark.get("/todoOk", ExcelController::todoOk );
+             Spark.get("/agregarSector",sectorController::devolverPantallaDeSectores);
+
         });
 
         Spark.path("/miembro/:idMiembro", () -> {

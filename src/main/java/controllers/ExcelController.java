@@ -26,7 +26,7 @@ import java.util.HashMap;
 import java.util.List;
 
 
-public class ExcelController {
+public class ExcelController extends Thread {
     static RepositorioDA repoDA;
    private static PathTransition file;
 
@@ -51,6 +51,7 @@ public class ExcelController {
         response.redirect("/organizacion/"+request.params("idOrganizacion")+"/todoOk");
         return response;
     }
+
 
     public static ModelAndView pantallaCargaExcel(Request request, Response response) {
         RepositorioOrganizacion repositorioOrganizacion= new RepositorioOrganizacion();

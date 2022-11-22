@@ -47,12 +47,12 @@ public class PersistirDatos {
 
     @Before
     public void init() throws IOException {
-        persisitrProvinciasYLocalidades();
-        PersistenciaInicial.persistirCombustibles();
-        persistirRolAdmin();
-        persistirRolMiembro();
-        persistirRolOrganizacion();
-        persistirRolAgenteSectorial();
+//        persisitrProvinciasYLocalidades();
+//        PersistenciaInicial.persistirTodoLoNecesario();
+//        persistirRolAdmin();
+//        persistirRolMiembro();
+//        persistirRolOrganizacion();
+//        persistirRolAgenteSectorial();
     }
     @Test
     public void persistirDatosEjemplo() throws IOException {
@@ -223,7 +223,7 @@ public class PersistirDatos {
         // FIN SECTORES //
 
         // MIEMBROS //
-        Rol rol_miembro = repositorioRol.buscar(2);
+        Rol rol_miembro = repositorioRol.buscarPorNombre("USUARIO");
         Miembro oscarAdministracion = new Miembro("Oscar", "Longaniza", TipoDocumento.DNI, "17545848");
         Usuario usuariooscarAdministracion= new Usuario(oscarAdministracion.getNombre(),
                 oscarAdministracion.getApellido(),
@@ -352,7 +352,7 @@ public class PersistirDatos {
                 "CocaCola",
                 "CocaCola",
                 "CocaCola@gmail.cocacola.com",
-                repositorioRol.buscar(3));
+                repositorioRol.buscarPorNombre("USUARIO"));
         cocaCola.setUsuario(usuarioCocacola);
         return cocaCola;
     }
@@ -542,7 +542,7 @@ public class PersistirDatos {
                 "Jumbo",
                 "Jumbo",
                 "Jumbo@gmail.Jumbo.com",
-                repositorioRol.buscar(3));
+                repositorioRol.buscarPorNombre("USUARIO"));
         cocaCola.setUsuario(usuarioCocacolaJumbo);
         return cocaCola;
     }
@@ -562,7 +562,7 @@ public class PersistirDatos {
                 "Bonaerense",
                 "Bonaerense",
                 "Bonaerense@gmail.com",
-                repositorioRol.buscar(4));
+                repositorioRol.buscarPorNombre("USUARIO"));
 
         AgenteSectorial agenteSectorialBonaerense = new AgenteSectorial(usuarioAgenteSectorial.getNombre(),
                 usuarioAgenteSectorial.getApellido(),
@@ -582,7 +582,7 @@ public class PersistirDatos {
         administrador.setTipoDocumento(DNI);
         administrador.setNumeroDocumento("6838743");
         administrador.setEmail("Administrador@admi.com");
-        administrador.setRol(repositorioRol.buscar(1));
+        administrador.setRol(repositorioRol.buscarPorNombre("USUARIO"));
 
         repositorioUsuario.guardar(administrador);
     }
