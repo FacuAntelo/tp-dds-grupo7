@@ -194,6 +194,7 @@ public class PersistirDatos {
         Provincia buenosAires = repositorioProvincia.buscarPorId(6);
         sectorBonaerense.agregarTerritorio(ezeiza);
         sectorBonaerense.agregarTerritorio(buenosAires);
+        sectorBonaerense.setNombre("Bonaerense");
         Direccion direccionCocaCola = new Direccion("Medrano", 1500, ezeiza, buenosAires);
         // FIN DIRECCION
         ubicacionCocaCola.setCodigoPostal(1804);
@@ -201,6 +202,7 @@ public class PersistirDatos {
 
         sectorTerritorial.agregarTerritorio(ezeiza);
         sectorTerritorial.agregarTerritorio(buenosAires);
+        sectorTerritorial.setNombre("Bonaerense");
         // FIN UBICACION //
         // TIPO DE LA ORGANIZACION //
         TipoOrganizacion tipoEmpresa = TipoOrganizacion.EMPRESA;
@@ -382,6 +384,7 @@ public class PersistirDatos {
         Provincia buenosAires = repositorioProvincia.buscarPorId(6);
         sectorBonaerense.agregarTerritorio(ezeiza);
         sectorBonaerense.agregarTerritorio(buenosAires);
+        sectorBonaerense.setNombre("Bonaerense2");
         Direccion direccionCocaCola = new Direccion("Medrano", 1500, ezeiza, buenosAires);
         // FIN DIRECCION
         ubicacionCocaCola.setCodigoPostal(1804);
@@ -389,6 +392,7 @@ public class PersistirDatos {
 
         sectorTerritorial.agregarTerritorio(ezeiza);
         sectorTerritorial.agregarTerritorio(buenosAires);
+        sectorTerritorial.setNombre("Bonaerense2");
         // FIN UBICACION //
         // TIPO DE LA ORGANIZACION //
         TipoOrganizacion tipoEmpresa = TipoOrganizacion.EMPRESA;
@@ -554,6 +558,7 @@ public class PersistirDatos {
         Provincia buenosAires = repositorioProvincia.buscarPorId(6);
         sectorBonaerense.agregarTerritorio(ezeiza);
         sectorBonaerense.agregarTerritorio(buenosAires);
+        sectorBonaerense.setNombre("Bonaerense3");
 
         Usuario usuarioAgenteSectorial= new Usuario("Bonaerense",
                 "Bonaerense",

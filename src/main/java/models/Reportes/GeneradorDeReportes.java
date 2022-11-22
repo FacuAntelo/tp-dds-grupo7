@@ -16,7 +16,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class GeneradorDeReportes {
-    public static void generarReporteHCTotalPorSectorTerritorial(){
+    public static List<ReporteNombreValor> generarReporteHCTotalPorSectorTerritorial(){
+        List<ReporteNombreValor> reporteLista = new ArrayList<>();
+
         System.out.println("\n-----HC total por sector territorial:-----");
         List<SectorTerritorial> sectores = EntityManagerHelper.getEntityManager()
                 .createQuery("select s from SectorTerritorial as s  ",SectorTerritorial.class).getResultList();
@@ -33,8 +35,12 @@ public class GeneradorDeReportes {
             registroUnificado.setTipoRegistro(TipoRegistro.TOTAL);
             sector.agregarRegistro(registroUnificado);
 
+            reporteLista.add(new ReporteNombreValor(sector.getNombre(), registroUnificado.getValorHCTotal().getValorConUnidad()));
+
             System.out.println("Del sector: " + sector.getId() +" se obtuvo el valor TOTAL: " + registroUnificado.getValorHCTotal().getValorConUnidad());
         });
+
+        return reporteLista;
     }
 
     public static void generarReporteHCTotalPorTipoDeOrganizacion(Clasificacion clasificacion){

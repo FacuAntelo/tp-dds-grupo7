@@ -7,9 +7,9 @@ import lombok.Setter;
 @Setter
 public class ReporteNombreValor {
     private String nombre;
-    private Long valor;
+    private String valor;
 
-    public ReporteNombreValor(String nombre, Long valor) {
+    public ReporteNombreValor(String nombre, String valor) {
         this.nombre = nombre;
         this.valor = valor;
     }

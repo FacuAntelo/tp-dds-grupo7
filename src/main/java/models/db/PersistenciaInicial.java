@@ -3,11 +3,14 @@ package models.db;
 import ServicioGeoRefAPIgob.ServicioGeoRefAPI;
 import ServicioGeoRefAPIgob.retrofit.ServicioGeoRefAPIRetrofit;
 import models.Combustible.Combustible;
+import models.HuellaDeCarbono.CalculadoraHC;
 import models.MediosDeTransporte.TipoVehiculo;
 import models.MediosDeTransporte.VehiculoParticular;
 import models.Usuarios.FactorDeEmision;
 import models.Usuarios.Permiso;
 import models.Usuarios.Rol;
+import models.domain.services.ServicioGeoDDS;
+import models.domain.services.adapters.ServicioGeoDDSRetrofitAdapter;
 import models.trayecto.Provincia;
 import repositories.RepositorioCombustible;
 import repositories.RepositorioProvincia;
@@ -159,7 +162,9 @@ public class PersistenciaInicial {
             EntityManagerHelper.getEntityManager().persist(miembro);
             EntityManagerHelper.commit();
         }
-//
+        ServicioGeoDDS servicioGeoDDS = ServicioGeoDDS.getInstance();
+        servicioGeoDDS.setAdapter(new ServicioGeoDDSRetrofitAdapter());
+        CalculadoraHC calculadoraHC = new CalculadoraHC();
     }
 
 }

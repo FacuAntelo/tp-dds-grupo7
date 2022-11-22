@@ -1,0 +1,84 @@
+ {{#partial "contenido" }}
+ <div class="container-fluid px-4" style="min-height: 91vh;">
+                <div class="row g-3 my-2 justify-content-md-center">
+                    <div class="col-lg-3 col-md-6 col-sm-12">
+                    <a href="/organizacion/{{organizacion.id}}/reportes/HCPorSectorTerritorial" >
+                        <div class="p-3 shadow-sm d-flex justify-content-center align-items-center rounded" style="background: #B4D8FD; height: 150px;">
+                            <div style="text-align: center;">
+                                <h3 class="fs-2">Huella de carbono total</h3>
+                                <p class="fs-5" >por sector territorial</p>
+                            </div>
+                        </div>
+                    </a>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 col-sm-12">
+                    <a href="/organizacion/{{organizacion.id}}/reportes/HCPorClasificacion">
+                        <div class="p-3 shadow-sm d-flex justify-content-center align-items-center rounded" style="background: #B4D8FD;height: 150px;">
+                            <div style="text-align: center;">
+                                <h3 class="fs-2">Huella de carbono total</h3>
+                                <p class="fs-5">segun clasificación de la organización</p>
+                            </div>
+                        </div>
+                    </a>
+                    </div>
+                </div>
+                <div class="row g-3 my-2 justify-content-md-center">
+                    <div class="col-lg-3 col-md-6 col-sm-12">
+                    <a href="/organizacion/{{organizacion.id}}/reportes/composicionHCDeSectorTerritorial" >
+                        <div class="p-3 shadow-sm d-flex justify-content-center align-items-center rounded" style="background: #B4D8FD; height: 150px;">
+                            <div style="text-align: center;">
+                                <h3 class="fs-2">Composición de huella de carbono total</h3>
+                                <p class="fs-5" >de un sector territorial</p>
+                            </div>
+                        </div>
+                    </a>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 col-sm-12">
+                    <a href="/organizacion/{{organizacion.id}}/reportes/composicionHCDelPais">
+                        <div class="p-3 shadow-sm d-flex justify-content-center align-items-center rounded" style="background: #B4D8FD;height: 150px;">
+                            <div style="text-align: center;">
+                                <h3 class="fs-2">Composición de huella de carbono total</h3>
+                                <p class="fs-5">a nivel pais</p>
+                            </div>
+                        </div>
+                    </a>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-12">
+                    <a href="/organizacion/{{organizacion.id}}/reportes/composicionHCDeOrganizacion">
+                        <div class="p-3 shadow-sm d-flex justify-content-center align-items-center rounded" style="background: #B4D8FD;height: 150px;">
+                            <div style="text-align: center;">
+                                <h3 class="fs-2">Composición de huella de carbono total</h3>
+                                <p class="fs-5">de la organizacion</p>
+                            </div>
+                        </div>
+                    </a>
+                    </div>
+                </div>
+                <div class="row g-3 my-2 justify-content-md-center">
+                    <div class="col-lg-3 col-md-6 col-sm-12">
+                    <a href="/organizacion/{{organizacion.id}}/reportes/evolucionHCPorSectorTerritorial" >
+                        <div class="p-3 shadow-sm d-flex justify-content-center align-items-center rounded" style="background: #B4D8FD; height: 150px;">
+                            <div style="text-align: center;">
+                                <h3 class="fs-2">Evolución de la huella de carbono total</h3>
+                                <p class="fs-5" >por sector territorial</p>
+                            </div>
+                        </div>
+                    </a>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 col-sm-12">
+                    <a href="/organizacion/{{organizacion.id}}/reportes/evolucionHCDeOrganizacion">
+                        <div class="p-3 shadow-sm d-flex justify-content-center align-items-center rounded" style="background: #B4D8FD;height: 150px;">
+                            <div style="text-align: center;">
+                                <h3 class="fs-2">Evolución de la huella de carbono total</h3>
+                                <p class="fs-5">de la organizacion</p>
+                            </div>
+                        </div>
+                    </a>
+                    </div>
+                </div>
+            </div>
+ {{/partial}}
+ {{> organizacion/baseOrganizacion.hbs }}

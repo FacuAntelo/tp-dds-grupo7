@@ -61,6 +61,8 @@ public class PeticionController {
         List<Peticion> peticionList = repositorioPeticion.buscarPendientes(Integer.parseInt(request.params("idOrganizacion")));
         Organizacion organizacionBuscado = repositorioOrganizacion.buscar(Integer.parseInt(request.params("idOrganizacion")));
 
+        System.out.println("Cantidaa de peticiones:"+peticionList.size() );
+
         return new ModelAndView(new HashMap<String, Object>(){{
             put("peticiones", peticionList);
             put("organizacion", organizacionBuscado);

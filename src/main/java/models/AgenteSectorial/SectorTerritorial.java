@@ -1,5 +1,7 @@
 package models.AgenteSectorial;
 
+import lombok.Getter;
+import lombok.Setter;
 import models.EntidadPersistente.EntidadPersistente;
 import models.HuellaDeCarbono.RegistroHC;
 
@@ -8,8 +10,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Getter
+@Setter
 @Table(name = "sector_territorial")
 public class SectorTerritorial extends EntidadPersistente {
+
+    @Column(name = "nombre")
+    private String nombre;
     @OneToMany(mappedBy = "sector",cascade= CascadeType.ALL)
     List<Territorio> territorioList = new ArrayList<>();
 

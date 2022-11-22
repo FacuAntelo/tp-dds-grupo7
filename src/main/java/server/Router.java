@@ -187,7 +187,14 @@ public class Router {
             Spark.post("/calcularHC", organizacionController:: ejecutarCalculadoraHC);
             Spark.get("/registros",registroController::mostrar, engine);
             Spark.get("/peticiones", peticionController::pantallaDePeticiones, engine);
-            Spark.get("/reportes", reporteController::mostrarPantallaDeOpciones, engine);
+            Spark.get("/reportes", reporteController::pantallaReportes, engine);
+            Spark.get("/reportes/HCPorSectorTerritorial", reporteController::pantallaHCPorSectorTerritorial, engine);
+            Spark.get("/reportes/HCPorClasificacion", reporteController::pantallaHCPorClasificacion, engine);
+            Spark.get("/reportes/composicionHCDeSectorTerritorial", reporteController::pantallacomposicionHCDeSectorTerritorial, engine);
+            Spark.get("/reportes/composicionHCDelPais", reporteController::pantallacomposicionHCDelPais, engine);
+            Spark.get("/reportes/composicionHCDeOrganizacion", reporteController::pantallacomposicionHCDeOrganizacion, engine);
+            Spark.get("/reportes/evolucionHCPorSectorTerritorial", reporteController::pantallaevolucionHCPorSectorTerritorial, engine);
+            Spark.get("/reportes/evolucionHCDeOrganizacion", reporteController::pantallaevolucionHCDeOrganizacion, engine);
             Spark.post("/peticiones/:idPeticion/aceptar", peticionController::aceptarPeticion);
             Spark.post("/peticiones/:idPeticion/rechazar", peticionController::rechazarPeticion);
             Spark.get("/registrarMediciones", ExcelController::pantallaCargaExcel,engine);
