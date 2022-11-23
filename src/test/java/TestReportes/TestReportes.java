@@ -14,6 +14,9 @@ public class TestReportes {
         RepositorioOrganizacion repositorioOrganizacion = new RepositorioOrganizacion();
         RepositorioSectorTerritorial repositorioSectorTerritorial = new RepositorioSectorTerritorial();
 
-        GeneradorDeReportes.generarReporteComposicionHCTotalDeOrganizacion(repositorioOrganizacion.buscar(2));
+//        GeneradorDeReportes.generarReporteComposicionHCTotalDiscriminadoPorProvincia();
+//        GeneradorDeReportes.generarReporteComposicionHCTotalDeOrganizacion(repositorioOrganizacion.buscar(2));
+
+        GeneradorDeReportes.generarReporteEvolucionHCTotalDeOrganizacion(repositorioOrganizacion.buscar(1));
     }
 }

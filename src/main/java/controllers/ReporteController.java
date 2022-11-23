@@ -12,6 +12,7 @@ import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -38,30 +39,41 @@ public class ReporteController {
         return new ModelAndView(new HashMap<String, Object>(){{
             put("organizacion", organizacionBuscado);
             put("reportes", reportes);
-        }},"/organizacion/reporte/pantallaHCPorSectorTerritorial.hbs");
+            put("titulo", "Huella de carbono total por sector territorial");
+            put("tipoNombre", "Sector territorial");
+        }},"/organizacion/reporte/reporteConNombreYValor.hbs");
     }
     public ModelAndView pantallaHCPorClasificacion(Request request, Response response){
         String idOrganización = request.params("idOrganizacion");
         Organizacion organizacionBuscado = repositorioOrganizacion.buscar(Integer.parseInt(idOrganización));
 
-        ReporteNombreValor reporte = GeneradorDeReportes.generarReporteHCTotalPorTipoDeOrganizacion(organizacionBuscado.getClasificacion());
+        List<ReporteNombreValor> reportes = GeneradorDeReportes.generarReporteHCTotalPorTipoDeOrganizacion(organizacionBuscado.getClasificacion());
 
         return new ModelAndView(new HashMap<String, Object>(){{
             put("organizacion", organizacionBuscado);
-            put("reporte", reporte);
-
-        }},"/organizacion/reporte/pantallaHCPorClasificacion.hbs");
+            put("reportes", reportes);
+            put("titulo", "Huella de carbono total por clasificación");
+            put("tipoNombre", "Clasificacion");
+        }},"/organizacion/reporte/reporteConNombreYValor.hbs");
     }
     public ModelAndView pantallacomposicionHCDeSectorTerritorial(Request request, Response response){
         String idOrganización = request.params("idOrganizacion");
         Organizacion organizacionBuscado = repositorioOrganizacion.buscar(Integer.parseInt(idOrganización));
 
-
+        List<ReporteNombreValor> reportes = new ArrayList<>();
+        organizacionBuscado.getSectoresTerritoriales().forEach(sectorTerritorial -> {
+            reportes.addAll(GeneradorDeReportes.generarReporteComposicionHCTotalDeUnSectorTerritorial(sectorTerritorial));
+        });
         return new ModelAndView(new HashMap<String, Object>(){{
             put("organizacion", organizacionBuscado);
-
-        }},"/organizacion/reporte/reportes.hbs");
+            put("reportes", reportes);
+            put("tipoDatoExtra", "Sector Territorial");
+            put("titulo", "Composición huella de carbono total por sector territorial");
+            put("tipoNombre", "Organización");
+        }},"/organizacion/reporte/reporteConNombreValorYDatoExtra.hbs");
     }
+
+    //TODO
     public ModelAndView pantallacomposicionHCDelPais(Request request, Response response){
         String idOrganización = request.params("idOrganizacion");
         Organizacion organizacionBuscado = repositorioOrganizacion.buscar(Integer.parseInt(idOrganización));
@@ -72,6 +84,8 @@ public class ReporteController {
 
         }},"/organizacion/reporte/reportes.hbs");
     }
+
+    //TODO
     public ModelAndView pantallacomposicionHCDeOrganizacion(Request request, Response response){
         String idOrganización = request.params("idOrganizacion");
         Organizacion organizacionBuscado = repositorioOrganizacion.buscar(Integer.parseInt(idOrganización));
@@ -86,20 +100,31 @@ public class ReporteController {
         String idOrganización = request.params("idOrganizacion");
         Organizacion organizacionBuscado = repositorioOrganizacion.buscar(Integer.parseInt(idOrganización));
 
+        List<ReporteNombreValor> reportes = new ArrayList<>();
+        organizacionBuscado.getSectoresTerritoriales().forEach(sectorTerritorial -> {
+            reportes.addAll(GeneradorDeReportes.generarReporteEvolucionHCTotalDeSectorTerritorial(sectorTerritorial));
+        });
 
         return new ModelAndView(new HashMap<String, Object>(){{
             put("organizacion", organizacionBuscado);
-
-        }},"/organizacion/reporte/reportes.hbs");
+            put("reportes", reportes);
+            put("tipoDatoExtra", "Sector Territorial");
+            put("titulo", "Evolucion huella de carbono total por sector territorial");
+            put("tipoNombre", "Fecha");
+        }},"/organizacion/reporte/reporteConNombreValorYDatoExtra.hbs");
     }
     public ModelAndView pantallaevolucionHCDeOrganizacion(Request request, Response response){
         String idOrganización = request.params("idOrganizacion");
         Organizacion organizacionBuscado = repositorioOrganizacion.buscar(Integer.parseInt(idOrganización));
 
+        List<ReporteNombreValor> reportes = GeneradorDeReportes.generarReporteEvolucionHCTotalDeOrganizacion(organizacionBuscado);
 
         return new ModelAndView(new HashMap<String, Object>(){{
             put("organizacion", organizacionBuscado);
-
-        }},"/organizacion/reporte/reportes.hbs");
+            put("reportes", reportes);
+            put("titulo", "Evolucion huella de carbono total por sector territorial");
+            put("tipoNombre", "Fecha");
+            put("tipoDatoExtra", "Organización");
+        }},"/organizacion/reporte/reporteConNombreValorYDatoExtra.hbs");
     }
 }
