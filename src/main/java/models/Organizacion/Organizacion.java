@@ -12,12 +12,14 @@ import models.Notificacion.Notificacion;
 import lombok.Getter;
 import lombok.Setter;
 import models.Sector.Sector;
+import models.Usuarios.FactorDeEmision;
 import models.Usuarios.Usuario;
 import models.ValidacionExterna.ValidadorExterno;
 import models.trayecto.Localidad;
 import models.trayecto.Provincia;
 import models.trayecto.Tramo;
 import models.trayecto.Trayecto;
+import repositories.RepositorioFactoresDeEmision;
 import repositories.RepositorioOrganizacion;
 
 import javax.persistence.*;
@@ -164,7 +166,14 @@ public class Organizacion extends EntidadPersistente {
 
 
     public void leerExcel(String path) throws IOException {
+        RepositorioFactoresDeEmision repositorioFactoresDeEmision = new RepositorioFactoresDeEmision();
+
         this.datosDeActividad = lectorExcel.leerExcel(path);
+
+        this.datosDeActividad.forEach( d ->{
+            FactorDeEmision fe = repositorioFactoresDeEmision.buscarPorNombre(d.getTipoDeConsumo().toUpperCase());
+            d.setFactorDeEmision(fe);
+        });
     }
 
     public void recibePeticion(String nombre, String apellido, TipoDocumento tipoDocumento, String nroDocumento, ValidadorExterno validadorPertenencia){

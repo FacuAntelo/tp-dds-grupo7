@@ -102,12 +102,17 @@ public class CalculadoraHC {
     }
 
     public static HuellaDeCarbono calcularHCMiembro(Miembro miembro) {
-        int hc = miembro.getTramos().stream().mapToInt(tramo -> {
-            int valor_ = (int) ((int) tramo.getDistancia().getValor() * tramo.getMedioDeTransporte().getConsumoXKM() * tramo.getMedioDeTransporte().getValorFactorDeEmision());
-            return valor_;
-        }).sum();
-        HuellaDeCarbono huella = new HuellaDeCarbono(hc);
-        return huella;
+        if(!miembro.getTramos().isEmpty()){
+            int hc = miembro.getTramos().stream().mapToInt(tramo -> {
+                int valor_ = (int) ((int) tramo.getDistancia().getValor() * tramo.getMedioDeTransporte().getConsumoXKM() * tramo.getMedioDeTransporte().getValorFactorDeEmision());
+                return valor_;
+            }).sum();
+
+            return new HuellaDeCarbono(hc);
+        }
+        else{
+            return new HuellaDeCarbono(0);
+        }
     }
     public static void miembroHCrespectoOrganizacion(Miembro miembro,Organizacion organizacion){
         System.out.println("IMPACTO DE MIEMBRO EN ORGANIZACION");
@@ -121,11 +126,17 @@ public class CalculadoraHC {
 
     public static void calculoDeHCdeSectores(Organizacion organizacion){
         System.out.println("IMPACTO DE LOS SECTORES DE LA ORGANIZACION: " + organizacion.getRazonSocial());
-        organizacion.getSectores().stream().forEach(sector -> {
-            System.out.println("IMPACTO DEL SECTOR " + sector.getNombre());
-            int valorHC = sector.getMiembros().stream().mapToInt(m -> calcularHCMiembro(m).getValor()).sum();
-            HuellaDeCarbono hc = new HuellaDeCarbono(valorHC);
-            System.out.println(hc.getValorConUnidad());
-        });
+
+        if(!organizacion.getSectores().isEmpty()){
+            organizacion.getSectores().stream().forEach(sector -> {
+                if(!sector.getMiembros().isEmpty()){
+                    System.out.println("IMPACTO DEL SECTOR " + sector.getNombre());
+                    int valorHC = sector.getMiembros().stream().mapToInt(m -> calcularHCMiembro(m).getValor()).sum();
+                    HuellaDeCarbono hc = new HuellaDeCarbono(valorHC);
+                    System.out.println(hc.getValorConUnidad());
+                }
+            });
+
+        }
     }
 }

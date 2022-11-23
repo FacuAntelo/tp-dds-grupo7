@@ -9,6 +9,8 @@ import models.HuellaDeCarbono.HuellaDeCarbono;
 import models.HuellaDeCarbono.RegistroHC;
 import models.HuellaDeCarbono.TipoRegistro;
 import models.trayecto.Provincia;
+import repositories.RepositorioOrganizacion;
+import repositories.RepositorioSectorTerritorial;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -17,42 +19,56 @@ import java.util.stream.Collectors;
 
 public class GeneradorDeReportes {
     public static List<ReporteNombreValor> generarReporteHCTotalPorSectorTerritorial(){
+        RepositorioOrganizacion repositorioOrganizacion = new RepositorioOrganizacion();
+        RepositorioSectorTerritorial repositorioSectorTerritorial=new RepositorioSectorTerritorial();
+
         List<ReporteNombreValor> reporteLista = new ArrayList<>();
 
         System.out.println("\n-----HC total por sector territorial:-----");
-        List<SectorTerritorial> sectores = EntityManagerHelper.getEntityManager()
-                .createQuery("select s from SectorTerritorial as s  ",SectorTerritorial.class).getResultList();
+        List<SectorTerritorial> sectores = repositorioSectorTerritorial.buscarTodos();
 
         sectores.forEach(sector ->{
-            List<Organizacion> organizaciones = (List <Organizacion>) EntityManagerHelper.getEntityManager()
-                    .createQuery("select o from Organizacion as o ",Organizacion.class).getResultList();
-            organizaciones =  organizaciones.stream().filter(o->o.getSectoresTerritoriales().stream().map(s -> s.getId()).collect(Collectors.toList()).contains(sector.getId())).collect(Collectors.toList());
-            List <RegistroHC> registros = organizaciones.stream().map(o -> o.devolverUltimoRegistro()).collect(Collectors.toList());
+            List<Organizacion> organizaciones = repositorioOrganizacion.buscarTodos();
 
-            RegistroHC registroUnificado = RegistroHC.unificarRegistros(registros);
+            organizaciones =  organizaciones.stream().filter(o-> !(o.getRegistrosHC().isEmpty()) && o.getSectoresTerritoriales().stream().map(s -> s.getId()).collect(Collectors.toList()).contains(sector.getId())).collect(Collectors.toList());
 
-            //Estas dos lineas hay que eliminar??
-            registroUnificado.setTipoRegistro(TipoRegistro.TOTAL);
-            sector.agregarRegistro(registroUnificado);
+            if(!organizaciones.isEmpty()){
+                List <RegistroHC> registros = organizaciones.stream().map(o -> o.devolverUltimoRegistro()).collect(Collectors.toList());
+                RegistroHC registroUnificado = RegistroHC.unificarRegistros(registros);
 
-            reporteLista.add(new ReporteNombreValor(sector.getNombre(), registroUnificado.getValorHCTotal().getValorConUnidad()));
+                //Estas dos lineas hay que eliminar??
+                registroUnificado.setTipoRegistro(TipoRegistro.TOTAL);
+                sector.agregarRegistro(registroUnificado);
 
-            System.out.println("Del sector: " + sector.getId() +" se obtuvo el valor TOTAL: " + registroUnificado.getValorHCTotal().getValorConUnidad());
+                reporteLista.add(new ReporteNombreValor(sector.getNombre(), registroUnificado.getValorHCTotal().getValorConUnidad()));
+
+                System.out.println("Del sector: " + sector.getId() +" se obtuvo el valor TOTAL: " + registroUnificado.getValorHCTotal().getValorConUnidad());
+            }
         });
 
         return reporteLista;
     }
 
-    public static void generarReporteHCTotalPorTipoDeOrganizacion(Clasificacion clasificacion){
+    public static ReporteNombreValor generarReporteHCTotalPorTipoDeOrganizacion(Clasificacion clasificacion){
+
         List<Organizacion> organizaciones = (List<Organizacion>) EntityManagerHelper.getEntityManager()
                 .createQuery("SELECT o from Organizacion as o  where o.clasificacion = :clasificacion ", Organizacion.class)
                 .setParameter("clasificacion", clasificacion).getResultList();
-        List <RegistroHC> registros = organizaciones.stream().map(o -> o.devolverUltimoRegistro()).collect(Collectors.toList());
-        RegistroHC registroUnificado = RegistroHC.unificarRegistros(registros);
+        organizaciones = organizaciones.stream().filter(o-> !(o.getRegistrosHC().isEmpty())).collect(Collectors.toList());
 
-        System.out.println("\n-----HC total por tipo de Organización (según la clasificación de la Organización):-----");
-        System.out.println("REPORTE POR TIPO DE ORGANIZACION: " + clasificacion.getNombre());
-        System.out.println(clasificacion.getNombre()+ ": "+ registroUnificado.getValorHCTotal().getValorConUnidad());
+        if(!organizaciones.isEmpty()){
+            List <RegistroHC> registros = organizaciones.stream().map(o -> o.devolverUltimoRegistro()).collect(Collectors.toList());
+            RegistroHC registroUnificado = RegistroHC.unificarRegistros(registros);
+
+            System.out.println("\n-----HC total por tipo de Organización (según la clasificación de la Organización):-----");
+            System.out.println("REPORTE POR TIPO DE ORGANIZACION: " + clasificacion.getNombre());
+            System.out.println(clasificacion.getNombre()+ ": "+ registroUnificado.getValorHCTotal().getValorConUnidad());
+
+            return new ReporteNombreValor(clasificacion.getNombre(), registroUnificado.getValorHCTotal().getValorConUnidad());
+        }
+        else {
+            return new ReporteNombreValor("", "");
+        }
     }
 
     public static void generarReporteComposicionHCTotalDeUnSectorTerritorial(SectorTerritorial sector){
@@ -62,7 +78,7 @@ public class GeneradorDeReportes {
 
         System.out.println("\n-----Composición de HC total de un determinado sector territorial:-----");
         System.out.println("REPORTE POR  SECTOR TERRITORIAL: " + sector.getId());
-        organizaciones.forEach(o -> System.out.println("Organizacion: " + o.getId() + " obtuvo valor total: "+ o.devolverUltimoRegistro().getValorHCTotal().getValorConUnidad()));
+        organizaciones.forEach(o -> System.out.println("Organizacion: " + o.getRazonSocial() + " obtuvo valor total: "+ o.devolverUltimoRegistro().getValorHCTotal().getValorConUnidad()));
     }
 
     public static void generarReporteComposicionHCTotalDiscriminadoPorProvincia(){
@@ -78,7 +94,7 @@ public class GeneradorDeReportes {
         });
     }
 
-    public static void ggenerarReporteComposicionHCTotalDeOrganizacion(Organizacion organizacion){
+    public static void generarReporteComposicionHCTotalDeOrganizacion(Organizacion organizacion){
         System.out.println("\n-----Composición de HC total de una determinada Organización:-----");
         CalculadoraHC.calculoDeHCdeSectores(organizacion);
     }

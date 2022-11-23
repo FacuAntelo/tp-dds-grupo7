@@ -2,6 +2,7 @@ package repositories;
 
 import models.Organizacion.DatosDeActividad;
 import models.Organizacion.Organizacion;
+import models.Sector.Sector;
 import models.Usuarios.FactorDeEmision;
 import models.db.EntityManagerHelper;
 
@@ -22,6 +23,13 @@ public class RepositorioFactoresDeEmision {
 
     public FactorDeEmision buscar(Integer id){
         return EntityManagerHelper.getEntityManager().find(FactorDeEmision.class,id);
+    }
+
+    public FactorDeEmision buscarPorNombre(String nombre){
+
+        return EntityManagerHelper.getEntityManager().
+                createQuery("select f from FactorDeEmision as f where f.nombre = :nombreFE", FactorDeEmision.class).
+                setParameter("nombreFE", nombre).getSingleResult();
     }
 
 }

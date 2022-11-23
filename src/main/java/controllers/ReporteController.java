@@ -44,11 +44,13 @@ public class ReporteController {
         String idOrganización = request.params("idOrganizacion");
         Organizacion organizacionBuscado = repositorioOrganizacion.buscar(Integer.parseInt(idOrganización));
 
+        ReporteNombreValor reporte = GeneradorDeReportes.generarReporteHCTotalPorTipoDeOrganizacion(organizacionBuscado.getClasificacion());
 
         return new ModelAndView(new HashMap<String, Object>(){{
             put("organizacion", organizacionBuscado);
+            put("reporte", reporte);
 
-        }},"/organizacion/reporte/reportes.hbs");
+        }},"/organizacion/reporte/pantallaHCPorClasificacion.hbs");
     }
     public ModelAndView pantallacomposicionHCDeSectorTerritorial(Request request, Response response){
         String idOrganización = request.params("idOrganizacion");

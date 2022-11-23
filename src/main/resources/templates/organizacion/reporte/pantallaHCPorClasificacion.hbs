@@ -1,0 +1,24 @@
+{{#partial "contenido" }}
+                <div class="row my-5">
+                    <h3 class="fs-4 mb-3">Huella de carbono total por sector territorial</h3>
+                    <div class="col">
+                        <table class="table bg-white rounded shadow-sm  table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Nombre</th>
+                                    <th scope="col">Valor de HC</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr>
+                                    <td>{{reporte.nombre}}</td>
+                                    <td>{{reporte.valor}}</td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+{{/partial}}
+{{> organizacion/baseOrganizacion.hbs }}
