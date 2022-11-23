@@ -5,6 +5,7 @@ import models.Miembro.Miembro;
 import models.Organizacion.Organizacion;
 import models.Sector.Sector;
 import models.db.EntityManagerHelper;
+import models.trayecto.Localidad;
 
 import javax.persistence.EntityManager;
 import java.util.Arrays;
@@ -88,6 +89,17 @@ public class RepositorioOrganizacion {
     public Sector buscarSector(int idOrganizacion, int idSector){
         return buscarTodosLosSectores(Integer.valueOf(idOrganizacion)).stream().filter(x->x.getId()==idSector).collect(Collectors.toList()).get(0);
 
+    }
+
+    public List<Organizacion> buscarOrganizacionesDeLaLocalidad(long idLocalidad){
+        List<Organizacion> organizacionesLocalidad =EntityManagerHelper.getEntityManager()
+                .createQuery("select o from Organizacion as o" +
+                        " inner join o.localidad as l" +
+                        " where l.id= :localidad_id", Organizacion.class)
+                .setParameter("localidad_id",Long.parseLong("6270010001"))
+                .getResultList();
+
+        return organizacionesLocalidad;
     }
 
 }

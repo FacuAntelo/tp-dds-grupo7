@@ -10,6 +10,7 @@ import models.HuellaDeCarbono.RegistroHC;
 import models.HuellaDeCarbono.TipoRegistro;
 import models.trayecto.Provincia;
 import repositories.RepositorioOrganizacion;
+import repositories.RepositorioProvincia;
 import repositories.RepositorioSectorTerritorial;
 
 import java.util.ArrayList;
@@ -91,17 +92,22 @@ public class GeneradorDeReportes {
         return reporteList;
     }
 
-    public static void generarReporteComposicionHCTotalDiscriminadoPorProvincia(){
+    public static List<ReporteNombreValor> generarReporteComposicionHCTotalDiscriminadoPorProvincia(){
+        List<ReporteNombreValor> reporteList = new ArrayList<>();
+
+        RepositorioProvincia repositorioProvincia = new RepositorioProvincia();
+
         System.out.println("\n-----Composición de HC total a nivel país (discriminando provincias):-----");
-        List<Provincia> provincias = EntityManagerHelper.getEntityManager()
-                .createQuery("SELECT p from Provincia as p  ", Provincia.class)
-                .getResultList();
+        List<Provincia> provincias = repositorioProvincia.traerTodas();
         System.out.println("Cantidad provincia: "+provincias.size());
 
         provincias.forEach( provincia -> {
-            RegistroHC resultado =  provincia.calcularHC();
-            System.out.println(provincia.getNombre() + ": " + resultado.getValorHCTotal().getValorConUnidad());
+            String resultado =  provincia.calcularHC().getValorHCTotal().getValorConUnidad();
+            System.out.println(provincia.getNombre() + ": " + resultado);
+            reporteList.add(new ReporteNombreValor(provincia.getNombre(), resultado, ""));
         });
+
+        return reporteList;
     }
 
     public static void generarReporteComposicionHCTotalDeOrganizacion(Organizacion organizacion){

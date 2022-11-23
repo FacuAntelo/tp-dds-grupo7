@@ -78,11 +78,14 @@ public class ReporteController {
         String idOrganización = request.params("idOrganizacion");
         Organizacion organizacionBuscado = repositorioOrganizacion.buscar(Integer.parseInt(idOrganización));
 
-
+        List<ReporteNombreValor> reportes = GeneradorDeReportes.generarReporteComposicionHCTotalDiscriminadoPorProvincia();
         return new ModelAndView(new HashMap<String, Object>(){{
             put("organizacion", organizacionBuscado);
+            put("reportes", reportes);
+            put("titulo", "Composición huella de carbono total por provincincia");
+            put("tipoNombre", "Provincia");
 
-        }},"/organizacion/reporte/reportes.hbs");
+        }},"/organizacion/reporte/reporteConNombreYValor.hbs");
     }
 
     //TODO
@@ -122,7 +125,7 @@ public class ReporteController {
         return new ModelAndView(new HashMap<String, Object>(){{
             put("organizacion", organizacionBuscado);
             put("reportes", reportes);
-            put("titulo", "Evolucion huella de carbono total por sector territorial");
+            put("titulo", "Evolucion huella de carbono total de la organizacion");
             put("tipoNombre", "Fecha");
             put("tipoDatoExtra", "Organización");
         }},"/organizacion/reporte/reporteConNombreValorYDatoExtra.hbs");

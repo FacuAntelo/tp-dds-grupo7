@@ -8,6 +8,7 @@ import models.db.EntityManagerHelper;
 import models.trayecto.Direccion;
 import models.trayecto.Localidad;
 import models.trayecto.Tramo;
+import repositories.RepositorioOrganizacion;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -49,12 +50,12 @@ public class CalculadoraHC {
         }
     }
     public static RegistroHC calcularHCLocalidad(Localidad localidad) {
-        List<Organizacion> organizacionesLocalidad = (List<Organizacion>) EntityManagerHelper.getEntityManager()
-                .createQuery("select o from Organizacion as o" +
-                        "where o.localidad= :localidad_id", Organizacion.class)
-                .setParameter("localidad_id",localidad.getId())
-                .getResultList();
-        List<RegistroHC> registros = organizacionesLocalidad.stream().map(o -> o.calcularHC()).collect(Collectors.toList());
+        RepositorioOrganizacion repositorioOrganizacion = new RepositorioOrganizacion();
+
+        List<Organizacion> organizacionesLocalidad = repositorioOrganizacion.buscarOrganizacionesDeLaLocalidad(localidad.getId());
+        organizacionesLocalidad = organizacionesLocalidad.stream().filter(o-> !(o.getRegistrosHC().isEmpty())).collect(Collectors.toList());
+        organizacionesLocalidad.forEach(o-> o.calcularHC());
+        List<RegistroHC> registros = organizacionesLocalidad.stream().map(o -> o.devolverUltimoRegistro()).collect(Collectors.toList());
 
         return RegistroHC.unificarRegistros(registros);
 
