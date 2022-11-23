@@ -18,7 +18,7 @@ public class RepositorioDireccion {
         EntityManagerHelper.commit();
     }
     public Direccion buscar(Integer id){
-        return EntityManagerHelper.getEntityManager().find(Direccion.class,id);
+        return (Direccion) EntityManagerHelper.getEntityManager().createQuery("select d from Direccion d where d.id= : id",Direccion.class);
     }
 
     public Direccion buscarYGuardar(String calle, int altura, Localidad localidad, Provincia provincia){
